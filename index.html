@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentSquad v3.1 — Agile Agentic Marketing & CRM Command Center (Luiz Lee)</title>
+  <title>AgentSquad v3.2 — Agile Agentic Marketing & CRM Command Center (Luiz Lee)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -42,7 +42,7 @@
           <div>
             <div class="flex items-center gap-1.5">
               <h1 class="font-extrabold text-base tracking-tight">AgentSquad</h1>
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300">v3.1 Gold</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.2 Verified</span>
             </div>
             <p class="text-[11px] text-slate-500 dark:text-slate-400">Google Flow & Nano Banana Edition</p>
           </div>
@@ -135,7 +135,7 @@
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
       <div>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.1 Gold Standard</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.2 Gold Standard</span>
           <span class="text-xs text-slate-500 dark:text-slate-400">NotebookLM Grounded • Google Flow 8s/10s Multi-Clip • Nano Banana Prose • CEA PG 02/2011</span>
         </div>
         <h2 id="view-title" class="text-lg sm:text-xl font-extrabold mt-1">End-to-End Agile Content & Compliance Pipeline</h2>
@@ -306,11 +306,11 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button onclick="runAgentInStudio('agent2')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
                 <i data-lucide="pen-tool" class="w-4 h-4"></i>
-                <span>1. Agent 2: Copy & Hook</span>
+                <span>1. Agent 2: Social Caption</span>
               </button>
               <button onclick="runAgentInStudio('agent3')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
                 <i data-lucide="clapperboard" class="w-4 h-4"></i>
-                <span>2. Agent 3: 8s/10s Script</span>
+                <span>2. Agent 3: Spoken Script</span>
               </button>
               <button onclick="runAgentInStudio('agent4a')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
                 <i data-lucide="image" class="w-4 h-4"></i>
@@ -335,38 +335,45 @@
             </div>
           </div>
 
-          <!-- THREE SEPARATE CHAINED OUTPUT BOXES (Copy, Script, and Visual/Multi-Clip Prompts) -->
-          <div class="space-y-3">
+          <!-- THREE SEPARATE CHAINED OUTPUT BOXES (With Unmistakable Labels for Box B vs Box C) -->
+          <div class="space-y-4">
+            <!-- BOX A: SOCIAL CAPTION -->
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-bold">Box A: Omnichannel Caption & Hook Pack (Agent 2 Output)</label>
-                <button onclick="copyBoxText('studio-copy-output')" class="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Copy Caption</button>
+                <label class="text-xs font-extrabold text-slate-700 dark:text-slate-200">Box A: Social Media Caption & Hook Pack (Paste onto FB, IG, TikTok & YT Description)</label>
+                <button onclick="copyBoxText('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white text-[11px] font-bold transition">Copy Social Caption</button>
               </div>
-              <textarea id="studio-copy-output" rows="4" oninput="updateStudioCardField('copy', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
+              <textarea id="studio-copy-output" rows="5" oninput="updateStudioCardField('copy', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-bold">Box B: Time-Coded 8s/10s Retention Script (Agent 3 Output — Reads Agent 2 Hook)</label>
-                <button onclick="copyBoxText('studio-script-output')" class="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Copy Script</button>
-              </div>
-              <textarea id="studio-script-output" rows="4" oninput="updateStudioCardField('script', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
-            </div>
-
-            <div>
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <label class="text-xs font-bold">Box C: Target Visual Prompt — Google Flow Multi-Clip / Nano Banana (Agent 4A/4B)</label>
-                <div class="flex gap-2">
-                  <button onclick="copyCleanVisualPromptOnly()" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shadow-sm">
-                    📋 Copy Clean Prompt Only (Strip Meta Tags)
-                  </button>
+            <!-- BOX B: INTERNAL STORYBOARD / TELEPROMPTER (Auto-hides in Image/Flyer mode) -->
+            <div id="box-b-script-wrapper" class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-950/60 border border-dashed border-slate-300 dark:border-slate-800 space-y-1.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <label class="text-xs font-bold text-slate-600 dark:text-slate-300">Box B (Internal Storyboard / Teleprompter Only — Do NOT Paste This Into Google Flow)</label>
+                  <p class="text-[10px] text-slate-400">Agent 3 writes the spoken dialogue here first, and Agent 4B automatically embeds these lines into Box C below.</p>
                 </div>
+                <button onclick="copyBoxText('studio-script-output', this)" class="text-[11px] text-slate-500 hover:text-indigo-600 font-semibold underline">Copy Voiceover Script</button>
               </div>
-              <textarea id="studio-media-output" rows="6" oninput="updateStudioCardField('media', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
+              <textarea id="studio-script-output" rows="3" oninput="updateStudioCardField('script', this.value)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-xs mono leading-relaxed text-slate-600 dark:text-slate-300"></textarea>
             </div>
 
-            <!-- Individual 8s/10s Clip Copy Buttons for Google Flow Merging -->
-            <div id="multi-clip-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1"></div>
+            <!-- BOX C: THE ACTUAL PROMPT TO PASTE INTO GOOGLE FLOW OR NANO BANANA -->
+            <div class="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-emerald-500/40 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-extrabold uppercase">USE THIS FOR AI GENERATION</span>
+                  <label class="block text-xs font-extrabold text-slate-900 dark:text-white mt-1">Box C: FINAL COPYABLE PROMPT for Google Flow (Veo 3.1) / Google Nano Banana</label>
+                </div>
+                <button onclick="copyCleanVisualPromptOnly()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-sm">
+                  📋 Copy Full Clean Prompt
+                </button>
+              </div>
+              <textarea id="studio-media-output" rows="8" oninput="updateStudioCardField('media', this.value)" class="w-full bg-white dark:bg-slate-950 border border-emerald-300 dark:border-emerald-800/70 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
+
+              <!-- Individual 8s/10s Clip Copy Buttons for Google Flow Merging (FIXED QUOTES BUG!) -->
+              <div id="multi-clip-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
+            </div>
           </div>
         </div>
 
@@ -527,7 +534,6 @@
     <!-- VIEW 4: FULL INTERACTIVE 6-STAGE CRM & AGENT 8 OVERRIDE CONTROLS    -->
     <!-- =================================================================== -->
     <section id="view-crm" class="tab-view hidden space-y-6">
-      <!-- 6-Stage Interactive Filter Pills -->
       <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
         <div id="crm-stage-filter-bar" class="flex flex-wrap gap-1.5"></div>
         <button onclick="openLeadModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
@@ -536,7 +542,6 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left 7 Cols: Interactive CRM Lead Cards with Direct Stage Dropdown & Agent 8 Mode Override -->
         <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
           <div class="flex items-center justify-between">
             <div>
@@ -548,7 +553,6 @@
           <div id="crm-leads-list" class="space-y-3"></div>
         </div>
 
-        <!-- Right 5 Cols: Live WhatsApp Business Cloud API Coexistence Qualifier + Human Override -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
             <div class="flex items-center gap-2.5">
@@ -566,22 +570,18 @@
             </label>
           </div>
 
-          <!-- Custom Human Override Directive for Agent 8 -->
           <div class="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 space-y-1">
             <label class="block text-[10px] font-extrabold uppercase text-amber-800 dark:text-amber-300">🛑 Human Override Instruction for Agent 8 (Optional):</label>
             <input id="agent8-override-directive" type="text" placeholder="e.g., Skip IPA question; invite directly to Saturday 3pm viewing at Bishan..." oninput="updateAgent8Override(this.value)" class="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-lg px-2.5 py-1 text-xs" />
           </div>
 
-          <!-- Simulated WhatsApp Thread -->
           <div id="wa-chat-box" class="bg-slate-100 dark:bg-slate-950 rounded-2xl p-3.5 h-64 overflow-y-auto space-y-2.5 text-xs border border-slate-200 dark:border-slate-800"></div>
 
-          <!-- Extracted BANT Qualification Pill Bar -->
           <div id="wa-bant-summary" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[11px] space-y-1">
             <div class="font-extrabold text-emerald-700 dark:text-emerald-300">Agent 8 Live Qualification Extraction:</div>
             <div id="wa-bant-details" class="text-slate-600 dark:text-slate-300">Residency: SC • Intent: Upgrade HDB to 3BR Condo • MOP: Q4 2026 • IPA: Pending</div>
           </div>
 
-          <!-- Test Incoming Prospect Message Input -->
           <div class="flex gap-2">
             <input id="wa-incoming-input" type="text" placeholder="Simulate incoming buyer WhatsApp (auto-creates CRM lead)..." class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs" onkeydown="if(event.key==='Enter') simulateIncomingWhatsApp()" />
             <button onclick="simulateIncomingWhatsApp()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0">
@@ -646,7 +646,7 @@
                 <td class="py-2.5 font-bold">2. Viral Copy & Hook Strategist</td>
                 <td class="mono text-indigo-600 dark:text-indigo-400">gemini-flash-lite-latest</td>
                 <td>Agent 1 Topic + NotebookLM Notes</td>
-                <td>Structured `[HOOK_HEADLINE]`, `[DATA_BULLETS]`, `[DM_TRIGGER]` + 5 CEA Footer</td>
+                <td>Topic-specific buyer copy (D15, MOP, ABSD, EC, TDSR) + 5 CEA Footer</td>
               </tr>
               <tr>
                 <td class="py-2.5 font-bold">3. Retention Scriptwriter</td>
@@ -657,14 +657,14 @@
               <tr>
                 <td class="py-2.5 font-bold">4A. Nano Banana Image/Flyer Agent</td>
                 <td class="mono text-violet-600 dark:text-violet-400">Nano Banana Prose Engine</td>
-                <td>Agent 2 Hook & Bullets + CEA Photo</td>
-                <td>3-Zone vertical 4:5 natural prose + exact `"quoted text"` + Artist's Impression tag</td>
+                <td>Agent 2 Hook & Topic Theme + Photo</td>
+                <td>Topic-matched 3D cutaway + 3 short glassmorphism pills + Avatar Footer</td>
               </tr>
               <tr>
                 <td class="py-2.5 font-bold">4B. Google Flow Video Agent</td>
                 <td class="mono text-violet-600 dark:text-violet-400">Veo 3.1 Multi-Clip Engine</td>
                 <td>Agent 3's 8s/10s Script Blocks</td>
-                <td>4x 8s/10s mergeable 6-layer clips + Positive Geometry Lock + Agent Photo Reminder</td>
+                <td>4x 120-word 6-layer clips + Lip-sync dialogue + Positive Geometry Lock</td>
               </tr>
               <tr>
                 <td class="py-2.5 font-bold">5. CEA & PDPA Compliance Gate</td>
@@ -690,9 +690,8 @@
     <section id="view-settings" class="tab-view hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Col 1 (5 Cols): CEA Salesperson Details + Cross-Device Cloud Sync (Supabase & Google Drive) -->
+        <!-- Col 1 (5 Cols): CEA Salesperson Details + Cross-Device Cloud Sync -->
         <div class="lg:col-span-5 space-y-6">
-          <!-- Box 1: CEA Profile & Compressed CTA Photo Upload -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
               <div class="flex items-center gap-2">
@@ -745,7 +744,6 @@
             </div>
           </div>
 
-          <!-- Box 2: Cross-Device Cloud Sync (Supabase Primary + Google Drive Filing Cabinet Fallback) -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
               <div class="flex items-center gap-2">
@@ -798,7 +796,6 @@
 
         <!-- Col 2 (7 Cols): AI Brain Key Vault + Multi-Model Diagnostic Tester + Live Social API Testers -->
         <div class="lg:col-span-7 space-y-6">
-          <!-- Box 3: Gemini API Vault & Active Model Cascade (Retires 2.5-flash-lite) -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
               <div class="flex items-center gap-2">
@@ -866,7 +863,6 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <!-- Meta (FB + IG Reels) -->
               <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex items-center justify-between font-bold">
                   <span>1. FB Page & IG Reels (Meta API)</span>
@@ -880,7 +876,6 @@
                 </div>
               </div>
 
-              <!-- YouTube Shorts -->
               <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex items-center justify-between font-bold">
                   <span>2. YouTube Shorts (Data API v3)</span>
@@ -894,7 +889,6 @@
                 </div>
               </div>
 
-              <!-- TikTok Content Posting API -->
               <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex items-center justify-between font-bold">
                   <span>3. TikTok Creator Posting API</span>
@@ -908,7 +902,6 @@
                 </div>
               </div>
 
-              <!-- WhatsApp Business Cloud API (Coexistence) -->
               <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex items-center justify-between font-bold">
                   <span>4. WhatsApp Business Cloud API</span>
@@ -1031,7 +1024,7 @@
   </div>
 
   <!-- =================================================================== -->
-  <!-- APPLICATION LOGIC (v3.0 — ZERO LEAKS, FULL PERSISTENCE & CHAINING)  -->
+  <!-- APPLICATION LOGIC (v3.2 — BUG-FREE CLIP BUTTONS & TOPIC-AWARE AI)   -->
   <!-- =================================================================== -->
   <script>
     const WORKFLOW_STAGES = [
@@ -1055,11 +1048,13 @@
       '6. Completed & Nurture'
     ];
 
-    // 24-Angle Singapore Property Matrix (Loaded in NotebookLM for Agent 1 Deduplication)
+    // Safe global holder for clean Google Flow clips so quotes never break HTML onclick attributes
+    window._cleanFlowClips = [];
+
     const SG_24_TOPIC_MATRIX = [
       { title: 'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA REALIS & HDB Q3 2026 resale dataset: 5-year MOP flats exhibit peak equity velocity before lease decay steepens.' },
-      { title: '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'URA REALIS Q1-Q3 2026 District 15 non-landed transactions (exact unit numbers masked per CEA PG 02/2011).' },
-      { title: 'ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'Official IRAS Stamp Duty brackets (SC 2nd property 20% ABSD, PR 5%/30%) and legal matrimonial transfer exemptions.' },
+      { title: '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'URA REALIS Q1-Q3 2026 District 15 non-landed transactions: efficient dumbbell 3BR layouts under $2,350 PSF (exact unit numbers masked per CEA PG 02/2011).' },
+      { title: 'ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'Official IRAS Stamp Duty brackets (SC 2nd property 20% ABSD with 6-month HDB sale refund, PR 5%/30%) and legal transfer rules.' },
       { title: 'EC vs Resale Private Condo: Monthly Cashflow, Deferred Payment & CPF OA Math', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'HDB & MAS rules on Executive Condominium $16,000 income ceiling, 30% MSR vs 55% TDSR calculation.' },
       { title: 'How the 55% TDSR Rule Impacts Variable Income & Commission Earners in 2026', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'MAS Notice 645: 30% haircut applied to variable income/bonuses when computing Total Debt Servicing Ratio at 4% stress-test rate.' },
       { title: 'OCR vs RCR 3-Bedroom PSF Gap Narrowing: 4 URA Charts Every Family Should Save', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'URA Property Price Index Q3 2026 showing Outside Central Region vs Rest of Central Region PSF compression.' },
@@ -1068,18 +1063,12 @@
       { title: 'Dumbbell Layout vs Traditional Corridor Floorplan: Why 950 sqft Can Live Like 1,100 sqft', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'Architectural floorplan efficiency analysis: zero wasted hallway dead-space saves ~$180,000 at $2,000 PSF.' },
       { title: 'New Launch Progressive Payment Scheme (PPS) vs Resale Immediate Cashflow Breakdown', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'BCA stage-by-stage construction billing (5%-15%-10%-5%...) vs completed resale mortgage commencement.' },
       { title: 'BTO Plus & Prime Models: 10-Year MOP & Subsidy Clawback Implications for Future Upgraders', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'HDB Standard / Plus / Prime classification framework: 10-year MOP, rental restrictions, and resale income ceilings.' },
-      { title: 'Dual-Key Condominium Units in 2026: Rental Yield Reality vs Resale Exit Liquidity', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA rental contract telemetry & ABSD savings for single-title dual-key layouts.' },
-      { title: 'HDB Enhanced Contra Facility: How Cash-Tight Upgraders Bridge the Deposit Gap Safely', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'HDB CPF OA contra mechanics and cash proceeds release timeline.' },
-      { title: 'Greater Southern Waterfront & Paya Lebar Airbase Master Plan: 10-Year Horizon vs Entry PSF', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA Draft Master Plan statutory zoning updates and infrastructure timeline.' },
-      { title: 'Single Singapore Citizen (35+) Property Playbook: 2-Room Flexi vs Resale HDB vs 1+Study Condo', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'HDB Singles Scheme grants, Prime/Plus access rules, and private condo LTV limits.' },
-      { title: 'Right-Sizing for Retirees: Silver Housing Bonus & Unlocking Home Equity Without Stress', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'MND & CPF Retirement Sum top-up incentives for seniors right-sizing to 3-room or smaller flats.' },
-      { title: 'Primary School 1km Priority Admission Rule: How MOE Distance Impacts Family Condo Holding Power', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'MOE Phase 2C 1km/2km Home-School Distance measurement via OneMap & 30-month residency requirement.' },
-      { title: 'Ground-Floor Patio Units vs High-Floor units: Buyer Pool & Exit Strategy Comparison', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA REALIS historical resale velocity comparing ground-floor high-ceiling units vs high-floor stack premiums.' }
+      { title: 'Dual-Key Condominium Units in 2026: Rental Yield Reality vs Resale Exit Liquidity', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA rental contract telemetry & ABSD savings for single-title dual-key layouts.' }
     ];
 
     const NOTEBOOKLM_PRESETS = {
       URA_MOP_2026: 'URA REALIS & HDB Q3 2026 Dataset: 5-year MOP flats in Punggol/Tampines/Bidadari show strong upgrader equity cushioning. Always cite data.gov.sg / URA REALIS Q3 2026 and mask exact unit numbers.',
-      OCR_RCR_GAP: 'URA Q3 2026 Price Index: Narrowing PSF gap between OCR new launches ($2,150-$2,300 PSF) and RCR resale 3-bedroom units ($2,250-$2,450 PSF). Highlight dumbbell layout efficiency.',
+      OCR_RCR_GAP: 'URA Q3 2026 Price Index: Narrowing PSF gap between OCR new launches ($2,150-$2,300 PSF) and RCR / District 15 resale 3-bedroom units ($2,250-$2,450 PSF). Highlight dumbbell layout efficiency.',
       ABSD_IRAS_2026: 'Official IRAS & MAS 2026 Rules: SC 1st property 0% ABSD, 2nd property 20% ABSD (refunded if HDB sold within 6 months of completed purchase). MAS TDSR capped at 55% using 4.0% stress-test interest rate.',
       CEA_PG02_2011: 'CEA PG 02/2011 & CEPCC Mandatory Rules: Display all 5 CEA particulars on every slide/outro, verify prior written seller consent, mask transacted unit numbers (#XX-XX), and label 3D renders as Artist Impression.'
     };
@@ -1108,7 +1097,137 @@
       return String(t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    // Default Initial State (Overridden automatically if squad_workspace_v3_1 exists in localStorage)
+    // Topic-Aware Builders for Agent 2 (Caption), Agent 4A (Nano Banana), and Agent 4B (Google Flow 6-Layer)
+    function detectTopicTheme(title) {
+      const t = String(title || '').toLowerCase();
+      if (t.includes('district 15') || t.includes('d15') || t.includes('floorplan') || t.includes('dumbbell') || t.includes('freehold')) return 'FLOORPLAN_D15';
+      if (t.includes('absd') || t.includes('decoupling') || t.includes('iras') || t.includes('stamp duty')) return 'ABSD_TAX';
+      if (t.includes('ec ') || t.includes('executive condo') || t.includes('resale condo')) return 'EC_VS_CONDO';
+      if (t.includes('tdsr') || t.includes('variable income') || t.includes('interest rate') || t.includes('sora')) return 'TDSR_FINANCE';
+      if (t.includes('just listed') || t.includes('bishan') || t.includes('exclusive')) return 'LISTING_FLYER';
+      return 'HDB_MOP';
+    }
+
+    function buildDeterministicCleanCopy(title, notes, p) {
+      const theme = detectTopicTheme(title);
+      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`;
+
+      if (theme === 'FLOORPLAN_D15') {
+        return `Looking at East Coast & District 15 freehold condos in 2026? Not all 1,000 sqft 3-bedders live the same. 🏡\n\nWhen comparing family-sized units, layout efficiency matters just as much as PSF. Here is what URA REALIS Q3 2026 District 15 benchmarks show:\n\n1️⃣ Dumbbell Layout Efficiency: Eliminating a long entry hallway saves ~85 sqft of dead corridor space—equivalent to nearly $195,000 in usable living space at current District 15 PSF levels.\n2️⃣ Freehold vs 99-Year PSF Compression: Select mid-to-high floor (#11 to #15) freehold 3-bedroom resale layouts are trading within 8–11% of newer 99-year leasehold launches (${notes}).\n3️⃣ Enclosed Kitchen & Yard Utility: Families prioritizing enclosed wet/dry kitchens and natural ventilation see stronger resale holding power near East Coast MRT stations and 1km primary schools.\n\n💬 Comment "D15" below (or tap my WhatsApp link) and I'll send you the 3 side-by-side 3D floorplan comparisons!` + footer;
+      }
+      if (theme === 'ABSD_TAX') {
+        return `Is decoupling still necessary for Singapore families upgrading in 2026? Let's look at the official IRAS & MAS rules first. ⚖️\n\nBefore paying unnecessary legal fees or restructuring ownership, check these 3 official stamp duty and loan rules (Source: IRAS & MAS 2026):\n\n1️⃣ The 6-Month ABSD Refund Timeline: Married Singapore Citizen (SC) couples buying a completed resale condo together qualify for a full 20% ABSD refund—provided their existing HDB or private home is sold within 6 months of purchase.\n2️⃣ New Launch Progressive Relief: If upgrading to an uncompleted new launch, the 6-month sale clock only starts from the Temporary Occupation Permit (TOP) / CSC date.\n3️⃣ Single-Borrower 55% TDSR Check: Decoupling means one spouse must qualify for the entire mortgage under the 55% MAS TDSR cap (stress-tested at 4.0% interest).\n\n💬 Comment "ABSD" below and I'll DM you our 2026 Upgrader Stamp Duty & Timeline Checklist!` + footer;
+      }
+      if (theme === 'EC_VS_CONDO') {
+        return `Executive Condominium (EC) vs. Resale Private Condo: Which gives HDB upgraders stronger cashflow in 2026? 📊\n\nHere is the side-by-side math based on current HDB, URA REALIS, and MAS financing rules:\n\n1️⃣ Upfront Entry PSF Cushion: New ECs typically launch at a 20–25% PSF discount compared to nearby OCR private condos (subject to the $16,000 household income ceiling and 30% MSR cap).\n2️⃣ Deferred Payment Scheme (DPS): EC upgraders can defer the bulk of mortgage repayments until TOP, avoiding dual housing loan pressure while still living in their current HDB.\n3️⃣ Immediate Space & Location (Resale Condo): Completed RCR/OCR resale condos (#12 to #18 stacks) offer immediate move-in, 55% TDSR borrowing flexibility, and established MRT proximity.\n\n💬 Comment "COMPARE" below and I'll send you the EC vs. Resale Cashflow & CPF OA Calculator!` + footer;
+      }
+      if (theme === 'TDSR_FINANCE') {
+        return `Self-employed, commission earner, or receiving variable bonuses? Here is how the 55% MAS TDSR rule calculates your 2026 borrowing power. 💼\n\nBefore signing an Option to Purchase (OTP), make sure your In-Principle Approval (IPA) accounts for these 3 MAS Notice 645 rules:\n\n1️⃣ The 30% Variable Income Haircut: Banks apply a mandatory 30% haircut to variable commissions, bonuses, and rental income when calculating your eligible monthly income.\n2️⃣ The 4.0% Stress-Test Floor: Even if market SORA packages are lower, MAS requires banks to stress-test private property mortgages at a 4.0% interest rate ceiling.\n3️⃣ Eligible Financial Asset Pledging: Unencumbered cash or CPF OA reserves can be pledged (amortized over 48 months) to bridge a small TDSR shortfall safely.\n\n💬 Comment "TDSR" below and I'll send you our 2026 Self-Employed & Variable Income IPA Prep Sheet!` + footer;
+      }
+      return `Why do so many Singapore HDB owners miss their strongest upgrade window right after Year 5? 📈\n\nReaching your 5-Year HDB Minimum Occupation Period (MOP) isn't just a milestone—it is typically when your flat's equity velocity peaks before older-lease CPF restrictions set in.\n\nHere are 3 numbers every 2026 HDB upgrader should check before booking a viewing (Source: URA REALIS & HDB Q3 2026):\n\n1️⃣ Peak Full-CPF Buyer Pool: Newly MOP 4-room & 5-room flats (such as recent high-floor #16 to #20 transactions in Punggol & Tampines) attract the widest pool of buyers eligible for maximum CPF OA usage and 75% LTV loans.\n2️⃣ The 6-Month ABSD Remission Timeline: Singapore Citizen (SC) families upgrading from an HDB to a private condo qualify for 20% ABSD remission—provided the HDB flat is sold within 6 months.\n3️⃣ The 55% TDSR Stress-Test Buffer: MAS caps total monthly debt repayments at 55% of gross income calculated at a 4.0% stress-test interest rate (${notes}).\n\n💬 Comment "MOP" below (or tap my WhatsApp link) and I'll send you our 2026 HDB-to-Condo Cashflow & ABSD Timeline Sheet!` + footer;
+    }
+
+    function buildDeterministicNanoBananaPrompt(title, notes, p) {
+      const theme = detectTopicTheme(title);
+      const clean = String(title || '2026 SINGAPORE PROPERTY PLAYBOOK').replace(/\([^)]*\)/g, '').trim();
+      const shortBanner = clean.split(/\s+/).slice(0, 7).join(' ').toUpperCase();
+
+      let subHeader = '2026 Singapore Equity, ABSD & Floorplan Playbook';
+      let centerVisual = `On the left side, render a warm, sunlit 3D isometric cutaway floorplan of a modern Singapore HDB living area transitioning via a glowing golden progression arrow toward a luxury 3-bedroom private condominium balcony with lush tropical landscaping on the right side.`;
+      let pill1 = 'Peak Year-5 Equity';
+      let pill2 = '6-Month ABSD Refund';
+      let pill3 = '55% MAS TDSR Cap';
+
+      if (theme === 'FLOORPLAN_D15') {
+        subHeader = 'District 15 Freehold 3-Bedder Layout & URA PSF Comparison';
+        centerVisual = `Render a photorealistic 3D isometric architectural cutaway floorplan of a spacious District 15 freehold 3-bedroom Singapore condominium featuring a dumbbell layout (bedrooms on opposite wings with zero wasted corridor space), warm oak timber flooring, an enclosed glass-walled kitchen, and a sunlit balcony overlooking East Coast greenery.`;
+        pill1 = 'Dumbbell Zero Corridor';
+        pill2 = 'Under $2,350 PSF';
+        pill3 = 'Freehold D15 Legacy';
+      } else if (theme === 'ABSD_TAX') {
+        subHeader = 'Official 2026 IRAS Stamp Duty & Upgrader Remission Guide';
+        centerVisual = `Render a clean, modern 3D architectural timeline graphic showing a Singapore family home transitioning smoothly into a private condominium within a glowing 6-month calendar ring under warm daylight.`;
+        pill1 = '0% 1st Home ABSD';
+        pill2 = '6-Month HDB Refund';
+        pill3 = '55% MAS TDSR Rule';
+      } else if (theme === 'EC_VS_CONDO') {
+        subHeader = '2026 Executive Condo vs Resale Private Condo Breakdown';
+        centerVisual = `Render a balanced side-by-side 3D isometric architectural comparison showing a brand-new Executive Condominium tower with resort pool facilities on the left and an established MRT-adjacent Resale Condominium on the right.`;
+        pill1 = '$16K EC Income Cap';
+        pill2 = '30% MSR vs 55% TDSR';
+        pill3 = 'Deferred Payment Option';
+      } else if (theme === 'LISTING_FLYER') {
+        subHeader = 'Exclusive High-Floor Unblocked Singapore Residence Near MRT';
+        centerVisual = `Render a bright, unaltered editorial interior showcase of a high-floor Singapore 4-room living and dining room with floor-to-ceiling windows, natural daylight, and clean modern furnishings.`;
+        pill1 = 'High-Floor Unblocked';
+        pill2 = '5-Min Walk to MRT';
+        pill3 = 'Move-In Condition';
+      }
+
+      return `Create a vertical 4:5 portrait luxury real estate editorial infographic poster in three crisp architectural zones with ultra-sharp typography and balanced negative space:
+
+1. TOP HEADER ZONE (Deep Royal Navy & Warm Gold Accent Banner):
+Render the exact bold white sans-serif headline: "${shortBanner}" with a smaller golden sub-header underneath reading: "${subHeader}".
+
+2. CENTER HERO VISUAL ZONE (Photorealistic 3D Architectural Visual & Data Callouts):
+${centerVisual} Floating cleanly beside the visual, render three minimalist glassmorphism data pills with crisp, short 3-word text:
+- Pill 1: "${pill1}"
+- Pill 2: "${pill2}"
+- Pill 3: "${pill3}"
+In the bottom-right corner of the visual zone, include a small, clean compliance label reading: "Artist's Impression — Source: URA REALIS & HDB 2026".
+
+3. BOTTOM CTA & CEA COMPLIANCE FOOTER BAR (Full-Width Matte Obsidian-Slate Card):
+On the left of the footer bar, composite the attached reference portrait photo of presenter ${p.name} inside a circular emerald-trimmed avatar frame, preserving 100% of his exact facial features, glasses, and smart-casual attire. Beside the avatar, render clean white and emerald sans-serif text reading:
+"${p.name} | CEA Reg No: ${p.regNo}"
+"${p.agencyName} (Licence: ${p.licenceNo}) • WhatsApp: ${p.phone}"`;
+    }
+
+    function buildDeterministicGoogleFlowClips(title, clipSec, p, scriptText = '') {
+      const s = Number(clipSec) || 8;
+      const quoteMatches = String(scriptText || '').match(/"([^"]{12,200})"/g) || [];
+      const line1 = quoteMatches[0] ? quoteMatches[0].replace(/"/g, '') : `Stop treating your property timeline like a waiting game—here is why ${title} is your strongest lever in 2026.`;
+      const line2 = quoteMatches[1] ? quoteMatches[1].replace(/"/g, '') : `According to 2026 URA REALIS and HDB resale data, buyers who structure their equity window early capture the widest pool of full-CPF demand.`;
+      const line3 = quoteMatches[2] ? quoteMatches[2].replace(/"/g, '') : `By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve.`;
+      const line4 = quoteMatches[3] ? quoteMatches[3].replace(/"/g, '') : `Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet.`;
+
+      return `=== CLIP 1 (0–${s}s: Presenter Hook — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
+Camera: Slow, ultra-steady gimbal push-in from medium-waist framing to a confident medium close-up on an 85mm f/1.8 prime cinema lens, maintaining a level horizon, shallow depth of field, and zero lens distortion.
+Scene & Positive Identity Lock: High-resolution editorial portrait of Singapore real estate advisor ${p.name} anchored directly to the starting frame in a sunlit modern Singapore property consultation lounge with floor-to-ceiling glass overlooking the city skyline. The presenter's facial structure, hairstyle, glasses, tailored smart-casual attire, and studio background geometry remain 100% stationary, rigid, and faithful to the uploaded starting frame without morphing or drift.
+Subject Action & Lip-Sync Delivery: ${p.name} looks directly into the camera lens with warm, authoritative executive presence, making a natural, measured hand gesture while speaking clearly in English: "${line1}"
+Background Motion & Lighting: Soft golden-hour natural key light illuminates the presenter's face with crisp catchlights, while distant clouds drift imperceptibly across the Singapore skyline outside the window over a continuous ${s}-second take.
+Audio: Clear, warm studio-recorded spoken dialogue synced naturally to the presenter's lips, supported by quiet luxury indoor room tone; no background music, no echo, no sudden sound effects.
+
+=== CLIP 2 (${s}–${s * 2}s: Property Interior & Data Proof — Attach Living Room / Floorplan Photo as Starting Frame) ===
+Camera: Slow, ultra-steady gimbal dolly push-in moving smoothly forward along the central axis of the open-concept living and dining room on a 24mm rectilinear architectural cinema lens, maintaining strict perspective and zero barrel distortion.
+Scene & Positive Geometry Lock: High-resolution luxury Singapore condominium interior anchored to the starting frame. All architectural geometry, walls, recessed ceiling coves, built-in cabinetry, marble countertops, flooring planks, and furniture silhouettes remain 100% stationary, rigid, and structurally unchanged throughout the shot.
+Layered Micro-Motion Physics: Sheer white floor-to-ceiling balcony curtains billow gently inward with soft, realistic fabric inertia in a light breeze, while warm afternoon sunlight shifts subtly across the polished floor. Outside the large glass windows, soft clouds drift slowly across the skyline.
+Lighting & Pacing: Consistent soft natural daylight with stable interior reflections on polished surfaces; restrained, ultra-low motion pacing suited for luxury architectural cinematography over a continuous ${s}-second take.
+Audio: Voiceover narration by ${p.name} in a calm, authoritative tone saying: "${line2}" Accompanied by quiet luxury indoor room tone and a faint airy breeze; no background music, no random voices.
+
+=== CLIP 3 (${s * 2}–${s * 3}s: Balcony Skyline & Cashflow Takeaway — Attach Balcony/Kitchen Photo as Starting Frame) ===
+Camera: Smooth, stabilized lateral camera slider movement from left to right across the private balcony overlooking the greenery and Singapore residential skyline on a 35mm cinema lens with locked horizon geometry.
+Scene & Positive Geometry Lock: High-resolution balcony and exterior facade anchored directly to the starting frame. Every glass balustrade, tile seam, structural column, and surrounding building silhouette remains 100% rigid, stationary, and locked to the starting frame without warping.
+Layered Micro-Motion Physics: Tropical balcony planter leaves rustle gently in a light breeze while warm golden-hour sunlight glints softly off the glass railing and distant clouds move slowly across the sky.
+Lighting & Pacing: Warm late-afternoon golden-hour architectural lighting with natural highlight roll-off, 24fps cinematic shutter, continuous ${s}-second take.
+Audio: Voiceover narration by ${p.name} saying: "${line3}" Subtle outdoor breeze and quiet ambient city hum; no background music, no sudden sound effects.
+
+=== CLIP 4 (${s * 3}–${s * 4}s: CTA End-Card — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
+Camera: Locked tripod medium close-up shot on an 85mm f/1.8 portrait cinema lens with crisp optical focus on the presenter and a softly blurred luxury office background.
+Scene & Positive Identity Lock: Singapore property advisor ${p.name} anchored directly to the uploaded starting frame photo. Facial features, expression, smart-casual attire, and studio background architecture remain 100% stationary, rigid, and faithful to the reference photo.
+Subject Action & Lip-Sync Delivery: ${p.name} smiles warmly with approachable confidence, nodding slightly and gesturing toward the lower-third call-to-action area (${p.regNo} • ${p.phone}) while speaking clearly: "${line4}"
+Lighting & Pacing: Balanced studio Rembrandt lighting with warm rim light, photorealistic skin texture, continuous ${s}-second take.
+Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; no background music, no sudden sound effects.`;
+    }
+
+    const defaultPerson = {
+      name: 'Luiz Lee',
+      regNo: 'R123456A',
+      agencyName: 'PropNex Realty Pte Ltd',
+      licenceNo: 'L3008022J',
+      phone: '+65 9123 4567',
+      avatarDataUrl: ''
+    };
+
     const defaultWorkspace = {
       theme: 'light',
       preferredModel: 'auto',
@@ -1133,14 +1252,7 @@
         waPhoneId: '',
         waToken: ''
       },
-      ceaProfile: {
-        name: 'Luiz Lee',
-        regNo: 'R123456A',
-        agencyName: 'PropNex Realty Pte Ltd',
-        licenceNo: 'L3008022J',
-        phone: '+65 9123 4567',
-        avatarDataUrl: ''
-      },
+      ceaProfile: { ...defaultPerson },
       topicHistoryMemory: [
         'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026',
         '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)',
@@ -1170,9 +1282,9 @@
           exceptionState: null,
           exceptionOwner: null,
           exceptionReason: null,
-          copy: `Why do so many Singapore HDB owners miss their strongest upgrade window right after Year 5? 📈\n\nReaching your 5-Year HDB Minimum Occupation Period (MOP) isn't just a milestone—it is typically when your flat's equity velocity peaks before older-lease CPF restrictions set in.\n\nHere are 3 numbers every 2026 HDB upgrader should check before booking a viewing (Source: URA REALIS & HDB Q3 2026):\n\n1️⃣ Peak Full-CPF Buyer Pool: Newly MOP 4-room & 5-room flats (such as recent high-floor #16 to #20 transactions in Punggol & Tampines) attract the widest pool of buyers eligible for maximum CPF OA usage and 75% LTV loans.\n2️⃣ The 6-Month ABSD Remission Timeline: Singapore Citizen (SC) families upgrading from an HDB to a private condo qualify for 20% ABSD remission—provided the HDB flat is sold within 6 months of purchasing a completed resale unit (or after TOP for a new launch).\n3️⃣ The 55% TDSR Stress-Test Buffer: MAS caps total monthly debt repayments at 55% of gross income calculated at a 4.0% stress-test interest rate—meaning structuring your CPF OA refund and cash reserve 6 months early is critical.\n\n💬 Comment "MOP" below (or tap my WhatsApp link) and I'll send you our 2026 HDB-to-Condo Cashflow & ABSD Timeline Sheet!\n\n—\nLuiz Lee | CEA Reg No: R123456A\nPropNex Realty Pte Ltd | CEA Licence No: L3008022J\nContact: +65 9123 4567\n(Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`,
-          script: `[Clip 1: 0–8s — Hook & Presenter Intro]: "Stop treating your 5-year HDB MOP like a waiting room—here is why year 5 is your strongest equity springboard."\n[Clip 2: 8–16s — Visual Chart & Floorplan Proof]: "According to Q3 2026 HDB and URA data, 5-year flats attract the largest pool of full-CPF buyers."\n[Clip 3: 16–24s — Cashflow & TDSR Breakdown]: "By structuring your CPF OA and 55% TDSR buffer early, you can upgrade without draining family cash reserves."\n[Clip 4: 24–32s — WhatsApp & DM CTA Outro]: "Comment MOP below or tap my WhatsApp link and I will send you the exact 2026 progression sheet!"`,
-          media: `=== CLIP 1 (0–8s: Presenter Hook — Attach Uploaded Luiz Lee Profile Photo as Starting Frame) ===\nCamera: Steady 35mm medium close-up studio framing with subtle slow push-in.\nScene & Positive Identity Lock: Presenter Luiz Lee remains 100% locked to the uploaded starting frame photo, speaking naturally with confident hand gestures in a sunlit Singapore property studio.\nLighting & Pacing: Warm key lighting, natural 8-second real-time cadence.\nAudio: Crisp studio room tone.\n\n=== CLIP 2 (8–16s: Property Walkthrough — Attach Living Room Photo as Starting Frame) ===\nCamera: Slow, steady gimbal dolly push-in along the living room axis on a 24mm rectilinear lens with zero horizon roll.\nScene & Positive Geometry Lock: All architectural lines, walls, floor-to-ceiling windows, cabinetry, and furniture remain 100% rigid, stationary, and locked to the starting frame.\nLayered Micro-Motion: Sheer white curtains billowing softly in a gentle breeze while warm golden-hour sunlight shifts across the floor.\nAudio: Quiet indoor room tone, no music, no sudden sound effects.\n\n=== CLIP 3 (16–24s: Balcony & Skyline View — Attach Balcony Photo as Starting Frame) ===\nCamera: Smooth lateral slider movement from left to right across the balcony railing.\nScene & Positive Geometry Lock: Balcony railings, tiles, and Singapore skyline architecture remain completely rigid and locked to the starting frame.\nLayered Micro-Motion: Soft clouds drifting slowly across the sky and foliage leaves rustling gently.\nAudio: Subtle outdoor breeze, quiet ambient city hum.\n\n=== CLIP 4 (24–32s: CTA End-Card — Attach Uploaded Luiz Lee Profile Photo as Starting Frame) ===\nCamera: Locked tripod medium shot.\nScene & Positive Identity Lock: Presenter Luiz Lee smiles warmly and gestures toward the lower-third CEA & WhatsApp contact badge, maintaining 100% facial and attire fidelity to the uploaded profile photo.\nAudio: Clean studio room tone.`
+          copy: buildDeterministicCleanCopy('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', NOTEBOOKLM_PRESETS.URA_MOP_2026, defaultPerson),
+          script: `[Clip 1: 0–8s — Hook & Presenter Intro]: "Stop treating your five-year HDB MOP like a waiting room—here is why year five is your strongest equity springboard."\n[Clip 2: 8–16s — Visual Chart & Floorplan Proof]: "According to Q3 2026 HDB and URA data, five-year flats attract the largest pool of full-CPF buyers."\n[Clip 3: 16–24s — Cashflow & TDSR Breakdown]: "By structuring your CPF Ordinary Account and fifty-five percent TDSR buffer early, you can upgrade safely."\n[Clip 4: 24–32s — WhatsApp & DM CTA Outro]: "Comment MOP below or tap my WhatsApp link and I will send you the exact 2026 progression sheet!"`,
+          media: buildDeterministicGoogleFlowClips('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', '8', defaultPerson)
         },
         {
           id: 'c2',
@@ -1188,9 +1300,9 @@
           exceptionState: null,
           exceptionOwner: null,
           exceptionReason: null,
-          copy: `Looking at East Coast freehold condos in 2026? Not all 1,000 sqft 3-bedders live the same. 🏡\n\nHere is what URA REALIS Q3 2026 District 15 transaction benchmarks reveal for family upgraders:\n\n1️⃣ Dumbbell Layout Efficiency: Eliminating the long entry corridor saves up to 85 sqft of dead space—worth ~$195,000 at current District 15 PSF levels.\n2️⃣ Freehold vs 99-Year PSF Compression: Select mid-to-high floor (#11 to #15) freehold 3-bedroom layouts are trading within 8–11% of newer 99-year leasehold launches.\n3️⃣ School & MRT Holding Power: Proximity within 1km of established East Coast primary schools continues to anchor resale liquidity.\n\n💬 Comment "D15" below and I'll DM you the 3 side-by-side 3D floorplan comparisons!\n\n—\nLuiz Lee | CEA Reg No: R123456A\nPropNex Realty Pte Ltd | CEA Licence No: L3008022J\nContact: +65 9123 4567`,
-          script: `[Carousel Slide 1]: Hook Headline + 3D Cutaway Hero\n[Carousel Slide 2]: Layout A — Dumbbell 3BR Breakdown\n[Carousel Slide 3]: URA REALIS Q3 2026 PSF Table\n[Carousel Slide 4]: Luiz Lee Headshot + 5 Mandatory CEA Particulars & WhatsApp CTA`,
-          media: `A vertical 4:5 portrait real estate editorial infographic poster designed in three clean horizontal zones. At the top header banner in bold modern white sans-serif typography on a deep indigo background, render the exact headline "3 District 15 Freehold 3-Bedder Floorplans Under $2,350 PSF". In the center hero zone, render a photorealistic 3D isometric architectural cutaway floorplan of a bright modern 3-bedroom Singapore condominium with warm oak flooring, enclosed kitchen, and balcony greenery under soft golden-hour daylight, including a subtle caption label "Artist's Impression — Source: URA REALIS Q3 2026". At the bottom footer bar, reserve a clean dark slate badge space for the uploaded agent headshot photo alongside the exact text "Luiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (L3008022J) | +65 9123 4567".`
+          copy: buildDeterministicCleanCopy('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', NOTEBOOKLM_PRESETS.OCR_RCR_GAP, defaultPerson),
+          script: `[Clip 1: 0–8s]: "Looking at East Coast freehold condos? Here is why dumbbell 3-bedder layouts save families over $190,000 in dead space."\n[Clip 2: 8–16s]: "URA REALIS Q3 2026 data shows select District 15 freehold units trading within ten percent of 99-year launches."\n[Clip 3: 16–24s]: "Compare enclosed kitchen and yard layouts before you book your next viewing."\n[Clip 4: 24–32s]: "Comment D15 below or tap my WhatsApp link for the 3 side-by-side floorplan PDFs!"`,
+          media: buildDeterministicNanoBananaPrompt('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', NOTEBOOKLM_PRESETS.OCR_RCR_GAP, defaultPerson)
         },
         {
           id: 'c3',
@@ -1206,9 +1318,9 @@
           exceptionState: null,
           exceptionOwner: null,
           exceptionReason: null,
-          copy: `Before planning your next property move, verify the official 2026 IRAS ABSD brackets and 6-month HDB sale remission timeline.\n\n—\nLuiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (Licence: L3008022J) | +65 9123 4567`,
-          script: `[Clip 1: 0–8s]: "Think decoupling is the only way for a family to upgrade? Let's look at official IRAS remission rules."`,
-          media: `Camera: Steady 35mm medium shot.\nScene & Positive Identity Lock: Presenter Luiz Lee locked to uploaded profile photo in modern office.\nAudio: Clean room tone.`
+          copy: buildDeterministicCleanCopy('ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets', NOTEBOOKLM_PRESETS.ABSD_IRAS_2026, defaultPerson),
+          script: `[Clip 1: 0–8s]: "Think decoupling is the only way for a Singapore family to upgrade? Let's check official IRAS remission rules."`,
+          media: buildDeterministicGoogleFlowClips('ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets', '8', defaultPerson)
         },
         {
           id: 'c4',
@@ -1224,9 +1336,9 @@
           exceptionState: 'Blocked',
           exceptionOwner: 'Luiz Lee (Human Leader)',
           exceptionReason: 'Awaiting Seller signed CEA Written Consent to Advertise form before Agent 4A renders flyer.',
-          copy: `High-floor unblocked Bishan 4-Room unit. Unaltered showroom photo.\n\nLuiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (Licence: L3008022J) | +65 9123 4567`,
+          copy: buildDeterministicCleanCopy('Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)', NOTEBOOKLM_PRESETS.CEA_PG02_2011, defaultPerson),
           script: `Static Flyer Listing Announcement`,
-          media: `A vertical 4:5 portrait real estate flyer showcasing an unaltered bright living room with the headline "Just Listed: High-Floor Bishan 4-Room Near MRT" and footer "Luiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (L3008022J) | +65 9123 4567".`
+          media: buildDeterministicNanoBananaPrompt('Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)', NOTEBOOKLM_PRESETS.CEA_PG02_2011, defaultPerson)
         },
         {
           id: 'c5',
@@ -1242,9 +1354,9 @@
           exceptionState: null,
           exceptionOwner: null,
           exceptionReason: null,
-          copy: `Side-by-side CPF OA vs Cash outlay breakdown for HDB upgraders comparing EC vs Resale Condo (Source: HDB & URA Q3 2026).\n\n—\nLuiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (Licence: L3008022J) | +65 9123 4567`,
+          copy: buildDeterministicCleanCopy('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', NOTEBOOKLM_PRESETS.URA_MOP_2026, defaultPerson),
           script: `4-Slide Carousel Breakdown`,
-          media: `A vertical 4:5 portrait infographic poster with headline "EC vs Resale Condo: 2026 CPF & Cashflow Breakdown" and footer "Luiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (L3008022J) | +65 9123 4567".`
+          media: buildDeterministicNanoBananaPrompt('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', NOTEBOOKLM_PRESETS.URA_MOP_2026, defaultPerson)
         },
         {
           id: 'c6',
@@ -1260,9 +1372,9 @@
           exceptionState: null,
           exceptionOwner: null,
           exceptionReason: null,
-          copy: `Historical URA Property Price Index vs SORA rate cycles (2016–2026).\n\n—\nLuiz Lee | CEA Reg No: R123456A | PropNex Realty Pte Ltd (Licence: L3008022J) | +65 9123 4567`,
+          copy: buildDeterministicCleanCopy('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', NOTEBOOKLM_PRESETS.URA_MOP_2026, defaultPerson),
           script: `[Measured Winner]: 79% 3s Hold Rate, 412 Shares, 9 WhatsApp Leads generated.`,
-          media: `Camera: Gimbal push-in. All architectural lines remain rigid and stationary.`
+          media: buildDeterministicGoogleFlowClips('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', '8', defaultPerson)
         }
       ],
       leads: [
@@ -1306,16 +1418,20 @@
       ]
     };
 
-    // Load Persistent Workspace from localStorage on startup
     function loadWorkspaceFromStorage() {
       try {
-        const raw = localStorage.getItem('squad_workspace_v3_1');
-        if (!raw) return JSON.parse(JSON.stringify(defaultWorkspace));
+        const raw = localStorage.getItem('squad_workspace_v3_2');
+        const savedProfile = JSON.parse(localStorage.getItem('squad_cea_profile') || 'null');
+        if (!raw) {
+          const fresh = JSON.parse(JSON.stringify(defaultWorkspace));
+          if (savedProfile) fresh.ceaProfile = { ...fresh.ceaProfile, ...savedProfile };
+          return fresh;
+        }
         const parsed = JSON.parse(raw);
         return {
           ...defaultWorkspace,
           ...parsed,
-          ceaProfile: { ...defaultWorkspace.ceaProfile, ...(parsed.ceaProfile || {}) },
+          ceaProfile: { ...defaultWorkspace.ceaProfile, ...(parsed.ceaProfile || {}), ...(savedProfile || {}) },
           cloudConfig: { ...defaultWorkspace.cloudConfig, ...(parsed.cloudConfig || {}) },
           socialConnections: { ...defaultWorkspace.socialConnections, ...(parsed.socialConnections || {}) },
           cards: Array.isArray(parsed.cards) && parsed.cards.length ? parsed.cards : defaultWorkspace.cards,
@@ -1332,7 +1448,7 @@
     const appState = loadWorkspaceFromStorage();
 
     function saveWorkspaceToStorage() {
-      safeSetLocalStorage('squad_workspace_v3_1', JSON.stringify(appState));
+      safeSetLocalStorage('squad_workspace_v3_2', JSON.stringify(appState));
       safeSetLocalStorage('squad_cea_profile', JSON.stringify(appState.ceaProfile));
       const badge = document.getElementById('sidebar-sync-status');
       if (badge) {
@@ -1341,7 +1457,6 @@
       }
     }
 
-    // --- THEME SWITCHER ---
     function applyTheme() {
       const html = document.documentElement;
       if (appState.theme === 'dark') {
@@ -1535,19 +1650,17 @@
       switchTab('studio');
     }
 
-    // --- ERR-01 FIX: AGENT 1 CROSS-STAGE & MEMORY TOPIC DEDUPLICATION ---
+    // --- AGENT 1: CROSS-STAGE & MEMORY TOPIC DEDUPLICATION ---
     async function triggerAgent1Pitch() {
       const btn = document.getElementById('btn-agent1-pitch');
       const oldHtml = btn.innerHTML;
       btn.textContent = 'Agent 1 Scanning 9 Stages...';
 
-      // Collect all existing titles across all 9 stages, Blocked/Rework, and topicHistoryMemory
       const existingSet = new Set([
         ...appState.cards.map(c => normalizeTitle(c.title)),
         ...(appState.topicHistoryMemory || []).map(t => normalizeTitle(t))
       ]);
 
-      // Find unused topic from the 24-angle matrix first
       let candidate = SG_24_TOPIC_MATRIX.find(item => !existingSet.has(normalizeTitle(item.title)));
 
       const apiKey = await loadDecryptedGeminiKey();
@@ -1608,7 +1721,7 @@ TITLE | FORMAT (either "Video (Reels/TikTok/Shorts)" or "Image/Flyer Carousel") 
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy(candidate.title, candidate.notes, p),
-        script: `[Clip 1: 0–8s]: Hook on ${candidate.title}\n[Clip 2: 8–16s]: URA/HDB Data Proof\n[Clip 3: 16–24s]: Financial / Floorplan Takeaway\n[Clip 4: 24–32s]: WhatsApp & DM CTA for ${p.name}`,
+        script: `[Clip 1: 0–8s]: "Stop treating your property timeline like a waiting game—here is why ${candidate.title} matters in 2026."\n[Clip 2: 8–16s]: "According to 2026 URA REALIS and HDB data, buyers who plan their equity window early capture maximum CPF demand."\n[Clip 3: 16–24s]: "Structuring your CPF Ordinary Account and fifty-five percent MAS TDSR buffer protects your family cashflow."\n[Clip 4: 24–32s]: "Comment PLAN below or tap my WhatsApp link for the full 2026 breakdown!"`,
         media: candidate.targetApp === 'NANO_BANANA'
           ? buildDeterministicNanoBananaPrompt(candidate.title, candidate.notes, p)
           : buildDeterministicGoogleFlowClips(candidate.title, '8', p)
@@ -1625,96 +1738,22 @@ TITLE | FORMAT (either "Video (Reels/TikTok/Shorts)" or "Image/Flyer Carousel") 
       if (window.lucide) lucide.createIcons();
     }
 
-    // --- GOLD-STANDARD DETERMINISTIC BUILDERS (AGENT 2 COPY, AGENT 4A NANO BANANA & AGENT 4B GOOGLE FLOW 6-LAYER) ---
-    function extractShortHookBadge(title) {
-      const clean = String(title || '2026 SINGAPORE PROPERTY PLAYBOOK').replace(/\([^)]*\)/g, '').trim();
-      const words = clean.split(/\s+/).slice(0, 7).join(' ').toUpperCase();
-      return words || '2026 SINGAPORE PROPERTY PLAYBOOK';
-    }
-
-    function buildDeterministicCleanCopy(title, notes, p) {
-      return `Most Singapore buyers and upgraders overlook this critical timing window on "${title}" 📈
-
-Whether you are planning an HDB upgrade or comparing private condominium layouts in 2026, small differences in timeline and loan structure can shift your cash reserve by over $100,000.
-
-Here are 3 key numbers to check before booking your next viewing (Source: URA REALIS, HDB & MAS Q3 2026):
-
-1️⃣ Verified Market Benchmark: ${notes}
-2️⃣ Privacy-Compliant Stack Analysis: Recent mid-to-high floor (#15 to #19) resale transactions show buyers prioritizing functional dumbbell layouts and full CPF OA eligibility over raw square footage.
-3️⃣ The 55% MAS TDSR & ABSD Buffer: Structuring your CPF Ordinary Account refund, 4.0% stress-test TDSR calculation, and 6-month HDB sale remission timeline early protects your family's cash liquidity.
-
-💬 Comment "PLAN" below (or tap my WhatsApp link) and I'll send you our 2026 step-by-step calculation sheet!
-
-—
-${p.name} | CEA Reg No: ${p.regNo}
-${p.agencyName} | CEA Licence No: ${p.licenceNo}
-Contact: ${p.phone}
-(Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`;
-    }
-
-    function buildDeterministicNanoBananaPrompt(title, notes, p) {
-      const shortBanner = extractShortHookBadge(title);
-      return `Create a vertical 4:5 portrait luxury real estate editorial infographic poster in three crisp architectural zones with ultra-sharp typography and balanced negative space:
-
-1. TOP HEADER ZONE (Deep Royal Navy & Warm Gold Accent Banner):
-Render the exact bold white sans-serif headline: "${shortBanner}" with a smaller golden sub-header underneath reading: "2026 Singapore Equity, ABSD & Floorplan Playbook".
-
-2. CENTER HERO VISUAL ZONE (Photorealistic 3D Isometric Split-Comparison):
-On the left side, render a warm, sunlit 3D isometric cutaway floorplan of a modern Singapore HDB living area transitioning via a glowing golden progression arrow toward a luxury 3-bedroom private condominium balcony with lush tropical landscaping on the right side. Floating cleanly beside the arrow, render three minimalist glassmorphism data pills with crisp, short 3-word text:
-- Pill 1: "Peak Year-5 Equity"
-- Pill 2: "6-Month ABSD Refund"
-- Pill 3: "55% MAS TDSR Cap"
-In the bottom-right corner of the visual zone, include a small, clean compliance label reading: "Artist's Impression — Source: URA REALIS & MAS 2026".
-
-3. BOTTOM CTA & CEA COMPLIANCE FOOTER BAR (Full-Width Matte Obsidian-Slate Card):
-On the left of the footer bar, composite the attached reference portrait photo of presenter ${p.name} inside a circular emerald-trimmed avatar frame, preserving 100% of his exact facial features, glasses, and smart-casual attire. Beside the avatar, render clean white and emerald sans-serif text reading:
-"${p.name} | CEA Reg No: ${p.regNo}"
-"${p.agencyName} (Licence: ${p.licenceNo}) • WhatsApp: ${p.phone}"`;
-    }
-
-    function buildDeterministicGoogleFlowClips(title, clipSec, p, scriptText = '') {
-      const s = Number(clipSec) || 8;
-      // Extract spoken lines from Agent 3 script if available
-      const quoteMatches = String(scriptText || '').match(/"([^"]{12,180})"/g) || [];
-      const line1 = quoteMatches[0] ? quoteMatches[0].replace(/"/g, '') : `Stop treating your property timeline like a waiting game—here is why ${title} is your strongest lever in 2026.`;
-      const line2 = quoteMatches[1] ? quoteMatches[1].replace(/"/g, '') : `According to 2026 URA REALIS and HDB resale data, buyers who structure their equity window early capture the widest pool of full-CPF demand.`;
-      const line3 = quoteMatches[2] ? quoteMatches[2].replace(/"/g, '') : `By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve.`;
-      const line4 = quoteMatches[3] ? quoteMatches[3].replace(/"/g, '') : `Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet.`;
-
-      return `=== CLIP 1 (0–${s}s: Presenter Hook — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
-Camera: Slow, ultra-steady gimbal push-in from medium-waist framing to a confident medium close-up on an 85mm f/1.8 prime cinema lens, maintaining a level horizon, shallow depth of field, and zero lens distortion.
-Scene & Positive Identity Lock: High-resolution editorial portrait of Singapore real estate advisor ${p.name} anchored directly to the starting frame in a sunlit modern Singapore property consultation lounge with floor-to-ceiling glass overlooking the city skyline. The presenter's facial structure, hairstyle, glasses, tailored smart-casual attire, and studio background geometry remain 100% stationary, rigid, and faithful to the uploaded starting frame without morphing or drift.
-Subject Action & Lip-Sync Delivery: ${p.name} looks directly into the camera lens with warm, authoritative executive presence, making a natural, measured hand gesture while speaking clearly in English: "${line1}"
-Background Motion & Lighting: Soft golden-hour natural key light illuminates the presenter's face with crisp catchlights, while distant clouds drift imperceptibly across the Singapore skyline outside the window over a continuous ${s}-second take.
-Audio: Clear, warm studio-recorded spoken dialogue synced naturally to the presenter's lips, supported by quiet luxury indoor room tone; no background music, no echo, no sudden sound effects.
-
-=== CLIP 2 (${s}–${s * 2}s: Property Interior & Data Proof — Attach Living Room / Floorplan Photo as Starting Frame) ===
-Camera: Slow, ultra-steady gimbal dolly push-in moving smoothly forward along the central axis of the open-concept living and dining room on a 24mm rectilinear architectural cinema lens, maintaining strict perspective and zero barrel distortion.
-Scene & Positive Geometry Lock: High-resolution luxury Singapore condominium interior anchored to the starting frame. All architectural geometry, walls, recessed ceiling coves, built-in cabinetry, marble countertops, flooring planks, and furniture silhouettes remain 100% stationary, rigid, and structurally unchanged throughout the shot.
-Layered Micro-Motion Physics: Sheer white floor-to-ceiling balcony curtains billow gently inward with soft, realistic fabric inertia in a light breeze, while warm afternoon sunlight shifts subtly across the polished floor. Outside the large glass windows, soft clouds drift slowly across the skyline.
-Lighting & Pacing: Consistent soft natural daylight with stable interior reflections on polished surfaces; restrained, ultra-low motion pacing suited for luxury architectural cinematography over a continuous ${s}-second take.
-Audio: Voiceover narration by ${p.name} in a calm, authoritative tone saying: "${line2}" Accompanied by quiet luxury indoor room tone and a faint airy breeze; no background music, no random voices.
-
-=== CLIP 3 (${s * 2}–${s * 3}s: Balcony Skyline & Cashflow Takeaway — Attach Balcony/Kitchen Photo as Starting Frame) ===
-Camera: Smooth, stabilized lateral camera slider movement from left to right across the private balcony overlooking the greenery and Singapore residential skyline on a 35mm cinema lens with locked horizon geometry.
-Scene & Positive Geometry Lock: High-resolution balcony and exterior facade anchored directly to the starting frame. Every glass balustrade, tile seam, structural column, and surrounding building silhouette remains 100% rigid, stationary, and locked to the starting frame without warping.
-Layered Micro-Motion Physics: Tropical balcony planter leaves rustle gently in a light breeze while warm golden-hour sunlight glints softly off the glass railing and distant clouds move slowly across the sky.
-Lighting & Pacing: Warm late-afternoon golden-hour architectural lighting with natural highlight roll-off, 24fps cinematic shutter, continuous ${s}-second take.
-Audio: Voiceover narration by ${p.name} saying: "${line3}" Subtle outdoor breeze and quiet ambient city hum; no background music, no sudden sound effects.
-
-=== CLIP 4 (${s * 3}–${s * 4}s: CTA End-Card — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
-Camera: Locked tripod medium close-up shot on an 85mm f/1.8 portrait cinema lens with crisp optical focus on the presenter and a softly blurred luxury office background.
-Scene & Positive Identity Lock: Singapore property advisor ${p.name} anchored directly to the uploaded starting frame photo. Facial features, expression, smart-casual attire, and studio background architecture remain 100% stationary, rigid, and faithful to the reference photo.
-Subject Action & Lip-Sync Delivery: ${p.name} smiles warmly with approachable confidence, nodding slightly and gesturing toward the lower-third call-to-action area (${p.regNo} • ${p.phone}) while speaking clearly: "${line4}"
-Lighting & Pacing: Balanced studio Rembrandt lighting with warm rim light, photorealistic skin texture, continuous ${s}-second take.
-Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; no background music, no sudden sound effects.`;
-    }
-
-    // --- STUDIO & CHAINED AGENT EXECUTION (AGENT 1 -> 2 -> 3 -> 4A/4B -> 5) ---
+    // --- STUDIO & CHAINED AGENT EXECUTION ---
     function populateStudioSelector() {
       const sel = document.getElementById('studio-card-selector');
       if (!sel) return;
       sel.innerHTML = appState.cards.map(c => `<option value="${escapeHTML(c.id)}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${escapeHTML(c.stage)}] ${escapeHTML(c.title.slice(0, 45))}...</option>`).join('');
+    }
+
+    function syncBoxBVisibility(card) {
+      const boxB = document.getElementById('box-b-script-wrapper');
+      if (!boxB) return;
+      const isFlyer = (card.targetApp === 'NANO_BANANA' || card.targetApp === 'MIDJOURNEY' || (card.format && card.format.includes('Image')));
+      if (isFlyer) {
+        boxB.classList.add('hidden');
+      } else {
+        boxB.classList.remove('hidden');
+      }
     }
 
     function loadCardIntoStudio(cardId) {
@@ -1736,6 +1775,7 @@ Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; 
       document.getElementById('preview-headline').textContent = card.title;
       document.getElementById('preview-format-tag').textContent = `${card.targetApp || 'GOOGLE_FLOW'} • ${card.format.toUpperCase()}`;
 
+      syncBoxBVisibility(card);
       renderIndividualClipCopyButtons(card.media || '');
       runCEAComplianceAudit();
     }
@@ -1758,6 +1798,7 @@ Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; 
       if (field === 'title') document.getElementById('preview-headline').textContent = val;
       if (field === 'format' || field === 'targetApp') {
         document.getElementById('preview-format-tag').textContent = `${card.targetApp} • ${card.format.toUpperCase()}`;
+        syncBoxBVisibility(card);
       }
       if (field === 'media') {
         renderIndividualClipCopyButtons(val);
@@ -1768,25 +1809,40 @@ Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; 
       renderKanbanBoard();
     }
 
+    // BUG-01 FIX: Store clean clips in window._cleanFlowClips[i] so quotes inside prompts NEVER break HTML buttons!
     function renderIndividualClipCopyButtons(mediaText) {
       const container = document.getElementById('multi-clip-cards-container');
       if (!container) return;
       const blocks = String(mediaText).split(/(?==== CLIP \d)/g).map(s => s.trim()).filter(Boolean);
+      window._cleanFlowClips = blocks.map(blk => stripMetaTagsForGenerator(blk));
+
       if (blocks.length <= 1) {
         container.innerHTML = '';
         return;
       }
-      container.innerHTML = blocks.map((blk, i) => {
-        const cleanClip = stripMetaTagsForGenerator(blk);
-        return `
-          <div class="p-2.5 rounded-xl bg-indigo-50/60 dark:bg-slate-950 border border-indigo-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
-            <div class="truncate font-bold text-indigo-900 dark:text-indigo-300">🎬 Full 6-Layer Clip ${i + 1} (Google Flow)</div>
-            <button onclick="navigator.clipboard.writeText(${JSON.stringify(cleanClip)}); this.textContent='Copied Clip ${i + 1} ✓'; setTimeout(()=>this.textContent='Copy Clip ${i + 1}', 1400);" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold shrink-0">
-              Copy Clip ${i + 1}
-            </button>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = blocks.map((blk, i) => `
+        <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-emerald-300 dark:border-slate-700 flex items-center justify-between gap-2 text-xs shadow-sm">
+          <div class="truncate font-extrabold text-slate-800 dark:text-slate-200">🎬 Full 6-Layer Clip ${i + 1} (Paste into Flow)</div>
+          <button type="button" onclick="copySingleFlowClip(${i}, this)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold shrink-0 transition">
+            Copy Clip ${i + 1}
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function copySingleFlowClip(idx, btnEl) {
+      const text = window._cleanFlowClips?.[idx] || '';
+      if (!text) return;
+      navigator.clipboard.writeText(text);
+      if (btnEl) {
+        const old = btnEl.textContent;
+        btnEl.textContent = `Copied Clip ${idx + 1} ✓`;
+        btnEl.classList.replace('bg-indigo-600', 'bg-emerald-600');
+        setTimeout(() => {
+          btnEl.textContent = old;
+          btnEl.classList.replace('bg-emerald-600', 'bg-indigo-600');
+        }, 1400);
+      }
     }
 
     function stripMetaTagsForGenerator(rawText) {
@@ -1802,26 +1858,30 @@ Audio: Clear, natural spoken dialogue by ${p.name} with quiet studio room tone; 
       const clean = stripMetaTagsForGenerator(raw);
       navigator.clipboard.writeText(clean);
       const statusEl = document.getElementById('agent-run-status');
-      statusEl.textContent = '✓ Clean 6-Layer Generator Prompt Copied (All meta-tags & negative traps stripped!)';
+      statusEl.textContent = '✓ Final Generator Prompt Copied from Box C!';
     }
 
-    function copyBoxText(id) {
+    function copyBoxText(id, btnEl) {
       const val = document.getElementById(id)?.value || '';
       navigator.clipboard.writeText(val);
+      if (btnEl) {
+        const old = btnEl.textContent;
+        btnEl.textContent = 'Copied ✓';
+        setTimeout(() => { btnEl.textContent = old; }, 1200);
+      }
     }
 
     async function runFullChainedPipeline() {
       await runAgentInStudio('agent2');
-      await runAgentInStudio('agent3');
       const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (card && card.targetApp === 'NANO_BANANA') {
+      if (card && (card.targetApp === 'NANO_BANANA' || card.targetApp === 'MIDJOURNEY')) {
         await runAgentInStudio('agent4a');
       } else {
+        await runAgentInStudio('agent3');
         await runAgentInStudio('agent4b');
       }
     }
 
-    // GOLD-STANDARD CHAINED AGENT EXECUTION (v3.1)
     async function runAgentInStudio(agentType) {
       const lockedCardId = appState.activeCardId;
       const card = appState.cards.find(c => c.id === lockedCardId);
@@ -1842,12 +1902,12 @@ Topic: "${card.title}"
 Supporting Statutory / Market Context: "${card.notebookNotes}"
 Viral Rules: "${appState.viralMemory.slice(0, 2).join(' | ')}"
 
-Write a polished, ready-to-publish omnichannel social media caption for Facebook, Instagram Reels, TikTok, and YouTube Shorts.
+Write a polished, ready-to-publish omnichannel social media caption specifically tailored to "${card.title}" for Facebook, Instagram Reels, TikTok, and YouTube Shorts.
 CRITICAL RULES:
 1. DO NOT output developer bracket labels like [HOOK_HEADLINE], [DATA_BULLETS], or [DM_TRIGGER]. Write natural, human-ready copy with emojis and clean numbered points (1️⃣, 2️⃣, 3️⃣).
-2. Open with a punchy curiosity-gap hook question or bold data statement that naturally bridges "${card.title}" with "${card.notebookNotes}".
+2. Open with a punchy curiosity-gap hook question or bold data statement specific to "${card.title}".
 3. Include 3 concrete, educational buyer takeaways citing URA REALIS / HDB / MAS 2026 rules. Mask any example floor/unit stacks as "#15 to #19" (never write unmasked #18-04 or meta-instructions like "(exact unit numbers masked)").
-4. End with a single 1-word comment keyword CTA (e.g., Comment "MOP" or "PLAN" below) followed by this exact CEA compliance footer:
+4. End with a single 1-word comment keyword CTA followed by this exact CEA compliance footer:
 —
 ${p.name} | CEA Reg No: ${p.regNo}
 ${p.agencyName} | CEA Licence No: ${p.licenceNo}
@@ -1875,10 +1935,10 @@ Read Agent 2's Copy below:
 ${card.copy}
 """
 ${card.targetApp === 'MIDJOURNEY'
-  ? `Generate a detailed Midjourney v6.1/v7 architectural infographic & 3D cutaway floorplan prompt ending with --ar 4:5 --stylize 250 --no blurry text, warped walls.`
-  : `Generate a Gold-Standard Google Nano Banana natural-language prose prompt (NO --ar or --no flags) structured in 3 crisp zones for a vertical 4:5 portrait real estate infographic poster:
-1. TOP HEADER ZONE: Specify a bold 5-to-7 word uppercase headline in "double quotes" + a short sub-header in "double quotes".
-2. CENTER HERO VISUAL ZONE: Describe a photorealistic 3D isometric cutaway floorplan or split-comparison render under warm golden-hour sunlight, plus THREE short glassmorphism data pills (MAXIMUM 3-4 words per pill in "double quotes" — NEVER put long sentences inside quotes!) and the small compliance label "Artist's Impression — Source: URA REALIS & MAS 2026".
+  ? `Generate a detailed Midjourney v6.1/v7 architectural infographic & 3D cutaway floorplan prompt specifically depicting "${card.title}" ending with --ar 4:5 --stylize 250 --no blurry text, warped walls.`
+  : `Generate a Gold-Standard Google Nano Banana natural-language prose prompt (NO --ar or --no flags) structured in 3 crisp zones for a vertical 4:5 portrait real estate infographic poster specifically about "${card.title}":
+1. TOP HEADER ZONE: Specify a bold 5-to-7 word uppercase headline in "double quotes" matching "${card.title}" + a short sub-header in "double quotes".
+2. CENTER HERO VISUAL ZONE: Describe a photorealistic 3D isometric cutaway floorplan or architectural render specifically matching "${card.title}" under warm golden-hour sunlight, plus THREE short glassmorphism data pills (MAXIMUM 3-4 words per pill in "double quotes" extracted from Agent 2's copy — NEVER use generic HDB MOP pills if the topic is about District 15 condos or ABSD!) and the small compliance label "Artist's Impression — Source: URA REALIS & HDB 2026".
 3. BOTTOM CTA & CEA COMPLIANCE FOOTER BAR: Instruct Nano Banana to composite the attached reference portrait photo of presenter ${p.name} inside a circular emerald-trimmed avatar frame on the left (preserving 100% facial identity, glasses, and smart-casual attire), alongside the exact text "${p.name} | CEA Reg No: ${p.regNo}" and "${p.agencyName} (Licence: ${p.licenceNo}) • WhatsApp: ${p.phone}".`}`,
 
             agent4b: `You are Agent 4B (Principal Google Flow Veo 3.1 Multi-Clip Video Prompt Architect).
@@ -1926,19 +1986,20 @@ CRITICAL GOOGLE FLOW RULES FOR EVERY CLIP:
         }
       }
 
-      // Gold-Standard Deterministic Chained Fallback (Used when running offline or if API times out)
+      // Topic-Aware Gold-Standard Deterministic Fallback
       if (agentType === 'agent2') {
         card.copy = buildDeterministicCleanCopy(card.title, card.notebookNotes, p);
         if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
       } else if (agentType === 'agent3') {
         const s = clipSec;
-        card.script = `[Clip 1: 0–${s}s — Presenter Hook & Intro]: (Attach ${p.name} Profile Photo) "Stop treating your property timeline like a waiting game—here is why ${card.title} is your strongest lever in 2026."\n[Clip 2: ${s}–${s * 2}s — URA/HDB Visual Proof]: (Attach Property/Floorplan Photo) "According to 2026 URA REALIS and HDB resale data, buyers who structure their equity window early capture the widest pool of full-CPF demand."\n[Clip 3: ${s * 2}–${s * 3}s — Cashflow & TDSR Takeaway]: (Attach Balcony/Kitchen Photo) "By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve."\n[Clip 4: ${s * 3}–${s * 4}s — WhatsApp & DM CTA Outro]: (Attach ${p.name} Profile Photo) "Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet."`;
+        card.script = `[Clip 1: 0–${s}s — Presenter Hook & Intro]: "Stop treating your property timeline like a waiting game—here is why ${card.title} is your strongest lever in 2026."\n[Clip 2: ${s}–${s * 2}s — URA/HDB Visual Proof]: "According to 2026 URA REALIS and HDB resale data, buyers who structure their equity window early capture the widest pool of full-CPF demand."\n[Clip 3: ${s * 2}–${s * 3}s — Cashflow & TDSR Takeaway]: "By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve."\n[Clip 4: ${s * 3}–${s * 4}s — WhatsApp & DM CTA Outro]: "Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet."`;
         if (appState.activeCardId === lockedCardId) document.getElementById('studio-script-output').value = card.script;
       } else if (agentType === 'agent4a') {
         card.targetApp = 'NANO_BANANA';
         document.getElementById('studio-target-app').value = 'NANO_BANANA';
         card.media = buildDeterministicNanoBananaPrompt(card.title, card.notebookNotes, p);
         if (appState.activeCardId === lockedCardId) {
+          syncBoxBVisibility(card);
           document.getElementById('studio-media-output').value = card.media;
           renderIndividualClipCopyButtons(card.media);
         }
@@ -1947,13 +2008,14 @@ CRITICAL GOOGLE FLOW RULES FOR EVERY CLIP:
         document.getElementById('studio-target-app').value = 'GOOGLE_FLOW';
         card.media = buildDeterministicGoogleFlowClips(card.title, card.clipDuration, p, card.script);
         if (appState.activeCardId === lockedCardId) {
+          syncBoxBVisibility(card);
           document.getElementById('studio-media-output').value = card.media;
           renderIndividualClipCopyButtons(card.media);
         }
       }
 
       saveWorkspaceToStorage();
-      statusEl.textContent = `✓ Gold-Standard Skill Engine (${agentType.toUpperCase()}) Complete`;
+      statusEl.textContent = `✓ Topic-Matched Gold-Standard Engine (${agentType.toUpperCase()}) Complete — Copy from Box C below!`;
       if (appState.activeCardId === lockedCardId) runCEAComplianceAudit();
     }
 
@@ -2069,7 +2131,7 @@ CRITICAL GOOGLE FLOW RULES FOR EVERY CLIP:
       }
     }
 
-    // --- ERR-05 FIX: FULL 6-STAGE INTERACTIVE CRM, MANUAL LEAD MODAL & AGENT 8 OVERRIDE ---
+    // --- FULL 6-STAGE INTERACTIVE CRM, MANUAL LEAD MODAL & AGENT 8 OVERRIDE ---
     function renderCRMStageFilterBar() {
       const bar = document.getElementById('crm-stage-filter-bar');
       if (!bar) return;
@@ -2255,7 +2317,6 @@ CRITICAL GOOGLE FLOW RULES FOR EVERY CLIP:
       const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       appState.waMessages.push({ sender: 'lead', name: 'Prospect (WhatsApp Inbound)', text: msg, time: now });
 
-      // Automatically log inbound WhatsApp inquiry into CRM Pipeline
       appState.leads.unshift({
         id: 'l' + Date.now(),
         name: `WhatsApp Prospect (${now})`,
@@ -2440,7 +2501,6 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
         syncedAt: new Date().toISOString()
       };
 
-      // 1. Try Primary Supabase Cloud Sync if configured
       if (sbUrl && sbKey) {
         try {
           badge.textContent = 'Pushing to Supabase...';
@@ -2468,7 +2528,6 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
         }
       }
 
-      // 2. Try Google Drive Web App Bridge if configured
       if (bridgeUrl && bridgeUrl.startsWith('http')) {
         try {
           badge.textContent = 'Saving to Google Drive...';
@@ -2484,7 +2543,6 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
         }
       }
 
-      // 3. Fallback: Download portable `agent-squad-cloud-sync.json` to drop into Google Drive folder
       const blob = new Blob([JSON.stringify(payloadToSync, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -2582,7 +2640,7 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
       renderWhatsAppChat();
     }
 
-    // --- ERR-02 FIX: RETIRE gemini-2.5-flash-lite & PRIORITIZE gemini-flash-lite-latest ---
+    // --- ACTIVE GEMINI MODEL DISCOVERY & VAULT ---
     function setPreferredModel(modelName) {
       appState.preferredModel = modelName;
       saveWorkspaceToStorage();
@@ -2613,7 +2671,6 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
       );
     }
 
-    // Explicitly excludes retired `2.5-flash-lite` and `2.0-flash`
     async function discoverAccessibleGeminiModels(apiKey) {
       const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
       if (!listResp.ok) {
@@ -2841,7 +2898,7 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
       document.getElementById('settings-gemini-key').placeholder = 'Paste AIzaSy... key once';
     }
 
-    // --- UPG-08: SOCIAL MEDIA & WHATSAPP PERSISTENT STORAGE & LIVE CONNECTION TESTERS ---
+    // --- SOCIAL MEDIA & WHATSAPP PERSISTENT STORAGE & LIVE CONNECTION TESTERS ---
     function saveSocialConnections() {
       appState.socialConnections = {
         metaId: document.getElementById('conn-meta-id')?.value.trim() || '',
@@ -2974,7 +3031,7 @@ Never promise guaranteed returns. Keep reply warm and under 3 sentences.`);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `agent-squad-v3-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `agent-squad-v3.2-backup-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }

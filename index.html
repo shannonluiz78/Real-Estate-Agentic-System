@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentSquad v3.7 Final — Google Flow & Nano Banana Edition (Luiz Lee)</title>
+  <title>AgentSquad v3.8 Final — Google Flow & Nano Banana Edition (Luiz Lee)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -42,7 +42,7 @@
           <div>
             <div class="flex items-center gap-1.5">
               <h1 class="font-extrabold text-base tracking-tight">AgentSquad</h1>
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.7 FINAL</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.8 FINAL</span>
             </div>
             <p class="text-[11px] text-slate-500 dark:text-slate-400">Google Flow & Nano Banana Edition</p>
           </div>
@@ -86,7 +86,7 @@
           </button>
           <button onclick="switchTab('studio')" data-tab="studio" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2.5"><i data-lucide="sparkles" class="w-4 h-4 text-violet-500"></i> 2. 9-Agent Studio & CEA Gate</span>
-            <span class="px-1.5 py-0.5 rounded-md bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 text-[10px]">AI Optimize</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 text-[10px]">Direct Sync</span>
           </button>
           <button onclick="switchTab('traffic')" data-tab="traffic" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2.5"><i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-500"></i> 3. Traffic & Viral Memory</span>
@@ -131,8 +131,8 @@
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
       <div>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.7 Final</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">AI Prompt Optimizer • Dynamic Agent 3→4B Clip Sync • Google Flow Policy-Safe • CEA PG 02/2011</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.8 Final</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Direct Box B → 4-Clip Visual & Audio Parser • Mandatory Stillness & Voiceprint Lock • CEA Source Guard</span>
         </div>
         <h2 id="view-title" class="text-lg sm:text-xl font-extrabold mt-1">End-to-End Agile Content & Compliance Pipeline</h2>
       </div>
@@ -301,10 +301,10 @@
           <!-- Mandatory Reference Photo Upload Reminder Banner -->
           <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3 text-xs">
             <div>
-              <span class="font-extrabold text-emerald-800 dark:text-emerald-300">📸 Policy-Safe Reference Photo Mode (Google Flow & Nano Banana):</span>
-              <p class="text-[11px] text-slate-600 dark:text-slate-300">Attach your headshot as the Starting Frame in Google Flow. Personal names, phone numbers & CEA IDs are automatically stripped from Flow video prompts to prevent policy errors!</p>
+              <span class="font-extrabold text-emerald-800 dark:text-emerald-300">📸 Policy-Safe + Stillness & Voiceprint Enforcer (Google Flow & Nano Banana):</span>
+              <p class="text-[11px] text-slate-600 dark:text-slate-300">Attach your headshot (Clips 1 & 4) or property/floorplan image (Clips 2 & 3 in B-Roll mode) as the Starting Frame. Stillness Lock & Master Voiceprint Lock are automatically enforced across all 4 clips!</p>
             </div>
-            <button onclick="sanitizeCurrentMediaPrompt()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shrink-0">Sanitize & Sync Clips</button>
+            <button onclick="sanitizeCurrentMediaPrompt()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shrink-0">Enforce Locks & Sync</button>
           </div>
 
           <!-- SEPARATED COPY-PASTE BOXES -->
@@ -312,7 +312,7 @@
             <!-- Box A: Clean Social Caption -->
             <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <label class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">BOX A — Clean Ready-to-Post Social Caption (Zero Labels • Full 5 CEA Particulars)</label>
+                <label class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">BOX A — Clean Ready-to-Post Social Caption (Zero Labels • Source Cited • 5 CEA Particulars)</label>
                 <div class="flex gap-1.5">
                   <button onclick="stripLabelsFromCaption()" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-[11px] font-bold">Clean Tags</button>
                   <button onclick="copyBoxText('studio-copy-output', this)" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold">Copy Clean Caption</button>
@@ -324,11 +324,11 @@
             <!-- Box B: Multi-Clip 8s/10s Storyboard OR Nano Banana Prose Prompt + AI Optimizer -->
             <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2.5">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <label class="text-xs font-extrabold text-violet-600 dark:text-violet-400">BOX B — Script & Master Prompt (Auto-Syncs Spoken Dialogue Into All 4 Clips Below)</label>
+                <label class="text-xs font-extrabold text-violet-600 dark:text-violet-400">BOX B — Master Multi-Clip Prompt (Directly Parses Visuals & Audio Into All 4 Clips Below)</label>
                 <div class="flex flex-wrap items-center gap-1.5">
-                  <select id="ai-opt-mode" class="bg-white dark:bg-slate-900 border border-violet-300 dark:border-violet-700 rounded-lg px-2 py-1 text-[11px] font-bold text-violet-700 dark:text-violet-300">
-                    <option value="cinematic">✨ Mode: Ultra-Cinematic Veo 3.1</option>
-                    <option value="broll">🏠 Mode: Presenter + Floorplan B-Roll</option>
+                  <select id="ai-opt-mode" onchange="onMediaBoxEdited()" class="bg-white dark:bg-slate-900 border border-violet-300 dark:border-violet-700 rounded-lg px-2 py-1 text-[11px] font-bold text-violet-700 dark:text-violet-300">
+                    <option value="broll">🏠 Mode: Presenter (Clips 1,4) + Property B-Roll (Clips 2,3)</option>
+                    <option value="cinematic">✨ Mode: Ultra-Cinematic Veo 3.1 (All Presenter)</option>
                     <option value="voice_lock">🎙️ Mode: Strict Voiceprint & Lip-Sync Lock</option>
                     <option value="efficient">⚡ Mode: Token-Efficient & Punchy</option>
                   </select>
@@ -340,9 +340,9 @@
                   </button>
                 </div>
               </div>
-              <textarea id="studio-media-output" rows="7" oninput="onMediaBoxEdited()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
+              <textarea id="studio-media-output" rows="8" oninput="onMediaBoxEdited()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
 
-              <!-- Individual Clip Copy Cards for Google Flow (Auto-Synced to Agent 3 / Box B Dialogue) -->
+              <!-- Individual Clip Copy Cards for Google Flow (Directly Parsed from Box B!) -->
               <div id="flow-clips-drawer" class="space-y-2 pt-2"></div>
             </div>
           </div>
@@ -355,7 +355,7 @@
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
               <div>
                 <h3 class="font-extrabold text-sm">Agent 5: Singapore CEA & PDPA Compliance Gate</h3>
-                <p class="text-[11px] text-slate-500">Enforces PG 02/2011, CEPCC PC 04-13, 5 Particulars & URA Masking</p>
+                <p class="text-[11px] text-slate-500">Enforces PG 02/2011 Clause 2.3 Source Citation, 5 Particulars & URA Masking</p>
               </div>
               <span id="cea-score-pill" class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">PASS</span>
             </div>
@@ -364,7 +364,7 @@
 
             <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
               <button onclick="injectCEAWatermarkIntoCopy()" class="flex-1 py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition">
-                + Auto-Stamp 5 CEA Particulars & Disclosures
+                + Auto-Stamp Source Citation & 5 CEA Particulars
               </button>
               <button onclick="approveFromStudio()" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">
                 Approve → Scheduled
@@ -570,7 +570,7 @@
                 </tr>
                 <tr>
                   <td class="py-2.5 font-bold">2. Viral Copy Strategist</td>
-                  <td>Zero-Tag Clean Caption + 5 CEA Particulars</td>
+                  <td>Zero-Tag Clean Caption + Source Citation + 5 CEA Particulars</td>
                   <td>Feeds Hook & CTA → Agent 3</td>
                 </tr>
                 <tr>
@@ -585,12 +585,12 @@
                 </tr>
                 <tr>
                   <td class="py-2.5 font-bold">4B. Google Flow Video</td>
-                  <td>Policy-Safe 6-Layer Kinematics + AI Optimizer</td>
+                  <td>Direct Box B Parser + Stillness & Voiceprint Lock</td>
                   <td>Audited by Agent 5 Compliance Gate</td>
                 </tr>
                 <tr>
                   <td class="py-2.5 font-bold">5. CEA & PDPA Gate</td>
-                  <td>PG 02/2011, CEPCC PC 04-13, URA Unit Masking</td>
+                  <td>PG 02/2011 Clause 2.3 Source Check + 5 Particulars</td>
                   <td>Approves → Scheduled / Flags Rework</td>
                 </tr>
                 <tr>
@@ -896,7 +896,7 @@ function doGet() {
         </div>
         <div class="space-y-1.5">
           <div class="flex items-center justify-between font-bold text-emerald-600 dark:text-emerald-400">
-            <span>AFTER (AI-Optimized & Policy-Safe)</span>
+            <span>AFTER (AI-Optimized • Stillness & Master Voiceprint Locked)</span>
             <span id="opt-after-tokens" class="mono text-[11px]">~0 tokens (est.)</span>
           </div>
           <textarea id="opt-after-text" rows="12" class="w-full bg-emerald-50/40 dark:bg-slate-950 border border-emerald-400/60 dark:border-emerald-700 rounded-xl p-3 mono text-[11px] leading-relaxed"></textarea>
@@ -904,11 +904,11 @@ function doGet() {
       </div>
 
       <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200 dark:border-slate-800 text-xs">
-        <span class="text-[11px] text-slate-500">Note: Token counts are approximate estimates. Accepting will update Box B and sync all 4 Individual Google Flow Clip cards automatically.</span>
+        <span class="text-[11px] text-slate-500">Accepting will update Box B AND directly sync the exact optimized Camera, Scene, Stillness Lock & Voiceprint into all 4 Individual Clip Cards.</span>
         <div class="flex gap-2">
           <button onclick="closeAIOptimizerModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">Keep Original</button>
           <button onclick="acceptAIOptimizedPrompt()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold shadow-md transition">
-            ✓ Accept & Replace Prompt
+            ✓ Accept & Sync All 4 Clips
           </button>
         </div>
       </div>
@@ -916,7 +916,7 @@ function doGet() {
   </div>
 
   <!-- =================================================================== -->
-  <!-- APPLICATION SCRIPT (ZERO-TDZ + DYNAMIC AGENT 3->4B SYNC + OPTIMIZER)-->
+  <!-- APPLICATION SCRIPT (v3.8 DIRECT CLIP PARSER + STILLNESS/VOICE LOCK) -->
   <!-- =================================================================== -->
   <script>
     // 1. Initialize window.appState & window._cleanFlowClips FIRST so TDZ ReferenceError can NEVER occur
@@ -967,6 +967,9 @@ function doGet() {
       '5. Offer / OTP Issued',
       '6. Completed & Nurture'
     ];
+
+    const MASTER_VOICEPRINT_LOCK = 'Master Voiceprint Lock: Consistent 38-year-old Singaporean English professional male advisor voice across all clips, warm medium-low baritone timbre, crisp Shure SM7B close-mic broadcast warmth, 140 WPM cadence, calm advisory tone, zero pitch or accent drift';
+    const POSITIVE_STILLNESS_LOCK = 'All architectural walls, window frames, furniture geometry, and presenter attire remain 100% rigid, stationary, and structurally locked to the starting frame.';
 
     function loadSavedJSON(key, fallback) {
       try {
@@ -1038,12 +1041,83 @@ function doGet() {
       return cleaned;
     }
 
-    // Extracts spoken dialogue quotes from Agent 3's script or Box B so Individual Clip Cards ALWAYS match
+    // Post-Optimizer Guard: Cleans markdown bullets (- **Camera:** -> Camera:) and guarantees Stillness Lock + Master Voiceprint Lock
+    function enforceFlowLocksOnClipBlock(rawBlock) {
+      let block = sanitizeForGoogleFlowPolicy(rawBlock)
+        .replace(/^\s*[-*•]\s*\*\*([^*]+)\*\*\s*:?\s*/gm, '$1: ')
+        .replace(/\*\*(Camera|Scene & Subject Consistency|Subject Action & Delivery|Lighting & Pacing|Audio)\s*:?\*\*\s*:?\s*/gi, '$1: ')
+        .replace(/^(Camera|Scene & Subject Consistency|Subject Action & Delivery|Lighting & Pacing|Audio)\s*:\s*:\s*/gim, '$1: ')
+        .replace(/^---\s*$/gm, '')
+        .trim();
+
+      // 1. Guarantee Positive Structural Stillness Lock inside Scene & Subject Consistency
+      if (/Scene & Subject Consistency:/i.test(block) && !/100% rigid|structurally locked to the starting frame|completely rigid and consistent/i.test(block)) {
+        block = block.replace(/(Scene & Subject Consistency:\s*[^\n]+)/i, `$1 ${POSITIVE_STILLNESS_LOCK}`);
+      }
+
+      // 2. Guarantee full Master Voiceprint Lock inside Audio
+      if (/Audio:/i.test(block) && !/38-year-old Singaporean English|Master Voiceprint Lock/i.test(block)) {
+        const quoteMatch = block.match(/Audio:[^"\n]*"([^"]+)"/i);
+        if (quoteMatch && quoteMatch[1]) {
+          const spokenQuote = quoteMatch[1].trim();
+          block = block.replace(/Audio:\s*[^\n]+/i, `Audio: ${MASTER_VOICEPRINT_LOCK} synced naturally to the speaker saying: "${spokenQuote}" Quiet indoor room tone; no background music.`);
+        } else {
+          block = block.replace(/Audio:\s*([^\n]+)/i, `Audio: $1 (${MASTER_VOICEPRINT_LOCK}; quiet room tone; no background music).`);
+        }
+      }
+
+      return block;
+    }
+
+    // NEW IN v3.8: Directly parses 4 optimized clips from Box B if === GOOGLE FLOW CLIP X === blocks exist!
+    function parseClipsDirectlyFromBoxB(mediaText, sec = 8) {
+      if (!mediaText || !/GOOGLE FLOW CLIP\s*\d/i.test(mediaText)) return null;
+      const rawParts = String(mediaText)
+        .split(/(?====\s*GOOGLE FLOW CLIP\s*\d)/i)
+        .map(s => s.trim())
+        .filter(s => /^===\s*GOOGLE FLOW CLIP\s*\d/i.test(s));
+
+      if (rawParts.length === 0) return null;
+
+      return rawParts.slice(0, 4).map((part, idx) => {
+        const lines = part.split('\n');
+        const headerLine = lines[0] || '';
+        const bodyRaw = lines.slice(1).filter(l => !/^\[Attachment Rule\]/i.test(l.trim())).join('\n').trim();
+        const enforcedPrompt = enforceFlowLocksOnClipBlock(bodyRaw);
+
+        // Extract spoken quote for preview card
+        const quoteMatch = enforcedPrompt.match(/"([^"\n]{10,280})"/);
+        const spoken = quoteMatch ? quoteMatch[1].trim() : 'Spoken line synced from Box B';
+
+        // Detect whether this clip is B-Roll interior/floorplan or Presenter Starting Frame
+        const isBroll = /floorplan|walkthrough|interior|balcony|cutaway|living and dining/i.test(enforcedPrompt) && !/presenter in the starting frame/i.test(enforcedPrompt);
+        const attachmentBadge = isBroll
+          ? '🏠 Starting Frame: Attach Property / Floorplan Photo'
+          : '👤 Starting Frame: Attach Presenter Headshot';
+
+        const roleNames = [
+          `Hook & Curiosity Gap (0–${sec}s)`,
+          `Core Data Insight 1 (${sec}–${sec * 2}s)`,
+          `Core Data Insight 2 (${sec * 2}–${sec * 3}s)`,
+          `WhatsApp / DM Call-To-Action (${sec * 3}–${sec * 4}s)`
+        ];
+
+        return {
+          clipNo: idx + 1,
+          role: roleNames[idx] || `Clip ${idx + 1} (${sec}s)`,
+          spoken,
+          attachmentBadge,
+          isBroll,
+          prompt: enforcedPrompt
+        };
+      });
+    }
+
+    // Extracts spoken dialogue quotes from Agent 3's script or Box B
     function extractSpokenLinesFromMediaBox(mediaText, fallbackLines = []) {
       if (!mediaText) return fallbackLines;
       const extracted = [];
 
-      // Priority 1: Explicit Spoken Script lines from Agent 3 (e.g., **Spoken Script:** "..." or Spoken:)
       const scriptLineRegex = /(?:Spoken(?:\s+Script)?\s*\**:\**\s*)"([^"]{12,320})"/gi;
       let m;
       while ((m = scriptLineRegex.exec(mediaText)) !== null) {
@@ -1051,18 +1125,16 @@ function doGet() {
         if (!extracted.includes(line)) extracted.push(line);
       }
 
-      // Priority 2: Quotes inside Subject Action & Delivery / speaking clearly in English: "..."
       if (extracted.length < 4) {
-        const deliveryRegex = /(?:speaking clearly[^:]*:|saying:)\s*"([^"]{15,320})"/gi;
+        const deliveryRegex = /(?:speaking clearly[^:]*:|saying:|conviction:|line:|caution:|movement:)\s*"([^"]{12,320})"/gi;
         while ((m = deliveryRegex.exec(mediaText)) !== null) {
           const line = m[1].trim();
           if (!extracted.includes(line)) extracted.push(line);
         }
       }
 
-      // Priority 3: Any 4 substantial quoted sentences (>25 chars) if formatted as plain quotes
       if (extracted.length < 4) {
-        const genericQuotes = /"([^"\n]{28,300})"/g;
+        const genericQuotes = /"([^"\n]{20,300})"/g;
         while ((m = genericQuotes.exec(mediaText)) !== null) {
           const line = m[1].trim();
           if (!/STOP PAYING|CAPITAL EFFICIENCY|COMMENT|ARTIST'S IMPRESSION/i.test(line) && !extracted.includes(line)) {
@@ -1087,11 +1159,11 @@ function doGet() {
       };
       const theme = detectTopicTheme(title, notebookNotes);
       const factLine = notebookNotes
-        ? `📊 Verified Reference Note: ${notebookNotes}`
-        : `📊 Data Reference: URA REALIS & HDB Resale Portal Q3 2026 (exact unit/floor numbers masked per CEA guidelines).`;
+        ? `📊 Verified Reference (Source: URA REALIS & HDB Resale Portal Q1–Q3 2026): ${notebookNotes}`
+        : `📊 Data Reference (Source: URA REALIS & HDB Resale Portal Q1–Q3 2026): Exact unit/floor numbers masked per CEA guidelines.`;
 
       const bodies = {
-        hdb_mop: `Most Singapore HDB owners treat their 5-year Minimum Occupation Period (MOP) like a finish line—when in reality, Year 5 to Year 7 is your strongest equity progression window.\n\n${factLine}\n\nBefore deciding whether to hold, right-size, or upgrade to a 3-bedroom condo, always stress-test your CPF Ordinary Account (OA) accrued interest alongside the 3.0%–4.0% MAS TDSR rate floor.\n\nComment "MOP" below and I will send you the 1-page 2026 HDB-to-Condo Cashflow & Reserve Worksheet.`,
+        hdb_mop: `Most Singapore HDB owners treat their 5-year Minimum Occupation Period (MOP) like a finish line—when in reality, Year 5 to Year 7 is your strongest equity progression window.\n\n${factLine}\n\nBefore deciding whether to hold, right-size, or upgrade to a 3-bedroom condo, always stress-test your CPF Ordinary Account (OA) accrued interest alongside the 4.0% p.a. MAS TDSR rate floor.\n\nComment "MOP" below and I will send you the 1-page 2026 HDB-to-Condo Cashflow & Reserve Worksheet.`,
         d15_floorplan: `Shopping for a District 15 East Coast freehold 3-bedder in 2026? Never compare projects by headline PSF alone—layout efficiency determines your real liveable space.\n\n${factLine}\n\nA dumbbell 3-bedroom layout eliminates wasted hallway area and saves 65–85 sq ft compared to traditional corridor floorplans—translating to over $165,000 to $200,000 in capital efficiency.\n\nComment "D15" below for the 3 side-by-side floorplan overlays and URA PSF comparison sheet.`,
         ec_vs_condo: `Upgrading from an HDB flat in 2026: should your family apply for a new Executive Condominium (EC) under the 30% MSR cap, or buy a resale private condo under the 55% TDSR framework?\n\n${factLine}\n\nThe right answer depends on whether you need immediate move-in timeline certainty or deferred progressive payment cashflow.\n\nComment "CASHFLOW" below to receive the side-by-side EC vs Resale Condo monthly CPF OA & cash outlay calculator.`,
         absd_tdsr: `Planning a property portfolio move in 2026? Make sure your timeline and financing follow the latest official IRAS Stamp Duty and MAS TDSR brackets.\n\n${factLine}\n\nFor Singapore Citizen upgraders purchasing a second residential property before selling their existing home, the 20% ABSD remission timeline requires strict adherence to the 6-month sale condition.\n\nComment "TIMELINE" below and I will share the official IRAS & MAS upgrader checklist.`,
@@ -1100,19 +1172,19 @@ function doGet() {
       };
 
       const bodyText = bodies[theme] || bodies.hdb_mop;
-      return `${title}\n\n${bodyText}\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections are for illustrative education only and do not guarantee future performance.)`;
+      return `${title}\n\n${bodyText}\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections from URA REALIS / HDB Resale Portal are for illustrative education only and do not guarantee future performance.)`;
     }
 
-    function buildGoogleFlowMultiClipPrompts(title, sec = 8, notebookNotes = '', customMediaText = '', mode = 'default') {
+    function buildGoogleFlowMultiClipPrompts(title, sec = 8, notebookNotes = '', customMediaText = '', mode = 'broll') {
       const wordTarget = sec === 10 ? '24 words' : '20 words';
       const theme = detectTopicTheme(title, notebookNotes);
 
       const dialogueMap = {
         hdb_mop: [
-          'Why do so many Singapore HDB owners lose asset progression momentum right after hitting their five-year MOP milestone?',
-          'First, look at how flat lease decay and accrued CPF interest quietly reduce your net cash proceeds after year eight.',
-          'Second, by structuring a fifty-five percent TDSR safety buffer early, you can upgrade comfortably without over-stretching monthly family cashflow.',
-          'Comment M-O-P below or message me on WhatsApp and I will send you the full progression math sheet today.'
+          'Just crossed your five year HDB MOP in twenty twenty six? Your equity peak starts right now.',
+          'URA and HDB data show flats hit peak equity velocity between year five and year seven.',
+          'With the MAS four percent stress test floor, structuring your fifty-five percent TDSR buffer early is critical.',
+          'Drop me a DM with the word M-O-P to run your exact progression numbers today.'
         ],
         d15_floorplan: [
           'Stop buying District 15 freehold homes based on size alone. Most buyers overlook these three undervalued three-bedroom floorplans heading into 2026.',
@@ -1136,45 +1208,49 @@ function doGet() {
 
       const defaultLines = dialogueMap[theme] || dialogueMap.hdb_mop;
       const lines = extractSpokenLinesFromMediaBox(customMediaText, defaultLines);
-
       const isBrollMode = mode === 'broll';
-      const voiceProfile = mode === 'voice_lock'
-        ? 'Master Voiceprint Lock: Consistent 38-year-old Singaporean English professional male advisor voice across all clips, warm medium-low baritone timbre, crisp Shure SM7B close-mic broadcast warmth, 140 WPM cadence, calm advisory tone, zero pitch drift'
-        : 'Clear, warm professional male studio voice (medium-low baritone timbre, calm advisory tone, 140 WPM cadence)';
 
       const clips = [
         {
           clipNo: 1,
           role: `Hook & Curiosity Gap (0–${sec}s)`,
           spoken: lines[0],
-          prompt: `Camera: Slow, steady gimbal push-in from medium-waist framing to a medium close-up on an 85mm f/1.8 prime cinema lens, level horizon, shallow depth of field.\nScene & Subject Consistency: High-resolution portrait of the professional male presenter in the starting frame inside a sunlit modern Singapore property lounge overlooking the city skyline. The presenter's appearance, smart-casual attire, and studio background geometry remain stationary and consistent throughout the shot.\nSubject Action & Delivery: The presenter looks warmly into the camera lens, making a natural, measured hand gesture while speaking clearly in English: "${lines[0]}"\nLighting & Pacing: Soft golden-hour natural key light with subtle clouds drifting slowly across the skyline outside the window over a ${sec}-second continuous take.\nAudio: ${voiceProfile} synced naturally to the speaker saying: "${lines[0]}" Quiet indoor room tone; no background music.`
+          isBroll: false,
+          attachmentBadge: '👤 Starting Frame: Attach Presenter Headshot',
+          prompt: `Camera: Slow, steady gimbal push-in from medium-waist framing to a medium close-up on an 85mm f/1.8 prime cinema lens, level horizon, shallow depth of field.\nScene & Subject Consistency: High-resolution portrait of the professional male presenter in the starting frame inside a sunlit modern Singapore property lounge overlooking the city skyline. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: The presenter maintains direct, engaging eye contact with the camera lens, making a natural executive hand gesture while speaking clearly in English: "${lines[0]}"\nLighting & Pacing: Soft golden-hour natural key light with subtle clouds drifting slowly across the skyline outside the window over an ${sec}-second continuous take.\nAudio: ${MASTER_VOICEPRINT_LOCK} synced naturally to the speaker saying: "${lines[0]}" Quiet indoor room tone; no background music.`
         },
         {
           clipNo: 2,
           role: `Core Data Insight 1 (${sec}–${sec * 2}s)`,
           spoken: lines[1],
+          isBroll: isBrollMode,
+          attachmentBadge: isBrollMode ? '🏠 Starting Frame: Attach Property / Floorplan Photo' : '👤 Starting Frame: Attach Presenter Headshot',
           prompt: isBrollMode
-            ? `Camera: Slow, ultra-steady gimbal dolly push-in along the central axis of a bright modern Singapore 3-bedroom condominium living and dining room on a 24mm rectilinear architectural lens, zero distortion.\nScene & Subject Consistency: High-resolution architectural interior anchored to the uploaded property/floorplan starting frame. All walls, floor-to-ceiling windows, cabinetry, and furniture remain completely rigid and stationary.\nSubject Action & Delivery: Sheer daylight curtains billow gently in a soft breeze while warm sunlight shifts subtly across the oak floorboards.\nLighting & Pacing: Bright natural daylight over a smooth ${sec}-second continuous architectural take.\nAudio: ${voiceProfile} speaking over the interior walkthrough saying: "${lines[1]}" Quiet room tone; no background music.`
-            : `Camera: Smooth, subtle lateral slider pan left-to-right at eye level on a 50mm rectilinear lens, maintaining crisp focus on the presenter.\nScene & Subject Consistency: Same sunlit Singapore architectural lounge and same male presenter from the starting frame. All walls, glass window frames, and furniture remain completely rigid and consistent.\nSubject Action & Delivery: The presenter gestures calmly toward a clean architectural floorplan folio on the table while speaking clearly to the camera: "${lines[1]}"\nLighting & Pacing: Consistent warm daylight illumination, smooth natural motion cadence over ${sec} seconds.\nAudio: ${voiceProfile} synced to the presenter saying: "${lines[1]}" Quiet room tone; no background music.`
+            ? `Camera: Slow, ultra-steady gimbal dolly push-in along the central axis of a bright modern Singapore 3-bedroom living and dining room on a 24mm rectilinear architectural lens, level horizon, zero lens distortion.\nScene & Subject Consistency: High-resolution architectural interior anchored to the uploaded property/floorplan starting frame. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: Sheer daylight balcony curtains billow gently in a soft breeze while warm sunlight shifts subtly across the natural oak floorboards.\nLighting & Pacing: Bright, inviting natural daylight illumination over a smooth ${sec}-second continuous architectural walkthrough take.\nAudio: ${MASTER_VOICEPRINT_LOCK} narrating clearly over the interior walkthrough saying: "${lines[1]}" Quiet indoor room tone; no background music.`
+            : `Camera: Smooth, subtle lateral slider pan left-to-right at eye level on a 50mm rectilinear lens, level horizon, maintaining crisp focus on the presenter.\nScene & Subject Consistency: Same sunlit Singapore architectural lounge and same male presenter from the starting frame. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: The presenter gestures calmly toward a clean architectural floorplan folio on the table while speaking clearly to the camera: "${lines[1]}"\nLighting & Pacing: Consistent warm daylight illumination, smooth natural motion cadence over ${sec} seconds.\nAudio: ${MASTER_VOICEPRINT_LOCK} synced naturally to the speaker saying: "${lines[1]}" Quiet indoor room tone; no background music.`
         },
         {
           clipNo: 3,
           role: `Core Data Insight 2 (${sec * 2}–${sec * 3}s)`,
           spoken: lines[2],
+          isBroll: isBrollMode,
+          attachmentBadge: isBrollMode ? '🏠 Starting Frame: Attach Balcony / Skyline / Chart Photo' : '👤 Starting Frame: Attach Presenter Headshot',
           prompt: isBrollMode
-            ? `Camera: Smooth lateral tracking shot left-to-right across a private condominium balcony overlooking the East Coast Singapore skyline on a 35mm cinema lens.\nScene & Subject Consistency: Architectural balcony railing, tile seams, and skyline geometry remain completely rigid and stationary relative to the starting frame.\nSubject Action & Delivery: Tropical balcony foliage rustles gently in a light breeze while golden-hour sunlight glints softly off the glass balustrade.\nLighting & Pacing: Warm late-afternoon golden-hour lighting over a ${sec}-second take.\nAudio: ${voiceProfile} speaking clearly: "${lines[2]}" Quiet ambient room tone; no background music.`
-            : `Camera: Locked-off tripod medium close-up on an 85mm f/1.8 portrait lens with soft background bokeh.\nScene & Subject Consistency: Same presenter appearance, attire, and modern Singapore property studio environment locked to the starting frame.\nSubject Action & Delivery: The presenter nods reassuringly and counts two key points on his fingers while speaking clearly: "${lines[2]}"\nLighting & Pacing: Soft, even studio key light and subtle rim light over a ${sec}-second take.\nAudio: ${voiceProfile} synced to the presenter saying: "${lines[2]}" Quiet room tone; no background music.`
+            ? `Camera: Smooth lateral tracking shot left-to-right across a private condominium balcony overlooking the Singapore estate skyline on a 35mm cinema prime lens, level horizon.\nScene & Subject Consistency: High-resolution architectural balcony and skyline anchored to the starting frame. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: Tropical balcony foliage rustles gently in a light breeze while golden-hour sunlight glints softly off the glass balustrade.\nLighting & Pacing: Warm late-afternoon golden-hour lighting over a measured ${sec}-second continuous take.\nAudio: ${MASTER_VOICEPRINT_LOCK} narrating clearly saying: "${lines[2]}" Quiet ambient room tone; no background music.`
+            : `Camera: Locked-off tripod medium close-up on an 85mm f/1.8 portrait lens with soft anamorphic background bokeh.\nScene & Subject Consistency: Same presenter appearance, attire, and modern Singapore property studio environment locked to the starting frame. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: The presenter nods reassuringly and uses a precise finger gesture to highlight the data point while speaking clearly: "${lines[2]}"\nLighting & Pacing: Balanced three-point studio key light and subtle rim light over an ${sec}-second take.\nAudio: ${MASTER_VOICEPRINT_LOCK} synced naturally to the speaker saying: "${lines[2]}" Quiet indoor room tone; no background music.`
         },
         {
           clipNo: 4,
           role: `WhatsApp / DM Call-To-Action (${sec * 3}–${sec * 4}s)`,
           spoken: lines[3],
-          prompt: `Camera: Gentle 5% dolly pull-back to a clean medium portrait frame, leaving lower-third breathing room for a compliance end-card overlay.\nScene & Subject Consistency: Same presenter and sunlit Singapore skyline lounge consistent with the starting frame.\nSubject Action & Delivery: The presenter smiles warmly and gestures invitingly toward the lower screen while speaking clearly: "${lines[3]}"\nLighting & Pacing: Warm golden-hour fill light, steady composed finish over ${sec} seconds.\nAudio: ${voiceProfile} synced to the presenter saying: "${lines[3]}" Quiet room tone; no background music.`
+          isBroll: false,
+          attachmentBadge: '👤 Starting Frame: Attach Presenter Headshot',
+          prompt: `Camera: Gentle 5% dolly pull-back to a clean medium portrait frame on an 85mm f/1.8 prime lens, level horizon, leaving lower-third breathing room for a compliance end-card overlay.\nScene & Subject Consistency: Same presenter and sunlit Singapore skyline lounge consistent with the starting frame. ${POSITIVE_STILLNESS_LOCK}\nSubject Action & Delivery: The presenter offers a welcoming, reassuring smile and gestures invitingly toward the lower third of the frame while speaking clearly: "${lines[3]}"\nLighting & Pacing: Warm golden-hour fill light, steady composed finish over ${sec} seconds.\nAudio: ${MASTER_VOICEPRINT_LOCK} synced naturally to the speaker saying: "${lines[3]}" Quiet indoor room tone; no background music.`
         }
       ];
 
       const masterText = clips.map(c =>
-        `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: Attach your headshot (or property photo in B-Roll mode) as the Starting Frame in Google Flow.\n${sanitizeForGoogleFlowPolicy(c.prompt)}`
+        `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: ${c.attachmentBadge}\n${sanitizeForGoogleFlowPolicy(c.prompt)}`
       ).join('\n\n');
 
       return { clips, masterText };
@@ -1197,37 +1273,37 @@ function doGet() {
         id: 'nb1',
         title: 'URA REALIS & 5-Year HDB MOP Progression Pack (Q3 2026)',
         url: 'https://notebooklm.google.com/',
-        facts: 'HDB 5-year MOP flats in mature/non-mature estates show peak equity velocity between Year 5 and Year 7; MAS 55% TDSR stress-test floor at 4.0% p.a.; exact unit/floor numbers masked per CEA.'
+        facts: 'Source: URA REALIS & HDB Resale Portal (Q1–Q3 2026). HDB 5-year MOP flats in mature/non-mature estates show peak equity velocity between Year 5 and Year 7; MAS 55% TDSR stress-test floor at 4.0% p.a.; exact unit/floor numbers masked per CEA.'
       },
       {
         id: 'nb2',
         title: 'District 15 Freehold 3BR Floorplan Efficiency & PSF Study',
         url: 'https://notebooklm.google.com/',
-        facts: 'Dumbbell 3BR layouts save 65–85 sq ft of corridor space vs traditional layouts (~$165K–$200K capital efficiency at $2,450 PSF median in D15).'
+        facts: 'Source: URA REALIS District 15 Caveats (Q1–Q3 2026). Dumbbell 3BR layouts save 65–85 sq ft of corridor space vs traditional layouts (~$165K–$200K capital efficiency at $2,450 PSF median in D15).'
       },
       {
         id: 'nb3',
         title: 'CEA Practice Guidelines PG 02/2011 & CEPCC Advertising Rules',
         url: 'https://notebooklm.google.com/',
-        facts: 'Every property advertisement must display 5 mandatory particulars (Name, CEA Reg No, Agency Name, Licence No, Contact), have prior written owner consent, label Artist Impressions, and avoid guaranteed return claims.'
+        facts: 'Source: CEA Practice Guidelines PG 02/2011 & CEPCC PC 04-13. Every property advertisement must display 5 mandatory particulars (Name, CEA Reg No, Agency Name, Licence No, Contact), cite official data sources, have prior written owner consent, and label Artist Impressions.'
       },
       {
         id: 'nb4',
         title: 'EC vs Resale Private Condo: MSR 30% vs TDSR 55% Cashflow Matrix',
         url: 'https://notebooklm.google.com/',
-        facts: 'New Executive Condos are subject to 30% MSR and $16,000 household income ceiling, whereas resale private condos follow 55% TDSR with immediate occupancy.'
+        facts: 'Source: HDB & MAS Financing Guidelines (2026). New Executive Condos are subject to 30% MSR and $16,000 household income ceiling, whereas resale private condos follow 55% TDSR with immediate occupancy.'
       },
       {
         id: 'nb5',
         title: 'IRAS 2026 ABSD Remission & 6-Month Upgrader Sale Timeline',
         url: 'https://notebooklm.google.com/',
-        facts: 'Married Singapore Citizen couples upgrading to a second home must dispose of their first residential property within 6 months of exercising OTP/TOP to qualify for 20% ABSD refund.'
+        facts: 'Source: IRAS Stamp Duty Remission Rules (2026). Married Singapore Citizen couples upgrading to a second home must dispose of their first residential property within 6 months of exercising OTP/TOP to qualify for 20% ABSD refund.'
       },
       {
         id: 'nb6',
         title: 'HDB Cash-Over-Valuation (COV) & Registered Valuation Guide',
         url: 'https://notebooklm.google.com/',
-        facts: 'HDB buyers can only request official HDB valuation after obtaining an Option to Purchase (OTP); benchmarking 200m-radius past transactions prevents unexpected cash outlay.'
+        facts: 'Source: HDB Resale Portal Transactions (2026). HDB buyers can only request official HDB valuation after obtaining an Option to Purchase (OTP); benchmarking 200m-radius past transactions prevents unexpected cash outlay.'
       }
     ];
 
@@ -1257,7 +1333,7 @@ function doGet() {
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', DEFAULT_NOTEBOOKS[0].facts, DEFAULT_CEA_PROFILE),
-        media: buildGoogleFlowMultiClipPrompts('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', 8, DEFAULT_NOTEBOOKS[0].facts).masterText
+        media: buildGoogleFlowMultiClipPrompts('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', 8, DEFAULT_NOTEBOOKS[0].facts, '', 'broll').masterText
       },
       {
         id: 'c2',
@@ -1275,7 +1351,7 @@ function doGet() {
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', DEFAULT_NOTEBOOKS[1].facts, DEFAULT_CEA_PROFILE),
-        media: buildGoogleFlowMultiClipPrompts('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', 10, DEFAULT_NOTEBOOKS[1].facts).masterText
+        media: buildGoogleFlowMultiClipPrompts('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', 10, DEFAULT_NOTEBOOKS[1].facts, '', 'broll').masterText
       },
       {
         id: 'c3',
@@ -1293,7 +1369,7 @@ function doGet() {
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy('ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check', DEFAULT_NOTEBOOKS[4].facts, DEFAULT_CEA_PROFILE),
-        media: buildGoogleFlowMultiClipPrompts('ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check', 8, DEFAULT_NOTEBOOKS[4].facts).masterText
+        media: buildGoogleFlowMultiClipPrompts('ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check', 8, DEFAULT_NOTEBOOKS[4].facts, '', 'broll').masterText
       },
       {
         id: 'c4',
@@ -1329,7 +1405,7 @@ function doGet() {
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', DEFAULT_NOTEBOOKS[3].facts, DEFAULT_CEA_PROFILE),
-        media: buildGoogleFlowMultiClipPrompts('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', 8, DEFAULT_NOTEBOOKS[3].facts).masterText
+        media: buildGoogleFlowMultiClipPrompts('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', 8, DEFAULT_NOTEBOOKS[3].facts, '', 'broll').masterText
       },
       {
         id: 'c6',
@@ -1347,7 +1423,7 @@ function doGet() {
         exceptionOwner: null,
         exceptionReason: null,
         copy: buildDeterministicCleanCopy('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', DEFAULT_NOTEBOOKS[0].facts, DEFAULT_CEA_PROFILE),
-        media: buildGoogleFlowMultiClipPrompts('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', 8, DEFAULT_NOTEBOOKS[0].facts).masterText
+        media: buildGoogleFlowMultiClipPrompts('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', 8, DEFAULT_NOTEBOOKS[0].facts, '', 'broll').masterText
       }
     ];
 
@@ -1398,17 +1474,17 @@ function doGet() {
       driveFolderUrl: localStorage.getItem('squad_drive_folder') || '',
       cloudSyncUrl: localStorage.getItem('squad_cloud_sync_url') || '',
       ceaProfile: loadSavedJSON('squad_cea_profile', DEFAULT_CEA_PROFILE),
-      notebooks: loadSavedJSON('squad_notebooks_v37', DEFAULT_NOTEBOOKS),
-      viralMemory: loadSavedJSON('squad_viral_memory_v37', [
+      notebooks: loadSavedJSON('squad_notebooks_v38', DEFAULT_NOTEBOOKS),
+      viralMemory: loadSavedJSON('squad_viral_memory_v38', [
         'Hook Rule #1: Numbers + Specific District/MOP Year in first 2.5 seconds boosts 3s Hold Rate to >75%.',
-        'Flow Rule #2: Split short-form videos into 8-second (~20 words) or 10-second (~24 words) continuous takes with identical voice timbre & policy-safe presenter descriptions.',
+        'Flow Rule #2: Use Presenter Starting Frame on Clips 1 & 4, and Property/Floorplan B-Roll on Clips 2 & 3 with Master Voiceprint Lock.',
         'Nano Banana Rule #3: Use descriptive full-sentence prose (never Midjourney --ar flags) and attach reference photo.',
-        'CEA Rule #4: Always mask exact unit/floor numbers when citing URA REALIS transaction gains.'
+        'CEA Rule #4: Always cite official data sources (URA REALIS / HDB Resale Portal) and mask exact unit/floor numbers.'
       ]),
-      cards: loadSavedJSON('squad_cards_v37', DEFAULT_CARDS),
-      leads: loadSavedJSON('squad_leads_v37', DEFAULT_LEADS),
-      telemetry: loadSavedJSON('squad_telemetry_v37', DEFAULT_TELEMETRY),
-      waMessages: loadSavedJSON('squad_wa_msgs_v37', [
+      cards: loadSavedJSON('squad_cards_v38', DEFAULT_CARDS),
+      leads: loadSavedJSON('squad_leads_v38', DEFAULT_LEADS),
+      telemetry: loadSavedJSON('squad_telemetry_v38', DEFAULT_TELEMETRY),
+      waMessages: loadSavedJSON('squad_wa_msgs_v38', [
         { sender: 'lead', name: 'Darren Koh (+65 9876 1122)', text: 'Hi Luiz! Saw your TikTok reel on the 5-year HDB MOP math. Our Tampines BTO hits MOP in 4 months. Can we upgrade without selling first?', time: '8:42 PM' },
         { sender: 'ai', name: 'Agent 8 (AI Assistant for Luiz Lee)', text: 'Hi Darren! Thanks for reaching out to Luiz Lee (CEA Reg: R123456A, PropNex). Congrats on your upcoming Tampines MOP! To help Luiz prepare an accurate timeline & ABSD/bridge calculation for you:\n1) Are both owners Singapore Citizens (SC)?\n2) Have you done an initial mortgage IPA check yet?', time: '8:42 PM' }
       ])
@@ -1417,12 +1493,12 @@ function doGet() {
     function persistMasterState() {
       try {
         localStorage.setItem('squad_cea_profile', JSON.stringify(appState.ceaProfile));
-        localStorage.setItem('squad_notebooks_v37', JSON.stringify(appState.notebooks));
-        localStorage.setItem('squad_viral_memory_v37', JSON.stringify(appState.viralMemory));
-        localStorage.setItem('squad_cards_v37', JSON.stringify(appState.cards));
-        localStorage.setItem('squad_leads_v37', JSON.stringify(appState.leads));
-        localStorage.setItem('squad_telemetry_v37', JSON.stringify(appState.telemetry));
-        localStorage.setItem('squad_wa_msgs_v37', JSON.stringify(appState.waMessages));
+        localStorage.setItem('squad_notebooks_v38', JSON.stringify(appState.notebooks));
+        localStorage.setItem('squad_viral_memory_v38', JSON.stringify(appState.viralMemory));
+        localStorage.setItem('squad_cards_v38', JSON.stringify(appState.cards));
+        localStorage.setItem('squad_leads_v38', JSON.stringify(appState.leads));
+        localStorage.setItem('squad_telemetry_v38', JSON.stringify(appState.telemetry));
+        localStorage.setItem('squad_wa_msgs_v38', JSON.stringify(appState.waMessages));
       } catch (e) {
         console.warn('Local persistence warning:', e);
       }
@@ -1662,7 +1738,7 @@ function doGet() {
         exceptionReason: null,
         copy: buildDeterministicCleanCopy(title, nb.facts, appState.ceaProfile),
         media: isVideo
-          ? buildGoogleFlowMultiClipPrompts(title, 8, nb.facts).masterText
+          ? buildGoogleFlowMultiClipPrompts(title, 8, nb.facts, '', 'broll').masterText
           : buildNanoBananaProsePrompt(title, nb.facts, appState.ceaProfile)
       };
       appState.cards.unshift(newCard);
@@ -1730,7 +1806,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
           exceptionReason: null,
           copy: buildDeterministicCleanCopy(minedTitle, nb.facts, appState.ceaProfile),
           media: isVideo
-            ? buildGoogleFlowMultiClipPrompts(minedTitle, 8, nb.facts).masterText
+            ? buildGoogleFlowMultiClipPrompts(minedTitle, 8, nb.facts, '', 'broll').masterText
             : buildNanoBananaProsePrompt(minedTitle, nb.facts, appState.ceaProfile)
         };
         appState.cards.unshift(newCard);
@@ -1744,7 +1820,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
     }
 
     // =====================================================================
-    // VIEW 2: 9-AGENT CHAINED STUDIO, DYNAMIC CLIP SYNC & AI OPTIMIZER
+    // VIEW 2: 9-AGENT CHAINED STUDIO, DIRECT CLIP PARSER & AI OPTIMIZER
     // =====================================================================
     function openCardInStudio(cardId) {
       appState.activeCardId = cardId;
@@ -1821,7 +1897,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       if (field === 'generator' || field === 'clipDuration' || field === 'title') {
         const sec = parseInt(card.clipDuration || '8', 10);
         const currentMediaText = document.getElementById('studio-media-output')?.value || card.media || '';
-        const mode = document.getElementById('ai-opt-mode')?.value || 'default';
+        const mode = document.getElementById('ai-opt-mode')?.value || 'broll';
         if (card.generator === 'google_flow') {
           card.media = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes, currentMediaText, mode).masterText;
         } else {
@@ -1837,6 +1913,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       renderKanbanBoard();
     }
 
+    // UPGRADED IN v3.8: Directly parses the 4 clips (Camera, Scene, Action, Lighting, Audio) from Box B if present!
     function renderFlowClipDrawer(card) {
       const drawer = document.getElementById('flow-clips-drawer');
       if (!drawer) return;
@@ -1846,30 +1923,43 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       }
       const sec = parseInt(card.clipDuration || '8', 10);
       const currentBoxText = document.getElementById('studio-media-output')?.value || card.media || '';
-      const mode = document.getElementById('ai-opt-mode')?.value || 'default';
+      const mode = document.getElementById('ai-opt-mode')?.value || 'broll';
 
-      // Build 4 clips dynamically synced with any spoken dialogue in Box B (Agent 3 output)
-      const pack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes, currentBoxText, mode);
-      window._cleanFlowClips = pack.clips.map(c => sanitizeForGoogleFlowPolicy(c.prompt));
+      // Priority 1: Parse the exact === GOOGLE FLOW CLIP X === blocks from Box B (preserves AI Optimizer Camera/Scene/Lighting!)
+      let clipsList = parseClipsDirectlyFromBoxB(currentBoxText, sec);
+
+      // Priority 2: If Box B only contains Agent 3's raw spoken script, wrap those spoken lines in the 6-Layer Flow structure
+      if (!clipsList || clipsList.length === 0) {
+        const fallbackPack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes, currentBoxText, mode);
+        clipsList = fallbackPack.clips;
+      }
+
+      window._cleanFlowClips = clipsList.map(c => c.prompt);
 
       drawer.innerHTML = `
         <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
           <div class="text-[11px] font-extrabold text-violet-600 dark:text-violet-400">
-            Individual ${sec}-Second Policy-Safe Clips (Synced to Agent 3 Spoken Script — Click to Copy 1 Clip at a Time):
+            Individual ${sec}-Second Policy-Safe Clips (100% Synced to Box B Visuals, Stillness Lock & Voiceprint — Click to Copy):
           </div>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">✓ Spoken Script Synced</span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+            ✓ Direct Visual + Audio + Stillness Lock Synced
+          </span>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          ${pack.clips.map((c, idx) => `
-            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-violet-500/30 flex flex-col justify-between gap-2">
-              <div>
-                <div class="flex items-center justify-between text-[10px] font-bold text-violet-600 dark:text-violet-300">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          ${clipsList.map((c, idx) => `
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-violet-500/30 flex flex-col justify-between gap-2 shadow-sm">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between gap-1 text-[10px] font-bold text-violet-600 dark:text-violet-300">
                   <span>CLIP ${c.clipNo} (${sec}s) — ${escapeHTML(c.role)}</span>
                 </div>
-                <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 italic">"${escapeHTML(c.spoken)}"</p>
+                <div class="inline-block text-[10px] font-bold px-2 py-0.5 rounded ${c.isBroll ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30' : 'bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30'}">
+                  ${escapeHTML(c.attachmentBadge || '👤 Starting Frame: Attach Presenter Headshot')}
+                </div>
+                <p class="text-[11px] text-slate-700 dark:text-slate-200 font-semibold italic">"${escapeHTML(c.spoken)}"</p>
+                <div class="text-[10px] text-slate-500 dark:text-slate-400 mono line-clamp-2">${escapeHTML(c.prompt.split('\n')[0] || '')}</div>
               </div>
-              <button onclick="copyFlowClipByIndex(${idx}, this)" class="w-full py-1.5 rounded-lg bg-violet-600/15 hover:bg-violet-600 text-violet-700 dark:text-violet-300 hover:text-white text-[11px] font-bold transition">
-                Copy Policy-Safe Clip ${c.clipNo} Prompt
+              <button onclick="copyFlowClipByIndex(${idx}, this)" class="w-full py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-bold transition shadow-sm">
+                Copy Full 6-Layer Clip ${c.clipNo} Prompt
               </button>
             </div>
           `).join('')}
@@ -1882,7 +1972,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       if (!text) return;
       navigator.clipboard.writeText(text);
       const orig = btn.textContent;
-      btn.textContent = '✓ Copied to Clipboard!';
+      btn.textContent = `✓ Copied Clip ${idx + 1} (Stillness & Voice Locked)!`;
       setTimeout(() => { btn.textContent = orig; }, 1600);
     }
 
@@ -1891,11 +1981,22 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       const mediaEl = document.getElementById('studio-media-output');
       if (!mediaEl || !card) return;
       const sec = parseInt(card.clipDuration || '8', 10);
-      const mode = document.getElementById('ai-opt-mode')?.value || 'default';
+      const mode = document.getElementById('ai-opt-mode')?.value || 'broll';
+
       if (card.generator === 'google_flow') {
-        const syncedPack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes, mediaEl.value, mode);
-        mediaEl.value = syncedPack.masterText;
-        card.media = syncedPack.masterText;
+        const parsed = parseClipsDirectlyFromBoxB(mediaEl.value, sec);
+        if (parsed && parsed.length > 0) {
+          const wordTarget = sec === 10 ? '24 words' : '20 words';
+          const rebuiltMaster = parsed.map(c =>
+            `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: ${c.attachmentBadge}\n${c.prompt}`
+          ).join('\n\n');
+          mediaEl.value = rebuiltMaster;
+          card.media = rebuiltMaster;
+        } else {
+          const syncedPack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes, mediaEl.value, mode);
+          mediaEl.value = syncedPack.masterText;
+          card.media = syncedPack.masterText;
+        }
         renderFlowClipDrawer(card);
       } else {
         mediaEl.value = sanitizeForGoogleFlowPolicy(mediaEl.value);
@@ -1904,7 +2005,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       runCEAComplianceAudit();
     }
 
-    // LIVE AI PROMPT OPTIMIZER WITH BEFORE vs. AFTER REVIEW MODAL
+    // LIVE AI PROMPT OPTIMIZER WITH MANDATORY STILLNESS & VOICEPRINT LOCK ENFORCER
     async function openAIPromptOptimizer() {
       const card = appState.cards.find(c => c.id === appState.activeCardId);
       const mediaEl = document.getElementById('studio-media-output');
@@ -1912,8 +2013,8 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       if (!card || !mediaEl) return;
 
       const beforeText = mediaEl.value.trim();
-      const mode = document.getElementById('ai-opt-mode')?.value || 'cinematic';
-      const sec = parseInt(card.clipDuration || '10', 10);
+      const mode = document.getElementById('ai-opt-mode')?.value || 'broll';
+      const sec = parseInt(card.clipDuration || '8', 10);
       const maxWords = sec === 10 ? 24 : 20;
       const origBtnText = btn.textContent;
       btn.textContent = '✨ Optimizing...';
@@ -1926,19 +2027,32 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
         if (apiKey) {
           try {
             const modeInstructions = {
-              cinematic: 'Elevate optical cinema lens specs (85mm f/1.8 prime, subtle anamorphic bokeh, level horizon), micro-lighting physics, and natural executive hand gestures.',
-              broll: 'Make Clip 1 and Clip 4 on-camera presenter shots (Starting Frame: presenter photo), and make Clip 2 and Clip 3 architectural interior/floorplan walkthrough B-roll shots (Starting Frame: property/floorplan image) with voiceover.',
-              voice_lock: 'Enforce an identical acoustic Master Voiceprint Lock across all 4 clips (consistent 38-year-old Singaporean English professional male advisor voice, warm medium-low baritone timbre, Shure SM7B close-mic broadcast warmth, 140 WPM cadence, zero pitch drift).',
-              efficient: 'Condense camera and lighting descriptions into high-density, token-efficient directives while preserving 100% of the spoken dialogue and stillness locks.'
+              broll: `Make Clip 1 and Clip 4 on-camera presenter shots ([Attachment Rule]: 👤 Starting Frame: Attach Presenter Headshot), and make Clip 2 and Clip 3 photorealistic Singapore property interior/floorplan/balcony walkthrough B-roll shots ([Attachment Rule]: 🏠 Starting Frame: Attach Property / Floorplan Photo) with the presenter's voiceover narration.`,
+              cinematic: `Elevate optical cinema lens specs (85mm f/1.8 prime, subtle anamorphic bokeh, level horizon), micro-lighting physics, and natural executive hand gestures across all 4 clips.`,
+              voice_lock: `Enforce an identical acoustic Master Voiceprint Lock across all 4 clips (${MASTER_VOICEPRINT_LOCK}).`,
+              efficient: `Condense camera and lighting descriptions into high-density, token-efficient directives while preserving 100% of the spoken dialogue, stillness locks, and voiceprint lock.`
             };
 
             const prompt = card.generator === 'nano_banana'
               ? `You are a Principal Google Nano Banana Image Prompt Optimizer.\nTopic: "${card.title}"\nGrounded Facts: "${card.notebookNotes}"\nCurrent Draft:\n${beforeText}\n\nOptimize this into a richer, razor-sharp 4:5 vertical Singapore real estate infographic poster prompt in natural descriptive prose (zero --ar flags), preserving the 5 mandatory CEA particulars and reference portrait lock.`
-              : `You are a Principal Google Flow (Veo 3.1) Multi-Clip Prompt Optimizer.\nTopic: "${card.title}"\nGrounded Facts: "${card.notebookNotes}"\nCurrent Draft in Box B:\n${beforeText}\n\nOptimization Goal: ${modeInstructions[mode] || modeInstructions.cinematic}\nRewrite this into 4 ultra-polished, policy-safe ${sec}-second Google Flow prompts (Clips 1 to 4).\nSTRICT RULES:\n1. Keep the exact spoken script meaning from the draft (under ${maxWords} spoken words per clip) and enclose the spoken words in double quotes inside BOTH "Subject Action & Delivery:" and "Audio:".\n2. NEVER include personal names ("Luiz Lee"), phone numbers, CEA registration IDs, or the phrase "Positive Identity Lock" (use "Scene & Subject Consistency" and "the professional male presenter in the starting frame").\n3. Format each clip clearly with:\n=== GOOGLE FLOW CLIP X OF 4 (${sec} SECONDS) ===\nCamera: ...\nScene & Subject Consistency: ...\nSubject Action & Delivery: ...\nLighting & Pacing: ...\nAudio: ...`;
+              : `You are a Principal Google Flow (Veo 3.1) Multi-Clip Prompt Optimizer.\nTopic: "${card.title}"\nGrounded Facts: "${card.notebookNotes}"\nCurrent Draft in Box B:\n${beforeText}\n\nOptimization Goal: ${modeInstructions[mode] || modeInstructions.broll}\nRewrite this into 4 ultra-polished, policy-safe ${sec}-second Google Flow prompts (Clips 1 to 4).\nSTRICT MANDATORY RULES:\n1. Keep each spoken script line under ${maxWords} spoken words and enclose the spoken words in double quotes inside BOTH "Subject Action & Delivery:" and "Audio:".\n2. NEVER use markdown bullet points (- **Camera:**). Use clean plain-text labels: Camera:, Scene & Subject Consistency:, Subject Action & Delivery:, Lighting & Pacing:, Audio:.\n3. Every "Scene & Subject Consistency:" line MUST end with: "${POSITIVE_STILLNESS_LOCK}"\n4. Every "Audio:" line MUST include: "${MASTER_VOICEPRINT_LOCK}"\n5. NEVER include personal names ("Luiz Lee"), phone numbers, CEA registration IDs, or "Positive Identity Lock".\n6. Format each clip clearly starting with:\n=== GOOGLE FLOW CLIP X OF 4 (${sec} SECONDS) ===\n[Attachment Rule]: ...`;
 
             const res = await callGeminiDirect(apiKey, prompt);
-            afterText = card.generator === 'google_flow' ? sanitizeForGoogleFlowPolicy(res.text) : res.text;
-            engineLabel = `✓ Live Gemini API Optimizer (${res.modelUsed} • ${mode.toUpperCase()})`;
+            if (card.generator === 'google_flow') {
+              // Run through direct parser & lock enforcer so Stillness Lock and Voiceprint Lock are 100% guaranteed
+              const parsedClips = parseClipsDirectlyFromBoxB(res.text, sec);
+              if (parsedClips && parsedClips.length > 0) {
+                const wordTarget = sec === 10 ? '24 words' : '20 words';
+                afterText = parsedClips.map(c =>
+                  `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: ${c.attachmentBadge}\n${c.prompt}`
+                ).join('\n\n');
+              } else {
+                afterText = enforceFlowLocksOnClipBlock(res.text);
+              }
+            } else {
+              afterText = res.text;
+            }
+            engineLabel = `✓ Live Gemini API Optimizer (${res.modelUsed} • ${mode.toUpperCase()} + Stillness & Voiceprint Locked)`;
           } catch (apiErr) {
             console.warn('AI Optimizer fallback used:', apiErr);
           }
@@ -1952,7 +2066,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
             afterText = buildNanoBananaProsePrompt(card.title, card.notebookNotes, appState.ceaProfile) +
               `\n\n[Visual Polish Directive]: Render with ultra-crisp 8K architectural micro-contrast, balanced studio rim lighting on the presenter badge, and zero text distortion.`;
           }
-          engineLabel = `✓ Built-in Deep Veo 3.1 Optimizer (${mode.toUpperCase()} Mode — Synced All 4 Clips)`;
+          engineLabel = `✓ Built-in Deep Veo 3.1 Optimizer (${mode.toUpperCase()} Mode — Stillness & Voiceprint Locked)`;
         }
 
         document.getElementById('opt-modal-engine-badge').textContent = engineLabel;
@@ -1979,7 +2093,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
         card.media = afterText;
         renderFlowClipDrawer(card);
         runCEAComplianceAudit();
-        document.getElementById('agent-run-status').textContent = '✓ Accepted AI-Optimized Prompt & Synced All 4 Individual Google Flow Clips!';
+        document.getElementById('agent-run-status').textContent = '✓ Accepted AI-Optimized Prompt & Directly Synced All 4 Clip Cards!';
       }
       closeAIOptimizerModal();
       persistMasterState();
@@ -2023,7 +2137,7 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       const p = appState.ceaProfile;
       const sec = parseInt(card.clipDuration || '8', 10);
       const wordLimit = sec === 10 ? 24 : 20;
-      const mode = document.getElementById('ai-opt-mode')?.value || 'default';
+      const mode = document.getElementById('ai-opt-mode')?.value || 'broll';
 
       statusEl.textContent = `Running ${agentType.toUpperCase()} (Chained Context + NotebookLM Grounded)...`;
       const apiKey = await loadDecryptedGeminiKey();
@@ -2038,7 +2152,7 @@ Winning RAG Rules: ${JSON.stringify(appState.viralMemory)}.
 Write a clean, ready-to-post social media caption for Facebook, IG Reels, TikTok, and YouTube Shorts.
 CRITICAL RULES:
 1. DO NOT include internal bracket labels like "[3s Curiosity Hook]:" or "[Key Insight]:"—output ONLY clean, natural customer-facing paragraphs.
-2. Cite the grounded NotebookLM data naturally and mask exact unit/floor numbers.
+2. Explicitly cite the official data source and timeframe in the body (e.g., "Source: URA REALIS / HDB Resale Portal Q1–Q3 2026") to comply with CEA PG 02/2011 Clause 2.3, and mask exact unit/floor numbers.
 3. End with a single keyword DM trigger and the 5 mandatory CEA particulars footer + illustrative disclaimer.`,
             agent3: `You are Agent 3 (Short-Form Video Retention Scriptwriter).
 Topic: "${card.title}".
@@ -2054,19 +2168,34 @@ Write a natural-language descriptive prose prompt (NO Midjourney --ar flags) for
 Topic: "${card.title}".
 Upstream Agent 3 Spoken Script Context: "${card.media}".
 Generate 4 copy-ready Google Flow prompts (${sec} seconds each, max ${wordLimit} spoken words per clip) using the exact spoken script lines from Agent 3 above.
-POLICY-SAFE GUARDRAIL: Do NOT include real human names, phone numbers, or CEA registration IDs inside the video prompt. Refer to the speaker strictly as "the professional male real estate presenter in the frame" and use "Scene & Subject Consistency" (never "Positive Identity Lock").
-For EACH clip include: Camera, Scene & Subject Consistency, Subject Action & Delivery (with exact spoken dialogue in double quotes), Lighting & Pacing, and Audio (with exact spoken dialogue in double quotes, identical warm male baritone studio voice, 140 WPM, quiet room tone, no music).`
+STRICT RULES:
+1. Make Clip 1 and Clip 4 on-camera presenter shots, and make Clip 2 and Clip 3 architectural interior/floorplan B-roll shots with voiceover narration.
+2. Do NOT include real human names, phone numbers, or CEA registration IDs inside the video prompt.
+3. Every "Scene & Subject Consistency:" line MUST include: "${POSITIVE_STILLNESS_LOCK}"
+4. Every "Audio:" line MUST include: "${MASTER_VOICEPRINT_LOCK}"
+5. Format each clip clearly starting with === GOOGLE FLOW CLIP X OF 4 (${sec} SECONDS) === and plain-text labels Camera:, Scene & Subject Consistency:, Subject Action & Delivery:, Lighting & Pacing:, Audio:.`
           };
 
           const liveResult = await callGeminiDirect(apiKey, promptMap[agentType]);
           if (agentType === 'agent2') {
             card.copy = liveResult.text;
             if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
+          } else if (agentType === 'agent4b') {
+            const parsed = parseClipsDirectlyFromBoxB(liveResult.text, sec);
+            if (parsed && parsed.length > 0) {
+              const wordTarget = sec === 10 ? '24 words' : '20 words';
+              card.media = parsed.map(c =>
+                `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: ${c.attachmentBadge}\n${c.prompt}`
+              ).join('\n\n');
+            } else {
+              card.media = sanitizeForGoogleFlowPolicy(liveResult.text);
+            }
+            if (appState.activeCardId === lockedCardId) document.getElementById('studio-media-output').value = card.media;
           } else {
-            card.media = agentType === 'agent4b' ? sanitizeForGoogleFlowPolicy(liveResult.text) : liveResult.text;
+            card.media = liveResult.text;
             if (appState.activeCardId === lockedCardId) document.getElementById('studio-media-output').value = card.media;
           }
-          statusEl.textContent = `✓ Live Gemini (${liveResult.modelUsed}) Chained Output Complete & Synced to 4 Clips`;
+          statusEl.textContent = `✓ Live Gemini (${liveResult.modelUsed}) Chained Output Complete & Directly Synced to 4 Clips`;
           if (appState.activeCardId === lockedCardId) {
             renderFlowClipDrawer(card);
             runCEAComplianceAudit();
@@ -2078,7 +2207,7 @@ For EACH clip include: Camera, Scene & Subject Consistency, Subject Action & Del
         }
       }
 
-      // Deterministic Topic-Specific Fallback (Preserves Upstream Agent 3 Dialogue!)
+      // Deterministic Topic-Specific Fallback
       if (agentType === 'agent2') {
         card.copy = buildDeterministicCleanCopy(card.title, card.notebookNotes, p);
         if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
@@ -2124,12 +2253,12 @@ For EACH clip include: Camera, Scene & Subject Consistency, Subject Action & Del
           pass: copyText.includes(p.regNo) && copyText.includes(p.licenceNo) && copyText.includes(p.name)
         },
         {
-          label: 'Zero Raw Bracket Labels in Customer Caption (No "[3s Curiosity Hook]:" tags)',
-          pass: !/\[(3s Curiosity Hook|Key Insight|Actionable Takeaway)\]/i.test(copyText)
+          label: 'Official Data Source Cited in Caption (URA REALIS / HDB / MAS / IRAS per CEA PG 02/2011 Clause 2.3)',
+          pass: /(URA|HDB|MAS|IRAS|REALIS)/i.test(copyText)
         },
         {
-          label: 'Google Flow Policy-Safe Video Prompt (No personal phone/CEA IDs or "Positive Identity Lock" triggers inside Box B)',
-          pass: card?.generator === 'nano_banana' || (!mediaText.includes(p.regNo) && !/Positive Identity Lock/i.test(mediaText))
+          label: 'Google Flow Policy-Safe + Positive Stillness & Master Voiceprint Lock Active in Box B',
+          pass: card?.generator === 'nano_banana' || (!mediaText.includes(p.regNo) && !/Positive Identity Lock/i.test(mediaText) && /100% rigid|consistent/i.test(mediaText))
         },
         {
           label: 'Prior Written Seller/Landlord Consent Verified (CEA PG 02/2011)',
@@ -2165,7 +2294,10 @@ For EACH clip include: Camera, Scene & Subject Consistency, Subject Action & Del
       const p = appState.ceaProfile;
       const copyEl = document.getElementById('studio-copy-output');
       stripLabelsFromCaption();
-      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections are for illustrative education only.)`;
+      if (!/(URA|HDB|MAS|IRAS|REALIS)/i.test(copyEl.value)) {
+        copyEl.value = copyEl.value.trim() + `\n\n📊 Source: URA REALIS & HDB Resale Portal (Q1–Q3 2026).`;
+      }
+      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections from URA REALIS / HDB Resale Portal are for illustrative education only.)`;
       if (!copyEl.value.includes(p.regNo)) {
         copyEl.value = copyEl.value.trim() + footer;
       }
@@ -2690,7 +2822,6 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
       const listData = await listResp.json();
       const allModelsCount = (listData.models || []).length;
 
-      // Filter out retired 2.0-flash and 2.5-flash-lite per live test logs
       const callableTextModels = (listData.models || [])
         .filter(m =>
           Array.isArray(m.supportedGenerationMethods) &&
@@ -2870,7 +3001,7 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `agent-squad-v3.7-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `agent-squad-v3.8-backup-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }

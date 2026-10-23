@@ -915,3 +915,735 @@ function doGet() {
       let cleaned = String(promptText || '');
       if (p.name) {
         const escapedName = p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        cleaned = cleaned.replace(new RegExp(`Singapore real estate advisor\\s+${escapedName}`, 'gi'), 'the professional male real estate presenter in the frame');
+        cleaned = cleaned.replace(new RegExp(escapedName, 'gi'), 'the professional real estate presenter');
+      }
+      if (p.regNo) {
+        const escapedReg = p.regNo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        cleaned = cleaned.replace(new RegExp(escapedReg, 'gi'), '');
+      }
+      if (p.licenceNo) {
+        const escapedLic = p.licenceNo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        cleaned = cleaned.replace(new RegExp(escapedLic, 'gi'), '');
+      }
+      cleaned = cleaned
+        .replace(/\bR\d{6}[A-Z]\b/gi, '')
+        .replace(/\bL\d{7}[A-Z]\b/gi, '')
+        .replace(/\+65\s?\d{4}\s?\d{4}/g, '')
+        .replace(/Positive Identity Lock/gi, 'Subject Consistency')
+        .replace(/identity lock/gi, 'subject consistency')
+        .replace(/faithful to the uploaded starting frame/gi, 'consistent throughout the continuous take');
+      return cleaned;
+    }
+
+    function buildDeterministicCleanCopy(title, notebookNotes, profile) {
+      const p = profile || {
+        name: 'Luiz Lee',
+        regNo: 'R123456A',
+        agencyName: 'PropNex Realty Pte Ltd',
+        licenceNo: 'L3008022J',
+        phone: '+65 9123 4567'
+      };
+      const theme = detectTopicTheme(title, notebookNotes);
+      const factLine = notebookNotes
+        ? `📊 Verified Reference Note: ${notebookNotes}`
+        : `📊 Data Reference: URA REALIS & HDB Resale Portal Q3 2026 (exact unit/floor numbers masked per CEA guidelines).`;
+
+      const bodies = {
+        hdb_mop: `Most Singapore HDB owners treat their 5-year Minimum Occupation Period (MOP) like a finish line—when in reality, Year 5 to Year 7 is your strongest equity progression window.\n\n${factLine}\n\nBefore deciding whether to hold, right-size, or upgrade to a 3-bedroom condo, always stress-test your CPF Ordinary Account (OA) accrued interest alongside the 3.0%–4.0% MAS TDSR rate floor.\n\nComment "MOP" below and I will send you the 1-page 2026 HDB-to-Condo Cashflow & Reserve Worksheet.`,
+        d15_floorplan: `Shopping for a District 15 East Coast freehold 3-bedder in 2026? Never compare projects by headline PSF alone—layout efficiency determines your real liveable space.\n\n${factLine}\n\nA dumbbell 3-bedroom layout eliminates wasted hallway area and saves 65–85 sq ft compared to traditional corridor floorplans—translating to over $150,000 in capital efficiency.\n\nComment "D15" below for the 3 side-by-side floorplan overlays and URA PSF comparison sheet.`,
+        ec_vs_condo: `Upgrading from an HDB flat in 2026: should your family apply for a new Executive Condominium (EC) under the 30% MSR cap, or buy a resale private condo under the 55% TDSR framework?\n\n${factLine}\n\nThe right answer depends on whether you need immediate move-in timeline certainty or deferred progressive payment cashflow.\n\nComment "CASHFLOW" below to receive the side-by-side EC vs Resale Condo monthly CPF OA & cash outlay calculator.`,
+        absd_tdsr: `Planning a property portfolio move in 2026? Make sure your timeline and financing follow the latest official IRAS Stamp Duty and MAS TDSR brackets.\n\n${factLine}\n\nFor Singapore Citizen upgraders purchasing a second residential property before selling their existing home, the 20% ABSD remission timeline requires strict adherence to the 6-month sale condition.\n\nComment "TIMELINE" below and I will share the official IRAS & MAS upgrader checklist.`,
+        cov_hdb: `Worried about Cash-Over-Valuation (COV) eating into your 2026 HDB upgrade budget? Let's separate coffee-shop myths from actual HDB resale transaction records.\n\n${factLine}\n\nBy anchoring your offer to recent same-block or 200m-radius HDB registered valuations, you protect your cash reserve for stamp duties and renovation.\n\nComment "VALUATION" below for a custom recent transaction report for your town.`,
+        bishan_listing: `Looking for an unblocked high-floor 4-Room HDB flat within walking distance of Bishan MRT Junction 8?\n\n${factLine}\n\nSpacious regular layout with bright natural cross-ventilation and convenient access to North-South & Circle Line MRT interchanges.\n\nComment "BISHAN" or tap my WhatsApp contact below to arrange an exclusive viewing slot.`
+      };
+
+      const bodyText = bodies[theme] || bodies.hdb_mop;
+      return `${title}\n\n${bodyText}\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections are for illustrative education only and do not guarantee future performance.)`;
+    }
+
+    function buildGoogleFlowMultiClipPrompts(title, sec = 8, notebookNotes = '') {
+      const wordTarget = sec === 10 ? '24 words' : '20 words';
+      const theme = detectTopicTheme(title, notebookNotes);
+
+      const dialogueMap = {
+        hdb_mop: [
+          'Why do so many Singapore HDB owners lose asset progression momentum right after hitting their five-year MOP milestone?',
+          'First, look at how flat lease decay and accrued CPF interest quietly reduce your net cash proceeds after year eight.',
+          'Second, by structuring a fifty-five percent TDSR safety buffer early, you can upgrade comfortably without over-stretching monthly family cashflow.',
+          'Comment M-O-P below or message me on WhatsApp and I will send you the full progression math sheet today.'
+        ],
+        d15_floorplan: [
+          'Before you book a District Fifteen freehold condo viewing in 2026, stop looking only at headline price per square foot.',
+          'Look at this three-bedroom dumbbell floorplan—eliminating the long entrance hallway saves seventy-five square feet of dead space.',
+          'At two thousand four hundred dollars per square foot, that layout efficiency saves you over one hundred eighty thousand dollars.',
+          'Comment D-Fifteen below and I will send you all three East Coast floorplan overlays and URA transaction charts.'
+        ],
+        ec_vs_condo: [
+          'Before you upgrade from your HDB in 2026, should you buy a new Executive Condo or a resale private condo?',
+          'A new Executive Condo caps your mortgage at thirty percent MSR, while resale condos use the fifty-five percent TDSR limit.',
+          'Comparing your CPF Ordinary Account balance against progressive payment stages shows which option protects your family reserve best.',
+          'Comment CASHFLOW below and I will send you the side-by-side EC versus resale condo calculator on WhatsApp.'
+        ],
+        absd_tdsr: [
+          'If you are upgrading from an HDB to a private condo in 2026, timing your sale and purchase is critical.',
+          'Under IRAS rules, Singapore Citizen families qualifying for ABSD refund must sell their first home within six months.',
+          'Pairing that timeline with a four percent MAS stress-test interest rate ensures your bridge financing stays completely smooth.',
+          'Comment TIMELINE below to get the official step-by-step IRAS and MAS upgrader roadmap on WhatsApp.'
+        ]
+      };
+
+      const lines = dialogueMap[theme] || dialogueMap.hdb_mop;
+      const clips = [
+        {
+          clipNo: 1,
+          role: `Hook & Curiosity Gap (0–${sec}s)`,
+          spoken: lines[0],
+          prompt: `Camera: Slow, steady gimbal push-in from medium-waist framing to a medium close-up on an 85mm cinema lens, level horizon, shallow depth of field.\nScene & Subject Consistency: High-resolution portrait of the professional male presenter in the starting frame inside a sunlit modern Singapore property lounge overlooking the city skyline. The presenter's appearance, smart-casual attire, and studio background geometry remain stationary and consistent throughout the shot.\nSubject Action & Delivery: The presenter looks warmly into the camera lens, making a natural, measured hand gesture while speaking clearly in English: "${lines[0]}"\nLighting & Pacing: Soft golden-hour natural key light with subtle clouds drifting slowly across the skyline outside the window over a ${sec}-second continuous take.\nAudio: Clear, warm professional male studio voice (medium-low baritone timbre, calm advisory tone, 140 WPM cadence) synced naturally to the speaker saying: "${lines[0]}" Quiet indoor room tone; no background music.`
+        },
+        {
+          clipNo: 2,
+          role: `Core Data Insight 1 (${sec}–${sec * 2}s)`,
+          spoken: lines[1],
+          prompt: `Camera: Smooth, subtle lateral slider pan left-to-right at eye level on a 50mm rectilinear lens, maintaining crisp focus on the presenter.\nScene & Subject Consistency: Same sunlit Singapore architectural lounge and same male presenter from the starting frame. All walls, glass window frames, and furniture remain completely rigid and consistent.\nSubject Action & Delivery: The presenter gestures calmly toward a clean architectural folio on the table while speaking clearly to the camera: "${lines[1]}"\nLighting & Pacing: Consistent warm daylight illumination, smooth natural motion cadence over ${sec} seconds.\nAudio: Identical warm male baritone studio voice (140 WPM cadence, calm advisory tone) synced to the presenter saying: "${lines[1]}" Quiet room tone; no background music.`
+        },
+        {
+          clipNo: 3,
+          role: `Core Data Insight 2 (${sec * 2}–${sec * 3}s)`,
+          spoken: lines[2],
+          prompt: `Camera: Locked-off tripod medium close-up on an 85mm portrait lens with soft background bokeh.\nScene & Subject Consistency: Same presenter appearance, attire, and modern Singapore property studio environment locked to the starting frame.\nSubject Action & Delivery: The presenter nods reassuringly and counts two key points on his fingers while speaking clearly: "${lines[2]}"\nLighting & Pacing: Soft, even studio key light and subtle rim light over a ${sec}-second take.\nAudio: Identical warm male baritone studio voice (140 WPM cadence, calm advisory tone) synced to the presenter saying: "${lines[2]}" Quiet room tone; no background music.`
+        },
+        {
+          clipNo: 4,
+          role: `WhatsApp / DM Call-To-Action (${sec * 3}–${sec * 4}s)`,
+          spoken: lines[3],
+          prompt: `Camera: Gentle 5% dolly pull-back to a clean medium portrait frame, leaving lower-third breathing room for a compliance end-card overlay.\nScene & Subject Consistency: Same presenter and sunlit Singapore skyline lounge consistent with the starting frame.\nSubject Action & Delivery: The presenter smiles warmly and gestures invitingly toward the lower screen while speaking clearly: "${lines[3]}"\nLighting & Pacing: Warm golden-hour fill light, steady composed finish over ${sec} seconds.\nAudio: Identical warm male baritone studio voice (140 WPM cadence, friendly closing tone) synced to the presenter saying: "${lines[3]}" Quiet room tone; no background music.`
+        }
+      ];
+
+      const masterText = clips.map(c =>
+        `=== GOOGLE FLOW CLIP ${c.clipNo} OF 4 (${sec} SECONDS • ~${wordTarget}) — ${c.role} ===\n[Attachment Rule]: Attach your headshot as the Starting Frame in Google Flow (Policy-Safe Mode Active).\n${sanitizeForGoogleFlowPolicy(c.prompt)}`
+      ).join('\n\n');
+
+      return { clips, masterText };
+    }
+
+    function buildNanoBananaProsePrompt(title, notebookNotes = '', profile = null) {
+      const p = profile || ((typeof appState !== 'undefined' && appState && appState.ceaProfile)
+        ? appState.ceaProfile
+        : { name: 'Luiz Lee', regNo: 'R123456A', agencyName: 'PropNex Realty Pte Ltd', licenceNo: 'L3008022J', phone: '+65 9123 4567' });
+      const factSnippet = notebookNotes ? ` Incorporates data callout: "${notebookNotes}".` : '';
+      return `Create a vertical 4:5 editorial Singapore real estate infographic poster titled "${title}".${factSnippet} The centerpiece is a photorealistic 3D isometric cutaway floorplan of a bright, modern 3-bedroom Singapore condominium flooded with warm golden-hour sunlight, rendered with crisp architectural lines, natural oak flooring, and soft shadows. At the top, place a clean dark-navy header banner with bold white sans-serif typography reading "${title}" and a small subtle tag in the top-right corner reading "Artist's Impression • URA/HDB Data". Along the bottom edge, integrate a sleek frosted-glass compliance footer bar featuring the uploaded reference portrait photo of ${p.name} on the left, beside crisp legible text reading "${p.name} | CEA Reg No: ${p.regNo} | ${p.agencyName} (Licence: ${p.licenceNo})" and a green WhatsApp CTA pill reading "${p.phone}" on the right. Maintain the exact facial identity of the uploaded reference portrait photo and keep all architectural lines razor-sharp.`;
+    }
+
+    const DEFAULT_NOTEBOOKS = [
+      {
+        id: 'nb1',
+        title: 'URA REALIS & 5-Year HDB MOP Progression Pack (Q3 2026)',
+        url: 'https://notebooklm.google.com/',
+        facts: 'HDB 5-year MOP flats in mature/non-mature estates show peak equity velocity between Year 5 and Year 7; MAS 55% TDSR stress-test floor at 4.0% p.a.; exact unit/floor numbers masked per CEA.'
+      },
+      {
+        id: 'nb2',
+        title: 'District 15 Freehold 3BR Floorplan Efficiency & PSF Study',
+        url: 'https://notebooklm.google.com/',
+        facts: 'Dumbbell 3BR layouts save 65–85 sq ft of corridor space vs traditional layouts (~$165K–$200K capital efficiency at $2,450 PSF median in D15).'
+      },
+      {
+        id: 'nb3',
+        title: 'CEA Practice Guidelines PG 02/2011 & CEPCC Advertising Rules',
+        url: 'https://notebooklm.google.com/',
+        facts: 'Every property advertisement must display 5 mandatory particulars (Name, CEA Reg No, Agency Name, Licence No, Contact), have prior written owner consent, label Artist Impressions, and avoid guaranteed return claims.'
+      },
+      {
+        id: 'nb4',
+        title: 'EC vs Resale Private Condo: MSR 30% vs TDSR 55% Cashflow Matrix',
+        url: 'https://notebooklm.google.com/',
+        facts: 'New Executive Condos are subject to 30% MSR and $16,000 household income ceiling, whereas resale private condos follow 55% TDSR with immediate occupancy.'
+      },
+      {
+        id: 'nb5',
+        title: 'IRAS 2026 ABSD Remission & 6-Month Upgrader Sale Timeline',
+        url: 'https://notebooklm.google.com/',
+        facts: 'Married Singapore Citizen couples upgrading to a second home must dispose of their first residential property within 6 months of exercising OTP/TOP to qualify for 20% ABSD refund.'
+      },
+      {
+        id: 'nb6',
+        title: 'HDB Cash-Over-Valuation (COV) & Registered Valuation Guide',
+        url: 'https://notebooklm.google.com/',
+        facts: 'HDB buyers can only request official HDB valuation after obtaining an Option to Purchase (OTP); benchmarking 200m-radius past transactions prevents unexpected cash outlay.'
+      }
+    ];
+
+    const DEFAULT_CEA_PROFILE = {
+      name: 'Luiz Lee',
+      regNo: 'R123456A',
+      agencyName: 'PropNex Realty Pte Ltd',
+      licenceNo: 'L3008022J',
+      phone: '+65 9123 4567',
+      avatarDataUrl: ''
+    };
+
+    const DEFAULT_CARDS = [
+      {
+        id: 'c1',
+        title: 'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026',
+        format: 'Video (Reels/TikTok/Shorts)',
+        generator: 'google_flow',
+        clipDuration: '8',
+        notebookId: 'nb1',
+        notebookNotes: DEFAULT_NOTEBOOKS[0].facts,
+        driveLink: '',
+        channels: 'FB, IG Reels, TikTok, YT Shorts',
+        stage: 'In Progress',
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', DEFAULT_NOTEBOOKS[0].facts, DEFAULT_CEA_PROFILE),
+        media: buildGoogleFlowMultiClipPrompts('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', 8, DEFAULT_NOTEBOOKS[0].facts).masterText
+      },
+      {
+        id: 'c2',
+        title: '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)',
+        format: 'Image/Flyer Carousel',
+        generator: 'nano_banana',
+        clipDuration: '8',
+        notebookId: 'nb2',
+        notebookNotes: DEFAULT_NOTEBOOKS[1].facts,
+        driveLink: '',
+        channels: 'FB, IG Reels',
+        stage: 'Agent Proposed Topics',
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', DEFAULT_NOTEBOOKS[1].facts, DEFAULT_CEA_PROFILE),
+        media: buildNanoBananaProsePrompt('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', DEFAULT_NOTEBOOKS[1].facts, DEFAULT_CEA_PROFILE)
+      },
+      {
+        id: 'c3',
+        title: 'ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check',
+        format: 'Video (Reels/TikTok/Shorts)',
+        generator: 'google_flow',
+        clipDuration: '8',
+        notebookId: 'nb5',
+        notebookNotes: DEFAULT_NOTEBOOKS[4].facts,
+        driveLink: '',
+        channels: 'TikTok, IG Reels, YT Shorts',
+        stage: 'Human Select',
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy('ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check', DEFAULT_NOTEBOOKS[4].facts, DEFAULT_CEA_PROFILE),
+        media: buildGoogleFlowMultiClipPrompts('ABSD & Decoupling Myths vs MAS/IRAS 2026 Reality Check', 8, DEFAULT_NOTEBOOKS[4].facts).masterText
+      },
+      {
+        id: 'c4',
+        title: 'Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)',
+        format: 'Image/Flyer Carousel',
+        generator: 'nano_banana',
+        clipDuration: '8',
+        notebookId: 'nb3',
+        notebookNotes: DEFAULT_NOTEBOOKS[2].facts,
+        driveLink: '',
+        channels: 'FB, IG Reels, TikTok',
+        stage: 'Ready',
+        ownerConsent: false,
+        exceptionState: 'Blocked',
+        exceptionOwner: 'Luiz Lee (Human Leader)',
+        exceptionReason: 'Awaiting Seller signed CEA Written Consent to Advertise form before Agent 4A renders flyer.',
+        copy: buildDeterministicCleanCopy('Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)', DEFAULT_NOTEBOOKS[2].facts, DEFAULT_CEA_PROFILE),
+        media: buildNanoBananaProsePrompt('Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)', DEFAULT_NOTEBOOKS[2].facts, DEFAULT_CEA_PROFILE)
+      },
+      {
+        id: 'c5',
+        title: 'EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison',
+        format: 'Video (Reels/TikTok/Shorts)',
+        generator: 'google_flow',
+        clipDuration: '8',
+        notebookId: 'nb4',
+        notebookNotes: DEFAULT_NOTEBOOKS[3].facts,
+        driveLink: '',
+        channels: 'FB, IG Reels',
+        stage: 'Human Review',
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', DEFAULT_NOTEBOOKS[3].facts, DEFAULT_CEA_PROFILE),
+        media: buildGoogleFlowMultiClipPrompts('EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison', 8, DEFAULT_NOTEBOOKS[3].facts).masterText
+      },
+      {
+        id: 'c6',
+        title: 'Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF',
+        format: 'Video (Reels/TikTok/Shorts)',
+        generator: 'google_flow',
+        clipDuration: '8',
+        notebookId: 'nb1',
+        notebookNotes: DEFAULT_NOTEBOOKS[0].facts,
+        driveLink: '',
+        channels: 'FB, TikTok, IG Reels, YT Shorts',
+        stage: 'Measured',
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', DEFAULT_NOTEBOOKS[0].facts, DEFAULT_CEA_PROFILE),
+        media: buildGoogleFlowMultiClipPrompts('Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF', 8, DEFAULT_NOTEBOOKS[0].facts).masterText
+      }
+    ];
+
+    const DEFAULT_LEADS = [
+      {
+        id: 'l1',
+        name: 'Kelvin & Rachel Tan (+65 9122 3344)',
+        source: 'TikTok MOP Video (Post #c1)',
+        stage: '3. Financial/MOP Consult Booked',
+        bant: 'SC • Punggol 4RM HDB (MOP Nov 2026) • Budget $1.85M • IPA In Progress',
+        task: 'Prepare progression cashflow deck before Thursday 8pm Zoom',
+        overdue: false
+      },
+      {
+        id: 'l2',
+        name: 'Marcus Lim (+65 9655 7788)',
+        source: 'IG Reels D15 Carousel (Post #c2)',
+        stage: '4. Viewing Active',
+        bant: 'SC • Buyer • Looking at D15 Freehold 3BR • IPA Approved ($2.4M)',
+        task: 'SLA ALERT: 48h since Saturday viewing — Send WhatsApp feedback check-in now',
+        overdue: true
+      },
+      {
+        id: 'l3',
+        name: 'Cheryl Ng (+65 8233 9900)',
+        source: 'WhatsApp Direct Link (FB Page)',
+        stage: '2. AI Qualifying',
+        bant: 'PR • First-time Condo Buyer • Clarifying ABSD 5% bracket & timeline',
+        task: 'Agent 8 qualifying IPA readiness automatically',
+        overdue: false
+      }
+    ];
+
+    const DEFAULT_TELEMETRY = [
+      { topic: 'HDB MOP 5-Year Progression Math (Flow Video)', hold: 79, leads: 9, verdict: 'Scale Hook' },
+      { topic: '3 Under-Valued D15 Freehold Floorplans (Nano Banana)', hold: 71, leads: 7, verdict: 'High Saves' },
+      { topic: 'Generic Condo Walkthrough Without Hook (Video)', hold: 38, leads: 0, verdict: 'Deprecate Intro' }
+    ];
+
+    function loadSavedJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        return parsed || fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const appState = {
+      theme: localStorage.getItem('squad_theme') || 'light',
+      preferredModel: localStorage.getItem('squad_preferred_model') || 'auto',
+      discoveredModels: [],
+      activeCardId: 'c1',
+      crmStageFilter: 'ALL',
+      pendingExceptionCardId: null,
+      driveFolderUrl: localStorage.getItem('squad_drive_folder') || '',
+      cloudSyncUrl: localStorage.getItem('squad_cloud_sync_url') || '',
+      ceaProfile: loadSavedJSON('squad_cea_profile', DEFAULT_CEA_PROFILE),
+      notebooks: loadSavedJSON('squad_notebooks_v35', DEFAULT_NOTEBOOKS),
+      viralMemory: loadSavedJSON('squad_viral_memory_v35', [
+        'Hook Rule #1: Numbers + Specific District/MOP Year in first 2.5 seconds boosts 3s Hold Rate to >75%.',
+        'Flow Rule #2: Split short-form videos into 8-second (~20 words) or 10-second (~24 words) continuous takes with identical voice timbre & policy-safe presenter descriptions.',
+        'Nano Banana Rule #3: Use descriptive full-sentence prose (never Midjourney --ar flags) and attach reference photo.',
+        'CEA Rule #4: Always mask exact unit/floor numbers when citing URA REALIS transaction gains.'
+      ]),
+      cards: loadSavedJSON('squad_cards_v35', DEFAULT_CARDS),
+      leads: loadSavedJSON('squad_leads_v35', DEFAULT_LEADS),
+      telemetry: loadSavedJSON('squad_telemetry_v35', DEFAULT_TELEMETRY),
+      waMessages: loadSavedJSON('squad_wa_msgs_v35', [
+        { sender: 'lead', name: 'Darren Koh (+65 9876 1122)', text: 'Hi Luiz! Saw your TikTok reel on the 5-year HDB MOP math. Our Tampines BTO hits MOP in 4 months. Can we upgrade without selling first?', time: '8:42 PM' },
+        { sender: 'ai', name: 'Agent 8 (AI Assistant for Luiz Lee)', text: 'Hi Darren! Thanks for reaching out to Luiz Lee (CEA Reg: R123456A, PropNex). Congrats on your upcoming Tampines MOP! To help Luiz prepare an accurate timeline & ABSD/bridge calculation for you:\n1) Are both owners Singapore Citizens (SC)?\n2) Have you done an initial mortgage IPA check yet?', time: '8:42 PM' }
+      ])
+    };
+
+    function persistMasterState() {
+      try {
+        localStorage.setItem('squad_cea_profile', JSON.stringify(appState.ceaProfile));
+        localStorage.setItem('squad_notebooks_v35', JSON.stringify(appState.notebooks));
+        localStorage.setItem('squad_viral_memory_v35', JSON.stringify(appState.viralMemory));
+        localStorage.setItem('squad_cards_v35', JSON.stringify(appState.cards));
+        localStorage.setItem('squad_leads_v35', JSON.stringify(appState.leads));
+        localStorage.setItem('squad_telemetry_v35', JSON.stringify(appState.telemetry));
+        localStorage.setItem('squad_wa_msgs_v35', JSON.stringify(appState.waMessages));
+      } catch (e) {
+        console.warn('Local persistence warning:', e);
+      }
+    }
+
+    function applyTheme() {
+      const html = document.documentElement;
+      if (appState.theme === 'dark') {
+        html.classList.add('dark');
+        html.classList.remove('light');
+      } else {
+        html.classList.remove('dark');
+        html.classList.add('light');
+      }
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.setAttribute('data-lucide', appState.theme === 'dark' ? 'sun' : 'moon');
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    function toggleTheme() {
+      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('squad_theme', appState.theme);
+      applyTheme();
+    }
+
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`view-${tabKey}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabKey) {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+        }
+      });
+
+      if (tabKey === 'studio') {
+        populateStudioSelector();
+        populateNotebookDropdown();
+        loadCardIntoStudio(appState.activeCardId);
+      } else if (tabKey === 'crm') {
+        renderCRMStageFilterBar();
+        renderCRMLeads();
+        renderWhatsAppChat();
+      } else if (tabKey === 'traffic') {
+        renderTelemetryTable();
+        renderViralMemory();
+      } else if (tabKey === 'notebook') {
+        renderNotebookVault();
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // =====================================================================
+    // VIEW 1: KANBAN BOARD & AGENT 1 CONTEXT-AWARE TOPIC MINER
+    // =====================================================================
+    function renderKanbanBoard() {
+      const container = document.getElementById('kanban-columns-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const activeCards = appState.cards.filter(c => !c.exceptionState);
+      const countEl = document.getElementById('badge-board-count');
+      if (countEl) countEl.textContent = appState.cards.length;
+
+      WORKFLOW_STAGES.forEach((stage, idx) => {
+        const col = document.createElement('div');
+        col.className = 'w-72 shrink-0 bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 rounded-2xl p-3 flex flex-col justify-between space-y-3';
+
+        const stageCards = activeCards.filter(c => c.stage === stage);
+
+        let cardsHtml = stageCards.map(c => {
+          const isVideo = c.format.includes('Video');
+          const prevStage = idx > 0 ? WORKFLOW_STAGES[idx - 1] : null;
+          const nextStage = idx < WORKFLOW_STAGES.length - 1 ? WORKFLOW_STAGES[idx + 1] : null;
+
+          return `
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2.5 hover:border-indigo-500 transition">
+              <div class="flex items-center justify-between gap-1">
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${isVideo ? 'bg-violet-500/15 text-violet-600 dark:text-violet-300' : 'bg-amber-500/15 text-amber-600 dark:text-amber-300'}">
+                  ${isVideo ? '🎥 Google Flow' : '🍌 Nano Banana'}
+                </span>
+                <button onclick="deleteCard('${escapeHTML(c.id)}')" class="text-[10px] text-slate-400 hover:text-rose-500" title="Delete card">✕</button>
+              </div>
+              <div class="font-bold text-xs leading-snug cursor-pointer hover:text-indigo-600" onclick="openCardInStudio('${escapeHTML(c.id)}')">${escapeHTML(c.title)}</div>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-900 text-[10px]">
+                <div class="flex gap-1">
+                  ${prevStage ? `<button onclick="moveCardStage('${escapeHTML(c.id)}', '${escapeHTML(prevStage)}')" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">←</button>` : ''}
+                  ${nextStage ? `<button onclick="moveCardStage('${escapeHTML(c.id)}', '${escapeHTML(nextStage)}')" class="px-2 py-0.5 rounded bg-indigo-600 text-white font-bold hover:bg-indigo-500">Next →</button>` : ''}
+                </div>
+                <div class="flex gap-1">
+                  <button onclick="openCardInStudio('${escapeHTML(c.id)}')" class="px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-300 font-semibold">Studio</button>
+                  <button onclick="openExceptionModal('${escapeHTML(c.id)}')" class="px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 font-semibold">Flag</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (!cardsHtml) {
+          cardsHtml = `<div class="p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-800 text-center text-[11px] text-slate-400">No cards in stage</div>`;
+        }
+
+        col.innerHTML = `
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between px-1">
+              <span class="text-xs font-extrabold truncate">${idx + 1}. ${escapeHTML(stage)}</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">${stageCards.length}</span>
+            </div>
+            <div class="space-y-2.5">${cardsHtml}</div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+
+      renderExceptionZones();
+      persistMasterState();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function deleteCard(cardId) {
+      appState.cards = appState.cards.filter(c => c.id !== cardId);
+      if (appState.activeCardId === cardId && appState.cards.length) {
+        appState.activeCardId = appState.cards[0].id;
+      }
+      renderKanbanBoard();
+    }
+
+    function renderExceptionZones() {
+      const blockedCards = appState.cards.filter(c => c.exceptionState === 'Blocked');
+      const reworkCards = appState.cards.filter(c => c.exceptionState === 'Rework');
+
+      document.getElementById('count-blocked').textContent = blockedCards.length;
+      document.getElementById('count-rework').textContent = reworkCards.length;
+
+      document.getElementById('list-blocked').innerHTML = blockedCards.length ? blockedCards.map(c => `
+        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-800 flex items-start justify-between gap-3 text-xs">
+          <div class="space-y-1">
+            <div class="font-bold text-rose-700 dark:text-rose-300">${escapeHTML(c.title)} <span class="text-[10px] font-normal text-slate-400">(${escapeHTML(c.stage)})</span></div>
+            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
+            <div class="text-[11px] font-mono text-rose-600 dark:text-rose-400"><strong>Owner:</strong> ${escapeHTML(c.exceptionOwner)}</div>
+          </div>
+          <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold shrink-0">Resolve & Resume</button>
+        </div>
+      `).join('') : `<div class="text-xs text-slate-400 italic">Zero blocked cards.</div>`;
+
+      document.getElementById('list-rework').innerHTML = reworkCards.length ? reworkCards.map(c => `
+        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 flex items-start justify-between gap-3 text-xs">
+          <div class="space-y-1">
+            <div class="font-bold text-amber-700 dark:text-amber-300">${escapeHTML(c.title)} <span class="text-[10px] font-normal text-slate-400">(${escapeHTML(c.stage)})</span></div>
+            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Rework Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
+            <div class="text-[11px] font-mono text-amber-600 dark:text-amber-400"><strong>Owner:</strong> ${escapeHTML(c.exceptionOwner)}</div>
+          </div>
+          <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[11px] font-bold shrink-0">Fix in Studio</button>
+        </div>
+      `).join('') : `<div class="text-xs text-slate-400 italic">Zero cards in rework.</div>`;
+    }
+
+    function moveCardStage(cardId, targetStage) {
+      const card = appState.cards.find(c => c.id === cardId);
+      if (!card) return;
+      if (targetStage === 'Human Review' && !card.ownerConsent) {
+        card.exceptionState = 'Blocked';
+        card.exceptionOwner = 'Luiz Lee (Human Leader)';
+        card.exceptionReason = 'Agent 5 Auto-Block: Missing verified Seller Written Consent Form (CEA PG 02/2011).';
+        renderKanbanBoard();
+        return;
+      }
+      card.stage = targetStage;
+      renderKanbanBoard();
+    }
+
+    function openExceptionModal(cardId) {
+      appState.pendingExceptionCardId = cardId;
+      document.getElementById('exc-reason-input').value = '';
+      document.getElementById('exception-modal').classList.remove('hidden');
+    }
+
+    function closeExceptionModal() {
+      document.getElementById('exception-modal').classList.add('hidden');
+    }
+
+    function confirmExceptionState() {
+      const card = appState.cards.find(c => c.id === appState.pendingExceptionCardId);
+      if (!card) return;
+      card.exceptionState = document.getElementById('exc-state-select').value;
+      card.exceptionOwner = document.getElementById('exc-owner-select').value;
+      card.exceptionReason = document.getElementById('exc-reason-input').value.trim() || 'Quality/Compliance revision required.';
+      closeExceptionModal();
+      renderKanbanBoard();
+    }
+
+    function resolveException(cardId) {
+      const card = appState.cards.find(c => c.id === cardId);
+      if (!card) return;
+      card.exceptionState = null;
+      card.ownerConsent = true;
+      renderKanbanBoard();
+      openCardInStudio(cardId);
+    }
+
+    function openNewCardModal() {
+      document.getElementById('new-card-title').value = '';
+      document.getElementById('new-card-modal').classList.remove('hidden');
+    }
+
+    function closeNewCardModal() {
+      document.getElementById('new-card-modal').classList.add('hidden');
+    }
+
+    function createCustomTopicCard() {
+      const title = document.getElementById('new-card-title').value.trim();
+      if (!title) return;
+      const format = document.getElementById('new-card-format').value;
+      const stage = document.getElementById('new-card-stage').value;
+      const isVideo = format.includes('Video');
+      const nb = appState.notebooks[0] || DEFAULT_NOTEBOOKS[0];
+
+      const newCard = {
+        id: 'c' + Date.now(),
+        title,
+        format,
+        generator: isVideo ? 'google_flow' : 'nano_banana',
+        clipDuration: '8',
+        notebookId: nb.id,
+        notebookNotes: nb.facts,
+        driveLink: '',
+        channels: 'FB, IG Reels, TikTok, YT Shorts',
+        stage,
+        ownerConsent: true,
+        exceptionState: null,
+        exceptionOwner: null,
+        exceptionReason: null,
+        copy: buildDeterministicCleanCopy(title, nb.facts, appState.ceaProfile),
+        media: isVideo
+          ? buildGoogleFlowMultiClipPrompts(title, 8, nb.facts).masterText
+          : buildNanoBananaProsePrompt(title, nb.facts, appState.ceaProfile)
+      };
+      appState.cards.unshift(newCard);
+      closeNewCardModal();
+      renderKanbanBoard();
+      openCardInStudio(newCard.id);
+    }
+
+    // AGENT 1: Context-Aware Topic Miner (Reads All 9 Stages + NotebookLM + Viral RAG Memory)
+    async function triggerAgent1Pitch() {
+      const btn = document.getElementById('btn-agent1-pitch');
+      const originalHtml = btn ? btn.innerHTML : '+ Agent 1: Mine Viral Topic';
+      if (btn) btn.textContent = 'Agent 1 Scanning 9 Stages...';
+
+      try {
+        const existingTitles = appState.cards.map(c => c.title.toLowerCase());
+        const nb = appState.notebooks[Math.floor(Math.random() * appState.notebooks.length)] || DEFAULT_NOTEBOOKS[0];
+        const apiKey = await loadDecryptedGeminiKey();
+
+        let minedTitle = '';
+        let minedFormat = 'Video (Reels/TikTok/Shorts)';
+
+        if (apiKey) {
+          try {
+            const prompt = `You are Agent 1 (Singapore Real Estate Viral Topic Miner).
+Existing pipeline topics Across All 9 Stages (DO NOT repeat these): ${JSON.stringify(appState.cards.map(c => c.title))}.
+Winning Viral RAG Rules: ${JSON.stringify(appState.viralMemory)}.
+Grounded NotebookLM Facts: "${nb.title} — ${nb.facts}".
+Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 that does NOT overlap with existing topics. Return ONLY the plain headline text (under 16 words, no quotes, no labels).`;
+            const res = await callGeminiDirect(apiKey, prompt);
+            minedTitle = res.text.replace(/^["']|["']$/g, '').trim();
+          } catch (e) {
+            console.warn('Agent 1 fallback used:', e);
+          }
+        }
+
+        if (!minedTitle) {
+          const candidatePool = [
+            { title: '2026 HDB Upgrader Blindspot: Why Cash-Over-Valuation (COV) Myths Cost Buyers Time', format: 'Video (Reels/TikTok/Shorts)', nbId: 'nb6' },
+            { title: 'OCR vs RCR 3-Bedroom PSF Gap Narrowing: 4 URA Charts Every Family Should Save', format: 'Image/Flyer Carousel', nbId: 'nb2' },
+            { title: 'How the 55% TDSR Stress-Test Floor Impacts Commission & Bonus Earners in 2026', format: 'Video (Reels/TikTok/Shorts)', nbId: 'nb1' },
+            { title: 'Married SC Upgraders: How the 6-Month IRAS ABSD Refund Timeline Really Works', format: 'Video (Reels/TikTok/Shorts)', nbId: 'nb5' },
+            { title: 'New Executive Condo (30% MSR) vs Resale Condo (55% TDSR): 2026 Cashflow Showdown', format: 'Image/Flyer Carousel', nbId: 'nb4' }
+          ];
+          const unpicked = candidatePool.find(p => !existingTitles.includes(p.title.toLowerCase())) || candidatePool[0];
+          minedTitle = unpicked.title;
+          minedFormat = unpicked.format;
+        }
+
+        const isVideo = minedFormat.includes('Video');
+        const newCard = {
+          id: 'c' + Date.now(),
+          title: minedTitle,
+          format: minedFormat,
+          generator: isVideo ? 'google_flow' : 'nano_banana',
+          clipDuration: '8',
+          notebookId: nb.id,
+          notebookNotes: nb.facts,
+          driveLink: '',
+          channels: 'FB, IG Reels, TikTok, YT Shorts',
+          stage: 'Agent Proposed Topics',
+          ownerConsent: true,
+          exceptionState: null,
+          exceptionOwner: null,
+          exceptionReason: null,
+          copy: buildDeterministicCleanCopy(minedTitle, nb.facts, appState.ceaProfile),
+          media: isVideo
+            ? buildGoogleFlowMultiClipPrompts(minedTitle, 8, nb.facts).masterText
+            : buildNanoBananaProsePrompt(minedTitle, nb.facts, appState.ceaProfile)
+        };
+        appState.cards.unshift(newCard);
+        renderKanbanBoard();
+      } finally {
+        if (btn) {
+          btn.innerHTML = originalHtml;
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    }
+
+    // =====================================================================
+    // VIEW 2: 9-AGENT CHAINED STUDIO, FLOW CLIP SPLITTER & CEA AUDIT
+    // =====================================================================
+    function openCardInStudio(cardId) {
+      appState.activeCardId = cardId;
+      switchTab('studio');
+    }
+
+    function populateStudioSelector() {
+      const sel = document.getElementById('studio-card-selector');
+      if (!sel) return;
+      sel.innerHTML = appState.cards.map(c =>
+        `<option value="${escapeHTML(c.id)}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${escapeHTML(c.stage)}] ${escapeHTML(c.title.slice(0, 45))}...</option>`
+      ).join('');
+    }
+
+    function populateNotebookDropdown() {
+      const sel = document.getElementById('studio-notebook-selector');
+      if (!sel) return;
+      sel.innerHTML = appState.notebooks.map(nb =>
+        `<option value="${escapeHTML(nb.id)}">📚 ${escapeHTML(nb.title)}</option>`
+      ).join('');
+    }
+
+    function applyNotebookSourceToCard(nbId) {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      const nb = appState.notebooks.find(n => n.id === nbId);
+      if (!card || !nb) return;
+      card.notebookId = nb.id;
+      card.notebookNotes = nb.facts;
+      document.getElementById('studio-notebook-notes').value = nb.facts;
+      persistMasterState();
+    }
+
+    function loadCardIntoStudio(cardId) {
+      appState.activeCardId = cardId;
+      const card = appState.cards.find(c => c.id === cardId) || appState.cards[0];
+      if (!card) return;
+
+      document.getElementById('studio-format').value = card.format || 'Video (Reels/TikTok/Shorts)';
+      document.getElementById('studio-generator').value = card.generator || (card.format.includes('Video') ? 'google_flow' : 'nano_banana');
+      document.getElementById('studio-clip-duration').value = card.clipDuration || '8';
+      document.getElementById('studio-owner-consent').checked = Boolean(card.ownerConsent);
+      document.getElementById('studio-notebook-selector').value = card.notebookId || (appState.notebooks[0]?.id || 'nb1');
+      document.getElementById('studio-notebook-notes').value = card.notebookNotes || '';
+      document.getElementById('studio-drive-link').value = card.driveLink || '';
+      document.getElementById('studio-topic').value = card.title;
+      document.getElementById('studio-copy-output').value = card.copy;
+      document.getElementById('studio-media-output').value = card.media;
+      document.getElementById('preview-headline').textContent = card.title;

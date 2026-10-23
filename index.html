@@ -1647,3 +1647,994 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       document.getElementById('studio-copy-output').value = card.copy;
       document.getElementById('studio-media-output').value = card.media;
       document.getElementById('preview-headline').textContent = card.title;
+      document.getElementById('preview-format-tag').textContent = card.generator === 'nano_banana' ? 'NANO BANANA 4:5 FLYER' : `GOOGLE FLOW ${card.clipDuration || 8}S MULTI-CLIP`;
+
+      renderFlowClipDrawer(card);
+      runCEAComplianceAudit();
+    }
+
+    function updateStudioCardField(field, val) {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (!card) return;
+      card[field] = val;
+
+      if (field === 'format') {
+        card.generator = val.includes('Video') ? 'google_flow' : 'nano_banana';
+        document.getElementById('studio-generator').value = card.generator;
+      }
+      if (field === 'generator' || field === 'clipDuration' || field === 'title') {
+        const sec = parseInt(card.clipDuration || '8', 10);
+        if (card.generator === 'google_flow') {
+          card.media = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes).masterText;
+        } else {
+          card.media = buildNanoBananaProsePrompt(card.title, card.notebookNotes, appState.ceaProfile);
+        }
+        document.getElementById('studio-media-output').value = card.media;
+        renderFlowClipDrawer(card);
+      }
+
+      document.getElementById('preview-headline').textContent = card.title;
+      document.getElementById('preview-format-tag').textContent = card.generator === 'nano_banana' ? 'NANO BANANA 4:5 FLYER' : `GOOGLE FLOW ${card.clipDuration || 8}S MULTI-CLIP`;
+      runCEAComplianceAudit();
+      renderKanbanBoard();
+    }
+
+    function renderFlowClipDrawer(card) {
+      const drawer = document.getElementById('flow-clips-drawer');
+      if (!drawer) return;
+      if (card.generator !== 'google_flow') {
+        drawer.innerHTML = '';
+        return;
+      }
+      const sec = parseInt(card.clipDuration || '8', 10);
+      const pack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes);
+      drawer.innerHTML = `
+        <div class="text-[11px] font-extrabold text-violet-600 dark:text-violet-400">Individual ${sec}-Second Policy-Safe Clips for Google Flow (Click to Copy 1 Clip at a Time):</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          ${pack.clips.map(c => {
+            const safePrompt = sanitizeForGoogleFlowPolicy(c.prompt);
+            return `
+              <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-violet-500/30 flex flex-col justify-between gap-2">
+                <div>
+                  <div class="flex items-center justify-between text-[10px] font-bold text-violet-600 dark:text-violet-300">
+                    <span>CLIP ${c.clipNo} (${sec}s) — ${escapeHTML(c.role)}</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 italic">"${escapeHTML(c.spoken)}"</p>
+                </div>
+                <button onclick="copyDirectText(${JSON.stringify(safePrompt).replace(/"/g, '&quot;')}, this)" class="w-full py-1.5 rounded-lg bg-violet-600/15 hover:bg-violet-600 text-violet-700 dark:text-violet-300 hover:text-white text-[11px] font-bold transition">
+                  Copy Policy-Safe Clip ${c.clipNo} Prompt
+                </button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function sanitizeCurrentMediaPrompt() {
+      const mediaEl = document.getElementById('studio-media-output');
+      if (!mediaEl) return;
+      mediaEl.value = sanitizeForGoogleFlowPolicy(mediaEl.value);
+      runCEAComplianceAudit();
+    }
+
+    function copyDirectText(text, btn) {
+      navigator.clipboard.writeText(text);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied to Clipboard!';
+      setTimeout(() => { btn.textContent = orig; }, 1600);
+    }
+
+    function copyBoxText(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.value);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = orig; }, 1600);
+    }
+
+    function stripLabelsFromCaption() {
+      const el = document.getElementById('studio-copy-output');
+      if (!el) return;
+      el.value = el.value
+        .replace(/\[(3s Curiosity Hook|Hook|0-3s Hook|Key Insight|Actionable Takeaway|CTA)[^\]]*\]:?\s*/gi, '')
+        .replace(/^(1️⃣|2️⃣|💬)\s*(Key Insight|Actionable Takeaway):?\s*/gim, '');
+      runCEAComplianceAudit();
+    }
+
+    // Chained Execution: Agent 2 -> Agent 3 -> Agent 4A/4B -> Agent 5
+    async function runFullChainedPipeline() {
+      await runAgentInStudio('agent2');
+      await runAgentInStudio('agent3');
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (card && card.generator === 'nano_banana') {
+        await runAgentInStudio('agent4a');
+      } else {
+        await runAgentInStudio('agent4b');
+      }
+    }
+
+    async function runAgentInStudio(agentType) {
+      const lockedCardId = appState.activeCardId;
+      const card = appState.cards.find(c => c.id === lockedCardId);
+      if (!card) return;
+      const statusEl = document.getElementById('agent-run-status');
+      const p = appState.ceaProfile;
+      const sec = parseInt(card.clipDuration || '8', 10);
+      const wordLimit = sec === 10 ? 24 : 20;
+
+      statusEl.textContent = `Running ${agentType.toUpperCase()} (Chained Context + NotebookLM Grounded)...`;
+      const apiKey = await loadDecryptedGeminiKey();
+
+      if (apiKey) {
+        try {
+          const promptMap = {
+            agent2: `You are Agent 2 (Singapore Real Estate Viral Copywriter) for ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}, Licence: ${p.licenceNo}, Contact: ${p.phone}).
+Topic: "${card.title}".
+Grounded NotebookLM Facts: "${card.notebookNotes}".
+Winning RAG Rules: ${JSON.stringify(appState.viralMemory)}.
+Write a clean, ready-to-post social media caption for Facebook, IG Reels, TikTok, and YouTube Shorts.
+CRITICAL RULES:
+1. DO NOT include internal bracket labels like "[3s Curiosity Hook]:" or "[Key Insight]:"—output ONLY clean, natural customer-facing paragraphs.
+2. Cite the grounded NotebookLM data naturally and mask exact unit/floor numbers.
+3. End with a single keyword DM trigger and the 5 mandatory CEA particulars footer + illustrative disclaimer.`,
+            agent3: `You are Agent 3 (Short-Form Video Retention Scriptwriter).
+Topic: "${card.title}".
+Upstream Agent 2 Social Copy: "${card.copy}".
+Grounded NotebookLM Facts: "${card.notebookNotes}".
+Write a 4-clip spoken storyboard where EACH clip is strictly ${sec} seconds long (maximum ${wordLimit} spoken English words per clip so Google Flow never cuts off mid-sentence).
+Label clearly: Clip 1 (0-${sec}s Hook), Clip 2 (${sec}-${sec*2}s Data Point 1), Clip 3 (${sec*2}-${sec*3}s Data Point 2), Clip 4 (${sec*3}-${sec*4}s WhatsApp CTA).`,
+            agent4a: `You are Agent 4A (Nano Banana Gemini Image Prompt Engineer).
+Topic: "${card.title}".
+Grounded Facts: "${card.notebookNotes}".
+Write a natural-language descriptive prose prompt (NO Midjourney --ar flags) for a 4:5 vertical Singapore real estate infographic poster. Include 3D isometric cutaway floorplan details, top headline typography, subtle "Artist's Impression" tag, and a frosted-glass bottom compliance footer featuring the uploaded reference portrait photo of ${p.name} alongside "${p.name} | CEA Reg No: ${p.regNo} | ${p.agencyName} (Licence: ${p.licenceNo}) | ${p.phone}".`,
+            agent4b: `You are Agent 4B (Google Flow Veo 3.1 Multi-Clip Video Prompt Engineer).
+Topic: "${card.title}".
+Upstream Script Context: "${card.media}".
+Generate 4 copy-ready Google Flow prompts (${sec} seconds each, max ${wordLimit} spoken words per clip).
+POLICY-SAFE GUARDRAIL: Do NOT include real human names, phone numbers, or CEA registration IDs inside the video prompt. Refer to the speaker strictly as "the professional male real estate presenter in the frame" and use "Scene & Subject Consistency" (never "Positive Identity Lock").
+For EACH clip include: Camera, Scene & Subject Consistency, Subject Action & Delivery (with exact spoken dialogue in quotes), Lighting & Pacing, and Audio (identical warm male baritone studio voice, 140 WPM, quiet room tone, no music).`
+          };
+
+          const liveResult = await callGeminiDirect(apiKey, promptMap[agentType]);
+          if (agentType === 'agent2') {
+            card.copy = liveResult.text;
+            if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
+          } else {
+            card.media = agentType === 'agent4b' ? sanitizeForGoogleFlowPolicy(liveResult.text) : liveResult.text;
+            if (appState.activeCardId === lockedCardId) document.getElementById('studio-media-output').value = card.media;
+          }
+          statusEl.textContent = `✓ Live Gemini (${liveResult.modelUsed}) Chained Output Complete`;
+          if (appState.activeCardId === lockedCardId) {
+            renderFlowClipDrawer(card);
+            runCEAComplianceAudit();
+          }
+          persistMasterState();
+          return;
+        } catch (err) {
+          console.warn('Gemini fallback triggered:', err);
+        }
+      }
+
+      // Deterministic Topic-Specific Fallback
+      if (agentType === 'agent2') {
+        card.copy = buildDeterministicCleanCopy(card.title, card.notebookNotes, p);
+        if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
+      } else if (agentType === 'agent3' || agentType === 'agent4b') {
+        card.generator = 'google_flow';
+        document.getElementById('studio-generator').value = 'google_flow';
+        card.media = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes).masterText;
+        if (appState.activeCardId === lockedCardId) {
+          document.getElementById('studio-media-output').value = card.media;
+          renderFlowClipDrawer(card);
+        }
+      } else if (agentType === 'agent4a') {
+        card.generator = 'nano_banana';
+        document.getElementById('studio-generator').value = 'nano_banana';
+        card.media = buildNanoBananaProsePrompt(card.title, card.notebookNotes, p);
+        if (appState.activeCardId === lockedCardId) {
+          document.getElementById('studio-media-output').value = card.media;
+          renderFlowClipDrawer(card);
+        }
+      }
+      statusEl.textContent = `✓ Chained Topic-Aware Skill Engine (${agentType.toUpperCase()}) Complete`;
+      if (appState.activeCardId === lockedCardId) runCEAComplianceAudit();
+      persistMasterState();
+    }
+
+    function runCEAComplianceAudit() {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      const copyText = (document.getElementById('studio-copy-output')?.value || '');
+      const mediaText = (document.getElementById('studio-media-output')?.value || '');
+      const consentChecked = document.getElementById('studio-owner-consent')?.checked;
+      const p = appState.ceaProfile;
+
+      if (card) {
+        card.copy = copyText;
+        card.media = mediaText;
+        card.ownerConsent = consentChecked;
+      }
+
+      const checks = [
+        {
+          label: `5 Mandatory CEA Particulars in Caption (${p.name}, ${p.regNo}, ${p.agencyName}, ${p.licenceNo}, ${p.phone})`,
+          pass: copyText.includes(p.regNo) && copyText.includes(p.licenceNo) && copyText.includes(p.name)
+        },
+        {
+          label: 'Zero Raw Bracket Labels in Customer Caption (No "[3s Curiosity Hook]:" tags)',
+          pass: !/\[(3s Curiosity Hook|Key Insight|Actionable Takeaway)\]/i.test(copyText)
+        },
+        {
+          label: 'Google Flow Policy-Safe Video Prompt (No personal phone/CEA IDs or "Positive Identity Lock" triggers inside Box B)',
+          pass: card?.generator === 'nano_banana' || (!mediaText.includes(p.regNo) && !/Positive Identity Lock/i.test(mediaText))
+        },
+        {
+          label: 'Prior Written Seller/Landlord Consent Verified (CEA PG 02/2011)',
+          pass: Boolean(consentChecked)
+        },
+        {
+          label: 'Zero Banned Superlatives / Unsubstantiated Guarantees & Masked URA Unit Numbers',
+          pass: !/(guaranteed yield|guaranteed capital|no\.?\s*1 specialist|sure huat|#\d{2}-\d{2})/i.test(copyText + ' ' + mediaText)
+        }
+      ];
+
+      const listEl = document.getElementById('cea-checklist-ui');
+      if (!listEl) return;
+      listEl.innerHTML = checks.map(ch => `
+        <li class="flex items-start gap-2 p-2 rounded-xl ${ch.pass ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'}">
+          <span>${ch.pass ? '✓' : '⚠'}</span>
+          <span class="font-semibold">${escapeHTML(ch.label)}</span>
+        </li>
+      `).join('');
+
+      const allPass = checks.every(c => c.pass);
+      const pill = document.getElementById('cea-score-pill');
+      if (pill) {
+        pill.textContent = allPass ? 'CEA & FLOW SAFE ✓' : 'ACTION REQUIRED';
+        pill.className = allPass
+          ? 'px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300'
+          : 'px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-500/15 text-rose-600 dark:text-rose-400';
+      }
+      persistMasterState();
+    }
+
+    function injectCEAWatermarkIntoCopy() {
+      const p = appState.ceaProfile;
+      const copyEl = document.getElementById('studio-copy-output');
+      stripLabelsFromCaption();
+      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Disclaimer: Past transactions and projections are for illustrative education only.)`;
+      if (!copyEl.value.includes(p.regNo)) {
+        copyEl.value = copyEl.value.trim() + footer;
+      }
+      runCEAComplianceAudit();
+    }
+
+    function approveFromStudio() {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (!card) return;
+      injectCEAWatermarkIntoCopy();
+      card.stage = 'Scheduled';
+      card.exceptionState = null;
+      renderKanbanBoard();
+      switchTab('board');
+    }
+
+    // =====================================================================
+    // VIEW 3: TELEMETRY LOGGER & EDITABLE VIRAL RAG MEMORY (AGENT 7)
+    // =====================================================================
+    function renderTelemetryTable() {
+      const tbody = document.getElementById('telemetry-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = appState.telemetry.map((t, i) => `
+        <tr>
+          <td class="py-2.5 font-bold">${escapeHTML(t.topic)}</td>
+          <td class="font-bold ${t.hold >= 65 ? 'text-emerald-600' : 'text-rose-500'}">${escapeHTML(t.hold)}%</td>
+          <td class="font-bold text-indigo-600">${escapeHTML(t.leads)} Leads</td>
+          <td class="flex items-center justify-between py-2.5">
+            <span class="px-2 py-0.5 rounded ${t.hold >= 65 ? 'bg-emerald-500/15 text-emerald-600' : 'bg-rose-500/15 text-rose-600'} font-bold">${escapeHTML(t.verdict)}</span>
+            <button onclick="deleteTelemetryRow(${i})" class="text-slate-400 hover:text-rose-500">✕</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function addMeasuredTelemetryRow() {
+      const topic = document.getElementById('telemetry-topic').value.trim();
+      const hold = parseInt(document.getElementById('telemetry-hold').value || '72', 10);
+      const leads = parseInt(document.getElementById('telemetry-leads').value || '4', 10);
+      if (!topic) return;
+      const verdict = hold >= 65 ? 'Scale Hook' : 'Rework Hook';
+      appState.telemetry.unshift({ topic, hold, leads, verdict });
+      document.getElementById('telemetry-topic').value = '';
+      renderTelemetryTable();
+      persistMasterState();
+    }
+
+    function deleteTelemetryRow(idx) {
+      appState.telemetry.splice(idx, 1);
+      renderTelemetryTable();
+      persistMasterState();
+    }
+
+    function renderViralMemory() {
+      const el = document.getElementById('viral-memory-list');
+      if (!el) return;
+      el.innerHTML = appState.viralMemory.map((rule, idx) => `
+        <li class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-2.5">
+          <span>🧠 ${escapeHTML(rule)}</span>
+          <button onclick="deleteViralRule(${idx})" class="text-slate-400 hover:text-rose-500 font-bold shrink-0">✕</button>
+        </li>
+      `).join('');
+    }
+
+    function addCustomViralRule() {
+      const input = document.getElementById('new-rag-rule-input');
+      const val = input.value.trim();
+      if (!val) return;
+      appState.viralMemory.unshift(val);
+      input.value = '';
+      renderViralMemory();
+      persistMasterState();
+    }
+
+    function deleteViralRule(idx) {
+      appState.viralMemory.splice(idx, 1);
+      renderViralMemory();
+      persistMasterState();
+    }
+
+    function runAgent7Evaluation() {
+      const topPost = appState.telemetry[0] || { topic: 'HDB MOP 5-Year Math', hold: 79, leads: 9 };
+      const newRule = `Agent 7 Telemetry Rule (${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}): "${topPost.topic}" achieved ${topPost.hold}% 3s hold & ${topPost.leads} DM leads — replicate this opening hook cadence in Agent 1 & Agent 3.`;
+      appState.viralMemory.unshift(newRule);
+      renderViralMemory();
+      persistMasterState();
+    }
+
+    // =====================================================================
+    // VIEW 4: INTERACTIVE CRM PIPELINE & WHATSAPP AI QUALIFIER (AGENT 8)
+    // =====================================================================
+    function renderCRMStageFilterBar() {
+      const bar = document.getElementById('crm-stage-filter-bar');
+      if (!bar) return;
+      const stages = ['ALL', ...CRM_STAGES];
+      bar.innerHTML = stages.map(st => {
+        const active = appState.crmStageFilter === st;
+        return `<button onclick="setCRMStageFilter('${escapeHTML(st)}')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition ${active ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">${escapeHTML(st)}</button>`;
+      }).join('');
+    }
+
+    function setCRMStageFilter(stage) {
+      appState.crmStageFilter = stage;
+      renderCRMStageFilterBar();
+      renderCRMLeads();
+    }
+
+    function renderCRMLeads() {
+      const container = document.getElementById('crm-leads-list');
+      if (!container) return;
+      const badge = document.getElementById('badge-crm-alerts');
+      if (badge) badge.textContent = `${appState.leads.length} Leads`;
+
+      const filtered = appState.crmStageFilter === 'ALL'
+        ? appState.leads
+        : appState.leads.filter(l => l.stage === appState.crmStageFilter);
+
+      container.innerHTML = filtered.length ? filtered.map(lead => `
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border ${lead.overdue ? 'border-rose-400 dark:border-rose-700' : 'border-slate-200 dark:border-slate-800'} space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-extrabold text-sm">${escapeHTML(lead.name)}</span>
+              <span class="text-[11px] text-slate-400">Source: ${escapeHTML(lead.source)}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <select onchange="changeLeadStageDirect('${escapeHTML(lead.id)}', this.value)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-bold text-indigo-600 dark:text-indigo-300">
+                ${CRM_STAGES.map(s => `<option value="${escapeHTML(s)}" ${s === lead.stage ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('')}
+              </select>
+              <button onclick="openCRMLeadModal('${escapeHTML(lead.id)}')" class="px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-[11px] font-bold">Edit</button>
+              <button onclick="deleteCRMLead('${escapeHTML(lead.id)}')" class="px-2 py-1 rounded-lg bg-rose-500/10 text-rose-600 text-[11px] font-bold">✕</button>
+            </div>
+          </div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium">${escapeHTML(lead.bant)}</div>
+          <div class="text-[11px] font-bold ${lead.overdue ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}">
+            SLA Task: ${escapeHTML(lead.task)}
+          </div>
+        </div>
+      `).join('') : `<div class="p-4 text-xs text-slate-400 italic">No leads in this stage filter.</div>`;
+
+      persistMasterState();
+    }
+
+    function changeLeadStageDirect(leadId, newStage) {
+      const lead = appState.leads.find(l => l.id === leadId);
+      if (!lead) return;
+      lead.stage = newStage;
+      lead.overdue = false;
+      lead.task = `Stage updated to ${newStage} (${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})})`;
+      renderCRMLeads();
+    }
+
+    function openCRMLeadModal(leadId = null) {
+      const stageSel = document.getElementById('crm-stage-input');
+      stageSel.innerHTML = CRM_STAGES.map(s => `<option value="${escapeHTML(s)}">${escapeHTML(s)}</option>`).join('');
+
+      if (leadId) {
+        const lead = appState.leads.find(l => l.id === leadId);
+        if (!lead) return;
+        document.getElementById('crm-edit-id').value = lead.id;
+        document.getElementById('crm-name-input').value = lead.name;
+        document.getElementById('crm-stage-input').value = lead.stage;
+        document.getElementById('crm-source-input').value = lead.source;
+        document.getElementById('crm-bant-input').value = lead.bant;
+        document.getElementById('crm-task-input').value = lead.task;
+      } else {
+        document.getElementById('crm-edit-id').value = '';
+        document.getElementById('crm-name-input').value = '';
+        document.getElementById('crm-stage-input').value = CRM_STAGES[0];
+        document.getElementById('crm-source-input').value = 'Manual / Referral';
+        document.getElementById('crm-bant-input').value = '';
+        document.getElementById('crm-task-input').value = 'Follow up within 24h';
+      }
+      document.getElementById('crm-lead-modal').classList.remove('hidden');
+    }
+
+    function closeCRMLeadModal() {
+      document.getElementById('crm-lead-modal').classList.add('hidden');
+    }
+
+    function saveCRMLeadFromModal() {
+      const editId = document.getElementById('crm-edit-id').value;
+      const name = document.getElementById('crm-name-input').value.trim();
+      if (!name) return;
+      const stage = document.getElementById('crm-stage-input').value;
+      const source = document.getElementById('crm-source-input').value.trim() || 'Direct';
+      const bant = document.getElementById('crm-bant-input').value.trim() || 'Qualifying in progress';
+      const task = document.getElementById('crm-task-input').value.trim() || 'Scheduled check-in';
+
+      if (editId) {
+        const existing = appState.leads.find(l => l.id === editId);
+        if (existing) {
+          existing.name = name;
+          existing.stage = stage;
+          existing.source = source;
+          existing.bant = bant;
+          existing.task = task;
+          existing.overdue = false;
+        }
+      } else {
+        appState.leads.unshift({ id: 'l' + Date.now(), name, stage, source, bant, task, overdue: false });
+      }
+      closeCRMLeadModal();
+      renderCRMLeads();
+    }
+
+    function deleteCRMLead(leadId) {
+      appState.leads = appState.leads.filter(l => l.id !== leadId);
+      renderCRMLeads();
+    }
+
+    function renderWhatsAppChat() {
+      const box = document.getElementById('wa-chat-box');
+      if (!box) return;
+      box.innerHTML = appState.waMessages.map(m => `
+        <div class="flex flex-col ${m.sender === 'ai' ? 'items-end' : 'items-start'}">
+          <span class="text-[10px] text-slate-400 mb-0.5">${escapeHTML(m.name)} • ${escapeHTML(m.time)}</span>
+          <div class="max-w-[85%] p-2.5 rounded-2xl whitespace-pre-line ${m.sender === 'ai' ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'}">
+            ${escapeHTML(m.text)}
+          </div>
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function simulateIncomingWhatsApp() {
+      const input = document.getElementById('wa-incoming-input');
+      const directive = document.getElementById('wa-human-directive')?.value.trim() || '';
+      const msg = input.value.trim();
+      if (!msg) return;
+      input.value = '';
+
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      appState.waMessages.push({ sender: 'lead', name: 'Inbound WhatsApp Prospect', text: msg, time: now });
+      renderWhatsAppChat();
+
+      const autoReply = document.getElementById('wa-auto-reply-toggle').checked;
+      const p = appState.ceaProfile;
+      const apiKey = await loadDecryptedGeminiKey();
+
+      let aiReply = directive
+        ? `Hi! Thanks for messaging ${p.name} (CEA Reg: ${p.regNo}, ${p.agencyName}). ${directive}`
+        : `Hi! Thanks for messaging ${p.name} (${p.regNo}, ${p.agencyName}). I've noted your enquiry: "${msg.slice(0, 70)}". To help ${p.name} prepare the exact URA comparables & timeline for you:\n1) Are you buying as a Singapore Citizen (SC) or PR?\n2) Have you completed an initial bank IPA check yet?`;
+
+      if (apiKey) {
+        try {
+          const prompt = `You are Agent 8, the WhatsApp Business AI Qualifier for Singapore property agent ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}).
+Prospect Message: "${msg}".
+Human Override Directive from ${p.name}: "${directive || 'None — qualify SC/PR residency, MOP timeline, and bank IPA readiness politely.'}"
+Reply warmly in 2-3 concise sentences following the human override directive if provided, and never promise guaranteed financial returns.`;
+          const res = await callGeminiDirect(apiKey, prompt);
+          aiReply = res.text;
+        } catch (e) {
+          console.warn('WhatsApp AI fallback used:', e);
+        }
+      }
+
+      document.getElementById('wa-bant-details').textContent = `Extracted Intent: "${msg.slice(0, 55)}..." • Auto-Synced to CRM Pipeline`;
+
+      appState.leads.unshift({
+        id: 'l' + Date.now(),
+        name: `WhatsApp Prospect (${now})`,
+        source: 'WhatsApp Coexistence Webhook',
+        stage: '2. AI Qualifying',
+        bant: `Inbound Msg: "${msg.slice(0, 80)}"`,
+        task: directive ? `Human Directive Applied: ${directive}` : 'Agent 8 qualifying residency & IPA',
+        overdue: false
+      });
+      renderCRMLeads();
+
+      appState.waMessages.push({
+        sender: 'ai',
+        name: autoReply ? `Agent 8 Auto-Reply (${p.name})` : `Agent 8 Draft`,
+        text: aiReply,
+        time: now
+      });
+      renderWhatsAppChat();
+      persistMasterState();
+    }
+
+    // =====================================================================
+    // VIEW 5: NOTEBOOKLM KNOWLEDGE VAULT
+    // =====================================================================
+    function renderNotebookVault() {
+      const list = document.getElementById('notebook-vault-list');
+      const badge = document.getElementById('badge-notebook-count');
+      if (badge) badge.textContent = `${appState.notebooks.length} Docs`;
+      if (!list) return;
+
+      list.innerHTML = appState.notebooks.map(nb => `
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-extrabold text-amber-700 dark:text-amber-300">📚 ${escapeHTML(nb.title)}</span>
+            <div class="flex items-center gap-2">
+              <a href="${escapeHTML(nb.url)}" target="_blank" rel="noopener noreferrer" class="text-[11px] font-bold text-indigo-600 hover:underline">Open NotebookLM ↗</a>
+              <button onclick="deleteNotebookSource('${escapeHTML(nb.id)}')" class="text-slate-400 hover:text-rose-500">✕</button>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHTML(nb.facts)}</p>
+        </div>
+      `).join('');
+    }
+
+    function addNotebookSource() {
+      const title = document.getElementById('nb-title-input').value.trim();
+      const url = document.getElementById('nb-url-input').value.trim() || 'https://notebooklm.google.com/';
+      const facts = document.getElementById('nb-facts-input').value.trim();
+      if (!title || !facts) return;
+
+      appState.notebooks.unshift({ id: 'nb' + Date.now(), title, url, facts });
+      document.getElementById('nb-title-input').value = '';
+      document.getElementById('nb-facts-input').value = '';
+      renderNotebookVault();
+      populateNotebookDropdown();
+      persistMasterState();
+    }
+
+    function deleteNotebookSource(nbId) {
+      if (appState.notebooks.length <= 1) return;
+      appState.notebooks = appState.notebooks.filter(n => n.id !== nbId);
+      renderNotebookVault();
+      populateNotebookDropdown();
+      persistMasterState();
+    }
+
+    // =====================================================================
+    // VIEW 6: CEA PROFILE, GOOGLE DRIVE CLOUD BRIDGE & GEMINI TESTER
+    // =====================================================================
+    function handleProfilePhotoUpload(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_SIZE = 240;
+          let w = img.width;
+          let h = img.height;
+          if (w > h) {
+            if (w > MAX_SIZE) { h = Math.round((h * MAX_SIZE) / w); w = MAX_SIZE; }
+          } else {
+            if (h > MAX_SIZE) { w = Math.round((w * MAX_SIZE) / h); h = MAX_SIZE; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          appState.ceaProfile.avatarDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          syncCEAProfileUI();
+          persistMasterState();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveCEAProfile() {
+      appState.ceaProfile.name = document.getElementById('cea-name-input').value.trim() || 'Luiz Lee';
+      appState.ceaProfile.regNo = document.getElementById('cea-reg-input').value.trim() || 'R123456A';
+      appState.ceaProfile.phone = document.getElementById('cea-phone-input').value.trim() || '+65 9123 4567';
+      appState.ceaProfile.agencyName = document.getElementById('cea-agency-input').value.trim() || 'PropNex Realty Pte Ltd';
+      appState.ceaProfile.licenceNo = document.getElementById('cea-licence-input').value.trim() || 'L3008022J';
+
+      syncCEAProfileUI();
+      persistMasterState();
+      runCEAComplianceAudit();
+    }
+
+    function syncCEAProfileUI() {
+      const p = appState.ceaProfile;
+      document.getElementById('cea-name-input').value = p.name;
+      document.getElementById('cea-reg-input').value = p.regNo;
+      document.getElementById('cea-phone-input').value = p.phone;
+      document.getElementById('cea-agency-input').value = p.agencyName;
+      document.getElementById('cea-licence-input').value = p.licenceNo;
+
+      document.getElementById('sidebar-agent-name').textContent = p.name;
+      document.getElementById('sidebar-agency-name').textContent = p.agencyName;
+      document.getElementById('cea-sidebar-reg').textContent = `CEA: ${p.regNo}`;
+
+      document.getElementById('preview-cea-name').textContent = p.name;
+      document.getElementById('preview-cea-reg').textContent = `CEA Reg No: ${p.regNo}`;
+      document.getElementById('preview-cea-agency').textContent = `${p.agencyName} (Licence: ${p.licenceNo})`;
+      document.getElementById('preview-cea-phone').textContent = p.phone;
+
+      // Only load avatar image if it is a valid data:image URI or https URL (prevents 404 on AI Smart Casual.png)
+      if (p.avatarDataUrl && (p.avatarDataUrl.startsWith('data:image') || p.avatarDataUrl.startsWith('http'))) {
+        [
+          ['sidebar-avatar-img', 'sidebar-avatar-fallback'],
+          ['preview-cta-avatar', 'preview-cta-fallback'],
+          ['settings-avatar-preview', 'settings-avatar-fallback']
+        ].forEach(([imgId, fbId]) => {
+          const img = document.getElementById(imgId);
+          const fb = document.getElementById(fbId);
+          if (img) {
+            img.src = p.avatarDataUrl;
+            img.classList.remove('hidden');
+          }
+          if (fb) fb.classList.add('hidden');
+        });
+      }
+    }
+
+    function toggleDriveAppsScriptGuide() {
+      document.getElementById('drive-script-guide').classList.toggle('hidden');
+    }
+
+    function saveCloudSettings() {
+      appState.driveFolderUrl = document.getElementById('settings-drive-folder').value.trim();
+      appState.cloudSyncUrl = document.getElementById('settings-cloud-sync-url').value.trim();
+      localStorage.setItem('squad_drive_folder', appState.driveFolderUrl);
+      localStorage.setItem('squad_cloud_sync_url', appState.cloudSyncUrl);
+      document.getElementById('sync-status-pill').textContent = 'ENDPOINTS SAVED';
+    }
+
+    function openGoogleDriveMasterFolder() {
+      const url = appState.driveFolderUrl || 'https://drive.google.com/';
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    function openCardDriveLink() {
+      const link = document.getElementById('studio-drive-link')?.value.trim() || appState.driveFolderUrl || 'https://drive.google.com/';
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
+
+    async function pushCloudSync() {
+      persistMasterState();
+      const pill = document.getElementById('sync-status-pill');
+      if (!appState.cloudSyncUrl) {
+        pill.textContent = 'LOCAL SAVED ✓';
+        return;
+      }
+      pill.textContent = 'PUSHING...';
+      try {
+        await fetch(appState.cloudSyncUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            updatedAt: new Date().toISOString(),
+            ceaProfile: appState.ceaProfile,
+            notebooks: appState.notebooks,
+            viralMemory: appState.viralMemory,
+            cards: appState.cards,
+            leads: appState.leads,
+            telemetry: appState.telemetry
+          })
+        });
+        pill.textContent = `CLOUD PUSHED ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+      } catch (e) {
+        pill.textContent = 'LOCAL SAVED';
+      }
+    }
+
+    async function pullCloudSync() {
+      const pill = document.getElementById('sync-status-pill');
+      if (!appState.cloudSyncUrl) {
+        alert('To sync between PC and Mobile automatically, paste your Google Drive Apps Script Web App URL in "6. Settings, Cloud & APIs".');
+        switchTab('settings');
+        return;
+      }
+      pill.textContent = 'PULLING...';
+      try {
+        const res = await fetch(appState.cloudSyncUrl);
+        const data = await res.json();
+        if (data && Array.isArray(data.cards)) {
+          appState.ceaProfile = data.ceaProfile || appState.ceaProfile;
+          appState.notebooks = data.notebooks || appState.notebooks;
+          appState.viralMemory = data.viralMemory || appState.viralMemory;
+          appState.cards = data.cards;
+          appState.leads = data.leads || appState.leads;
+          appState.telemetry = data.telemetry || appState.telemetry;
+          persistMasterState();
+          syncCEAProfileUI();
+          renderKanbanBoard();
+          renderCRMLeads();
+          renderNotebookVault();
+          pill.textContent = 'SYNCED FROM DRIVE ✓';
+        }
+      } catch (e) {
+        pill.textContent = 'PULL FAILED';
+      }
+    }
+
+    // --- WEB CRYPTO AES-GCM KEY VAULT & GEMINI MODEL DISCOVERY ---
+    function setPreferredModel(modelName) {
+      appState.preferredModel = modelName;
+      localStorage.setItem('squad_preferred_model', modelName);
+    }
+
+    function populateModelDropdown(modelsList) {
+      const sel = document.getElementById('settings-preferred-model');
+      if (!sel || !modelsList.length) return;
+      const currentVal = appState.preferredModel || 'auto';
+      let html = `<option value="auto">Auto-Cascade (Recommended: ${escapeHTML(modelsList[0])})</option>`;
+      modelsList.forEach(m => {
+        html += `<option value="${escapeHTML(m)}" ${m === currentVal ? 'selected' : ''}>${escapeHTML(m)}</option>`;
+      });
+      sel.innerHTML = html;
+    }
+
+    async function deriveAESKey() {
+      const enc = new TextEncoder();
+      const originSalt = window.location.origin || 'local-origin';
+      const keyMaterial = await window.crypto.subtle.importKey(
+        'raw', enc.encode(`luiz-lee-vault-${originSalt}`), { name: 'PBKDF2' }, false, ['deriveKey']
+      );
+      return window.crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: enc.encode('sg-cea-squad-salt-v2'), iterations: 100000, hash: 'SHA-256' },
+        keyMaterial,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    }
+
+    async function discoverAccessibleGeminiModels(apiKey) {
+      const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
+      if (!listResp.ok) {
+        const errData = await listResp.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || `HTTP ${listResp.status}`);
+      }
+      const listData = await listResp.json();
+      const allModelsCount = (listData.models || []).length;
+
+      const callableTextModels = (listData.models || [])
+        .filter(m =>
+          Array.isArray(m.supportedGenerationMethods) &&
+          m.supportedGenerationMethods.includes('generateContent') &&
+          /gemini/i.test(m.name) &&
+          !/embedding|imagen|veo|audio|tts|vision|aqa|2\.0-flash/i.test(m.name)
+        )
+        .map(m => m.name.replace(/^models\//, ''));
+
+      const ordered = [
+        ...callableTextModels.filter(n => /flash-lite/i.test(n)),
+        ...callableTextModels.filter(n => /flash/i.test(n) && !/flash-lite/i.test(n)),
+        ...callableTextModels.filter(n => /pro/i.test(n))
+      ];
+      const uniqueOrdered = [...new Set([...ordered, ...callableTextModels])];
+      appState.discoveredModels = uniqueOrdered;
+      populateModelDropdown(uniqueOrdered);
+      return { allModelsCount, uniqueOrdered };
+    }
+
+    async function saveAndTestGeminiKey() {
+      const inputEl = document.getElementById('settings-gemini-key');
+      let rawKey = inputEl.value.trim();
+      if (!rawKey) rawKey = await loadDecryptedGeminiKey();
+      const pill = document.getElementById('vault-test-pill');
+      if (!rawKey) {
+        pill.textContent = 'Paste a valid Gemini key first';
+        return;
+      }
+      pill.textContent = 'Discovering models...';
+
+      try {
+        window._sessionGeminiKey = rawKey;
+        const aesKey = await deriveAESKey();
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
+        const cipher = await window.crypto.subtle.encrypt(
+          { name: 'AES-GCM', iv },
+          aesKey,
+          new TextEncoder().encode(rawKey)
+        );
+        localStorage.setItem('squad_gemini_vault', JSON.stringify({
+          iv: Array.from(iv),
+          data: Array.from(new Uint8Array(cipher))
+        }));
+        inputEl.value = '';
+
+        const discovery = await discoverAccessibleGeminiModels(rawKey);
+        const res = await callGeminiDirect(rawKey, 'Respond with OK');
+
+        pill.textContent = `✓ Connected (Active: ${res.modelUsed})`;
+        document.getElementById('gemini-dot').className = 'w-2 h-2 rounded-full bg-emerald-500';
+        document.getElementById('gemini-status-text').textContent = `Gemini: ${res.modelUsed}`;
+        document.getElementById('discovered-count-badge').textContent = `${discovery.uniqueOrdered.length} text models unlocked`;
+      } catch (err) {
+        pill.textContent = `API Error: ${err.message || 'Check key'}`;
+      }
+    }
+
+    async function testAllGeminiModels() {
+      const inputEl = document.getElementById('settings-gemini-key');
+      if (inputEl && inputEl.value.trim()) await saveAndTestGeminiKey();
+      const apiKey = await loadDecryptedGeminiKey();
+      const matrixBody = document.getElementById('model-test-results-body');
+      const countBadge = document.getElementById('discovered-count-badge');
+
+      if (!apiKey) {
+        matrixBody.innerHTML = `<div class="p-2.5 rounded-xl bg-rose-500/10 text-rose-600 font-semibold">Please paste your Google Gemini API key above first.</div>`;
+        return;
+      }
+
+      matrixBody.innerHTML = `<div class="text-indigo-600 font-semibold">Pinging live Gemini endpoints...</div>`;
+      try {
+        const discovery = await discoverAccessibleGeminiModels(apiKey);
+        const modelsToPing = discovery.uniqueOrdered.slice(0, 4);
+        countBadge.textContent = `Verified ${discovery.allModelsCount} total models`;
+
+        const rows = [];
+        for (const modelName of modelsToPing) {
+          const t0 = performance.now();
+          const resp = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: 'Reply with READY' }] }],
+                generationConfig: { maxOutputTokens: 10, temperature: 0.1 }
+              })
+            }
+          );
+          const latency = Math.round(performance.now() - t0);
+          if (resp.ok) {
+            rows.push(`<div class="flex items-center justify-between p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><span class="font-bold mono text-emerald-700 dark:text-emerald-300">✓ ${escapeHTML(modelName)}</span><span class="text-[11px] font-mono text-emerald-600">HTTP 200 OK • ${latency} ms</span></div>`);
+          } else {
+            rows.push(`<div class="flex items-center justify-between p-2 rounded-xl bg-amber-500/10 border border-amber-500/20"><span class="font-bold mono text-amber-700">⚠ ${escapeHTML(modelName)}</span><span class="text-[11px] text-amber-600">HTTP ${resp.status}</span></div>`);
+          }
+        }
+        matrixBody.innerHTML = rows.join('');
+      } catch (err) {
+        matrixBody.innerHTML = `<div class="p-2.5 rounded-xl bg-rose-500/10 text-rose-600 font-semibold">Discovery failed: ${escapeHTML(err.message)}</div>`;
+      }
+    }
+
+    async function loadDecryptedGeminiKey() {
+      if (window._sessionGeminiKey) return window._sessionGeminiKey;
+      const raw = localStorage.getItem('squad_gemini_vault');
+      if (!raw) return null;
+      try {
+        const payload = JSON.parse(raw);
+        const aesKey = await deriveAESKey();
+        const plain = await window.crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: new Uint8Array(payload.iv) },
+          aesKey,
+          new Uint8Array(payload.data)
+        );
+        return new TextDecoder().decode(plain);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function callGeminiDirect(apiKey, promptText) {
+      let candidateModels = [];
+      if (appState.preferredModel && appState.preferredModel !== 'auto') {
+        candidateModels.push(appState.preferredModel);
+      }
+      if (appState.discoveredModels.length > 0) {
+        candidateModels.push(...appState.discoveredModels);
+      } else {
+        try {
+          const disc = await discoverAccessibleGeminiModels(apiKey);
+          candidateModels.push(...disc.uniqueOrdered);
+        } catch (e) {}
+      }
+      if (candidateModels.length === 0) {
+        candidateModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-pro'];
+      }
+      candidateModels = [...new Set(candidateModels)];
+
+      const errors = [];
+      for (const model of candidateModels.slice(0, 4)) {
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: promptText }] }],
+              generationConfig: { temperature: 0.4 }
+            })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            errors.push(`${model}: ${data?.error?.message || res.statusText}`);
+            continue;
+          }
+          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return { text: text.trim(), modelUsed: model };
+        } catch (err) {
+          errors.push(`${model}: ${err.message}`);
+        }
+      }
+      throw new Error(errors[0] || 'No active Gemini model responded.');
+    }
+
+    function clearStoredAPIKey() {
+      window._sessionGeminiKey = null;
+      localStorage.removeItem('squad_gemini_vault');
+      document.getElementById('gemini-dot').className = 'w-2 h-2 rounded-full bg-amber-500';
+      document.getElementById('gemini-status-text').textContent = 'Gemini: Local';
+      document.getElementById('vault-test-pill').textContent = 'Key Cleared';
+    }
+
+    function exportMasterState() {
+      const safeCopy = JSON.parse(JSON.stringify(appState));
+      const blob = new Blob([JSON.stringify(safeCopy, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `agent-squad-v3.5-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      applyTheme();
+      syncCEAProfileUI();
+      document.getElementById('settings-drive-folder').value = appState.driveFolderUrl;
+      document.getElementById('settings-cloud-sync-url').value = appState.cloudSyncUrl;
+      renderKanbanBoard();
+      renderTelemetryTable();
+      renderViralMemory();
+      renderCRMStageFilterBar();
+      renderCRMLeads();
+      renderWhatsAppChat();
+      renderNotebookVault();
+      populateStudioSelector();
+      populateNotebookDropdown();
+      loadCardIntoStudio(appState.activeCardId);
+
+      const savedKey = await loadDecryptedGeminiKey();
+      if (savedKey) {
+        document.getElementById('gemini-dot').className = 'w-2 h-2 rounded-full bg-emerald-500';
+        document.getElementById('gemini-status-text').textContent = 'Gemini: Ready';
+      }
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

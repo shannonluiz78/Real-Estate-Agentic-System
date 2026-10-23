@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentSquad v3.5 Final — Google Flow & Nano Banana Edition (Luiz Lee)</title>
+  <title>AgentSquad v3.6 Final — Google Flow & Nano Banana Edition (Luiz Lee)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -42,7 +42,7 @@
           <div>
             <div class="flex items-center gap-1.5">
               <h1 class="font-extrabold text-base tracking-tight">AgentSquad</h1>
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.5 FINAL</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.6 FINAL</span>
             </div>
             <p class="text-[11px] text-slate-500 dark:text-slate-400">Google Flow & Nano Banana Edition</p>
           </div>
@@ -131,7 +131,7 @@
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
       <div>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.5 Final</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.6 Final</span>
           <span class="text-xs text-slate-500 dark:text-slate-400">NotebookLM Grounded • Google Flow Policy-Safe 8s/10s Multi-Clip • Nano Banana Prose • CEA PG 02/2011</span>
         </div>
         <h2 id="view-title" class="text-lg sm:text-xl font-extrabold mt-1">End-to-End Agile Content & Compliance Pipeline</h2>
@@ -715,8 +715,7 @@ function doGet() {
               <div>
                 <label class="block font-bold mb-1">Active Preferred Gemini Model</label>
                 <select id="settings-preferred-model" onchange="setPreferredModel(this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-semibold mono">
-                  <option value="auto">Auto-Cascade (gemini-2.5-flash-lite → flash → pro)</option>
-                  <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                  <option value="auto">Auto-Cascade (gemini-2.5-flash → pro)</option>
                   <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                   <option value="gemini-2.5-pro">gemini-2.5-pro</option>
                 </select>
@@ -861,9 +860,37 @@ function doGet() {
   </div>
 
   <!-- =================================================================== -->
-  <!-- APPLICATION SCRIPT (INITIALIZATION ORDER HARDENED + FLOW SANITIZER) -->
+  <!-- APPLICATION SCRIPT (ZERO-TDZ GLOBAL INITIALIZATION + FLOW SAFE)     -->
   <!-- =================================================================== -->
   <script>
+    // 1. Initialize window.appState & window._cleanFlowClips FIRST so TDZ ReferenceError can NEVER occur
+    window._cleanFlowClips = [];
+    window.appState = {
+      theme: 'light',
+      preferredModel: 'auto',
+      discoveredModels: [],
+      activeCardId: 'c1',
+      crmStageFilter: 'ALL',
+      pendingExceptionCardId: null,
+      driveFolderUrl: '',
+      cloudSyncUrl: '',
+      ceaProfile: {
+        name: 'Luiz Lee',
+        regNo: 'R123456A',
+        agencyName: 'PropNex Realty Pte Ltd',
+        licenceNo: 'L3008022J',
+        phone: '+65 9123 4567',
+        avatarDataUrl: ''
+      },
+      notebooks: [],
+      viralMemory: [],
+      cards: [],
+      leads: [],
+      telemetry: [],
+      waMessages: []
+    };
+    var appState = window.appState;
+
     const WORKFLOW_STAGES = [
       'Agent Proposed Topics',
       'Human Select',
@@ -885,7 +912,17 @@ function doGet() {
       '6. Completed & Nurture'
     ];
 
-    // STEP 1: Pure helper functions declared FIRST so DEFAULT_CARDS & appState never throw ReferenceError
+    function loadSavedJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        return parsed || fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
     function escapeHTML(str) {
       if (str === null || str === undefined) return '';
       return String(str)
@@ -908,9 +945,13 @@ function doGet() {
 
     // Strips real names, CEA numbers, licence IDs, phone numbers & biometric triggers from Google Flow prompts
     function sanitizeForGoogleFlowPolicy(promptText, customProfile = null) {
-      const p = customProfile || ((typeof appState !== 'undefined' && appState && appState.ceaProfile)
-        ? appState.ceaProfile
-        : { name: 'Luiz Lee', regNo: 'R123456A', agencyName: 'PropNex Realty Pte Ltd', licenceNo: 'L3008022J', phone: '+65 9123 4567' });
+      const p = customProfile || (window.appState && window.appState.ceaProfile) || {
+        name: 'Luiz Lee',
+        regNo: 'R123456A',
+        agencyName: 'PropNex Realty Pte Ltd',
+        licenceNo: 'L3008022J',
+        phone: '+65 9123 4567'
+      };
 
       let cleaned = String(promptText || '');
       if (p.name) {
@@ -937,7 +978,7 @@ function doGet() {
     }
 
     function buildDeterministicCleanCopy(title, notebookNotes, profile) {
-      const p = profile || {
+      const p = profile || (window.appState && window.appState.ceaProfile) || {
         name: 'Luiz Lee',
         regNo: 'R123456A',
         agencyName: 'PropNex Realty Pte Ltd',
@@ -1029,9 +1070,13 @@ function doGet() {
     }
 
     function buildNanoBananaProsePrompt(title, notebookNotes = '', profile = null) {
-      const p = profile || ((typeof appState !== 'undefined' && appState && appState.ceaProfile)
-        ? appState.ceaProfile
-        : { name: 'Luiz Lee', regNo: 'R123456A', agencyName: 'PropNex Realty Pte Ltd', licenceNo: 'L3008022J', phone: '+65 9123 4567' });
+      const p = profile || (window.appState && window.appState.ceaProfile) || {
+        name: 'Luiz Lee',
+        regNo: 'R123456A',
+        agencyName: 'PropNex Realty Pte Ltd',
+        licenceNo: 'L3008022J',
+        phone: '+65 9123 4567'
+      };
       const factSnippet = notebookNotes ? ` Incorporates data callout: "${notebookNotes}".` : '';
       return `Create a vertical 4:5 editorial Singapore real estate infographic poster titled "${title}".${factSnippet} The centerpiece is a photorealistic 3D isometric cutaway floorplan of a bright, modern 3-bedroom Singapore condominium flooded with warm golden-hour sunlight, rendered with crisp architectural lines, natural oak flooring, and soft shadows. At the top, place a clean dark-navy header banner with bold white sans-serif typography reading "${title}" and a small subtle tag in the top-right corner reading "Artist's Impression • URA/HDB Data". Along the bottom edge, integrate a sleek frosted-glass compliance footer bar featuring the uploaded reference portrait photo of ${p.name} on the left, beside crisp legible text reading "${p.name} | CEA Reg No: ${p.regNo} | ${p.agencyName} (Licence: ${p.licenceNo})" and a green WhatsApp CTA pill reading "${p.phone}" on the right. Maintain the exact facial identity of the uploaded reference portrait photo and keep all architectural lines razor-sharp.`;
     }
@@ -1231,18 +1276,8 @@ function doGet() {
       { topic: 'Generic Condo Walkthrough Without Hook (Video)', hold: 38, leads: 0, verdict: 'Deprecate Intro' }
     ];
 
-    function loadSavedJSON(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        if (!raw) return fallback;
-        const parsed = JSON.parse(raw);
-        return parsed || fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-
-    const appState = {
+    // Hydrate window.appState from localStorage safely
+    Object.assign(window.appState, {
       theme: localStorage.getItem('squad_theme') || 'light',
       preferredModel: localStorage.getItem('squad_preferred_model') || 'auto',
       discoveredModels: [],
@@ -1252,31 +1287,31 @@ function doGet() {
       driveFolderUrl: localStorage.getItem('squad_drive_folder') || '',
       cloudSyncUrl: localStorage.getItem('squad_cloud_sync_url') || '',
       ceaProfile: loadSavedJSON('squad_cea_profile', DEFAULT_CEA_PROFILE),
-      notebooks: loadSavedJSON('squad_notebooks_v35', DEFAULT_NOTEBOOKS),
-      viralMemory: loadSavedJSON('squad_viral_memory_v35', [
+      notebooks: loadSavedJSON('squad_notebooks_v36', DEFAULT_NOTEBOOKS),
+      viralMemory: loadSavedJSON('squad_viral_memory_v36', [
         'Hook Rule #1: Numbers + Specific District/MOP Year in first 2.5 seconds boosts 3s Hold Rate to >75%.',
         'Flow Rule #2: Split short-form videos into 8-second (~20 words) or 10-second (~24 words) continuous takes with identical voice timbre & policy-safe presenter descriptions.',
         'Nano Banana Rule #3: Use descriptive full-sentence prose (never Midjourney --ar flags) and attach reference photo.',
         'CEA Rule #4: Always mask exact unit/floor numbers when citing URA REALIS transaction gains.'
       ]),
-      cards: loadSavedJSON('squad_cards_v35', DEFAULT_CARDS),
-      leads: loadSavedJSON('squad_leads_v35', DEFAULT_LEADS),
-      telemetry: loadSavedJSON('squad_telemetry_v35', DEFAULT_TELEMETRY),
-      waMessages: loadSavedJSON('squad_wa_msgs_v35', [
+      cards: loadSavedJSON('squad_cards_v36', DEFAULT_CARDS),
+      leads: loadSavedJSON('squad_leads_v36', DEFAULT_LEADS),
+      telemetry: loadSavedJSON('squad_telemetry_v36', DEFAULT_TELEMETRY),
+      waMessages: loadSavedJSON('squad_wa_msgs_v36', [
         { sender: 'lead', name: 'Darren Koh (+65 9876 1122)', text: 'Hi Luiz! Saw your TikTok reel on the 5-year HDB MOP math. Our Tampines BTO hits MOP in 4 months. Can we upgrade without selling first?', time: '8:42 PM' },
         { sender: 'ai', name: 'Agent 8 (AI Assistant for Luiz Lee)', text: 'Hi Darren! Thanks for reaching out to Luiz Lee (CEA Reg: R123456A, PropNex). Congrats on your upcoming Tampines MOP! To help Luiz prepare an accurate timeline & ABSD/bridge calculation for you:\n1) Are both owners Singapore Citizens (SC)?\n2) Have you done an initial mortgage IPA check yet?', time: '8:42 PM' }
       ])
-    };
+    });
 
     function persistMasterState() {
       try {
         localStorage.setItem('squad_cea_profile', JSON.stringify(appState.ceaProfile));
-        localStorage.setItem('squad_notebooks_v35', JSON.stringify(appState.notebooks));
-        localStorage.setItem('squad_viral_memory_v35', JSON.stringify(appState.viralMemory));
-        localStorage.setItem('squad_cards_v35', JSON.stringify(appState.cards));
-        localStorage.setItem('squad_leads_v35', JSON.stringify(appState.leads));
-        localStorage.setItem('squad_telemetry_v35', JSON.stringify(appState.telemetry));
-        localStorage.setItem('squad_wa_msgs_v35', JSON.stringify(appState.waMessages));
+        localStorage.setItem('squad_notebooks_v36', JSON.stringify(appState.notebooks));
+        localStorage.setItem('squad_viral_memory_v36', JSON.stringify(appState.viralMemory));
+        localStorage.setItem('squad_cards_v36', JSON.stringify(appState.cards));
+        localStorage.setItem('squad_leads_v36', JSON.stringify(appState.leads));
+        localStorage.setItem('squad_telemetry_v36', JSON.stringify(appState.telemetry));
+        localStorage.setItem('squad_wa_msgs_v36', JSON.stringify(appState.waMessages));
       } catch (e) {
         console.warn('Local persistence warning:', e);
       }
@@ -1688,27 +1723,35 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       }
       const sec = parseInt(card.clipDuration || '8', 10);
       const pack = buildGoogleFlowMultiClipPrompts(card.title, sec, card.notebookNotes);
+      window._cleanFlowClips = pack.clips.map(c => sanitizeForGoogleFlowPolicy(c.prompt));
+
       drawer.innerHTML = `
         <div class="text-[11px] font-extrabold text-violet-600 dark:text-violet-400">Individual ${sec}-Second Policy-Safe Clips for Google Flow (Click to Copy 1 Clip at a Time):</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          ${pack.clips.map(c => {
-            const safePrompt = sanitizeForGoogleFlowPolicy(c.prompt);
-            return `
-              <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-violet-500/30 flex flex-col justify-between gap-2">
-                <div>
-                  <div class="flex items-center justify-between text-[10px] font-bold text-violet-600 dark:text-violet-300">
-                    <span>CLIP ${c.clipNo} (${sec}s) — ${escapeHTML(c.role)}</span>
-                  </div>
-                  <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 italic">"${escapeHTML(c.spoken)}"</p>
+          ${pack.clips.map((c, idx) => `
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-violet-500/30 flex flex-col justify-between gap-2">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-bold text-violet-600 dark:text-violet-300">
+                  <span>CLIP ${c.clipNo} (${sec}s) — ${escapeHTML(c.role)}</span>
                 </div>
-                <button onclick="copyDirectText(${JSON.stringify(safePrompt).replace(/"/g, '&quot;')}, this)" class="w-full py-1.5 rounded-lg bg-violet-600/15 hover:bg-violet-600 text-violet-700 dark:text-violet-300 hover:text-white text-[11px] font-bold transition">
-                  Copy Policy-Safe Clip ${c.clipNo} Prompt
-                </button>
+                <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 italic">"${escapeHTML(c.spoken)}"</p>
               </div>
-            `;
-          }).join('')}
+              <button onclick="copyFlowClipByIndex(${idx}, this)" class="w-full py-1.5 rounded-lg bg-violet-600/15 hover:bg-violet-600 text-violet-700 dark:text-violet-300 hover:text-white text-[11px] font-bold transition">
+                Copy Policy-Safe Clip ${c.clipNo} Prompt
+              </button>
+            </div>
+          `).join('')}
         </div>
       `;
+    }
+
+    function copyFlowClipByIndex(idx, btn) {
+      const text = (window._cleanFlowClips && window._cleanFlowClips[idx]) || '';
+      if (!text) return;
+      navigator.clipboard.writeText(text);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied to Clipboard!';
+      setTimeout(() => { btn.textContent = orig; }, 1600);
     }
 
     function sanitizeCurrentMediaPrompt() {
@@ -1716,13 +1759,6 @@ Propose ONE fresh, high-curiosity Singapore property topic headline for 2026 tha
       if (!mediaEl) return;
       mediaEl.value = sanitizeForGoogleFlowPolicy(mediaEl.value);
       runCEAComplianceAudit();
-    }
-
-    function copyDirectText(text, btn) {
-      navigator.clipboard.writeText(text);
-      const orig = btn.textContent;
-      btn.textContent = '✓ Copied to Clipboard!';
-      setTimeout(() => { btn.textContent = orig; }, 1600);
     }
 
     function copyBoxText(elementId, btn) {
@@ -2289,7 +2325,6 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
       document.getElementById('preview-cea-agency').textContent = `${p.agencyName} (Licence: ${p.licenceNo})`;
       document.getElementById('preview-cea-phone').textContent = p.phone;
 
-      // Only load avatar image if it is a valid data:image URI or https URL (prevents 404 on AI Smart Casual.png)
       if (p.avatarDataUrl && (p.avatarDataUrl.startsWith('data:image') || p.avatarDataUrl.startsWith('http'))) {
         [
           ['sidebar-avatar-img', 'sidebar-avatar-fallback'],
@@ -2434,13 +2469,13 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
           Array.isArray(m.supportedGenerationMethods) &&
           m.supportedGenerationMethods.includes('generateContent') &&
           /gemini/i.test(m.name) &&
-          !/embedding|imagen|veo|audio|tts|vision|aqa|2\.0-flash/i.test(m.name)
+          !/embedding|imagen|veo|audio|tts|vision|aqa|2\.0-flash|flash-lite/i.test(m.name)
         )
         .map(m => m.name.replace(/^models\//, ''));
 
       const ordered = [
-        ...callableTextModels.filter(n => /flash-lite/i.test(n)),
-        ...callableTextModels.filter(n => /flash/i.test(n) && !/flash-lite/i.test(n)),
+        ...callableTextModels.filter(n => /2\.5-flash$/i.test(n)),
+        ...callableTextModels.filter(n => /flash/i.test(n)),
         ...callableTextModels.filter(n => /pro/i.test(n))
       ];
       const uniqueOrdered = [...new Set([...ordered, ...callableTextModels])];
@@ -2564,7 +2599,7 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
         } catch (e) {}
       }
       if (candidateModels.length === 0) {
-        candidateModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-pro'];
+        candidateModels = ['gemini-2.5-flash', 'gemini-2.5-pro'];
       }
       candidateModels = [...new Set(candidateModels)];
 
@@ -2607,7 +2642,7 @@ Reply warmly in 2-3 concise sentences following the human override directive if 
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `agent-squad-v3.5-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `agent-squad-v3.6-backup-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }

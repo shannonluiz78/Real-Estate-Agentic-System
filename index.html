@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentSquad v3.4 — Agile Agentic Marketing & CRM Command Center (Luiz Lee)</title>
+  <title>AgentSquad v3.5 Final — Google Flow & Nano Banana Edition (Luiz Lee)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -42,7 +42,7 @@
           <div>
             <div class="flex items-center gap-1.5">
               <h1 class="font-extrabold text-base tracking-tight">AgentSquad</h1>
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.4 Final</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">v3.5 FINAL</span>
             </div>
             <p class="text-[11px] text-slate-500 dark:text-slate-400">Google Flow & Nano Banana Edition</p>
           </div>
@@ -52,31 +52,27 @@
         </button>
       </div>
 
-      <!-- Live Connection & Sync Status Pills -->
+      <!-- Live Connection & CEA Status Pills -->
       <div class="grid grid-cols-2 gap-2 p-2.5 rounded-2xl bg-slate-100/80 dark:bg-slate-950/70 border border-slate-200/80 dark:border-slate-800 text-[11px]">
         <div class="flex items-center gap-1.5">
           <span id="gemini-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
           <span id="gemini-status-text" class="font-semibold truncate">Gemini: Setup</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span id="sync-dot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span id="cea-sidebar-reg" class="font-semibold truncate">CEA: R123456A</span>
         </div>
       </div>
 
-      <!-- Quick Cloud & Drive Sync Bar -->
-      <div class="p-2.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-800/50 space-y-2">
-        <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">
-          <span>PC ↔ Mobile Sync</span>
-          <span id="sidebar-sync-status" class="text-emerald-600 dark:text-emerald-400">Auto-Saved</span>
+      <!-- PC <-> Mobile Cloud Sync Bar -->
+      <div class="p-3 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/70 dark:border-indigo-800/50 space-y-2">
+        <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider">
+          <span class="text-indigo-700 dark:text-indigo-300">PC ↔ Mobile Sync</span>
+          <span id="sync-status-pill" class="text-emerald-600 dark:text-emerald-400">AUTO-SAVED</span>
         </div>
         <div class="grid grid-cols-2 gap-1.5">
-          <button onclick="pullWorkspaceFromCloud()" class="px-2 py-1.5 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-[10px] font-bold transition flex items-center justify-center gap-1" title="Pull Settings & Board from Supabase or Google Drive">
-            <i data-lucide="cloud-download" class="w-3 h-3"></i> Pull Cloud
-          </button>
-          <button onclick="pushWorkspaceToCloud()" class="px-2 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold transition flex items-center justify-center gap-1" title="Push Settings & Board to Supabase & Google Drive">
-            <i data-lucide="cloud-upload" class="w-3 h-3"></i> Push Cloud
-          </button>
+          <button onclick="pullCloudSync()" class="py-1.5 px-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 border border-slate-200 dark:border-slate-700 text-[11px] font-bold transition">Pull Cloud</button>
+          <button onclick="pushCloudSync()" class="py-1.5 px-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold transition">Push Cloud</button>
         </div>
       </div>
 
@@ -100,9 +96,9 @@
             <span class="flex items-center gap-2.5"><i data-lucide="message-circle" class="w-4 h-4 text-pink-500"></i> 4. CRM & WhatsApp AI</span>
             <span id="badge-crm-alerts" class="px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px]">3 Leads</span>
           </button>
-          <button onclick="switchTab('blueprint')" data-tab="blueprint" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <button onclick="switchTab('notebook')" data-tab="notebook" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2.5"><i data-lucide="book-open" class="w-4 h-4 text-amber-500"></i> 5. NotebookLM & Skills</span>
-            <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold">6 Docs</span>
+            <span id="badge-notebook-count" class="text-[10px] text-amber-600 dark:text-amber-400 font-bold">6 Docs</span>
           </button>
           <button onclick="switchTab('settings')" data-tab="settings" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2.5"><i data-lucide="settings" class="w-4 h-4 text-indigo-500"></i> 6. Settings, Cloud & APIs</span>
@@ -115,8 +111,8 @@
     <div class="p-4 m-4 rounded-2xl bg-slate-100/90 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
         <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-indigo-500 shrink-0 bg-indigo-600 flex items-center justify-center text-white font-bold">
-          <img id="sidebar-avatar-img" src="AI Smart Casual.png" alt="Luiz Lee" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="hidden w-full h-full items-center justify-center text-sm font-bold">LL</div>
+          <img id="sidebar-avatar-img" src="" alt="Luiz Lee" class="hidden w-full h-full object-cover" />
+          <div id="sidebar-avatar-fallback" class="w-full h-full flex items-center justify-center text-sm font-bold">LL</div>
         </div>
         <div class="min-w-0 flex-1">
           <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Meet the Creator</div>
@@ -135,20 +131,20 @@
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
       <div>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.4 Final</span>
-          <span class="text-xs text-slate-500 dark:text-slate-400">NotebookLM Grounded • Google Flow 8s/10s Multi-Clip • Nano Banana Prose • CEA PG 02/2011</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">v3.5 Final</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">NotebookLM Grounded • Google Flow Policy-Safe 8s/10s Multi-Clip • Nano Banana Prose • CEA PG 02/2011</span>
         </div>
         <h2 id="view-title" class="text-lg sm:text-xl font-extrabold mt-1">End-to-End Agile Content & Compliance Pipeline</h2>
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <button onclick="triggerAgent1Pitch()" id="btn-agent1-pitch" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-500/20 transition">
-          <i data-lucide="radar" class="w-4 h-4"></i> + Agent 1: Mine Unique Topic
+        <button id="btn-agent1-pitch" onclick="triggerAgent1Pitch()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-500/20 transition">
+          <i data-lucide="radar" class="w-4 h-4"></i> + Agent 1: Mine Viral Topic
         </button>
-        <button onclick="openMasterDriveFolder()" class="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1.5 transition">
-          <i data-lucide="folder-kanban" class="w-4 h-4"></i> Open Google Drive Cabinet
+        <button onclick="openGoogleDriveMasterFolder()" class="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1.5 transition">
+          <i data-lucide="folder-open" class="w-4 h-4"></i> Open Google Drive Cabinet
         </button>
-        <button onclick="pullFromGoogleDriveFallback()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition">
-          <i data-lucide="hard-drive-download" class="w-3.5 h-3.5"></i> Pull Drive Backup
+        <button onclick="pullCloudSync()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <i data-lucide="cloud-download" class="w-4 h-4"></i> Pull Drive Backup
         </button>
         <button onclick="exportMasterState()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1.5 transition">
           <i data-lucide="download" class="w-3.5 h-3.5"></i> Export JSON
@@ -160,43 +156,37 @@
     <!-- VIEW 1: 9-STAGE AGILE WORKFLOW BOARD + BLOCKED / REWORK             -->
     <!-- =================================================================== -->
     <section id="view-board" class="tab-view space-y-5">
-      <!-- State Flow Legend + Deduplication Counter -->
       <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
         <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
           <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">1. Agent Proposed Topics</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-300">2. Human Select</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-300">3. Ready</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span class="px-2.5 py-1 rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-300">4. In Progress (+CEA Audit)</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
+          <span class="px-2.5 py-1 rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-300">4. In Progress</span>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-300">5. Human Review</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-300">6. Approved</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-300">7. Scheduled</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-300">8. Published</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>→</span>
           <span class="px-2.5 py-1 rounded-lg bg-pink-500/10 text-pink-600 dark:text-pink-300">9. Measured</span>
         </div>
-        <div class="flex items-center gap-2 text-xs">
-          <span id="dedup-status-pill" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold">Deduplication Guard Active (24-Angle Matrix)</span>
-        </div>
+        <button onclick="openNewCardModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">+ Add Custom Topic Card</button>
       </div>
 
       <!-- Horizontal 9-Column Kanban Board -->
       <div id="kanban-columns-container" class="flex gap-4 overflow-x-auto pb-3 min-h-[420px]"></div>
 
-      <!-- Exception Holding Zone: BLOCKED & REWORK (Retains Reason & Accountable Owner) -->
+      <!-- Exception Holding Zone: BLOCKED & REWORK -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i data-lucide="octagon-alert" class="w-4 h-4 text-rose-600 dark:text-rose-400"></i>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-rose-700 dark:text-rose-300">BLOCKED State (External / Legal Dependency)</h3>
-            </div>
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-rose-700 dark:text-rose-300">BLOCKED State (External / Written Consent Dependency)</h3>
             <span id="count-blocked" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 dark:bg-rose-900 text-rose-800 dark:text-rose-200">0</span>
           </div>
           <div id="list-blocked" class="space-y-2"></div>
@@ -204,10 +194,7 @@
 
         <div class="bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i data-lucide="refresh-cw-off" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-300">REWORK State (Agent Quality / CEA Failure)</h3>
-            </div>
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-300">REWORK State (Agent Quality / CEA Failure)</h3>
             <span id="count-rework" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-200 dark:bg-amber-900 text-amber-800 dark:text-amber-200">0</span>
           </div>
           <div id="list-rework" class="space-y-2"></div>
@@ -216,11 +203,11 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 2: 9-AGENT CHAINED STUDIO (GOOGLE FLOW & NANO BANANA)          -->
+    <!-- VIEW 2: 9-AGENT EXECUTION STUDIO & LIVE CEA COMPLIANCE GATE         -->
     <!-- =================================================================== -->
     <section id="view-studio" class="tab-view hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left 7 Cols: Chained Multi-Agent Production Line -->
+        <!-- Left 7 Cols: Active Card & Chained Multi-Agent Pipeline Runner -->
         <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
             <div>
@@ -230,62 +217,54 @@
             <select id="studio-card-selector" onchange="loadCardIntoStudio(this.value)" class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold max-w-xs"></select>
           </div>
 
-          <!-- Row 1: Format, Target Generator, Clip Duration & Written Owner Consent -->
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <!-- Format, Generator, Flow Clip Duration & CEA Consent Controls -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-1">1. Content Format</label>
               <select id="studio-format" onchange="updateStudioCardField('format', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 text-xs font-semibold">
-                <option value="Video (Reels/TikTok/Shorts)">🎬 Short-Form Video (9:16)</option>
-                <option value="Image/Flyer Carousel">🖼️ Static Flyer / Carousel (4:5)</option>
+                <option value="Video (Reels/TikTok/Shorts)">🎬 Short-Form Video</option>
+                <option value="Image/Flyer Carousel">🖼️ Nano Banana Flyer</option>
               </select>
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-1">2. Target AI Generator</label>
-              <select id="studio-target-app" onchange="updateStudioCardField('targetApp', this.value)" class="w-full bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-300 dark:border-indigo-700 rounded-xl px-2.5 py-2 text-xs font-bold text-indigo-700 dark:text-indigo-300">
-                <option value="GOOGLE_FLOW">🎬 Google Flow (Veo 3.1 I2V)</option>
-                <option value="NANO_BANANA">🍌 Google Nano Banana (Prose Flyer)</option>
-                <option value="KLING_AI">🎥 Kling AI (1.6 / 2.0 I2V)</option>
-                <option value="HAILUO_AI">🎬 Hailuo AI ([Push in] Director)</option>
-                <option value="MIDJOURNEY">🎨 Midjourney v6.1/v7 (--ar 4:5)</option>
+              <select id="studio-generator" onchange="updateStudioCardField('generator', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 text-xs font-semibold">
+                <option value="google_flow">🎥 Google Flow (Veo 3.1)</option>
+                <option value="nano_banana">🍌 Nano Banana (Gemini Image)</option>
               </select>
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-1">3. Flow Video Clip Split</label>
               <select id="studio-clip-duration" onchange="updateStudioCardField('clipDuration', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 text-xs font-semibold">
-                <option value="8">⏱️ 8-Sec Clips (4x 8s = 32s)</option>
-                <option value="10">⏱️ 10-Sec Clips (3x 10s = 30s)</option>
+                <option value="8">⏱️ 8-Sec Clips (~20 words/clip)</option>
+                <option value="10">⏱️ 10-Sec Clips (~24 words/clip)</option>
               </select>
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-500 mb-1">4. CEA Written Consent</label>
-              <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-semibold cursor-pointer">
+              <label class="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-semibold cursor-pointer">
                 <input id="studio-owner-consent" type="checkbox" checked onchange="updateStudioCardField('ownerConsent', this.checked)" class="rounded text-indigo-600" />
                 <span>Signed Verified</span>
               </label>
             </div>
           </div>
 
-          <!-- Row 2: NotebookLM Reference Brain Selector + Google Drive Asset Link -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/50">
+          <!-- Grounded NotebookLM Reference Selector + Google Drive Asset Link -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/40">
             <div>
-              <label class="block text-[11px] font-extrabold text-amber-800 dark:text-amber-300 mb-1">🧠 NotebookLM Reference Brain Source</label>
-              <select id="studio-notebook-source" onchange="applyNotebookLMSourcePreset(this.value)" class="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl px-2.5 py-1.5 text-xs font-semibold">
-                <option value="URA_MOP_2026">📘 URA REALIS & 5-Year HDB MOP Progression Math (Q3 2026)</option>
-                <option value="OCR_RCR_GAP">📊 OCR vs RCR 3-Bedroom PSF Gap & Dumbbell Floorplans</option>
-                <option value="ABSD_IRAS_2026">⚖️ Official IRAS ABSD & MAS 55% TDSR Stress-Test Brackets</option>
-                <option value="CEA_PG02_2011">🛡️ CEA PG 02/2011, CEPCC & PC 04-13 Ethical Advertising Rules</option>
-              </select>
+              <label class="block text-[11px] font-extrabold text-amber-800 dark:text-amber-300 mb-1">📚 NotebookLM Reference Brain Source</label>
+              <select id="studio-notebook-selector" onchange="applyNotebookSourceToCard(this.value)" class="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl px-2.5 py-1.5 text-xs font-semibold"></select>
             </div>
             <div>
-              <label class="block text-[11px] font-extrabold text-amber-800 dark:text-amber-300 mb-1">📂 Google Drive Filing Cabinet Asset Link (MP4 / Flyer)</label>
+              <label class="block text-[11px] font-extrabold text-amber-800 dark:text-amber-300 mb-1">📁 Google Drive Filing Cabinet Asset Link (MP4/Flyer)</label>
               <div class="flex gap-1.5">
-                <input id="studio-drive-url" type="text" placeholder="Paste Google Drive file/folder link for mobile access..." oninput="updateStudioCardField('driveUrl', this.value)" class="flex-1 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl px-2.5 py-1.5 text-xs" />
-                <button onclick="openCardDriveLink()" class="px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shrink-0" title="Open Asset in Google Drive">Open</button>
+                <input id="studio-drive-link" type="text" placeholder="Paste Google Drive file/folder link..." oninput="updateStudioCardField('driveLink', this.value)" class="flex-1 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl px-2.5 py-1.5 text-xs" />
+                <button onclick="openCardDriveLink()" class="px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shrink-0">Open</button>
               </div>
             </div>
             <div class="sm:col-span-2">
-              <label class="block text-[10px] font-bold text-slate-500 mb-1">NotebookLM Grounded Facts & Citation Notes (Fed into Agents 1, 2, 3 & 4)</label>
-              <input id="studio-notebook-notes" type="text" oninput="updateStudioCardField('notebookNotes', this.value)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs" />
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-1">NotebookLM Grounded Facts & Citation Notes (Fed into Agents 1, 2, 3 & 4)</label>
+              <textarea id="studio-notebook-notes" rows="2" oninput="updateStudioCardField('notebookNotes', this.value)" class="w-full bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800 rounded-xl p-2 text-xs"></textarea>
             </div>
           </div>
 
@@ -294,100 +273,76 @@
             <input id="studio-topic" type="text" oninput="updateStudioCardField('title', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-semibold" />
           </div>
 
-          <!-- 1-Click Chained Agent Execution Bar -->
+          <!-- 1-Click Agent Execution Buttons + Full Chained Run -->
           <div class="p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/70 dark:border-indigo-800/50 space-y-2.5">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <span class="text-xs font-extrabold text-indigo-900 dark:text-indigo-200">Execute Chained AI Agents (Each Agent Reads Upstream Output + NotebookLM)</span>
-              <button onclick="runFullChainedPipeline()" class="px-3 py-1 rounded-lg bg-gradient-to-r from-indigo-600 to-pink-600 text-white text-[11px] font-extrabold shadow">
+              <button onclick="runFullChainedPipeline()" class="px-3 py-1 rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-[11px] font-extrabold shadow-sm transition">
                 ⚡ Run Full Chain (2 → 3 → 4)
               </button>
             </div>
             <div id="agent-run-status" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">Ready — Select an agent below or run full chain</div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button onclick="runAgentInStudio('agent2')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
-                <i data-lucide="pen-tool" class="w-4 h-4"></i>
                 <span>1. Agent 2: Copy & Hook</span>
               </button>
               <button onclick="runAgentInStudio('agent3')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
-                <i data-lucide="clapperboard" class="w-4 h-4"></i>
                 <span>2. Agent 3: 8s/10s Script</span>
               </button>
               <button onclick="runAgentInStudio('agent4a')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
-                <i data-lucide="image" class="w-4 h-4"></i>
                 <span>3A. Agent 4A: Nano Banana</span>
               </button>
               <button onclick="runAgentInStudio('agent4b')" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-1">
-                <i data-lucide="video" class="w-4 h-4"></i>
                 <span>3B. Agent 4B: Google Flow</span>
               </button>
             </div>
           </div>
 
-          <!-- Mandatory Uploaded Profile Photo & Starting Frame Reminder Banner -->
-          <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-2.5 text-xs">
-            <i data-lucide="user-check" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-            <div class="space-y-0.5">
-              <div class="font-extrabold text-emerald-800 dark:text-emerald-300">Mandatory Reference Photo Attachment Reminder (Google Flow & Nano Banana):</div>
-              <p class="text-[11px] text-slate-600 dark:text-slate-300">
-                • <strong>Clip 1 (Intro Hook) & Clip 4 (CTA Outro) / Flyer Footer:</strong> Attach your uploaded <strong>Agent Profile Photo (Luiz Lee)</strong> as the <strong>Starting Frame (First Frame)</strong> so the AI locks your presenter identity.<br>
-                • <strong>Clips 2 & 3 (Property Walkthrough):</strong> Attach the actual <strong>Property Photo or Nano Banana Floorplan</strong> as the <strong>Starting Frame</strong> (never "Ingredients" mode) to preserve 100% structural accuracy under CEA PG 02/2011.
-              </p>
+          <!-- Mandatory Reference Photo Upload Reminder Banner -->
+          <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3 text-xs">
+            <div>
+              <span class="font-extrabold text-emerald-800 dark:text-emerald-300">📸 Policy-Safe Reference Photo Mode (Google Flow & Nano Banana):</span>
+              <p class="text-[11px] text-slate-600 dark:text-slate-300">Attach your headshot as the Starting Frame in Google Flow. Personal names, phone numbers & CEA IDs are automatically stripped from Flow video prompts to prevent policy errors!</p>
             </div>
+            <button onclick="sanitizeCurrentMediaPrompt()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shrink-0">Sanitize Prompt</button>
           </div>
 
-          <!-- THREE SEPARATE CHAINED OUTPUT BOXES (With Unmistakable Labels for Box B vs Box C) -->
+          <!-- SEPARATED COPY-PASTE BOXES -->
           <div class="space-y-4">
-            <!-- BOX A: SOCIAL CAPTION -->
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-extrabold text-slate-700 dark:text-slate-200">Box A: Social Media Caption & Hook Pack (Paste onto FB, IG, TikTok & YT Description)</label>
-                <button onclick="copyBoxText('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white text-[11px] font-bold transition">Copy Social Caption</button>
+            <!-- Box A: Clean Social Caption -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <label class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">BOX A — Clean Ready-to-Post Social Caption (Zero Labels • Full 5 CEA Particulars)</label>
+                <div class="flex gap-1.5">
+                  <button onclick="stripLabelsFromCaption()" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-[11px] font-bold">Clean Tags</button>
+                  <button onclick="copyBoxText('studio-copy-output', this)" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold">Copy Clean Caption</button>
+                </div>
               </div>
-              <textarea id="studio-copy-output" rows="5" oninput="updateStudioCardField('copy', this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
+              <textarea id="studio-copy-output" rows="5" oninput="runCEAComplianceAudit()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs leading-relaxed"></textarea>
             </div>
 
-            <!-- BOX B: INTERNAL STORYBOARD / TELEPROMPTER (Auto-hides in Image/Flyer mode) -->
-            <div id="box-b-script-wrapper" class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-950/60 border border-dashed border-slate-300 dark:border-slate-800 space-y-1.5">
+            <!-- Box B: Multi-Clip 8s/10s Storyboard OR Nano Banana Prose Prompt -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <label class="text-xs font-bold text-slate-600 dark:text-slate-300">Box B: Spoken Voiceover Script (For Mic / Teleprompter — DO NOT Paste Into Google Flow)</label>
-                  <p class="text-[10px] text-slate-400">Agent 3 writes the spoken dialogue here first, and Agent 4B automatically embeds these lines into Box C below.</p>
-                </div>
-                <button onclick="copyBoxText('studio-script-output', this)" class="text-[11px] text-slate-500 hover:text-indigo-600 font-semibold underline">Copy Voiceover Script</button>
+                <label class="text-xs font-extrabold text-violet-600 dark:text-violet-400">BOX B — Google Flow Policy-Safe 8s/10s Multi-Clip Prompts / Nano Banana Prompt</label>
+                <button onclick="copyBoxText('studio-media-output', this)" class="px-3 py-1 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-bold">Copy Master Prompt</button>
               </div>
-              <textarea id="studio-script-output" rows="3" oninput="updateStudioCardField('script', this.value)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-xs mono leading-relaxed text-slate-600 dark:text-slate-300"></textarea>
-            </div>
+              <textarea id="studio-media-output" rows="7" oninput="runCEAComplianceAudit()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
 
-            <!-- BOX C: THE ACTUAL PROMPT TO PASTE INTO GOOGLE FLOW OR NANO BANANA -->
-            <div class="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-emerald-500/40 space-y-2.5">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-extrabold uppercase">USE THIS FOR AI GENERATION</span>
-                  <label class="block text-xs font-extrabold text-slate-900 dark:text-white mt-1">Box C: FINAL COPYABLE PROMPT for Google Flow (Veo 3.1) / Google Nano Banana</label>
-                </div>
-                <button onclick="copyCleanVisualPromptOnly()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-sm">
-                  📋 Copy Full Clean Prompt
-                </button>
-              </div>
-              <textarea id="studio-media-output" rows="8" oninput="updateStudioCardField('media', this.value)" class="w-full bg-white dark:bg-slate-950 border border-emerald-300 dark:border-emerald-800/70 rounded-xl p-3 text-xs mono leading-relaxed"></textarea>
-
-              <!-- Individual 8s/10s Clip Copy Buttons for Google Flow Merging (FIXED QUOTES BUG!) -->
-              <div id="multi-clip-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
+              <!-- Individual Clip Copy Cards for Google Flow -->
+              <div id="flow-clips-drawer" class="space-y-2 pt-2"></div>
             </div>
           </div>
         </div>
 
-        <!-- Right 5 Cols: Agent 5 (2026 CEA Compliance Gate) + Live Flyer/End-Card Preview -->
+        <!-- Right 5 Cols: Agent 5 (CEA Compliance Gate) + Live Flyer/End-Card Preview -->
         <div class="lg:col-span-5 space-y-5">
           <!-- Agent 5: CEA Compliance Firewall -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-500"></i>
-                <div>
-                  <h3 class="font-extrabold text-sm">Agent 5: Singapore CEA & PDPA Compliance Gate</h3>
-                  <p class="text-[11px] text-slate-500">Enforces PG 02/2011, CEPCC, PC 04-13, 5 Particulars & URA Masking</p>
-                </div>
+              <div>
+                <h3 class="font-extrabold text-sm">Agent 5: Singapore CEA & PDPA Compliance Gate</h3>
+                <p class="text-[11px] text-slate-500">Enforces PG 02/2011, CEPCC PC 04-13, 5 Particulars & URA Masking</p>
               </div>
               <span id="cea-score-pill" class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">PASS</span>
             </div>
@@ -404,7 +359,7 @@
             </div>
           </div>
 
-          <!-- Live Visual CTA Footer & Flyer Preview (Uses Uploaded Profile Photo + CEA Info) -->
+          <!-- Live Visual CTA Footer & Flyer Preview -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
             <div class="flex items-center justify-between">
               <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Live Nano Banana Flyer / Flow Clip 4 End-Card Preview</span>
@@ -419,12 +374,11 @@
               <div id="preview-headline" class="font-extrabold text-sm sm:text-base leading-snug">
                 Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026
               </div>
-              <!-- Mandatory CEA CTA Badge with Profile Photo -->
               <div class="p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
                   <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400 shrink-0 bg-indigo-600 flex items-center justify-center font-bold">
-                    <img id="preview-cta-avatar" src="AI Smart Casual.png" alt="Agent Avatar" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                    <div class="hidden w-full h-full items-center justify-center text-sm">LL</div>
+                    <img id="preview-cta-avatar" src="" alt="Agent Avatar" class="hidden w-full h-full object-cover" />
+                    <div id="preview-cta-fallback" class="w-full h-full flex items-center justify-center text-sm">LL</div>
                   </div>
                   <div class="text-[11px] leading-tight space-y-0.5">
                     <div id="preview-cea-name" class="font-extrabold text-white text-xs">Luiz Lee</div>
@@ -444,86 +398,54 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 3: TRAFFIC TELEMETRY & VIRAL RAG MEMORY (AGENT 7)              -->
+    <!-- VIEW 3: TRAFFIC TELEMETRY & EDITABLE VIRAL RAG MEMORY (AGENT 7)     -->
     <!-- =================================================================== -->
     <section id="view-traffic" class="tab-view hidden space-y-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-          <div class="text-xs text-slate-500 font-semibold">Avg 3-Second Hold Rate</div>
-          <div class="text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-400">74.8%</div>
-          <div class="text-[11px] text-emerald-600 mt-1">↑ +6.2% vs last Sprint (Target >65%)</div>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-          <div class="text-xs text-slate-500 font-semibold">Avg Watch Time / Completion</div>
-          <div class="text-2xl font-extrabold mt-1 text-violet-600 dark:text-violet-400">41.2s (78%)</div>
-          <div class="text-[11px] text-emerald-600 mt-1">8s Multi-Clip Pacing Active</div>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-          <div class="text-xs text-slate-500 font-semibold">Shares + Saves Velocity</div>
-          <div class="text-2xl font-extrabold mt-1 text-pink-600 dark:text-pink-400">1,420</div>
-          <div class="text-[11px] text-slate-500 mt-1">Top Channel: IG Reels & TikTok</div>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-          <div class="text-xs text-slate-500 font-semibold">Inbound WhatsApp / DM Leads</div>
-          <div class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">19 Qualified</div>
-          <div class="text-[11px] text-emerald-600 mt-1">Routed to Agent 8 CRM Pipeline</div>
-        </div>
-      </div>
-
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Log Real Post Telemetry Form + Table -->
         <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-extrabold text-sm">Agent 7: Omnichannel Post Performance (`Measured` Stage)</h3>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="font-extrabold text-sm">Agent 7: Omnichannel Post Performance (`Measured` Stage)</h3>
+              <p class="text-[11px] text-slate-500">Log real post metrics or click Run Agent 7 Diagnostic to synthesize new RAG rules</p>
+            </div>
             <button onclick="runAgent7Evaluation()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">
-              Run Agent 7 Diagnostic → Feed Agent 1 & 2
+              ⚡ Run Agent 7 Diagnostic → Feed Agent 1 & 2
             </button>
           </div>
+
+          <!-- Log Real Post Telemetry Input Row -->
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+            <input id="telemetry-topic" type="text" placeholder="Post Topic..." class="sm:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5" />
+            <input id="telemetry-hold" type="number" placeholder="3s Hold % (e.g. 76)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5" />
+            <input id="telemetry-leads" type="number" placeholder="DM Leads (e.g. 8)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5" />
+            <button onclick="addMeasuredTelemetryRow()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg px-3 py-1.5">+ Log Post</button>
+          </div>
+
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead>
                 <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400">
                   <th class="pb-2">Post Topic & Format</th>
-                  <th class="pb-2">Platform</th>
                   <th class="pb-2">3s Hold</th>
-                  <th class="pb-2">Shares/Saves</th>
                   <th class="pb-2">DM Leads</th>
                   <th class="pb-2">Agent 7 Verdict</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
-                <tr>
-                  <td class="py-3 font-bold">HDB MOP 5-Year Progression Math (Flow 4x8s Video)</td>
-                  <td>TikTok / Reels</td>
-                  <td class="text-emerald-600 font-bold">79%</td>
-                  <td>412</td>
-                  <td class="font-bold text-indigo-600">9 Leads</td>
-                  <td><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 font-bold">Scale Hook</span></td>
-                </tr>
-                <tr>
-                  <td class="py-3 font-bold">3 Under-Valued D15 Freehold Floorplans (Nano Banana)</td>
-                  <td>FB / IG</td>
-                  <td class="text-emerald-600 font-bold">71%</td>
-                  <td>538</td>
-                  <td class="font-bold text-indigo-600">7 Leads</td>
-                  <td><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 font-bold">High Saves</span></td>
-                </tr>
-                <tr>
-                  <td class="py-3 font-bold">Generic Condo Walkthrough Without Hook (Video)</td>
-                  <td>YT Shorts</td>
-                  <td class="text-rose-500 font-bold">38%</td>
-                  <td>19</td>
-                  <td>0 Leads</td>
-                  <td><span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 font-bold">Deprecate Intro</span></td>
-                </tr>
-              </tbody>
+              <tbody id="telemetry-table-body" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
             </table>
           </div>
         </div>
 
+        <!-- Editable Shared Viral Memory (RAG) Rules -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="font-extrabold text-sm">Episodic Viral Memory (RAG Rules Fed to Agents 1–4)</h3>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-500/15 text-violet-600 dark:text-violet-300">Memory Synced</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-500/15 text-violet-600 dark:text-violet-300">Active Context</span>
+          </div>
+          <div class="flex gap-2">
+            <input id="new-rag-rule-input" type="text" placeholder="Add custom winning hook or pacing rule..." class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs" />
+            <button onclick="addCustomViralRule()" class="px-3 py-1.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold">+ Add Rule</button>
           </div>
           <ul id="viral-memory-list" class="space-y-2 text-xs"></ul>
         </div>
@@ -531,17 +453,17 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 4: FULL INTERACTIVE 6-STAGE CRM & AGENT 8 OVERRIDE CONTROLS    -->
+    <!-- VIEW 4: INTERACTIVE CRM PIPELINE & WHATSAPP AI QUALIFIER (AGENT 8)  -->
     <!-- =================================================================== -->
-    <section id="view-crm" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
-        <div id="crm-stage-filter-bar" class="flex flex-wrap gap-1.5"></div>
-        <button onclick="openLeadModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
-          <i data-lucide="user-plus" class="w-4 h-4"></i> + Add / Edit Manual Lead
-        </button>
+    <section id="view-crm" class="tab-view hidden space-y-5">
+      <!-- Stage Filter Pills + Add Manual Lead -->
+      <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-1.5" id="crm-stage-filter-bar"></div>
+        <button onclick="openCRMLeadModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">+ Add / Edit Manual Lead</button>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left 7 Cols: Interactive Customer Leads CRM & Task Monitor -->
         <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
           <div class="flex items-center justify-between">
             <div>
@@ -549,39 +471,38 @@
               <p class="text-xs text-slate-500">Change stages directly, edit BANT notes, or override Agent 8 per client</p>
             </div>
           </div>
-
           <div id="crm-leads-list" class="space-y-3"></div>
         </div>
 
+        <!-- Right 5 Cols: Live WhatsApp Business AI Qualifier + Human Steering Directive -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center">
-                <i data-lucide="message-square" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h3 class="font-extrabold text-sm">WhatsApp Business AI Qualifier (Agent 8)</h3>
-                <p class="text-[11px] text-slate-500">Coexistence Mode + Human Override Directives</p>
-              </div>
+            <div>
+              <h3 class="font-extrabold text-sm">WhatsApp Business AI Qualifier (Agent 8)</h3>
+              <p class="text-[11px] text-slate-500">Coexistence Mode + Human Override Directives</p>
             </div>
             <label class="flex items-center gap-1.5 text-xs font-bold cursor-pointer">
-              <input id="wa-auto-reply-toggle" type="checkbox" checked onchange="saveWorkspaceToStorage()" class="rounded text-emerald-600" />
+              <input id="wa-auto-reply-toggle" type="checkbox" checked class="rounded text-emerald-600" />
               <span class="text-emerald-600 dark:text-emerald-400">Auto-Qualify ON</span>
             </label>
           </div>
 
-          <div class="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 space-y-1">
-            <label class="block text-[10px] font-extrabold uppercase text-amber-800 dark:text-amber-300">🛑 Human Override Instruction for Agent 8 (Optional):</label>
-            <input id="agent8-override-directive" type="text" placeholder="e.g., Skip IPA question; invite directly to Saturday 3pm viewing at Bishan..." oninput="updateAgent8Override(this.value)" class="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-lg px-2.5 py-1 text-xs" />
+          <!-- Human Steering Override Bar for Agent 8 -->
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-1">
+            <label class="block text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-300">🎯 Human Override Instruction for Agent 8 (Optional):</label>
+            <input id="wa-human-directive" type="text" placeholder="e.g., Skip IPA question; invite directly to Saturday 3pm viewing at Bishan..." class="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-lg px-2.5 py-1 text-xs" />
           </div>
 
+          <!-- Simulated WhatsApp Thread -->
           <div id="wa-chat-box" class="bg-slate-100 dark:bg-slate-950 rounded-2xl p-3.5 h-64 overflow-y-auto space-y-2.5 text-xs border border-slate-200 dark:border-slate-800"></div>
 
+          <!-- Extracted BANT Qualification Pill Bar -->
           <div id="wa-bant-summary" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[11px] space-y-1">
             <div class="font-extrabold text-emerald-700 dark:text-emerald-300">Agent 8 Live Qualification Extraction:</div>
             <div id="wa-bant-details" class="text-slate-600 dark:text-slate-300">Residency: SC • Intent: Upgrade HDB to 3BR Condo • MOP: Q4 2026 • IPA: Pending</div>
           </div>
 
+          <!-- Test Incoming Prospect Message Input -->
           <div class="flex gap-2">
             <input id="wa-incoming-input" type="text" placeholder="Simulate incoming buyer WhatsApp (auto-creates CRM lead)..." class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs" onkeydown="if(event.key==='Enter') simulateIncomingWhatsApp()" />
             <button onclick="simulateIncomingWhatsApp()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0">
@@ -593,330 +514,230 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 5: NOTEBOOKLM REFERENCE BRAIN & 9-AGENT SKILLS MATRIX          -->
+    <!-- VIEW 5: NOTEBOOKLM KNOWLEDGE VAULT & UPFRONT SKILLS MATRIX          -->
     <!-- =================================================================== -->
-    <section id="view-blueprint" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h3 class="font-extrabold text-base">Connected NotebookLM Knowledge Bases (6 Master Sources Loaded)</h3>
-            <p class="text-xs text-slate-500">All 9 agents read from these structured knowledge bases & your Google Drive Filing Cabinet</p>
+    <section id="view-notebook" class="tab-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left 6 Cols: NotebookLM Grounded Reference Vault -->
+        <div class="lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+            <div>
+              <h3 class="font-extrabold text-base">📚 NotebookLM Grounded Reference Brain</h3>
+              <p class="text-xs text-slate-500">Add your NotebookLM notebook links & verified URA/HDB/CEA research packs here. Agents 1–5 cite these facts verbatim.</p>
+            </div>
           </div>
-          <a href="https://gemini.google.com/notebook/3e6023c8-976b-439a-8c25-39f8277cc5b2" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5">
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open Universal Prompt Builder NotebookLM
-          </a>
+
+          <div class="space-y-2.5 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+            <input id="nb-title-input" type="text" placeholder="Notebook Title (e.g., 2026 D15 Freehold URA REALIS Pack)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-bold" />
+            <input id="nb-url-input" type="text" placeholder="NotebookLM Share URL (https://notebooklm.google.com/notebook/...)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
+            <textarea id="nb-facts-input" rows="3" placeholder="Paste key verified facts, URA medians, or CEA circulars from your NotebookLM audio/summary..." class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3"></textarea>
+            <button onclick="addNotebookSource()" class="w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold">+ Save NotebookLM Reference Pack</button>
+          </div>
+
+          <div id="notebook-vault-list" class="space-y-2.5"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
-            <div class="font-extrabold text-indigo-600 dark:text-indigo-400">1–2. CEA Statutory Acts & PG 02/2011</div>
-            <p class="text-slate-500">Full clauses for Estate Agents Act, CEPCC, PG 02/2011 (5 particulars, written consent, URA unit masking), PC 04-13 & PDPA DNC rules.</p>
+        <!-- Right 6 Cols: 9-Agent Upfront Skills Matrix -->
+        <div class="lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
+          <h3 class="font-extrabold text-base">9-Agent Upfront Skills & Chained Handoff Matrix</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400">
+                  <th class="pb-2">Agent Node</th>
+                  <th class="pb-2">Upfront Injected Skill</th>
+                  <th class="pb-2">Downstream Handoff</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr>
+                  <td class="py-2.5 font-bold">1. Topic & Trend Miner</td>
+                  <td>NotebookLM Grounding + Curiosity-Gap Matrix</td>
+                  <td>Feeds Topic + Notebook Facts → Agent 2</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">2. Viral Copy Strategist</td>
+                  <td>Zero-Tag Clean Caption + 5 CEA Particulars</td>
+                  <td>Feeds Hook & CTA → Agent 3</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">3. Retention Scriptwriter</td>
+                  <td>8s (~20w) / 10s (~24w) Spoken Beat Splitter</td>
+                  <td>Feeds Exact Spoken Dialogue → Agent 4B</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">4A. Nano Banana Flyer</td>
+                  <td>Natural-Language Prose + Reference Photo Lock</td>
+                  <td>Audited by Agent 5 Compliance Gate</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">4B. Google Flow Video</td>
+                  <td>Policy-Safe 6-Layer Kinematics + Voice Profile</td>
+                  <td>Audited by Agent 5 Compliance Gate</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">5. CEA & PDPA Gate</td>
+                  <td>PG 02/2011, CEPCC PC 04-13, URA Unit Masking</td>
+                  <td>Approves → Scheduled / Flags Rework</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">7. Traffic & RAG Analyst</td>
+                  <td>3s Hold Diagnostic + RAG Memory Synthesizer</td>
+                  <td>Updates Viral Memory → Agents 1–3</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">8. WhatsApp AI Qualifier</td>
+                  <td>SG Real Estate BANT + Human Steering Override</td>
+                  <td>Auto-Creates & Updates CRM Leads</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
-            <div class="font-extrabold text-violet-600 dark:text-violet-400">3–4. Google Flow & Nano Banana Spec</div>
-            <p class="text-slate-500">24-angle non-repeating SG property topic matrix, Nano Banana 3-zone natural prose rules, and Google Flow 8s/10s multi-clip splitter.</p>
-          </div>
-          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
-            <div class="font-extrabold text-emerald-600 dark:text-emerald-400">5–6. Cloud Sync & Social API Runbook</div>
-            <p class="text-slate-500">Dual-layer PC ↔ Mobile persistence (Supabase Cloud + Google Drive JSON fallback) and live Meta/YouTube/TikTok/WhatsApp verification.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-        <h3 class="font-extrabold text-base">9-Agent Upfront Skills, Active AI Model Routing & Chained Handoff Matrix</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead>
-              <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400">
-                <th class="pb-2">Agent Node</th>
-                <th class="pb-2">Active AI Model</th>
-                <th class="pb-2">Upstream Input Read</th>
-                <th class="pb-2">Specialized Skill (Google Flow / Nano Banana / CEA)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
-              <tr>
-                <td class="py-2.5 font-bold">1. Topic & Trend Miner</td>
-                <td class="mono text-indigo-600 dark:text-indigo-400">gemini-flash-lite-latest</td>
-                <td>NotebookLM + 9-Stage History</td>
-                <td>24-Angle SG Property Matrix + Strict Cross-Stage Deduplication</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">2. Viral Copy & Hook Strategist</td>
-                <td class="mono text-indigo-600 dark:text-indigo-400">gemini-flash-lite-latest</td>
-                <td>Agent 1 Topic + NotebookLM Notes</td>
-                <td>Topic-specific buyer copy (D15, MOP, ABSD, EC, TDSR) + 5 CEA Footer</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">3. Retention Scriptwriter</td>
-                <td class="mono text-violet-600 dark:text-violet-400">gemini-3.1-flash-lite</td>
-                <td>Agent 2 Hook, Bullets & CTA</td>
-                <td>Splits spoken dialogue into exact 8s or 10s scene blocks (~18 words/clip)</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">4A. Nano Banana Image/Flyer Agent</td>
-                <td class="mono text-violet-600 dark:text-violet-400">Nano Banana Prose Engine</td>
-                <td>Agent 2 Hook & Topic Theme + Photo</td>
-                <td>Topic-matched 3D cutaway + 3 short glassmorphism pills + Avatar Footer</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">4B. Google Flow Video Agent</td>
-                <td class="mono text-violet-600 dark:text-violet-400">Veo 3.1 Multi-Clip Engine</td>
-                <td>Agent 3's 8s/10s Script Blocks</td>
-                <td>4x 120-word 6-layer clips + Lip-sync dialogue + Positive Geometry Lock</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">5. CEA & PDPA Compliance Gate</td>
-                <td class="mono text-emerald-600 dark:text-emerald-400">Clause Engine + Flash-Lite</td>
-                <td>Box A + Box B + Box C + Consent</td>
-                <td>Audits PG 02/2011, CEPCC, PC 04-13, URA unit masking & auto-blocks missing consent</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 font-bold">6–8. Publishing, Traffic & CRM</td>
-                <td class="mono text-emerald-600 dark:text-emerald-400">gemini-flash-lite-latest</td>
-                <td>Live Social APIs & WhatsApp</td>
-                <td>Meta/YT/TikTok verification, RAG feedback writer & human-overridable WhatsApp BANT</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 6: SETTINGS, SUPABASE + GOOGLE DRIVE SYNC & LIVE API TESTERS   -->
+    <!-- VIEW 6: SETTINGS, GOOGLE DRIVE SYNC, CEA PROFILE & API TESTER       -->
     <!-- =================================================================== -->
     <section id="view-settings" class="tab-view hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Col 1 (5 Cols): CEA Salesperson Details + Cross-Device Cloud Sync -->
-        <div class="lg:col-span-5 space-y-6">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="id-card" class="w-5 h-5 text-indigo-600"></i>
-                <div>
-                  <h3 class="font-extrabold text-sm">1. Singapore CEA Profile & CTA Photo</h3>
-                  <p class="text-[11px] text-slate-500">Auto-saved in browser & cloud sync</p>
-                </div>
-              </div>
-              <span id="cea-saved-badge" class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 text-[10px] font-bold">Saved in Memory ✓</span>
-            </div>
+        <!-- Col 1 (5 Cols): CEA Salesperson Details & CTA Profile Photo Upload -->
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-3">
+            <h3 class="font-extrabold text-sm">1. Singapore CEA Profile & Reference Photo Upload</h3>
+            <p class="text-[11px] text-slate-500">Auto-compressed to 240x240px (~18KB) & synced across your PC and Mobile</p>
+          </div>
 
-            <div class="flex items-center gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-500 shrink-0 bg-indigo-600 flex items-center justify-center text-white font-bold">
-                <img id="settings-avatar-preview" src="AI Smart Casual.png" alt="Profile Preview" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <div class="hidden w-full h-full items-center justify-center text-lg">LL</div>
-              </div>
-              <div class="space-y-1.5 flex-1">
-                <label class="block text-xs font-bold">Upload Agent Headshot (240px Auto-Compressed)</label>
-                <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer" />
-                <p class="text-[10px] text-slate-400">Used as Starting Frame reminder in Google Flow & Nano Banana CTA footer.</p>
-              </div>
+          <div class="flex items-center gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-500 shrink-0 bg-indigo-600 flex items-center justify-center text-white font-bold">
+              <img id="settings-avatar-preview" src="" alt="Profile Preview" class="hidden w-full h-full object-cover" />
+              <div id="settings-avatar-fallback" class="w-full h-full flex items-center justify-center text-lg">LL</div>
             </div>
-
-            <div class="space-y-3 text-xs">
-              <div>
-                <label class="block font-bold mb-1">CEA Registered Salesperson Name</label>
-                <input id="cea-name-input" type="text" value="Luiz Lee" oninput="saveCEAProfile()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="block font-bold mb-1">CEA Registration No.</label>
-                  <input id="cea-reg-input" type="text" value="R123456A" oninput="saveCEAProfile()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                </div>
-                <div>
-                  <label class="block font-bold mb-1">Registered Contact No.</label>
-                  <input id="cea-phone-input" type="text" value="+65 9123 4567" oninput="saveCEAProfile()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                </div>
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="block font-bold mb-1">Estate Agency Name</label>
-                  <input id="cea-agency-input" type="text" value="PropNex Realty Pte Ltd" oninput="saveCEAProfile()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
-                </div>
-                <div>
-                  <label class="block font-bold mb-1">Estate Agent Licence No.</label>
-                  <input id="cea-licence-input" type="text" value="L3008022J" oninput="saveCEAProfile()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                </div>
-              </div>
+            <div class="space-y-1.5 flex-1">
+              <label class="block text-xs font-bold">Upload Agent Headshot for CTA & Flow Starting Frame</label>
+              <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer" />
             </div>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="cloud" class="w-5 h-5 text-indigo-600"></i>
-                <div>
-                  <h3 class="font-extrabold text-sm">2. PC ↔ Mobile Cloud Sync & Google Drive Cabinet</h3>
-                  <p class="text-[11px] text-slate-500">Syncs all settings, API keys, Kanban cards & CRM leads across devices</p>
-                </div>
-              </div>
-              <span id="cloud-sync-badge" class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-[10px] font-bold">Local + Cloud Ready</span>
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-bold mb-1">CEA Registered Salesperson Name</label>
+              <input id="cea-name-input" type="text" value="Luiz Lee" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
             </div>
-
-            <div class="space-y-3 text-xs">
+            <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block font-bold mb-1">Personal Workspace Sync ID / PIN (Use same ID on PC & Mobile)</label>
-                <input id="sync-pin-input" type="text" value="luiz-lee-cea-2026" oninput="saveCloudConfig()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono font-bold text-indigo-600 dark:text-indigo-400" />
+                <label class="block font-bold mb-1">CEA Registration No.</label>
+                <input id="cea-reg-input" type="text" value="R123456A" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <div>
-                  <label class="block font-bold mb-1">Supabase Project URL</label>
-                  <input id="settings-supabase-url" type="text" placeholder="https://xyz.supabase.co" oninput="saveCloudConfig()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                </div>
-                <div>
-                  <label class="block font-bold mb-1">Supabase Anon Key</label>
-                  <input id="settings-supabase-key" type="password" placeholder="eyJhbGci..." oninput="saveCloudConfig()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                </div>
+              <div>
+                <label class="block font-bold mb-1">Registered Contact No.</label>
+                <input id="cea-phone-input" type="text" value="+65 9123 4567" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
               </div>
-
-              <div class="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                <label class="block font-bold">Google Drive Filing Cabinet (Folder URL & 1-Click Backup Bridge URL)</label>
-                <input id="settings-drive-folder" type="text" placeholder="Master Google Drive Folder URL (for MP4 videos & flyers)" oninput="saveCloudConfig()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
-                <input id="settings-drive-bridge" type="text" placeholder="Optional Google Apps Script Web App URL (for 1-Click Auto-Pull/Push)" oninput="saveCloudConfig()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-                <input id="drive-file-picker" type="file" accept=".json" onchange="handleLocalDriveJSONImport(event)" class="hidden" />
-              </div>
-
-              <div class="grid grid-cols-2 gap-2 pt-1">
-                <button onclick="pushWorkspaceToCloud()" class="py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition">
-                  ☁️ Push All Settings to Cloud
-                </button>
-                <button onclick="pullWorkspaceFromCloud()" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition">
-                  📲 Pull Settings to This Device
-                </button>
-              </div>
-              <button onclick="pullFromGoogleDriveFallback()" class="w-full py-2 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold transition">
-                📂 Pull / Restore `agent-squad-cloud-sync.json` from Google Drive
-              </button>
             </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold mb-1">Estate Agency Name</label>
+                <input id="cea-agency-input" type="text" value="PropNex Realty Pte Ltd" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
+              </div>
+              <div>
+                <label class="block font-bold mb-1">Estate Agent Licence No.</label>
+                <input id="cea-licence-input" type="text" value="L3008022J" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
+              </div>
+            </div>
+            <button onclick="saveCEAProfile()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition">
+              Save CEA Particulars & Update All Cards
+            </button>
           </div>
         </div>
 
-        <!-- Col 2 (7 Cols): AI Brain Key Vault + Multi-Model Diagnostic Tester + Live Social API Testers -->
+        <!-- Col 2 (7 Cols): Google Drive Cloud Bridge + Gemini Multi-Model Tester -->
         <div class="lg:col-span-7 space-y-6">
+          <!-- Google Drive Filing Cabinet & PC <-> Mobile Sync Bridge -->
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="cpu" class="w-5 h-5 text-emerald-500"></i>
-                <div>
-                  <h3 class="font-extrabold text-sm">3. AI Agent Brain (Google Gemini BYOK) & Active Model Tester</h3>
-                  <p class="text-[11px] text-slate-500">Prioritizes `gemini-flash-lite-latest` (667ms) & `gemini-3.1-flash-lite` • Blocks retired `2.5-flash-lite`</p>
-                </div>
+              <div>
+                <h3 class="font-extrabold text-sm">2. Google Drive Filing Cabinet & PC ↔ Mobile Cloud Sync</h3>
+                <p class="text-[11px] text-slate-500">Auto-saves your entire Kanban board, CRM leads, NotebookLM vault & CEA profile to your personal Google Drive</p>
               </div>
-              <span id="vault-test-pill" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800">Ready</span>
+              <button onclick="toggleDriveAppsScriptGuide()" class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-700 dark:text-amber-300 text-[11px] font-bold">
+                View 60-Sec Google Drive Setup Code
+              </button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div>
-                <label class="block font-bold mb-1">Google Gemini API Key (AES-GCM Saved in Memory)</label>
-                <input id="settings-gemini-key" type="password" placeholder="Paste AIzaSy... key once (remembered automatically)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
+                <label class="block font-bold mb-1">Master Google Drive Filing Cabinet Folder URL</label>
+                <input id="settings-drive-folder" type="text" placeholder="https://drive.google.com/drive/folders/..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
+              </div>
+              <div>
+                <label class="block font-bold mb-1">Google Drive Web App Sync URL (Apps Script Endpoint)</label>
+                <input id="settings-cloud-sync-url" type="text" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button onclick="saveCloudSettings()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Save Drive Endpoints</button>
+              <button onclick="pushCloudSync()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">Push State to Google Drive Now</button>
+              <button onclick="pullCloudSync()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold">Pull Latest State from Google Drive</button>
+            </div>
+
+            <!-- Collapsible 15-Line Google Apps Script Snippet -->
+            <div id="drive-script-guide" class="hidden p-3.5 rounded-2xl bg-slate-950 text-slate-200 text-[11px] space-y-2 mono">
+              <div class="font-bold text-amber-400">Paste this into script.google.com → Deploy → New Deployment → Web App (Execute as: Me, Who has access: Anyone):</div>
+<pre class="overflow-x-auto text-[10px] leading-relaxed text-emerald-300">function doPost(e) {
+  PropertiesService.getScriptProperties().setProperty('SQUAD_STATE', e.postData.contents);
+  return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+}
+function doGet() {
+  var data = PropertiesService.getScriptProperties().getProperty('SQUAD_STATE') || '{}';
+  return ContentService.createTextOutput(data).setMimeType(ContentService.MimeType.JSON);
+}</pre>
+            </div>
+          </div>
+
+          <!-- Gemini API Vault & Multi-Model Connection Tester -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div>
+                <h3 class="font-extrabold text-sm">3. AI Agent Brain (Google Gemini BYOK) & All-Model Tester</h3>
+                <p class="text-[11px] text-slate-500">AES-GCM encrypted locally • Auto-discovers all callable models on your key</p>
+              </div>
+              <span id="vault-test-pill" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800">Ready to Test</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-bold mb-1">Google Gemini API Key</label>
+                <input id="settings-gemini-key" type="password" placeholder="Paste AIzaSy... key" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
               </div>
               <div>
                 <label class="block font-bold mb-1">Active Preferred Gemini Model</label>
                 <select id="settings-preferred-model" onchange="setPreferredModel(this.value)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-semibold mono">
-                  <option value="auto">Auto-Cascade (Recommended: gemini-flash-lite-latest)</option>
-                  <option value="gemini-flash-lite-latest">gemini-flash-lite-latest (Fastest ~667ms)</option>
-                  <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (Active 3.1 Tier)</option>
-                  <option value="gemini-3.1-flash-lite-preview">gemini-3.1-flash-lite-preview</option>
-                  <option value="gemini-2.5-flash">gemini-2.5-flash (Balanced Reasoning)</option>
-                  <option value="gemini-2.5-pro">gemini-2.5-pro (Deep Strategy)</option>
+                  <option value="auto">Auto-Cascade (gemini-2.5-flash-lite → flash → pro)</option>
+                  <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                  <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                  <option value="gemini-2.5-pro">gemini-2.5-pro</option>
                 </select>
               </div>
             </div>
 
             <div class="flex flex-wrap gap-2">
-              <button onclick="saveAndTestGeminiKey()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">
-                1. Save Key & Discover Models
-              </button>
-              <button onclick="testAllGeminiModels()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition">
-                2. Ping & Verify Active Models
-              </button>
-              <button onclick="clearStoredAPIKey()" class="px-3 py-2 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-bold">
-                Clear Key
-              </button>
+              <button onclick="saveAndTestGeminiKey()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">1. Save Key & Discover Models</button>
+              <button onclick="testAllGeminiModels()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">2. Ping & Verify All Core Models</button>
+              <button onclick="clearStoredAPIKey()" class="px-3 py-2 rounded-xl bg-rose-500/10 text-rose-600 text-xs font-bold">Clear Key</button>
             </div>
 
             <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex items-center justify-between text-[11px]">
-                <span class="font-extrabold uppercase tracking-wider text-slate-400">Live API Model Verification Matrix (Retired 2.5-flash-lite Excluded)</span>
-                <span id="discovered-count-badge" class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">Ready</span>
+                <span class="font-extrabold uppercase tracking-wider text-slate-400">Live API Model Verification Matrix</span>
+                <span id="discovered-count-badge" class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">Awaiting test...</span>
               </div>
               <div id="model-test-results-body" class="space-y-1.5 text-xs">
-                <div class="text-slate-400 italic text-[11px]">Click "Ping & Verify Active Models" to test live HTTP 200 handshakes and response times.</div>
+                <div class="text-slate-400 italic text-[11px]">Paste your Gemini API key above and click "Ping & Verify All Core Models" to test every model endpoint live.</div>
               </div>
             </div>
-          </div>
-
-          <!-- Box 4: Omnichannel Social Media & WhatsApp Business Live Connection Setup & Testers -->
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <i data-lucide="share-2" class="w-5 h-5 text-pink-500"></i>
-                <div>
-                  <h3 class="font-extrabold text-sm">4. Omnichannel Social & WhatsApp API Setup + Live Connection Testers</h3>
-                  <p class="text-[11px] text-slate-500">All credentials persist in local & cloud memory so you never re-key them</p>
-                </div>
-              </div>
-              <button onclick="saveSocialConnections()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Save All Endpoints</button>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between font-bold">
-                  <span>1. FB Page & IG Reels (Meta API)</span>
-                  <span id="conn-meta-badge" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px]">Not Tested</span>
-                </div>
-                <input id="conn-meta-id" type="text" placeholder="Page / IG Business ID (e.g. 178414...)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <input id="conn-meta-token" type="password" placeholder="Page Access Token (EAA...)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <div class="flex items-center justify-between pt-1">
-                  <span class="text-[10px] text-slate-400">Meta Graph API v21.0 `/me`</span>
-                  <button onclick="testSocialConnection('meta')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold">Test Meta API</button>
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between font-bold">
-                  <span>2. YouTube Shorts (Data API v3)</span>
-                  <span id="conn-yt-badge" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px]">Not Tested</span>
-                </div>
-                <input id="conn-yt-channel" type="text" placeholder="YouTube Channel ID (UC...)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <input id="conn-yt-token" type="password" placeholder="Google API Key (AIza...) or OAuth (ya29...)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <div class="flex items-center justify-between pt-1">
-                  <span class="text-[10px] text-slate-400">Can use your Gemini API key!</span>
-                  <button onclick="testSocialConnection('youtube')" class="px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[11px] font-bold">Test YouTube API</button>
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between font-bold">
-                  <span>3. TikTok Creator Posting API</span>
-                  <span id="conn-tiktok-badge" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px]">Not Tested</span>
-                </div>
-                <input id="conn-tiktok-handle" type="text" placeholder="Creator Handle (e.g. @luizlee.sg)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <input id="conn-tiktok-token" type="password" placeholder="TikTok OAuth Token (act....)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <div class="flex items-center justify-between pt-1">
-                  <span class="text-[10px] text-slate-400">Validates `act.` OAuth format</span>
-                  <button onclick="testSocialConnection('tiktok')" class="px-2.5 py-1 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[11px] font-bold">Verify TikTok</button>
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between font-bold">
-                  <span>4. WhatsApp Business Cloud API</span>
-                  <span id="conn-wa-badge" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px]">Not Tested</span>
-                </div>
-                <input id="conn-wa-phone-id" type="text" placeholder="Phone Number ID (15 digits)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <input id="conn-wa-token" type="password" placeholder="Permanent System Token (EAA...)" oninput="saveSocialConnections()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 mono" />
-                <div class="flex items-center justify-between pt-1">
-                  <span class="text-[10px] text-slate-400">Pings Meta Phone ID endpoint</span>
-                  <button onclick="testSocialConnection('whatsapp')" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold">Test WhatsApp API</button>
-                </div>
-              </div>
-            </div>
-
-            <div id="social-test-diagnostic" class="hidden p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs mono"></div>
           </div>
         </div>
       </div>
@@ -924,16 +745,13 @@
 
   </main>
 
-  <!-- =================================================================== -->
-  <!-- MODAL 1: MANDATORY BLOCKED / REWORK REASON & ACCOUNTABLE OWNER      -->
-  <!-- =================================================================== -->
+  <!-- MODAL 1: MANDATORY BLOCKED / REWORK REASON & ACCOUNTABLE OWNER -->
   <div id="exception-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 id="exception-modal-title" class="font-extrabold text-base text-rose-600">Flag Card as Blocked / Rework</h3>
-        <button onclick="closeExceptionModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 class="font-extrabold text-base text-rose-600">Flag Card as Blocked / Rework</h3>
+        <button onclick="closeExceptionModal()" class="text-slate-400 hover:text-slate-600">✕</button>
       </div>
-      <p class="text-xs text-slate-500">Agile governance requires logging the exact root-cause reason and assigning an accountable owner before moving a card to Blocked or Rework.</p>
       <div class="space-y-3 text-xs">
         <div>
           <label class="block font-bold mb-1">Exception State</label>
@@ -955,7 +773,7 @@
         </div>
         <div>
           <label class="block font-bold mb-1">Specific Reason / Fix Required</label>
-          <textarea id="exc-reason-input" rows="3" placeholder="e.g., Missing Estate Agent Licence No. on carousel slide 2, or awaiting signed seller consent..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3"></textarea>
+          <textarea id="exc-reason-input" rows="3" placeholder="Enter exact fix required..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3"></textarea>
         </div>
       </div>
       <div class="flex justify-end gap-2 pt-2">
@@ -965,66 +783,85 @@
     </div>
   </div>
 
-  <!-- =================================================================== -->
-  <!-- MODAL 2: MANUAL ADD / EDIT CRM LEAD & AGENT 8 OVERRIDE              -->
-  <!-- =================================================================== -->
-  <div id="lead-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+  <!-- MODAL 2: ADD / EDIT CRM LEAD -->
+  <div id="crm-lead-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 id="lead-modal-title" class="font-extrabold text-base text-indigo-600 dark:text-indigo-400">Add / Edit CRM Customer Lead</h3>
-        <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 class="font-extrabold text-base">Add / Edit Customer Lead (Agent 8 CRM)</h3>
+        <button onclick="closeCRMLeadModal()" class="text-slate-400 hover:text-slate-600">✕</button>
       </div>
-      <input type="hidden" id="lead-edit-id" value="" />
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+      <input id="crm-edit-id" type="hidden" />
+      <div class="space-y-3 text-xs">
         <div>
-          <label class="block font-bold mb-1">Client Name *</label>
-          <input id="lead-name-input" type="text" placeholder="e.g., Raymond & Vivian Tan" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
+          <label class="block font-bold mb-1">Client Name & Contact</label>
+          <input id="crm-name-input" type="text" placeholder="e.g., Raymond Lim (+65 9111 2233)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-bold" />
         </div>
-        <div>
-          <label class="block font-bold mb-1">WhatsApp / Phone Number</label>
-          <input id="lead-phone-input" type="text" placeholder="+65 9888 1234" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mono" />
-        </div>
-        <div>
-          <label class="block font-bold mb-1">CRM Pipeline Stage</label>
-          <select id="lead-stage-input" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-bold">
-            <option value="1. Inbound Lead">1. Inbound Lead</option>
-            <option value="2. AI Qualifying">2. AI Qualifying</option>
-            <option value="3. Financial/MOP Consult Booked">3. Financial/MOP Consult Booked</option>
-            <option value="4. Viewing Active">4. Viewing Active</option>
-            <option value="5. Offer / OTP Issued">5. Offer / OTP Issued</option>
-            <option value="6. Completed & Nurture">6. Completed & Nurture</option>
-          </select>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold mb-1">Pipeline Stage</label>
+            <select id="crm-stage-input" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 font-semibold"></select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Lead Source Attribution</label>
+            <input id="crm-source-input" type="text" placeholder="e.g., TikTok MOP Reel" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2" />
+          </div>
         </div>
         <div>
-          <label class="block font-bold mb-1">Agent 8 Mode (Human Override)</label>
-          <select id="lead-aimode-input" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-bold">
-            <option value="AUTO">🤖 Agent 8 Auto-Pilot</option>
-            <option value="DRAFT">✍️ Co-Pilot Draft Only</option>
-            <option value="HUMAN">🛑 Human Takeover (Pause AI)</option>
-          </select>
+          <label class="block font-bold mb-1">SG Real Estate BANT Qualification Notes</label>
+          <textarea id="crm-bant-input" rows="2" placeholder="SC/PR residency, MOP date, budget, IPA status..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5"></textarea>
         </div>
-        <div class="sm:col-span-2">
-          <label class="block font-bold mb-1">Lead Source (Post / Referral / Walk-in)</label>
-          <input id="lead-source-input" type="text" placeholder="e.g., IG Reels MOP Video / Referral" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
-        </div>
-        <div class="sm:col-span-2">
-          <label class="block font-bold mb-1">Singapore Real Estate BANT Qualification Notes (Residency, MOP, Budget, IPA)</label>
-          <textarea id="lead-bant-input" rows="2" placeholder="e.g., SC • Selling 4RM Punggol HDB • Budget $1.9M for 3BR RCR Condo • Bank IPA Approved" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5"></textarea>
-        </div>
-        <div class="sm:col-span-2">
-          <label class="block font-bold mb-1">Next Actionable Follow-Up Task & SLA</label>
-          <input id="lead-task-input" type="text" placeholder="e.g., Send 3 shortlisted D15 floorplans before Friday 6pm" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
+        <div>
+          <label class="block font-bold mb-1">Next Action / SLA Task</label>
+          <input id="crm-task-input" type="text" placeholder="e.g., Send D15 floorplan PDF before Friday 6pm" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2" />
         </div>
       </div>
       <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeLeadModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">Cancel</button>
-        <button onclick="saveManualLead()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Save Lead to CRM</button>
+        <button onclick="closeCRMLeadModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">Cancel</button>
+        <button onclick="saveCRMLeadFromModal()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Save Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: ADD NEW CUSTOM BACKLOG TOPIC CARD -->
+  <div id="new-card-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="font-extrabold text-base">Create Custom Content Topic Card</h3>
+        <button onclick="closeNewCardModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1">Topic & Hook Headline</label>
+          <input id="new-card-title" type="text" placeholder="e.g., Why 2026 Bidadari MOP Flat Owners Are Moving to RCR 3-Bedders" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 font-bold" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold mb-1">Content Format</label>
+            <select id="new-card-format" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2">
+              <option value="Video (Reels/TikTok/Shorts)">🎬 Short-Form Video</option>
+              <option value="Image/Flyer Carousel">🖼️ Nano Banana Flyer</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Starting Stage</label>
+            <select id="new-card-stage" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2">
+              <option value="Agent Proposed Topics">1. Agent Proposed Topics</option>
+              <option value="Human Select">2. Human Select</option>
+              <option value="Ready">3. Ready</option>
+              <option value="In Progress">4. In Progress</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeNewCardModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">Cancel</button>
+        <button onclick="createCustomTopicCard()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">Create & Open in Studio</button>
       </div>
     </div>
   </div>
 
   <!-- =================================================================== -->
-  <!-- APPLICATION LOGIC (v3.4 — ULTIMATE PRODUCTION READY)                -->
+  <!-- APPLICATION SCRIPT (INITIALIZATION ORDER HARDENED + FLOW SANITIZER) -->
   <!-- =================================================================== -->
   <script>
     const WORKFLOW_STAGES = [
@@ -1048,30 +885,7 @@
       '6. Completed & Nurture'
     ];
 
-    window._cleanFlowClips = [];
-
-    const SG_24_TOPIC_MATRIX = [
-      { title: 'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA REALIS & HDB Q3 2026 resale dataset: 5-year MOP flats exhibit peak equity velocity before lease decay steepens.' },
-      { title: '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'URA REALIS Q1-Q3 2026 District 15 non-landed transactions: efficient dumbbell 3BR layouts under $2,350 PSF (exact unit numbers masked per CEA PG 02/2011).' },
-      { title: 'ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'Official IRAS Stamp Duty brackets (SC 2nd property 20% ABSD with 6-month HDB sale refund, PR 5%/30%) and legal transfer rules.' },
-      { title: 'EC vs Resale Private Condo: Monthly Cashflow, Deferred Payment & CPF OA Math', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'HDB & MAS rules on Executive Condominium $16,000 income ceiling, 30% MSR vs 55% TDSR calculation.' },
-      { title: 'How the 55% TDSR Rule Impacts Variable Income & Commission Earners in 2026', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'MAS Notice 645: 30% haircut applied to variable income/bonuses when computing Total Debt Servicing Ratio at 4% stress-test rate.' },
-      { title: 'OCR vs RCR 3-Bedroom PSF Gap Narrowing: 4 URA Charts Every Family Should Save', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'URA Property Price Index Q3 2026 showing Outside Central Region vs Rest of Central Region PSF compression.' },
-      { title: 'HDB Lease Decay & Bala Curve: Why 99-Year Flat CPF Usage Changes When Remaining Lease Hits 60 Years', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'CPF Board & HDB rules: Full CPF OA usage requires remaining lease to cover youngest buyer to age 95.' },
-      { title: 'Selling HDB & Buying Condo Timeline: How to Avoid Temporary Rental Traps Using HDB Extension of Stay', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'HDB Temporary Extension of Stay (up to 3 months post-completion) & bridge financing cashflow sequencing.' },
-      { title: 'Dumbbell Layout vs Traditional Corridor Floorplan: Why 950 sqft Can Live Like 1,100 sqft', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'Architectural floorplan efficiency analysis: zero wasted hallway dead-space saves ~$180,000 at $2,000 PSF.' },
-      { title: 'New Launch Progressive Payment Scheme (PPS) vs Resale Immediate Cashflow Breakdown', format: 'Image/Flyer Carousel', targetApp: 'NANO_BANANA', notes: 'BCA stage-by-stage construction billing (5%-15%-10%-5%...) vs completed resale mortgage commencement.' },
-      { title: 'BTO Plus & Prime Models: 10-Year MOP & Subsidy Clawback Implications for Future Upgraders', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'HDB Standard / Plus / Prime classification framework: 10-year MOP, rental restrictions, and resale income ceilings.' },
-      { title: 'Dual-Key Condominium Units in 2026: Rental Yield Reality vs Resale Exit Liquidity', format: 'Video (Reels/TikTok/Shorts)', targetApp: 'GOOGLE_FLOW', notes: 'URA rental contract telemetry & ABSD savings for single-title dual-key layouts.' }
-    ];
-
-    const NOTEBOOKLM_PRESETS = {
-      URA_MOP_2026: 'URA REALIS & HDB Q3 2026 Dataset: 5-year MOP flats in Punggol/Tampines/Bidadari show strong upgrader equity cushioning. Always cite data.gov.sg / URA REALIS Q3 2026 and mask exact unit numbers.',
-      OCR_RCR_GAP: 'URA Q3 2026 Price Index: Narrowing PSF gap between OCR new launches ($2,150-$2,300 PSF) and RCR / District 15 resale 3-bedroom units ($2,250-$2,450 PSF). Highlight dumbbell layout efficiency.',
-      ABSD_IRAS_2026: 'Official IRAS & MAS 2026 Rules: SC 1st property 0% ABSD, 2nd property 20% ABSD (refunded if HDB sold within 6 months of completed purchase). MAS TDSR capped at 55% using 4.0% stress-test interest rate.',
-      CEA_PG02_2011: 'CEA PG 02/2011 & CEPCC Mandatory Rules: Display all 5 CEA particulars on every slide/outro, verify prior written seller consent, mask transacted unit numbers (#XX-XX), and label 3D renders as Artist Impression.'
-    };
-
+    // STEP 1: Pure helper functions declared FIRST so DEFAULT_CARDS & appState never throw ReferenceError
     function escapeHTML(str) {
       if (str === null || str === undefined) return '';
       return String(str)
@@ -1082,1238 +896,22 @@
         .replace(/'/g, '&#39;');
     }
 
-    function safeSetLocalStorage(key, value) {
-      try {
-        localStorage.setItem(key, value);
-        return true;
-      } catch (err) {
-        console.warn(`Storage quota warning for ${key}:`, err);
-        return false;
-      }
+    function detectTopicTheme(title = '', notes = '') {
+      const combined = `${title} ${notes}`.toLowerCase();
+      if (/d15|district 15|east coast|freehold|floorplan|dumbbell/i.test(combined)) return 'd15_floorplan';
+      if (/ec\b|executive condo|resale condo|cashflow/i.test(combined)) return 'ec_vs_condo';
+      if (/absd|tdsr|decoupl|stamp duty|iras|mas/i.test(combined)) return 'absd_tdsr';
+      if (/cov|cash-over-valuation|valuation/i.test(combined)) return 'cov_hdb';
+      if (/bishan|mrt|4-room|just listed/i.test(combined)) return 'bishan_listing';
+      return 'hdb_mop';
     }
 
-    function normalizeTitle(t) {
-      return String(t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-    }
-
-    const defaultWorkspace = {
-      theme: 'light',
-      preferredModel: 'auto',
-      discoveredModels: [],
-      activeCardId: 'c1',
-      crmFilterStage: 'ALL',
-      agent8OverrideDirective: '',
-      cloudConfig: {
-        syncPin: 'luiz-lee-cea-2026',
-        supabaseUrl: '',
-        supabaseKey: '',
-        driveFolderUrl: '',
-        driveBridgeUrl: ''
-      },
-      socialConnections: {
-        metaId: '',
-        metaToken: '',
-        ytChannel: '',
-        ytToken: '',
-        tiktokHandle: '',
-        tiktokToken: '',
-        waPhoneId: '',
-        waToken: ''
-      },
-      ceaProfile: {
-        name: 'Luiz Lee',
-        regNo: 'R123456A',
-        agencyName: 'PropNex Realty Pte Ltd',
-        licenceNo: 'L3008022J',
-        phone: '+65 9123 4567',
-        avatarDataUrl: ''
-      },
-      topicHistoryMemory: [
-        'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026',
-        '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)',
-        'ABSD & Decoupling Myths vs Official IRAS/MAS 2026 Brackets',
-        'Just Listed: High-Floor 4-Room Bishan HDB Near MRT (Exclusive)',
-        'EC vs Resale Condo: Monthly Cashflow & CPF OA Comparison',
-        'Why Waiting for Interest Rates to Hit 1% Could Cost You More in PSF'
-      ],
-      viralMemory: [
-        'Hook Rule #1: Numbers + Specific District/MOP Year in first 2.5 seconds boosts 3s Hold Rate to >75%.',
-        'Format Rule #2: 4-slide 3D Cutaway Floorplan Carousels (Nano Banana) drive 3.4x higher Saves on IG/FB than exterior photos.',
-        'CTA Rule #3: Single DM keyword trigger ("Comment MOP") converts 2.8x more WhatsApp leads than generic "Contact me".',
-        'CEA Rule #4: Always mask exact unit/floor numbers when citing URA REALIS transaction gains and label 3D floorplans as Artist\'s Impression.'
-      ],
-      cards: [
-        {
-          id: 'c1',
-          title: 'Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026',
-          format: 'Video (Reels/TikTok/Shorts)',
-          targetApp: 'GOOGLE_FLOW',
-          clipDuration: '8',
-          channels: 'FB, IG Reels, TikTok, YT Shorts',
-          stage: 'In Progress',
-          ownerConsent: true,
-          driveUrl: '',
-          notebookNotes: NOTEBOOKLM_PRESETS.URA_MOP_2026,
-          exceptionState: null,
-          exceptionOwner: null,
-          exceptionReason: null,
-          copy: buildDeterministicCleanCopy('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', NOTEBOOKLM_PRESETS.URA_MOP_2026, {name:'Luiz Lee', regNo:'R123456A', agencyName:'PropNex Realty Pte Ltd', licenceNo:'L3008022J', phone:'+65 9123 4567'}),
-          script: `[Clip 1: 0–8s — Presenter Hook & Intro]: "Stop treating your 5-year HDB MOP like a waiting room—here is why year 5 is your strongest equity springboard."\n[Clip 2: 8–16s — Visual Chart & Floorplan Proof]: "According to Q3 2026 HDB and URA data, 5-year flats attract the largest pool of full-CPF buyers."\n[Clip 3: 16–24s — Cashflow & TDSR Breakdown]: "By structuring your CPF OA and 55% TDSR buffer early, you can upgrade without draining family cash reserves."\n[Clip 4: 24–32s — WhatsApp & DM CTA Outro]: "Comment MOP below or tap my WhatsApp link and I will send you the exact 2026 progression sheet!"`,
-          media: buildDeterministicGoogleFlowClips('Why 5-Year HDB MOP Is Your Strongest Asset Progression Lever in 2026', '8', {name:'Luiz Lee', regNo:'R123456A', agencyName:'PropNex Realty Pte Ltd', licenceNo:'L3008022J', phone:'+65 9123 4567'})
-        },
-        {
-          id: 'c2',
-          title: '3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)',
-          format: 'Image/Flyer Carousel',
-          targetApp: 'NANO_BANANA',
-          clipDuration: '8',
-          channels: 'FB, IG Reels',
-          stage: 'Agent Proposed Topics',
-          ownerConsent: true,
-          driveUrl: '',
-          notebookNotes: NOTEBOOKLM_PRESETS.OCR_RCR_GAP,
-          exceptionState: null,
-          exceptionOwner: null,
-          exceptionReason: null,
-          copy: buildDeterministicCleanCopy('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', NOTEBOOKLM_PRESETS.OCR_RCR_GAP, {name:'Luiz Lee', regNo:'R123456A', agencyName:'PropNex Realty Pte Ltd', licenceNo:'L3008022J', phone:'+65 9123 4567'}),
-          script: `[Carousel Slide 1]: Hook Headline + 3D Cutaway Hero\n[Carousel Slide 2]: Layout A — Dumbbell 3BR Breakdown\n[Carousel Slide 3]: URA REALIS Q3 2026 PSF Table\n[Carousel Slide 4]: Luiz Lee Headshot + 5 Mandatory CEA Particulars & WhatsApp CTA`,
-          media: buildDeterministicNanoBananaPrompt('3 Under-Valued District 15 Freehold 3-Bedder Floorplans (2026 PSF Breakdown)', NOTEBOOKLM_PRESETS.OCR_RCR_GAP, {name:'Luiz Lee', regNo:'R123456A', agencyName:'PropNex Realty Pte Ltd', licenceNo:'L3008022J', phone:'+65 9123 4567'})
-        }
-      ],
-      leads: [
-        {
-          id: 'l1',
-          name: 'Kelvin & Rachel Tan',
-          phone: '+65 9111 2233',
-          source: 'TikTok MOP Video (Post #c1)',
-          stage: '3. Financial/MOP Consult Booked',
-          aiMode: 'AUTO',
-          bant: 'SC • Punggol 4RM HDB (MOP Nov 2026) • Budget $1.85M • IPA In Progress',
-          task: 'Prepare progression cashflow deck before Thursday 8pm Zoom',
-          overdue: false
-        },
-        {
-          id: 'l2',
-          name: 'Marcus Lim',
-          phone: '+65 9222 3344',
-          source: 'IG Reels D15 Carousel (Post #c2)',
-          stage: '4. Viewing Active',
-          aiMode: 'HUMAN',
-          bant: 'SC • Buyer • Looking at D15 Freehold 3BR • IPA Approved ($2.4M)',
-          task: 'SLA ALERT: 48h since Saturday viewing — Send WhatsApp feedback check-in now',
-          overdue: true
-        }
-      ],
-      waMessages: [
-        { sender: 'lead', name: 'Darren Koh (+65 9876 1122)', text: 'Hi Luiz! Saw your TikTok reel on the 5-year HDB MOP math. Our Tampines BTO hits MOP in 4 months. Can we upgrade without selling first?', time: '8:42 PM' },
-        { sender: 'ai', name: 'Agent 8 (AI Assistant for Luiz Lee)', text: 'Hi Darren! Thanks for reaching out to Luiz Lee (CEA Reg: R123456A, PropNex). Congrats on your upcoming Tampines MOP! To help Luiz prepare an accurate timeline & ABSD/bridge calculation for you:\n1) Are both owners Singapore Citizens (SC)?\n2) Have you done an initial mortgage IPA check yet?', time: '8:42 PM' }
-      ]
-    };
-
-    function loadWorkspaceFromStorage() {
-      try {
-        const raw = localStorage.getItem('squad_workspace_v3_4');
-        const savedProfile = JSON.parse(localStorage.getItem('squad_cea_profile') || 'null');
-        if (!raw) {
-          const fresh = JSON.parse(JSON.stringify(defaultWorkspace));
-          if (savedProfile) fresh.ceaProfile = { ...fresh.ceaProfile, ...savedProfile };
-          return fresh;
-        }
-        const parsed = JSON.parse(raw);
-        return {
-          ...defaultWorkspace,
-          ...parsed,
-          ceaProfile: { ...defaultWorkspace.ceaProfile, ...(parsed.ceaProfile || {}), ...(savedProfile || {}) },
-          cloudConfig: { ...defaultWorkspace.cloudConfig, ...(parsed.cloudConfig || {}) },
-          socialConnections: { ...defaultWorkspace.socialConnections, ...(parsed.socialConnections || {}) },
-          cards: Array.isArray(parsed.cards) && parsed.cards.length ? parsed.cards : defaultWorkspace.cards,
-          leads: Array.isArray(parsed.leads) && parsed.leads.length ? parsed.leads : defaultWorkspace.leads,
-          viralMemory: Array.isArray(parsed.viralMemory) ? parsed.viralMemory : defaultWorkspace.viralMemory,
-          topicHistoryMemory: Array.isArray(parsed.topicHistoryMemory) ? parsed.topicHistoryMemory : defaultWorkspace.topicHistoryMemory,
-          waMessages: Array.isArray(parsed.waMessages) ? parsed.waMessages : defaultWorkspace.waMessages
-        };
-      } catch (e) {
-        return JSON.parse(JSON.stringify(defaultWorkspace));
-      }
-    }
-
-    const appState = loadWorkspaceFromStorage();
-
-    function saveWorkspaceToStorage() {
-      safeSetLocalStorage('squad_workspace_v3_4', JSON.stringify(appState));
-      safeSetLocalStorage('squad_cea_profile', JSON.stringify(appState.ceaProfile));
-      const badge = document.getElementById('sidebar-sync-status');
-      if (badge) {
-        badge.textContent = 'Saved ✓';
-        setTimeout(() => { badge.textContent = 'Auto-Saved'; }, 1200);
-      }
-    }
-
-    function applyTheme() {
-      const html = document.documentElement;
-      if (appState.theme === 'dark') {
-        html.classList.add('dark');
-        html.classList.remove('light');
-      } else {
-        html.classList.remove('dark');
-        html.classList.add('light');
-      }
-      const icon = document.getElementById('theme-icon');
-      if (icon) {
-        icon.setAttribute('data-lucide', appState.theme === 'dark' ? 'sun' : 'moon');
-        if (window.lucide) lucide.createIcons();
-      }
-    }
-
-    function toggleTheme() {
-      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
-      saveWorkspaceToStorage();
-      applyTheme();
-    }
-
-    function switchTab(tabKey) {
-      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
-      const target = document.getElementById(`view-${tabKey}`);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.dataset.tab === tabKey) {
-          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20';
-        } else {
-          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
-        }
-      });
-
-      if (tabKey === 'studio') {
-        populateStudioSelector();
-        loadCardIntoStudio(appState.activeCardId);
-      } else if (tabKey === 'crm') {
-        renderCRMStageFilterBar();
-        renderCRMLeads();
-      }
-    }
-
-    function renderKanbanBoard() {
-      const container = document.getElementById('kanban-columns-container');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const activeCards = appState.cards.filter(c => !c.exceptionState);
-      document.getElementById('badge-board-count').textContent = appState.cards.length;
-
-      WORKFLOW_STAGES.forEach((stage, idx) => {
-        const col = document.createElement('div');
-        col.className = 'w-72 shrink-0 bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 rounded-2xl p-3 flex flex-col justify-between space-y-3';
-
-        const stageCards = activeCards.filter(c => c.stage === stage);
-
-        let cardsHtml = stageCards.map(c => {
-          const isVideo = c.format.includes('Video');
-          const prevStage = idx > 0 ? WORKFLOW_STAGES[idx - 1] : null;
-          const nextStage = idx < WORKFLOW_STAGES.length - 1 ? WORKFLOW_STAGES[idx + 1] : null;
-          const hasDrive = c.driveUrl && c.driveUrl.trim().length > 5;
-
-          return `
-            <div class="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2.5 hover:border-indigo-500 transition">
-              <div class="flex items-center justify-between gap-1">
-                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${isVideo ? 'bg-violet-500/15 text-violet-600 dark:text-violet-300' : 'bg-amber-500/15 text-amber-600 dark:text-amber-300'}">
-                  ${isVideo ? '🎬 Flow Video' : '🍌 Nano Banana'}
-                </span>
-                <span class="text-[10px] text-slate-400 font-mono truncate max-w-[110px]">${escapeHTML(c.channels)}</span>
-              </div>
-              <div class="font-bold text-xs leading-snug cursor-pointer hover:text-indigo-600" onclick="openCardInStudio('${escapeHTML(c.id)}')">${escapeHTML(c.title)}</div>
-              ${hasDrive ? `<a href="${escapeHTML(c.driveUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 dark:text-amber-400 hover:underline">📂 Open Drive Asset →</a>` : ''}
-              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-900 text-[10px]">
-                <div class="flex gap-1">
-                  ${prevStage ? `<button onclick="moveCardStage('${escapeHTML(c.id)}', '${escapeHTML(prevStage)}')" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">←</button>` : ''}
-                  ${nextStage ? `<button onclick="moveCardStage('${escapeHTML(c.id)}', '${escapeHTML(nextStage)}')" class="px-2 py-0.5 rounded bg-indigo-600 text-white font-bold hover:bg-indigo-500">Next →</button>` : ''}
-                </div>
-                <div class="flex gap-1">
-                  <button onclick="openCardInStudio('${escapeHTML(c.id)}')" class="px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-300 font-semibold">Studio</button>
-                  <button onclick="openExceptionModal('${escapeHTML(c.id)}')" class="px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 font-semibold" title="Flag Blocked or Rework">Flag</button>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        if (!cardsHtml) {
-          cardsHtml = `<div class="p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-800 text-center text-[11px] text-slate-400">No cards in stage</div>`;
-        }
-
-        col.innerHTML = `
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between px-1">
-              <span class="text-xs font-extrabold truncate">${idx + 1}. ${escapeHTML(stage)}</span>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">${stageCards.length}</span>
-            </div>
-            <div class="space-y-2.5">${cardsHtml}</div>
-          </div>
-        `;
-        container.appendChild(col);
-      });
-
-      renderExceptionZones();
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function renderExceptionZones() {
-      const blockedCards = appState.cards.filter(c => c.exceptionState === 'Blocked');
-      const reworkCards = appState.cards.filter(c => c.exceptionState === 'Rework');
-
-      document.getElementById('count-blocked').textContent = blockedCards.length;
-      document.getElementById('count-rework').textContent = reworkCards.length;
-
-      document.getElementById('list-blocked').innerHTML = blockedCards.length ? blockedCards.map(c => `
-        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-800 flex items-start justify-between gap-3 text-xs">
-          <div class="space-y-1">
-            <div class="font-bold text-rose-700 dark:text-rose-300">${escapeHTML(c.title)} <span class="text-[10px] font-normal text-slate-400">(Paused at: ${escapeHTML(c.stage)})</span></div>
-            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
-            <div class="text-[11px] font-mono text-rose-600 dark:text-rose-400"><strong>Accountable Owner:</strong> ${escapeHTML(c.exceptionOwner)}</div>
-          </div>
-          <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold shrink-0">Resolve & Resume</button>
-        </div>
-      `).join('') : `<div class="text-xs text-slate-400 italic">Zero blocked cards.</div>`;
-
-      document.getElementById('list-rework').innerHTML = reworkCards.length ? reworkCards.map(c => `
-        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 flex items-start justify-between gap-3 text-xs">
-          <div class="space-y-1">
-            <div class="font-bold text-amber-700 dark:text-amber-300">${escapeHTML(c.title)} <span class="text-[10px] font-normal text-slate-400">(Stage: ${escapeHTML(c.stage)})</span></div>
-            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Rework Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
-            <div class="text-[11px] font-mono text-amber-600 dark:text-amber-400"><strong>Accountable Owner:</strong> ${escapeHTML(c.exceptionOwner)}</div>
-          </div>
-          <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[11px] font-bold shrink-0">Fix in Studio</button>
-        </div>
-      `).join('') : `<div class="text-xs text-slate-400 italic">Zero cards in rework.</div>`;
-    }
-
-    function moveCardStage(cardId, targetStage) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-
-      if (targetStage === 'Human Review' && !card.ownerConsent) {
-        card.exceptionState = 'Blocked';
-        card.exceptionOwner = 'Luiz Lee (Human Leader)';
-        card.exceptionReason = 'Agent 5 Auto-Block: Missing verified Seller Written Consent Form (CEA PG 02/2011).';
-        saveWorkspaceToStorage();
-        renderKanbanBoard();
-        return;
-      }
-
-      card.stage = targetStage;
-      saveWorkspaceToStorage();
-      renderKanbanBoard();
-    }
-
-    function openExceptionModal(cardId) {
-      appState.pendingExceptionCardId = cardId;
-      document.getElementById('exc-reason-input').value = '';
-      document.getElementById('exception-modal').classList.remove('hidden');
-    }
-
-    function closeExceptionModal() {
-      document.getElementById('exception-modal').classList.add('hidden');
-    }
-
-    function confirmExceptionState() {
-      const card = appState.cards.find(c => c.id === appState.pendingExceptionCardId);
-      if (!card) return;
-      card.exceptionState = document.getElementById('exc-state-select').value;
-      card.exceptionOwner = document.getElementById('exc-owner-select').value;
-      card.exceptionReason = document.getElementById('exc-reason-input').value.trim() || 'Quality/Compliance revision required.';
-      closeExceptionModal();
-      saveWorkspaceToStorage();
-      renderKanbanBoard();
-    }
-
-    function resolveException(cardId) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      card.exceptionState = null;
-      card.ownerConsent = true;
-      saveWorkspaceToStorage();
-      renderKanbanBoard();
-      openCardInStudio(cardId);
-    }
-
-    function openCardInStudio(cardId) {
-      appState.activeCardId = cardId;
-      switchTab('studio');
-    }
-
-    async function triggerAgent1Pitch() {
-      const btn = document.getElementById('btn-agent1-pitch');
-      const oldHtml = btn.innerHTML;
-      btn.textContent = 'Agent 1 Scanning 9 Stages...';
-
-      const existingSet = new Set([
-        ...appState.cards.map(c => normalizeTitle(c.title)),
-        ...(appState.topicHistoryMemory || []).map(t => normalizeTitle(t))
-      ]);
-
-      let candidate = SG_24_TOPIC_MATRIX.find(item => !existingSet.has(normalizeTitle(item.title)));
-      const apiKey = await loadDecryptedGeminiKey();
-      const p = appState.ceaProfile;
-
-      if (apiKey) {
-        try {
-          const allExistingTitles = appState.cards.map(c => `- [${c.stage}] ${c.title}`).join('\n');
-          const prompt = `You are Agent 1 (Viral Trend & Topic Miner) for Singapore property salesperson ${p.name}.
-Active topics on board:
-${allExistingTitles}
-Generate ONE brand-new, high-retention Singapore real estate content topic for 2026 that does NOT repeat any topic above. Return ONLY pipe-separated:
-TITLE | FORMAT (either "Video (Reels/TikTok/Shorts)" or "Image/Flyer Carousel") | URA_OR_HDB_FACT_NOTE`;
-
-          const res = await callGeminiDirect(apiKey, prompt);
-          const parts = res.text.split('|').map(s => s.trim());
-          if (parts.length >= 2 && parts[0].length > 10 && !existingSet.has(normalizeTitle(parts[0]))) {
-            const isVid = parts[1].toLowerCase().includes('video');
-            candidate = {
-              title: parts[0].replace(/^["']|["']$/g, ''),
-              format: isVid ? 'Video (Reels/TikTok/Shorts)' : 'Image/Flyer Carousel',
-              targetApp: isVid ? 'GOOGLE_FLOW' : 'NANO_BANANA',
-              notes: parts[2] || NOTEBOOKLM_PRESETS.URA_MOP_2026
-            };
-          }
-        } catch (e) {
-          console.warn('Agent 1 live generation fallback:', e);
-        }
-      }
-
-      if (!candidate) {
-        candidate = {
-          title: `2026 Singapore Upgrader Case Study: CPF OA vs Cash Reserve Optimization`,
-          format: 'Video (Reels/TikTok/Shorts)',
-          targetApp: 'GOOGLE_FLOW',
-          notes: NOTEBOOKLM_PRESETS.URA_MOP_2026
-        };
-      }
-
-      appState.topicHistoryMemory.push(candidate.title);
-      const newCard = {
-        id: 'c' + Date.now(),
-        title: candidate.title,
-        format: candidate.format,
-        targetApp: candidate.targetApp,
-        clipDuration: '8',
-        channels: 'FB, IG Reels, TikTok, YT Shorts',
-        stage: 'Agent Proposed Topics',
-        ownerConsent: true,
-        driveUrl: '',
-        notebookNotes: candidate.notes,
-        exceptionState: null,
-        exceptionOwner: null,
-        exceptionReason: null,
-        copy: buildDeterministicCleanCopy(candidate.title, candidate.notes, p),
-        script: `[Clip 1: 0–8s]: "Stop treating your property timeline like a waiting game—here is why ${candidate.title} is your strongest lever in 2026."\n[Clip 2: 8–16s]: "According to 2026 URA REALIS and HDB data, buyers who structure their equity window early capture the widest pool of full-CPF demand."\n[Clip 3: 16–24s]: "By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve."\n[Clip 4: 24–32s]: "Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet."`,
-        media: candidate.targetApp === 'NANO_BANANA'
-          ? buildDeterministicNanoBananaPrompt(candidate.title, candidate.notes, p)
-          : buildDeterministicGoogleFlowClips(candidate.title, '8', p)
-      };
-
-      appState.cards.unshift(newCard);
-      appState.activeCardId = newCard.id;
-      saveWorkspaceToStorage();
-      renderKanbanBoard();
-      btn.innerHTML = oldHtml;
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function extractShortHookBadge(title) {
-      const clean = String(title || '2026 SINGAPORE PROPERTY PLAYBOOK').replace(/\([^)]*\)/g, '').trim();
-      const words = clean.split(/\s+/).slice(0, 7).join(' ').toUpperCase();
-      return words || '2026 SINGAPORE PROPERTY PLAYBOOK';
-    }
-
-    function buildDeterministicCleanCopy(title, notes, p) {
-      const theme = detectTopicTheme(title);
-      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}\n(Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`;
-
-      if (theme === 'FLOORPLAN_D15') {
-        return `Looking at East Coast & District 15 freehold condos in 2026? Not all 1,000 sqft 3-bedders live the same. 🏡\n\nWhen comparing family-sized units, layout efficiency matters just as much as PSF. Here is what URA REALIS Q3 2026 District 15 benchmarks show:\n\n1️⃣ Dumbbell Layout Efficiency: Eliminating a long entry hallway saves ~85 sqft of dead corridor space—equivalent to nearly $195,000 in usable living space at current District 15 PSF levels.\n2️⃣ Freehold vs 99-Year PSF Compression: Select mid-to-high floor (#11 to #15) freehold 3-bedroom resale layouts are trading within 8–11% of newer 99-year leasehold launches (${notes}).\n3️⃣ Enclosed Kitchen & Yard Utility: Families prioritizing enclosed wet/dry kitchens and natural ventilation see stronger resale holding power near East Coast MRT stations and 1km primary schools.\n\n💬 Comment "D15" below (or tap my WhatsApp link) and I'll send you the 3 side-by-side 3D floorplan comparisons!` + footer;
-      }
-      return `Most Singapore buyers and upgraders overlook this critical timing window on "${title}" 📈\n\nWhether you are planning an HDB upgrade or comparing private condominium layouts in 2026, small differences in timeline and loan structure can shift your cash reserve by over $100,000.\n\nHere are 3 key numbers to check before booking your next viewing (Source: URA REALIS, HDB & MAS Q3 2026):\n\n1️⃣ Verified Market Benchmark: ${notes}\n2️⃣ Privacy-Compliant Stack Analysis: Recent mid-to-high floor (#15 to #19) resale transactions show buyers prioritizing functional dumbbell layouts and full CPF OA eligibility over raw square footage.\n3️⃣ The 55% MAS TDSR & ABSD Buffer: Structuring your CPF Ordinary Account refund, 4.0% stress-test TDSR calculation, and 6-month HDB sale remission timeline early protects your family's cash liquidity.\n\n💬 Comment "PLAN" below (or tap my WhatsApp link) and I'll send you our 2026 step-by-step calculation sheet!` + footer;
-    }
-
-    function buildDeterministicNanoBananaPrompt(title, notes, p) {
-      const shortBanner = extractShortHookBadge(title);
-      const theme = detectTopicTheme(title);
-      let subHeader = '2026 Singapore Equity, ABSD & Floorplan Playbook';
-      let pill1 = 'Peak Year-5 Equity';
-      let pill2 = '6-Month ABSD Refund';
-      let pill3 = '55% MAS TDSR Cap';
-
-      if (theme === 'FLOORPLAN_D15') {
-        subHeader = 'District 15 Freehold 3-Bedder Layout & URA PSF Comparison';
-        pill1 = 'Dumbbell Zero Corridor';
-        pill2 = 'Under $2,350 PSF';
-        pill3 = 'Freehold D15 Legacy';
-      }
-
-      return `Create a vertical 4:5 portrait luxury real estate editorial infographic poster in three crisp architectural zones with ultra-sharp typography and balanced negative space:
-
-1. TOP HEADER ZONE (Deep Royal Navy & Warm Gold Accent Banner):
-Render the exact bold white sans-serif headline: "${shortBanner}" with a smaller golden sub-header underneath reading: "${subHeader}".
-
-2. CENTER HERO VISUAL ZONE (Photorealistic 3D Isometric Split-Comparison):
-On the left side, render a warm, sunlit 3D isometric cutaway floorplan of a modern Singapore property living area transitioning via a glowing golden progression arrow toward a luxury 3-bedroom private condominium balcony with lush tropical landscaping on the right side. Floating cleanly beside the arrow, render three minimalist glassmorphism data pills with crisp, short 3-word text:
-- Pill 1: "${pill1}"
-- Pill 2: "${pill2}"
-- Pill 3: "${pill3}"
-In the bottom-right corner of the visual zone, include a small, clean compliance label reading: "Artist's Impression — Source: URA REALIS & MAS 2026".
-
-3. BOTTOM CTA & CEA COMPLIANCE FOOTER BAR (Full-Width Matte Obsidian-Slate Card):
-On the left of the footer bar, composite the attached reference portrait photo of presenter ${p.name} inside a circular emerald-trimmed avatar frame, preserving 100% of his exact facial features, glasses, and smart-casual attire. Beside the avatar, render clean white and emerald sans-serif text reading:
-"${p.name} | CEA Reg No: ${p.regNo}"
-"${p.agencyName} (Licence: ${p.licenceNo}) • WhatsApp: ${p.phone}"`;
-    }
-
-    function buildDeterministicGoogleFlowClips(title, clipSec, p, scriptText = '') {
-      const s = Number(clipSec) || 8;
-      const quoteMatches = String(scriptText || '').match(/"([^"]{12,180})"/g) || [];
-      const line1 = quoteMatches[0] ? quoteMatches[0].replace(/"/g, '') : `Stop treating your property timeline like a waiting game—here is why ${title} is your strongest lever in 2026.`;
-      const line2 = quoteMatches[1] ? quoteMatches[1].replace(/"/g, '') : `According to 2026 URA REALIS and HDB resale data, buyers who structure their equity window early capture the widest pool of full-CPF demand.`;
-      const line3 = quoteMatches[2] ? quoteMatches[2].replace(/"/g, '') : `By aligning your CPF Ordinary Account refund and fifty-five percent MAS TDSR buffer six months ahead, you protect your family's cash reserve.`;
-      const line4 = quoteMatches[3] ? quoteMatches[3].replace(/"/g, '') : `Comment PLAN below or tap my WhatsApp link, and I will send you the full 2026 progression sheet.`;
-
-      const voiceLock = `Spoken by ${p.name} using the exact Master Voiceprint Lock (consistent, identical 38-year-old Singaporean English professional male voice across all clips, warm medium-low baritone timbre, crisp close-mic studio condenser acoustic profile, calm authoritative advisory tone, measured 140 WPM cadence)`;
-
-      return `=== CLIP 1 (0–${s}s: Presenter Hook — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
-Camera: Slow, ultra-steady gimbal push-in from medium-waist framing to a confident medium close-up on an 85mm f/1.8 prime cinema lens, maintaining a level horizon, shallow depth of field, and zero lens distortion.
-Scene & Positive Identity Lock: High-resolution editorial portrait of Singapore real estate advisor ${p.name} anchored directly to the starting frame in a sunlit modern Singapore property consultation lounge with floor-to-ceiling glass overlooking the city skyline. The presenter's facial structure, hairstyle, glasses, tailored smart-casual attire, and studio background geometry remain 100% stationary, rigid, and faithful to the uploaded starting frame without morphing or drift.
-Subject Action & Lip-Sync Delivery: ${p.name} looks directly into the camera lens with warm, authoritative executive presence, making a natural, measured hand gesture while speaking clearly in English: "${line1}"
-Background Motion & Lighting: Soft golden-hour natural key light illuminates the presenter's face with crisp catchlights, while distant clouds drift imperceptibly across the Singapore skyline outside the window over a continuous ${s}-second take.
-Audio: ${voiceLock}, synced naturally to the presenter's lips, saying: "${line1}" Supported by quiet luxury indoor room tone; no background music, no echo, no sudden sound effects.
-
-=== CLIP 2 (${s}–${s * 2}s: Property Interior & Data Proof — Attach Living Room / Floorplan Photo as Starting Frame) ===
-Camera: Slow, ultra-steady gimbal dolly push-in moving smoothly forward along the central axis of the open-concept living and dining room on a 24mm rectilinear architectural cinema lens, maintaining strict perspective and zero barrel distortion.
-Scene & Positive Geometry Lock: High-resolution luxury Singapore condominium interior anchored to the starting frame. All architectural geometry, walls, recessed ceiling coves, built-in cabinetry, marble countertops, flooring planks, and furniture silhouettes remain 100% stationary, rigid, and structurally unchanged throughout the shot.
-Layered Micro-Motion Physics: Sheer white floor-to-ceiling balcony curtains billow gently inward with soft, realistic fabric inertia in a light breeze, while warm afternoon sunlight shifts subtly across the polished floor. Outside the large glass windows, soft clouds drift slowly across the skyline.
-Lighting & Pacing: Consistent soft natural daylight with stable interior reflections on polished surfaces; restrained, ultra-low motion pacing suited for luxury architectural cinematography over a continuous ${s}-second take.
-Audio: ${voiceLock} saying: "${line2}" Accompanied by quiet luxury indoor room tone; no background music, no random voices.
-
-=== CLIP 3 (${s * 2}–${s * 3}s: Balcony Skyline & Cashflow Takeaway — Attach Balcony/Kitchen Photo as Starting Frame) ===
-Camera: Smooth, stabilized lateral camera slider movement from left to right across the private balcony overlooking the greenery and Singapore residential skyline on a 35mm cinema lens with locked horizon geometry.
-Scene & Positive Geometry Lock: High-resolution balcony and exterior facade anchored directly to the starting frame. Every glass balustrade, tile seam, structural column, and surrounding building silhouette remains 100% rigid, stationary, and locked to the starting frame without warping.
-Layered Micro-Motion Physics: Tropical balcony planter leaves rustle gently in a light breeze while warm golden-hour sunlight glints softly off the glass railing and distant clouds move slowly across the sky.
-Lighting & Pacing: Warm late-afternoon golden-hour architectural lighting with natural highlight roll-off, 24fps cinematic shutter, continuous ${s}-second take.
-Audio: ${voiceLock} saying: "${line3}" Subtle outdoor breeze and quiet ambient room tone; no background music, no sudden sound effects.
-
-=== CLIP 4 (${s * 3}–${s * 4}s: CTA End-Card — Attach Uploaded ${p.name} Profile Photo as Starting Frame) ===
-Camera: Locked tripod medium close-up shot on an 85mm f/1.8 portrait cinema lens with crisp optical focus on the presenter and a softly blurred luxury office background.
-Scene & Positive Identity Lock: Singapore property advisor ${p.name} anchored directly to the uploaded starting frame photo. Facial features, expression, smart-casual attire, and studio background architecture remain 100% stationary, rigid, and faithful to the reference photo.
-Subject Action & Lip-Sync Delivery: ${p.name} smiles warmly with approachable confidence, nodding slightly and gesturing toward the lower-third call-to-action area (${p.regNo} • ${p.phone}) while speaking clearly: "${line4}"
-Lighting & Pacing: Balanced studio Rembrandt lighting with warm rim light, photorealistic skin texture, continuous ${s}-second take.
-Audio: ${voiceLock}, synced naturally to the presenter's lips, saying: "${line4}" Quiet studio room tone; no background music, no sudden sound effects.`;
-    }
-
-    function populateStudioSelector() {
-      const sel = document.getElementById('studio-card-selector');
-      if (!sel) return;
-      sel.innerHTML = appState.cards.map(c => `<option value="${escapeHTML(c.id)}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${escapeHTML(c.stage)}] ${escapeHTML(c.title.slice(0, 45))}...</option>`).join('');
-    }
-
-    function syncBoxBVisibility(card) {
-      const boxB = document.getElementById('box-b-script-wrapper');
-      if (!boxB) return;
-      const isFlyer = (card.targetApp === 'NANO_BANANA' || card.targetApp === 'MIDJOURNEY' || (card.format && card.format.includes('Image')));
-      if (isFlyer) {
-        boxB.classList.add('hidden');
-      } else {
-        boxB.classList.remove('hidden');
-      }
-    }
-
-    function loadCardIntoStudio(cardId) {
-      appState.activeCardId = cardId;
-      const card = appState.cards.find(c => c.id === cardId) || appState.cards[0];
-      if (!card) return;
-
-      document.getElementById('studio-format').value = card.format || 'Video (Reels/TikTok/Shorts)';
-      document.getElementById('studio-target-app').value = card.targetApp || (card.format.includes('Video') ? 'GOOGLE_FLOW' : 'NANO_BANANA');
-      document.getElementById('studio-clip-duration').value = card.clipDuration || '8';
-      document.getElementById('studio-owner-consent').checked = Boolean(card.ownerConsent);
-      document.getElementById('studio-drive-url').value = card.driveUrl || '';
-      document.getElementById('studio-notebook-notes').value = card.notebookNotes || NOTEBOOKLM_PRESETS.URA_MOP_2026;
-      document.getElementById('studio-topic').value = card.title || '';
-      document.getElementById('studio-copy-output').value = card.copy || '';
-      document.getElementById('studio-script-output').value = card.script || '';
-      document.getElementById('studio-media-output').value = card.media || '';
-
-      document.getElementById('preview-headline').textContent = card.title;
-      document.getElementById('preview-format-tag').textContent = `${card.targetApp || 'GOOGLE_FLOW'} • ${card.format.toUpperCase()}`;
-
-      syncBoxBVisibility(card);
-      renderIndividualClipCopyButtons(card.media || '');
-      runCEAComplianceAudit();
-    }
-
-    function applyNotebookLMSourcePreset(presetKey) {
-      const note = NOTEBOOKLM_PRESETS[presetKey] || NOTEBOOKLM_PRESETS.URA_MOP_2026;
-      document.getElementById('studio-notebook-notes').value = note;
-      updateStudioCardField('notebookNotes', note);
-    }
-
-    function updateStudioCardField(field, val) {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return;
-      card[field] = val;
-
-      if (field === 'format') {
-        card.targetApp = val.includes('Video') ? 'GOOGLE_FLOW' : 'NANO_BANANA';
-        document.getElementById('studio-target-app').value = card.targetApp;
-      }
-      if (field === 'title') document.getElementById('preview-headline').textContent = val;
-      if (field === 'format' || field === 'targetApp') {
-        document.getElementById('preview-format-tag').textContent = `${card.targetApp} • ${card.format.toUpperCase()}`;
-        syncBoxBVisibility(card);
-      }
-      if (field === 'media') {
-        renderIndividualClipCopyButtons(val);
-      }
-
-      saveWorkspaceToStorage();
-      runCEAComplianceAudit();
-      renderKanbanBoard();
-    }
-
-    function renderIndividualClipCopyButtons(mediaText) {
-      const container = document.getElementById('multi-clip-cards-container');
-      if (!container) return;
-      const blocks = String(mediaText).split(/(?==== CLIP \d)/g).map(s => s.trim()).filter(Boolean);
-      window._cleanFlowClips = blocks.map(blk => stripMetaTagsForGenerator(blk));
-
-      if (blocks.length <= 1) {
-        container.innerHTML = '';
-        return;
-      }
-      container.innerHTML = blocks.map((blk, i) => `
-        <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-emerald-300 dark:border-slate-700 flex items-center justify-between gap-2 text-xs shadow-sm">
-          <div class="truncate font-extrabold text-slate-800 dark:text-slate-200">🎬 Full 6-Layer Clip ${i + 1} (Paste into Flow)</div>
-          <button type="button" onclick="copySingleFlowClip(${i}, this)" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold shrink-0 transition">
-            Copy Clip ${i + 1}
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function copySingleFlowClip(idx, btnEl) {
-      const text = window._cleanFlowClips?.[idx] || '';
-      if (!text) return;
-      navigator.clipboard.writeText(text);
-      if (btnEl) {
-        const old = btnEl.textContent;
-        btnEl.textContent = `Copied Clip ${idx + 1} ✓`;
-        btnEl.classList.replace('bg-indigo-600', 'bg-emerald-600');
-        setTimeout(() => {
-          btnEl.textContent = old;
-          btnEl.classList.replace('bg-emerald-600', 'bg-indigo-600');
-        }, 1400);
-      }
-    }
-
-    function stripMetaTagsForGenerator(rawText) {
-      return String(rawText || '')
-        .replace(/^=== CLIP \d+.*?===\s*/gm, '')
-        .replace(/\[Mandatory Guardrail\]:.*$/gim, '')
-        .replace(/\[Target.*?\]/gi, '')
-        .trim();
-    }
-
-    function copyCleanVisualPromptOnly() {
-      const raw = document.getElementById('studio-media-output').value;
-      const clean = stripMetaTagsForGenerator(raw);
-      navigator.clipboard.writeText(clean);
-      const statusEl = document.getElementById('agent-run-status');
-      statusEl.textContent = '✓ Final Generator Prompt Copied from Box C!';
-    }
-
-    function copyBoxText(id, btnEl) {
-      const val = document.getElementById(id)?.value || '';
-      navigator.clipboard.writeText(val);
-      if (btnEl) {
-        const old = btnEl.textContent;
-        btnEl.textContent = 'Copied ✓';
-        setTimeout(() => { btnEl.textContent = old; }, 1200);
-      }
-    }
-
-    async function runFullChainedPipeline() {
-      await runAgentInStudio('agent2');
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (card && (card.targetApp === 'NANO_BANANA' || card.targetApp === 'MIDJOURNEY')) {
-        await runAgentInStudio('agent4a');
-      } else {
-        await runAgentInStudio('agent3');
-        await runAgentInStudio('agent4b');
-      }
-    }
-
-    async function runAgentInStudio(agentType) {
-      const lockedCardId = appState.activeCardId;
-      const card = appState.cards.find(c => c.id === lockedCardId);
-      if (!card) return;
-      const statusEl = document.getElementById('agent-run-status');
-      const p = appState.ceaProfile;
-      const clipSec = Number(card.clipDuration) || 8;
-      const clipCount = clipSec === 10 ? 3 : 4;
-      statusEl.textContent = `Running ${agentType.toUpperCase()} in Chained Mode...`;
-
-      const apiKey = await loadDecryptedGeminiKey();
-
-      if (apiKey) {
-        try {
-          const promptMap = {
-            agent2: `You are Agent 2 (Viral Copy & Hook Strategist) for Singapore real estate advisor ${p.name}. Topic: "${card.title}". Context: "${card.notebookNotes}". Write a polished social caption with clean numbered points (1️⃣, 2️⃣, 3️⃣) and the 5 CEA particulars at the bottom.`,
-            agent3: `You are Agent 3 (Retention Scriptwriter). Topic: "${card.title}". Caption: "${card.copy}". Write a time-coded spoken script split into ${clipCount} exact ${clipSec}-second scene blocks in "double quotes".`,
-            agent4a: `You are Agent 4A (Nano Banana Specialist). Topic: "${card.title}". Caption: "${card.copy}". Generate a vertical 4:5 real estate infographic prose prompt in 3 zones (Header, 3D cutaway with Artist's Impression, and Footer with ${p.name}'s photo & CEA particulars).`,
-            agent4b: `You are Agent 4B (Google Flow Veo 3.1 Multi-Clip Architect). Topic: "${card.title}". Script: "${card.script}". Generate ${clipCount} rich ${clipSec}-second Google Flow video prompts with 6 layers and positive geometry locks.`
-          };
-
-          const liveResult = await callGeminiDirect(apiKey, promptMap[agentType]);
-          if (agentType === 'agent2') {
-            card.copy = liveResult.text;
-            if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = liveResult.text;
-          } else if (agentType === 'agent3') {
-            card.script = liveResult.text;
-            if (appState.activeCardId === lockedCardId) document.getElementById('studio-script-output').value = liveResult.text;
-          } else {
-            card.media = liveResult.text;
-            if (appState.activeCardId === lockedCardId) {
-              document.getElementById('studio-media-output').value = liveResult.text;
-              renderIndividualClipCopyButtons(liveResult.text);
-            }
-          }
-          saveWorkspaceToStorage();
-          statusEl.textContent = `✓ Live Gemini (${liveResult.modelUsed}) Complete`;
-          if (appState.activeCardId === lockedCardId) runCEAComplianceAudit();
-          return;
-        } catch (err) {
-          console.warn('Gemini chained fallback:', err);
-        }
-      }
-
-      // Deterministic Fallback
-      if (agentType === 'agent2') {
-        card.copy = buildDeterministicCleanCopy(card.title, card.notebookNotes, p);
-        if (appState.activeCardId === lockedCardId) document.getElementById('studio-copy-output').value = card.copy;
-      } else if (agentType === 'agent3') {
-        const s = clipSec;
-        const lines = getTopicSpokenScriptLines(card.title, p);
-        card.script = `[Clip 1: 0–${s}s]: "${lines[0]}"\n[Clip 2: ${s}–${s * 2}s]: "${lines[1]}"\n[Clip 3: ${s * 2}–${s * 3}s]: "${lines[2]}"\n[Clip 4: ${s * 3}–${s * 4}s]: "${lines[3]}"`;
-        if (appState.activeCardId === lockedCardId) document.getElementById('studio-script-output').value = card.script;
-      } else if (agentType === 'agent4a') {
-        card.targetApp = 'NANO_BANANA';
-        document.getElementById('studio-target-app').value = 'NANO_BANANA';
-        card.media = buildDeterministicNanoBananaPrompt(card.title, card.notebookNotes, p);
-        if (appState.activeCardId === lockedCardId) {
-          syncBoxBVisibility(card);
-          document.getElementById('studio-media-output').value = card.media;
-          renderIndividualClipCopyButtons(card.media);
-        }
-      } else if (agentType === 'agent4b') {
-        card.targetApp = 'GOOGLE_FLOW';
-        document.getElementById('studio-target-app').value = 'GOOGLE_FLOW';
-        card.media = buildDeterministicGoogleFlowClips(card.title, card.clipDuration, p, card.script);
-        if (appState.activeCardId === lockedCardId) {
-          syncBoxBVisibility(card);
-          document.getElementById('studio-media-output').value = card.media;
-          renderIndividualClipCopyButtons(card.media);
-        }
-      }
-
-      saveWorkspaceToStorage();
-      statusEl.textContent = `✓ Gold-Standard Engine (${agentType.toUpperCase()}) Complete`;
-      if (appState.activeCardId === lockedCardId) runCEAComplianceAudit();
-    }
-
-    function runCEAComplianceAudit() {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      const copyText = (document.getElementById('studio-copy-output')?.value || '');
-      const scriptText = (document.getElementById('studio-script-output')?.value || '');
-      const mediaText = (document.getElementById('studio-media-output')?.value || '');
-      const consentChecked = document.getElementById('studio-owner-consent')?.checked;
-      const p = appState.ceaProfile;
-      const combined = `${copyText} ${scriptText} ${mediaText}`;
-
-      if (card) {
-        card.copy = copyText;
-        card.script = scriptText;
-        card.media = mediaText;
-        card.ownerConsent = consentChecked;
-      }
-
-      const checks = [
-        { label: `5 Mandatory CEA Particulars Present (${p.name}, ${p.regNo})`, pass: copyText.includes(p.regNo) && copyText.includes(p.name) },
-        { label: 'Prior Written Seller Consent Verified (CEA PG 02/2011)', pass: Boolean(consentChecked) },
-        { label: 'Zero Banned Yield Guarantees or Superlatives', pass: !/(guaranteed yield|guaranteed capital|no\.?\s*1 specialist)/i.test(combined) },
-        { label: 'URA REALIS Unit Privacy Masking', pass: !/#\d{2}-\d{2}/.test(copyText) },
-        { label: 'Positive Geometry Lock / Artist Impression', pass: /rigid|stationary|artist's impression/i.test(mediaText) }
-      ];
-
-      const listEl = document.getElementById('cea-checklist-ui');
-      if (!listEl) return;
-      listEl.innerHTML = checks.map(ch => `
-        <li class="flex items-start gap-2 p-2 rounded-xl ${ch.pass ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'}">
-          <i data-lucide="${ch.pass ? 'check-circle-2' : 'alert-triangle'}" class="w-4 h-4 shrink-0 mt-0.5"></i>
-          <span class="font-semibold">${escapeHTML(ch.label)}</span>
-        </li>
-      `).join('');
-
-      const allPass = checks.every(c => c.pass);
-      const pill = document.getElementById('cea-score-pill');
-      if (pill) {
-        pill.textContent = allPass ? 'CEA 2026 COMPLIANT ✓' : 'ACTION REQUIRED';
-        pill.className = allPass ? 'px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300' : 'px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-500/15 text-rose-600 dark:text-rose-400';
-      }
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function injectCEAWatermarkIntoCopy() {
-      const p = appState.ceaProfile;
-      const copyEl = document.getElementById('studio-copy-output');
-      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}`;
-      if (!copyEl.value.includes(p.regNo)) copyEl.value = copyEl.value.trim() + footer;
-      saveWorkspaceToStorage();
-      runCEAComplianceAudit();
-    }
-
-    function approveFromStudio() {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return;
-      injectCEAWatermarkIntoCopy();
-      card.stage = 'Scheduled';
-      card.exceptionState = null;
-      saveWorkspaceToStorage();
-      renderKanbanBoard();
-      switchTab('board');
-    }
-
-    function renderViralMemory() {
-      const el = document.getElementById('viral-memory-list');
-      if (!el) return;
-      el.innerHTML = appState.viralMemory.map(rule => `
-        <li class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
-          <i data-lucide="brain" class="w-4 h-4 text-violet-500 shrink-0 mt-0.5"></i>
-          <span>${escapeHTML(rule)}</span>
-        </li>
-      `).join('');
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function runAgent7Evaluation() {
-      const newRule = `Sprint Telemetry Update: 4x 8-second Google Flow clips with ${appState.ceaProfile.name} headshot achieved 79% hold rate. Prioritized for Agent 1 & 4B.`;
-      if (!appState.viralMemory.includes(newRule)) {
-        appState.viralMemory.unshift(newRule);
-        saveWorkspaceToStorage();
-        renderViralMemory();
-      }
-    }
-
-    function renderCRMStageFilterBar() {
-      const bar = document.getElementById('crm-stage-filter-bar');
-      if (!bar) return;
-      const allStages = ['ALL', ...CRM_STAGES];
-      bar.innerHTML = allStages.map(st => {
-        const count = st === 'ALL' ? appState.leads.length : appState.leads.filter(l => l.stage === st).length;
-        const active = appState.crmFilterStage === st;
-        return `
-          <button onclick="setCRMFilterStage('${escapeHTML(st)}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition ${active ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'}">
-            ${st === 'ALL' ? 'All Stages' : escapeHTML(st)} (${count})
-          </button>
-        `;
-      }).join('');
-    }
-
-    function setCRMFilterStage(st) {
-      appState.crmFilterStage = st;
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-    }
-
-    function renderCRMLeads() {
-      const container = document.getElementById('crm-leads-list');
-      if (!container) return;
-      document.getElementById('badge-crm-alerts').textContent = `${appState.leads.length} Leads`;
-      const filtered = appState.crmFilterStage === 'ALL' ? appState.leads : appState.leads.filter(l => l.stage === appState.crmFilterStage);
-      if (!filtered.length) {
-        container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl">No leads in this stage. Click "+ Add / Edit Manual Lead" above.</div>`;
-        return;
-      }
-      container.innerHTML = filtered.map(lead => {
-        const stageOptions = CRM_STAGES.map(s => `<option value="${escapeHTML(s)}" ${lead.stage === s ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('');
-        const aiOptions = [{ val: 'AUTO', label: '🤖 Auto-Pilot' }, { val: 'DRAFT', label: '✍️ Draft Only' }, { val: 'HUMAN', label: '🛑 Human Takeover' }].map(o => `<option value="${o.val}" ${(lead.aiMode||'AUTO') === o.val ? 'selected' : ''}>${o.label}</option>`).join('');
-        return `
-          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border ${lead.overdue ? 'border-rose-400' : 'border-slate-200 dark:border-slate-800'} space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="font-extrabold text-sm">${escapeHTML(lead.name)}</span>
-                <span class="text-xs font-mono text-indigo-600">${escapeHTML(lead.phone||'')}</span>
-              </div>
-              <div class="flex gap-1.5">
-                <button onclick="openLeadModal('${escapeHTML(lead.id)}')" class="px-2.5 py-1 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-bold">Edit</button>
-                <button onclick="deleteCRMLead('${escapeHTML(lead.id)}')" class="px-2 py-1 rounded bg-rose-500/10 text-rose-600 text-[11px] font-bold">✕</button>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <select onchange="changeLeadStageDirect('${escapeHTML(lead.id)}', this.value)" class="bg-white dark:bg-slate-900 border rounded-xl px-2 py-1 font-bold text-indigo-600">${stageOptions}</select>
-              <select onchange="changeLeadAIMode('${escapeHTML(lead.id)}', this.value)" class="bg-white dark:bg-slate-900 border rounded-xl px-2 py-1 font-bold">${aiOptions}</select>
-            </div>
-            <div class="text-xs text-slate-600 dark:text-slate-300"><strong>BANT:</strong> ${escapeHTML(lead.bant)}</div>
-            <div class="text-[11px] font-bold ${lead.overdue?'text-rose-600':'text-emerald-600'}">Task: ${escapeHTML(lead.task)}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function changeLeadStageDirect(leadId, st) {
-      const l = appState.leads.find(x => x.id === leadId);
-      if (l) { l.stage = st; l.overdue = false; saveWorkspaceToStorage(); renderCRMStageFilterBar(); renderCRMLeads(); }
-    }
-    function changeLeadAIMode(leadId, m) {
-      const l = appState.leads.find(x => x.id === leadId);
-      if (l) { l.aiMode = m; saveWorkspaceToStorage(); renderCRMLeads(); }
-    }
-    function openLeadModal(leadId = '') {
-      const lead = appState.leads.find(l => l.id === leadId);
-      document.getElementById('lead-edit-id').value = lead ? lead.id : '';
-      document.getElementById('lead-name-input').value = lead ? lead.name : '';
-      document.getElementById('lead-phone-input').value = lead ? (lead.phone || '+65 ') : '+65 ';
-      document.getElementById('lead-stage-input').value = lead ? lead.stage : '1. Inbound Lead';
-      document.getElementById('lead-aimode-input').value = lead ? (lead.aiMode || 'AUTO') : 'AUTO';
-      document.getElementById('lead-source-input').value = lead ? lead.source : 'Manual Entry';
-      document.getElementById('lead-bant-input').value = lead ? lead.bant : '';
-      document.getElementById('lead-task-input').value = lead ? lead.task : 'Follow up';
-      document.getElementById('lead-modal').classList.remove('hidden');
-    }
-    function closeLeadModal() { document.getElementById('lead-modal').classList.add('hidden'); }
-    function saveManualLead() {
-      const editId = document.getElementById('lead-edit-id').value;
-      const name = document.getElementById('lead-name-input').value.trim();
-      if (!name) return alert('Enter client name');
-      const item = {
-        id: editId || ('l' + Date.now()),
-        name,
-        phone: document.getElementById('lead-phone-input').value.trim(),
-        stage: document.getElementById('lead-stage-input').value,
-        aiMode: document.getElementById('lead-aimode-input').value,
-        source: document.getElementById('lead-source-input').value.trim() || 'Manual',
-        bant: document.getElementById('lead-bant-input').value.trim() || 'Pending',
-        task: document.getElementById('lead-task-input').value.trim() || 'Follow up',
-        overdue: false
-      };
-      if (editId) {
-        const i = appState.leads.findIndex(l => l.id === editId);
-        if (i !== -1) appState.leads[i] = item;
-      } else {
-        appState.leads.unshift(item);
-      }
-      closeLeadModal();
-      saveWorkspaceToStorage();
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-    }
-    function deleteCRMLead(id) {
-      appState.leads = appState.leads.filter(l => l.id !== id);
-      saveWorkspaceToStorage();
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-    }
-    function updateAgent8Override(v) { appState.agent8OverrideDirective = v; saveWorkspaceToStorage(); }
-
-    function renderWhatsAppChat() {
-      const box = document.getElementById('wa-chat-box');
-      if (!box) return;
-      box.innerHTML = appState.waMessages.map(m => `
-        <div class="flex flex-col ${m.sender === 'ai' ? 'items-end' : 'items-start'}">
-          <span class="text-[10px] text-slate-400 mb-0.5">${escapeHTML(m.name)} • ${escapeHTML(m.time)}</span>
-          <div class="max-w-[85%] p-2.5 rounded-2xl whitespace-pre-line ${m.sender === 'ai' ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'}">
-            ${escapeHTML(m.text)}
-          </div>
-        </div>
-      `).join('');
-      box.scrollTop = box.scrollHeight;
-    }
-
-    async function simulateIncomingWhatsApp() {
-      const input = document.getElementById('wa-incoming-input');
-      const msg = input.value.trim();
-      if (!msg) return;
-      input.value = '';
-      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      appState.waMessages.push({ sender: 'lead', name: 'Prospect (WhatsApp)', text: msg, time: now });
-      appState.leads.unshift({
-        id: 'l' + Date.now(),
-        name: `WhatsApp Prospect (${now})`,
-        phone: '+65 Inbound',
-        source: 'WhatsApp Webhook',
-        stage: '2. AI Qualifying',
-        aiMode: 'AUTO',
-        bant: `Inbound: "${msg.slice(0, 60)}"`,
-        task: 'Agent 8 BANT qualification',
-        overdue: false
-      });
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-      renderWhatsAppChat();
-      saveWorkspaceToStorage();
-    }
-
-    function handleProfilePhotoUpload(e) {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = evt => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const max = 240;
-          let w = img.width, h = img.height;
-          if (w > h) { if (w > max) { h = Math.round((h * max) / w); w = max; } }
-          else { if (h > max) { w = Math.round((w * max) / h); h = max; } }
-          canvas.width = w; canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          appState.ceaProfile.avatarDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-          syncCEAProfileUI();
-          saveWorkspaceToStorage();
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function syncCEAProfileUI() {
-      const p = appState.ceaProfile;
-      document.getElementById('cea-name-input').value = p.name;
-      document.getElementById('cea-reg-input').value = p.regNo;
-      document.getElementById('cea-phone-input').value = p.phone;
-      document.getElementById('cea-agency-input').value = p.agencyName;
-      document.getElementById('cea-licence-input').value = p.licenceNo;
-      document.getElementById('sidebar-agent-name').textContent = p.name;
-      document.getElementById('sidebar-agency-name').textContent = p.agencyName;
-      document.getElementById('cea-sidebar-reg').textContent = `CEA: ${p.regNo}`;
-      document.getElementById('preview-cea-name').textContent = p.name;
-      document.getElementById('preview-cea-reg').textContent = `CEA Reg No: ${p.regNo}`;
-      document.getElementById('preview-cea-agency').textContent = `${p.agencyName} (Licence: ${p.licenceNo})`;
-      document.getElementById('preview-cea-phone').textContent = p.phone;
-      if (p.avatarDataUrl) {
-        ['sidebar-avatar-img', 'preview-cta-avatar', 'settings-avatar-preview'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.src = p.avatarDataUrl; el.style.display = 'block'; if (el.nextElementSibling) el.nextElementSibling.style.display = 'none'; }
-        });
-      }
-    }
-
-    function saveCloudConfig() {
-      appState.cloudConfig.syncPin = document.getElementById('sync-pin-input').value.trim() || 'luiz-lee-cea-2026';
-      appState.cloudConfig.supabaseUrl = document.getElementById('settings-supabase-url').value.trim();
-      appState.cloudConfig.supabaseKey = document.getElementById('settings-supabase-key').value.trim();
-      appState.cloudConfig.driveFolderUrl = document.getElementById('settings-drive-folder').value.trim();
-      appState.cloudConfig.driveBridgeUrl = document.getElementById('settings-drive-bridge').value.trim();
-      saveWorkspaceToStorage();
-    }
-
-    function syncCloudAndSocialUI() {
-      const cc = appState.cloudConfig;
-      document.getElementById('sync-pin-input').value = cc.syncPin || 'luiz-lee-cea-2026';
-      document.getElementById('settings-supabase-url').value = cc.supabaseUrl || '';
-      document.getElementById('settings-supabase-key').value = cc.supabaseKey || '';
-      document.getElementById('settings-drive-folder').value = cc.driveFolderUrl || '';
-      document.getElementById('settings-drive-bridge').value = cc.driveBridgeUrl || '';
-      const sc = appState.socialConnections;
-      document.getElementById('conn-meta-id').value = sc.metaId || '';
-      document.getElementById('conn-meta-token').value = sc.metaToken || '';
-      document.getElementById('conn-yt-channel').value = sc.ytChannel || '';
-      document.getElementById('conn-yt-token').value = sc.ytToken || '';
-      document.getElementById('conn-tiktok-handle').value = sc.tiktokHandle || '';
-      document.getElementById('conn-tiktok-token').value = sc.tiktokToken || '';
-      document.getElementById('conn-wa-phone-id').value = sc.waPhoneId || '';
-      document.getElementById('conn-wa-token').value = sc.waToken || '';
-    }
-
-    function openMasterDriveFolder() {
-      const u = appState.cloudConfig.driveFolderUrl;
-      if (u && u.startsWith('http')) window.open(u, '_blank', 'noopener');
-      else { switchTab('settings'); alert('Paste your Master Google Drive Folder URL in Tab 6 (Settings -> Box 2).'); }
-    }
-    function openCardDriveLink() {
-      const u = document.getElementById('studio-drive-url').value.trim();
-      if (u && u.startsWith('http')) window.open(u, '_blank', 'noopener');
-      else openMasterDriveFolder();
-    }
-
-    async function pushWorkspaceToCloud() {
-      saveCloudConfig();
-      const badge = document.getElementById('cloud-sync-badge');
-      const sbUrl = appState.cloudConfig.supabaseUrl;
-      const sbKey = appState.cloudConfig.supabaseKey;
-      const pin = appState.cloudConfig.syncPin || 'luiz-lee-cea-2026';
-      const payload = { ...appState, encryptedGeminiVault: localStorage.getItem('squad_gemini_vault') || null };
-      if (sbUrl && sbKey) {
-        try {
-          badge.textContent = 'Pushing to Supabase...';
-          const res = await fetch(`${sbUrl.replace(/\/$/, '')}/rest/v1/agent_squad_cloud_sync`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': sbKey, 'Authorization': `Bearer ${sbKey}`, 'Prefer': 'resolution=merge-duplicates' },
-            body: JSON.stringify({ sync_id: pin, encrypted_workspace: payload, updated_at: new Date().toISOString() })
-          });
-          if (res.ok) { badge.textContent = '✓ Synced to Supabase Cloud'; return; }
-        } catch (e) { console.warn('Supabase push error:', e); }
-      }
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'agent-squad-cloud-sync.json'; a.click();
-      badge.textContent = '✓ Downloaded Drive Sync File';
-    }
-
-    async function pullWorkspaceFromCloud() {
-      saveCloudConfig();
-      const badge = document.getElementById('cloud-sync-badge');
-      const sbUrl = appState.cloudConfig.supabaseUrl;
-      const sbKey = appState.cloudConfig.supabaseKey;
-      const pin = appState.cloudConfig.syncPin || 'luiz-lee-cea-2026';
-      if (sbUrl && sbKey) {
-        try {
-          badge.textContent = 'Pulling from Supabase...';
-          const res = await fetch(`${sbUrl.replace(/\/$/, '')}/rest/v1/agent_squad_cloud_sync?sync_id=eq.${encodeURIComponent(pin)}&select=encrypted_workspace`, {
-            headers: { 'apikey': sbKey, 'Authorization': `Bearer ${sbKey}` }
-          });
-          if (res.ok) {
-            const rows = await res.json();
-            if (rows.length && rows[0].encrypted_workspace) {
-              restoreWorkspaceObject(rows[0].encrypted_workspace);
-              badge.textContent = '✓ Pulled from Supabase';
-              return;
-            }
-          }
-        } catch (e) { console.warn('Supabase pull error:', e); }
-      }
-      document.getElementById('drive-file-picker').click();
-    }
-
-    function pullFromGoogleDriveFallback() { document.getElementById('drive-file-picker').click(); }
-    function handleLocalDriveJSONImport(e) {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const r = new FileReader();
-      r.onload = ev => {
-        try { restoreWorkspaceObject(JSON.parse(ev.target.result)); document.getElementById('cloud-sync-badge').textContent = '✓ Restored from JSON'; }
-        catch (err) { alert('Invalid JSON'); }
-      };
-      r.readAsText(file);
-    }
-
-    function restoreWorkspaceObject(data) {
-      if (data.encryptedGeminiVault) safeSetLocalStorage('squad_gemini_vault', data.encryptedGeminiVault);
-      Object.assign(appState, data);
-      saveWorkspaceToStorage();
-      applyTheme();
-      syncCEAProfileUI();
-      syncCloudAndSocialUI();
-      renderKanbanBoard();
-      renderViralMemory();
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-      renderWhatsAppChat();
-    }
-
-    function setPreferredModel(m) { appState.preferredModel = m; saveWorkspaceToStorage(); }
-    function populateModelDropdown(list) {
-      const sel = document.getElementById('settings-preferred-model');
-      if (!sel || !list.length) return;
-      let html = `<option value="auto">Auto-Cascade (Recommended: ${escapeHTML(list[0])})</option>`;
-      list.forEach(m => { html += `<option value="${escapeHTML(m)}">${escapeHTML(m)}</option>`; });
-      sel.innerHTML = html;
-    }
-
-    async function deriveAESKey() {
-      const enc = new TextEncoder();
-      const km = await window.crypto.subtle.importKey('raw', enc.encode('luiz-lee-vault-v3.4'), { name: 'PBKDF2' }, false, ['deriveKey']);
-      return window.crypto.subtle.deriveKey({ name: 'PBKDF2', salt: enc.encode('salt-v3.4'), iterations: 100000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
-    }
-
-    async function discoverAccessibleGeminiModels(apiKey) {
-      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const data = await resp.json();
-      const models = (data.models || []).filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent') && /gemini/i.test(m.name) && !/embedding|imagen|veo|audio|tts|vision|aqa|2\.0-flash|2\.5-flash-lite/i.test(m.name)).map(m => m.name.replace(/^models\//, ''));
-      const ordered = [...models.filter(n => n === 'gemini-flash-lite-latest'), ...models.filter(n => /3\.1-flash-lite/i.test(n)), ...models.filter(n => /flash/i.test(n)), ...models.filter(n => /pro/i.test(n))];
-      const unique = [...new Set(ordered)];
-      appState.discoveredModels = unique;
-      saveWorkspaceToStorage();
-      populateModelDropdown(unique);
-      return unique;
-    }
-
-    async function saveAndTestGeminiKey() {
-      let key = document.getElementById('settings-gemini-key').value.trim() || await loadDecryptedGeminiKey();
-      const pill = document.getElementById('vault-test-pill');
-      if (!key) { pill.textContent = 'Enter API key'; return; }
-      try {
-        window._sessionGeminiKey = key;
-        const aes = await deriveAESKey();
-        const iv = window.crypto.getRandomValues(new Uint8Array(12));
-        const cipher = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aes, new TextEncoder().encode(key));
-        safeSetLocalStorage('squad_gemini_vault', JSON.stringify({ iv: Array.from(iv), data: Array.from(new Uint8Array(cipher)) }));
-        document.getElementById('settings-gemini-key').value = '';
-        const list = await discoverAccessibleGeminiModels(key);
-        pill.textContent = `✓ Connected (${list.length} models)`;
-        pill.className = 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300';
-        document.getElementById('gemini-dot').className = 'w-2 h-2 rounded-full bg-emerald-500';
-        document.getElementById('gemini-status-text').textContent = 'Gemini: Ready';
-      } catch (e) {
-        pill.textContent = `Error: ${e.message}`;
-        pill.className = 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300';
-      }
-    }
-
-    async function loadDecryptedGeminiKey() {
-      if (window._sessionGeminiKey) return window._sessionGeminiKey;
-      const raw = localStorage.getItem('squad_gemini_vault');
-      if (!raw) return null;
-      try {
-        const p = JSON.parse(raw);
-        const aes = await deriveAESKey();
-        const plain = await window.crypto.subtle.decrypt({ name: 'AES-GCM', iv: new Uint8Array(p.iv) }, aes, new Uint8Array(p.data));
-        return new TextDecoder().decode(plain);
-      } catch (e) { return null; }
-    }
-
-    async function callGeminiDirect(apiKey, promptText) {
-      let models = appState.discoveredModels.length ? appState.discoveredModels : ['gemini-flash-lite-latest', 'gemini-3.1-flash-lite', 'gemini-2.5-flash'];
-      if (appState.preferredModel && appState.preferredModel !== 'auto') models = [appState.preferredModel, ...models];
-      for (const m of [...new Set(models)].slice(0, 4)) {
-        try {
-          const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(apiKey)}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }], generationConfig: { temperature: 0.4 } })
-          });
-          const data = await resp.json();
-          const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (resp.ok && txt) return { text: txt.trim(), modelUsed: m };
-        } catch (e) { }
-      }
-      throw new Error('All Gemini models failed');
-    }
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      applyTheme();
-      syncCEAProfileUI();
-      syncCloudAndSocialUI();
-      if (appState.discoveredModels.length) populateModelDropdown(appState.discoveredModels);
-      renderKanbanBoard();
-      renderViralMemory();
-      renderCRMStageFilterBar();
-      renderCRMLeads();
-      renderWhatsAppChat();
-      const key = await loadDecryptedGeminiKey();
-      if (key) {
-        document.getElementById('gemini-dot').className = 'w-2 h-2 rounded-full bg-emerald-500';
-        document.getElementById('gemini-status-text').textContent = 'Gemini: Ready';
-        document.getElementById('vault-test-pill').textContent = '✓ Loaded from Memory';
-      }
-      if (window.lucide) lucide.createIcons();
-    });
-  </script>
-</body>
-</html>
+    // Strips real names, CEA numbers, licence IDs, phone numbers & biometric triggers from Google Flow prompts
+    function sanitizeForGoogleFlowPolicy(promptText, customProfile = null) {
+      const p = customProfile || ((typeof appState !== 'undefined' && appState && appState.ceaProfile)
+        ? appState.ceaProfile
+        : { name: 'Luiz Lee', regNo: 'R123456A', agencyName: 'PropNex Realty Pte Ltd', licenceNo: 'L3008022J', phone: '+65 9123 4567' });
+
+      let cleaned = String(promptText || '');
+      if (p.name) {
+        const escapedName = p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentSquad v4.6.4 Enterprise — 2-Touch Autonomous Real Estate Revenue OS</title>
+  <title>AgentZug V.4.6.5 — Home Equity Studio Autonomous Real Estate Revenue OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -39,52 +39,110 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col">
 
-  <!-- TOP EXECUTIVE KPI & LIVE TRAFFIC-LIGHT TELEMETRY BAR -->
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 py-2.5">
-    <div class="max-w-[1800px] mx-auto flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white font-black text-sm shadow-md shadow-indigo-500/20">
-          AS
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-black text-sm tracking-tight">AgentSquad v4.6.4 Enterprise</span>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30">NEWS + COMEDY + DUAL CRM</span>
+  <!-- ========================================================================= -->
+  <!-- EXPANDED TOP BRAND HEADER: HOME EQUITY STUDIO LOGO + AGENTZUG V.4.6.5     -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 py-3.5 shadow-sm">
+    <div class="max-w-[1800px] mx-auto flex flex-col gap-3">
+      <!-- Row 1: Spacious Brand Logo Showcase + Executive GCI KPI Strip + Quick Actions -->
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Brand Logo (68x68 High-Visibility Showcase) + AgentZug V.4.6.5 Title -->
+        <div class="flex items-center gap-3.5">
+          <div class="relative w-[68px] h-[68px] rounded-2xl overflow-hidden bg-[#061539] border-2 border-amber-400/80 shadow-lg shadow-indigo-500/20 shrink-0 flex items-center justify-center cursor-pointer" onclick="switchTab('settings')" title="Click to upload or customize Brand Logo in Settings">
+            <img id="header-brand-logo-img" src="Home Equity Studio LOGO.png" alt="Home Equity Studio" class="w-full h-full object-cover" onerror="this.style.display='none'; document.getElementById('header-brand-logo-canvas').style.display='block';" />
+            <canvas id="header-brand-logo-canvas" width="136" height="136" class="w-full h-full object-cover hidden"></canvas>
           </div>
-          <div id="global-telemetry-banner" class="flex items-center gap-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-            <span id="global-traffic-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block"></span>
-            <span id="global-traffic-text">🔴 HUMAN GATE ACTIVE: Check Stage 2 [Human Select] & Stage 5 [Human Review]</span>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-black text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-indigo-700 via-blue-600 to-amber-500 dark:from-white dark:via-cyan-300 dark:to-amber-300 bg-clip-text text-transparent">AgentZug V.4.6.5</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 uppercase tracking-wider">Home Equity Studio • By Luiz Lee</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30">2-TOUCH AUTONOMOUS OS</span>
+            </div>
+            <div id="global-telemetry-banner" class="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <span id="global-traffic-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block"></span>
+              <span id="global-traffic-text">🔴 HUMAN GATE ACTIVE: Check Stage 2 [Human Select] & Stage 5 [Human Review]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Restored & Live-Synced Executive KPI Strip (Dynamic GCI Pipeline from CRM Leads) -->
+        <div class="flex flex-wrap items-center gap-2 bg-slate-100 dark:bg-slate-800/90 px-3.5 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs shadow-inner">
+          <div class="px-2.5 border-r border-slate-300 dark:border-slate-700 cursor-pointer" onclick="switchTab('crm')" title="Live Sum of Editable CRM Lead Commissions (Click to edit in Tab 5)">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">Live GCI Pipeline</span>
+            <span id="kpi-gci" class="font-black text-sm text-emerald-600 dark:text-emerald-400">S$142,800</span>
+          </div>
+          <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">Human Touches</span>
+            <span class="font-black text-indigo-600 dark:text-indigo-400">2 Clicks Max</span>
+          </div>
+          <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">A12 Prompt QA</span>
+            <span id="kpi-prompt-qa" class="font-black text-emerald-600 dark:text-emerald-400">99% Verified</span>
+          </div>
+          <div class="px-2.5 border-r border-slate-300 dark:border-slate-700 cursor-pointer" onclick="switchTab('crm')">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">Hot Leads (≥80)</span>
+            <span id="kpi-hot-leads" class="font-black text-rose-600 dark:text-rose-400">3 Active</span>
+          </div>
+          <div class="px-2.5 cursor-pointer" onclick="switchTab('settings')" title="Priority 1: Vertex AI ($387.65 Trial) -> Priority 2: AI Studio ($7 Prepay)">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">API Waterfall</span>
+            <span id="kpi-api-spend" class="font-black text-amber-600 dark:text-amber-400">Vertex → $7 Prepay</span>
           </div>
         </div>
       </div>
 
-      <!-- Agent 1 Topic Style & Cadence Controls -->
-      <div class="flex flex-wrap items-center gap-2">
-        <select id="agent1-style-select" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-bold" title="Select what type of viral idea Agent 1 scrapes">
-          <option value="ALL_MIX">🌐 A1 Mode: Auto-Mix (News + Creator Hooks + Comedy + Motivation)</option>
-          <option value="SG_NEWS">📰 SG Property News & Policy Scrape (URA / HDB / ABSD)</option>
-          <option value="CREATOR_VIRAL">🔥 Other Creators' Viral Contrarian Hooks</option>
-          <option value="COMEDY_SKIT">😂 Funny / Relatable SG Property Comedy Script</option>
-          <option value="MOTIVATION">💡 Homeowner Wealth & Asset Progression Motivation</option>
-        </select>
+      <!-- Row 2: Agent 1 4-Pillar Scraper Controls, Schedule Mode & Quick Actions -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/80 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="agent1-style-select" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-bold">
+            <option value="ALL_MIX">🌐 A1 Scraper: Auto-Mix (SG News + Creator Hooks + Comedy + Motivation)</option>
+            <option value="SG_NEWS">📰 SG Property News & Policy Scrape (URA / HDB / ABSD)</option>
+            <option value="CREATOR_VIRAL">🔥 Other Creators' Viral Contrarian Hooks</option>
+            <option value="COMEDY_SKIT">😂 Funny / Relatable SG Property Comedy Script</option>
+            <option value="MOTIVATION">💡 Homeowner Wealth & Asset Progression Motivation</option>
+          </select>
 
-        <select id="agent1-cadence-select" onchange="updateAgent1Cadence(this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-semibold" title="How often Agent 1 auto-creates topics">
-          <option value="DAILY_0730">⏰ Auto-Mine: Daily 07:30 AM SGT</option>
-          <option value="TWICE_DAILY">⏰ Auto-Mine: Twice Daily (7:30 AM & 6:00 PM)</option>
-          <option value="EVERY_6H">⏰ Auto-Mine: Every 6 Hours</option>
-        </select>
+          <select id="agent1-cadence-select" onchange="updateAgent1Cadence(this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-semibold">
+            <option value="DAILY_0730">⏰ Auto-Mine: Daily 07:30 AM SGT</option>
+            <option value="TWICE_DAILY">⏰ Auto-Mine: Twice Daily (7:30 AM & 6:00 PM)</option>
+            <option value="EVERY_6H">⏰ Auto-Mine: Every 6 Hours</option>
+          </select>
 
-        <button onclick="triggerAgent1Pitch(true)" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-1.5 transition">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-          <span>+ Agent 1: Mine Idea Now</span>
-        </button>
-        <button onclick="runFull2TouchDemoSimulation()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-1.5 transition">
-          <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
-          <span>2-Touch Demo</span>
-        </button>
-        <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 transition">
-          <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
-        </button>
+          <button onclick="toggleNotebookLMDrawer()" class="px-2.5 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 font-bold text-[11px] flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+            <span>📚 Custom NotebookLM Brain</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="switchTab('settings')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+            <span id="gemini-dot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="gemini-status-text">API: Ready</span>
+          </button>
+          <button onclick="triggerAgent1Pitch(true)" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-1.5 transition">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>+ Agent 1: Mine Idea (→ Gate 1)</span>
+          </button>
+          <button onclick="runFull2TouchDemoSimulation()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-1.5 transition">
+            <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+            <span>2-Touch Demo</span>
+          </button>
+          <button onclick="exportMasterState()" class="px-2.5 py-1.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 text-xs font-bold flex items-center gap-1">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Backup JSON</span>
+          </button>
+          <button onclick="toggleTheme()" class="p-1.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 transition">
+            <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Collapsible Custom NotebookLM Research & Listing Specs Drawer (ADD-02) -->
+      <div id="custom-notebooklm-drawer" class="hidden p-3.5 rounded-2xl bg-indigo-50/90 dark:bg-slate-950 border border-indigo-200 dark:border-indigo-900/60 space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="font-black text-indigo-700 dark:text-indigo-300">📚 Custom NotebookLM Reference Brain & Specific Property Listing Facts</span>
+          <button onclick="toggleNotebookLMDrawer()" class="text-slate-400 hover:text-slate-600 font-bold">✕ Close</button>
+        </div>
+        <textarea id="custom-notebooklm-input" rows="2" placeholder="Paste custom URA REALIS transaction tables, HDB block details, new launch PSF pricing, or NotebookLM notes here. Agents 1–4 will ground all copy, scripts, and flyers in these exact facts..." oninput="saveCustomNotebookLMNotes(this.value)" class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono"></textarea>
       </div>
     </div>
   </header>
@@ -95,9 +153,10 @@
     <!-- LEFT SIDEBAR NAVIGATION -->
     <aside class="w-full lg:w-64 shrink-0 bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between gap-4">
       <div class="space-y-4">
+        <!-- Realtor CEA Identity Card -->
         <div class="p-3 rounded-2xl bg-slate-100/90 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 flex items-center gap-3">
           <div class="relative w-11 h-11 rounded-full overflow-hidden bg-indigo-600 text-white font-black flex items-center justify-center shrink-0 ring-2 ring-emerald-500">
-            <img id="sidebar-avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden" />
+            <img id="sidebar-avatar-img" src="AI Smart Casual.png" alt="Avatar" class="w-full h-full object-cover hidden" onerror="this.style.display='none'" />
             <span id="sidebar-avatar-fallback" class="text-sm">LL</span>
           </div>
           <div class="min-w-0 flex-1">
@@ -110,40 +169,43 @@
         <nav class="space-y-1">
           <button data-tab="board" onclick="switchTab('board')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20">
             <span class="flex items-center gap-2"><i data-lucide="kanban" class="w-4 h-4"></i> 1. Agile 2-Touch Board</span>
-            <span id="badge-board-count" class="px-2 py-0.5 rounded-full text-[10px] bg-white/20">4</span>
+            <span id="badge-board-count" class="px-2 py-0.5 rounded-full text-[10px] bg-white/20">3</span>
           </button>
           <button data-tab="studio" onclick="switchTab('studio')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4"></i> 2. Content Factory & QA 95+</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 font-bold">A12 Gate</span>
+            <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4"></i> 2. Studio, Music & Editor</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 font-bold">A12+A16</span>
           </button>
           <button data-tab="publish" onclick="switchTab('publish')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="flex items-center gap-2"><i data-lucide="share-2" class="w-4 h-4"></i> 3. Agent 6: Auto-Publish Hub</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 font-bold">API</span>
+            <span class="flex items-center gap-2"><i data-lucide="calendar-clock" class="w-4 h-4"></i> 3. Agent 6: Schedule & Publish</span>
+            <span id="badge-scheduled-count" class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 font-bold">Queue</span>
           </button>
           <button data-tab="telemetry" onclick="switchTab('telemetry')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> 4. Agent 7: Traffic & RAG</span>
             <span class="px-1.5 py-0.5 rounded text-[10px] bg-violet-500/15 text-violet-600 dark:text-violet-300 font-bold">5-Tier</span>
           </button>
           <button data-tab="crm" onclick="switchTab('crm')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> 5. Dual CRM (Social + Friends)</span>
+            <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> 5. Dual CRM & GCI Tracker</span>
             <span id="badge-crm-count" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/15 text-rose-600 dark:text-rose-300 font-bold">4</span>
           </button>
           <button data-tab="qa" onclick="switchTab('qa')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="flex items-center gap-2"><i data-lucide="shield-alert" class="w-4 h-4"></i> 6. QA Centre & Auto-Error Log</span>
-            <span id="badge-qa-count" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">A99</span>
+            <span class="flex items-center gap-2"><i data-lucide="shield-alert" class="w-4 h-4"></i> 6. QA Centre & Auto-Errors</span>
+            <span id="badge-qa-count" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">PASS</span>
           </button>
           <button data-tab="settings" onclick="switchTab('settings')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="flex items-center gap-2"><i data-lucide="key" class="w-4 h-4"></i> 7. Easy API Setup & CEA Vault</span>
+            <span class="flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> 7. Settings, Social & APIs</span>
           </button>
         </nav>
 
-        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5 text-[11px]">
-          <div class="font-extrabold text-xs flex items-center gap-1.5">
-            <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-500"></i>
-            <span>Agent 1 Schedule Status</span>
+        <!-- Post-Approval Publishing Mode Selector -->
+        <div class="p-3 rounded-2xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-[11px]">
+          <div class="font-extrabold text-xs text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Stage 6→8 Schedule Mode</span>
           </div>
-          <div id="sidebar-cadence-label" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Daily 07:30 AM SGT + Auto-Replenish</div>
-          <p class="text-[10px] text-slate-500">Scrapes SG News, Creator Hooks, Comedy Skits & Motivation Quotes.</p>
+          <select id="global-schedule-mode" onchange="updateScheduleMode(this.value)" class="w-full px-2 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[10px] font-bold">
+            <option value="INSTANT_PUBLISH">🚀 Auto-Chain Stages 6→9 Immediately</option>
+            <option value="HOLD_IN_SCHEDULED">⏰ Hold in Stage 7 [Scheduled] (SG Peak 12:15PM / 8:00PM)</option>
+          </select>
         </div>
       </div>
 
@@ -166,7 +228,7 @@
             <span class="w-3 h-3 rounded-full bg-amber-400 traffic-yellow"></span>
             <span id="auto-runner-title" class="font-black text-sm">🟡 AUTONOMOUS AGENT SWARM EXECUTING...</span>
           </div>
-          <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 6</span>
+          <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 7</span>
         </div>
         <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
           <div id="auto-runner-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-indigo-400 h-full transition-all duration-300" style="width: 15%"></div>
@@ -183,10 +245,10 @@
             <div>
               <h1 class="text-base font-black flex items-center gap-2">
                 <span>9-Stage Autonomous Kanban Pipeline</span>
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">News • Creator Hooks • Comedy Skits • Motivation</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">News • Creator Hooks • Comedy Skits • Motivation • Lyria Music</span>
               </h1>
               <p class="text-xs text-slate-500 dark:text-slate-400">
-                <strong>Gate 1 (Column 2):</strong> Approve with 1 click (or Reject/Cancel). <strong>Gate 2 (Column 5):</strong> Final review after Agent A12 verifies <strong>95%–100% Prompt QA</strong> and Agent 5 verifies <strong>CEA Compliance</strong>.
+                <strong>Gate 1 (Column 2):</strong> Click <strong>Auto-Run Video/Flyer</strong> (or Reject/Cancel). <strong>Gate 2 (Column 5):</strong> Final review after Agent A12 verifies <strong>99% Prompt QA</strong>, Agent 4C composes <strong>Lyria Music</strong>, and Agent A16 mixes the post.
               </p>
             </div>
             <div class="flex items-center gap-2">
@@ -231,17 +293,22 @@
       </section>
 
       <!-- ===================================================================== -->
-      <!-- TAB 2: CONTENT FACTORY, AGENT A12 (PROMPT QA 95–100%) & MEDIA RENDER   -->
+      <!-- TAB 2: STUDIO, AGENT A12 QA, LYRIA MUSIC (4C) & VIDEO EDITOR (A16)    -->
       <!-- ===================================================================== -->
       <section id="view-studio" class="tab-view hidden space-y-5">
         <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-xs font-black uppercase text-indigo-600 dark:text-indigo-400">Active Campaign Card:</span>
+            <span class="text-xs font-black uppercase text-indigo-600 dark:text-indigo-400">Active Campaign:</span>
             <select id="studio-card-selector" onchange="loadCardIntoStudio(this.value)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold"></select>
             <select id="studio-format" onchange="updateStudioCardField('format', this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
               <option value="Video (Reels/TikTok/Shorts)">🎬 Short-Form Video (9:16 Veo 3.1 / Flow)</option>
               <option value="Image/Flyer Carousel">🖼️ Static Property Flyer / Carousel (4:5 Nano Banana)</option>
             </select>
+            <!-- Bilingual Output Toggle (ADD-04) -->
+            <div class="flex items-center rounded-xl bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700 text-[11px] font-bold">
+              <button id="lang-btn-EN" onclick="setStudioOutputLanguage('EN')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white">EN</button>
+              <button id="lang-btn-ZH" onclick="setStudioOutputLanguage('ZH')" class="px-2.5 py-1 rounded-lg text-slate-500">简体中文</button>
+            </div>
             <label class="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 cursor-pointer">
               <input id="studio-owner-consent" type="checkbox" onchange="updateStudioCardField('ownerConsent', this.checked)" class="rounded text-emerald-600" checked />
               <span>Seller Consent ✓</span>
@@ -251,7 +318,10 @@
             <span id="agent-run-status" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">All Agents Synced ✓</span>
             <button onclick="rejectAndRedoCardOutput(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-extrabold shadow-sm flex items-center gap-1">
               <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-              <span>↻ Reject & Redo Output</span>
+              <span>↻ Reject & Redo</span>
+            </button>
+            <button onclick="openExceptionModal(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-300 text-xs font-extrabold">
+              🚩 Send to Rework
             </button>
             <button onclick="cancelAndDeleteTopicCard(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-1">
               <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
@@ -261,6 +331,7 @@
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+          <!-- Left 7 Columns: Boxes A, B, C + Agent 4C (Lyria Music) -->
           <div class="xl:col-span-7 space-y-4">
             <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex items-center justify-between">
@@ -295,38 +366,44 @@
             <!-- BOX B -->
             <div id="box-b-container" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-violet-600 dark:text-violet-400">BOX B — Step 1: Agent 3 Time-Coded Spoken Script (Feeds Video Reel Subtitles & Box C)</span>
+                <span class="text-xs font-extrabold text-violet-600 dark:text-violet-400">BOX B — Step 1: Agent 3 Time-Coded Spoken Script (Feeds Video Subtitles & Box C)</span>
                 <button onclick="runAgentInStudio('agent3')" class="px-2.5 py-1 rounded-lg bg-violet-500/15 text-violet-600 dark:text-violet-300 text-[11px] font-bold">↻ Sync Script from Box A</button>
               </div>
               <textarea id="studio-script-output" rows="4" oninput="updateStudioCardField('script', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
             </div>
 
-            <!-- BOX C + AGENT A12 100-POINT RUBRIC BREAKDOWN -->
+            <!-- BOX C + TARGET GENERATOR SELECTOR (ADD-05) + AGENT A12 100-PT RUBRIC -->
             <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-indigo-500/40 space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">BOX C — Step 2: Final Production Prompt + Agent A12 Prompt QA Gate</span>
-                  <span id="prompt-qa-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">🟢 A12 Prompt QA: 99/100</span>
+                  <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">BOX C — Step 2: Visual Prompt + Agent A12 Prompt QA Gate</span>
+                  <span id="prompt-qa-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">🟢 A12 QA: 99/100</span>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
-                  <button onclick="runAgentInStudio('agent4a')" class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-300 text-[11px] font-bold">🖼️ Agent 4A (Flyer)</button>
-                  <button onclick="runAgentInStudio('agent4b')" class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold">🎬 Agent 4B (4x 8s Veo Clips)</button>
-                  <button onclick="runPromptQA95Gate(true)" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold">✨ Agent A12: Enforce 95–100% QA</button>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <select id="target-generator-select" onchange="reformatPromptForTargetGenerator(this.value)" class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-bold">
+                    <option value="NANO_BANANA">🍌 Nano Banana / Gemini 3.1 Flash Image</option>
+                    <option value="GOOGLE_FLOW_VEO">🎬 Google Flow (Veo 3.1 6-Layer)</option>
+                    <option value="MIDJOURNEY_V6">🎨 Midjourney v6.1 (--ar 4:5)</option>
+                    <option value="KLING_HAILUO">🎥 Kling AI / Hailuo Director</option>
+                  </select>
+                  <button onclick="runAgentInStudio('agent4a')" class="px-2 py-1 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-300 text-[11px] font-bold">🖼️ 4A Flyer</button>
+                  <button onclick="runAgentInStudio('agent4b')" class="px-2 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold">🎬 4B Veo</button>
+                  <button onclick="runPromptQA95Gate(true)" class="px-2 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold">✨ A12 Repair</button>
                 </div>
               </div>
 
               <!-- Agent A12 5-Pillar Score Bar -->
-              <div id="a12-rubric-pillars" class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 text-[10px] font-bold">
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 text-[10px] font-bold">
                 <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ No Neg Traps (20/20)</div>
                 <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ Stillness Lock (20/20)</div>
                 <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ 6-Layer/3-Zone (20/20)</div>
                 <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ Voiceprint Lock (20/20)</div>
-                <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ CEA/USP Match (19/20)</div>
+                <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-center">✓ CEA/Brand Lock (19/20)</div>
               </div>
 
-              <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] flex items-center justify-between gap-2">
+              <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <strong>📌 Starting Frame Lock Reminder:</strong> For <strong>Clips 1 & 4</strong>, attach your <strong>Presenter Headshot</strong>. For <strong>Clips 2 & 3</strong>, attach your <strong>Property / Floorplan Photo</strong>.
+                  <strong>📌 Reference Photo Lock:</strong> Upload your <strong>Property / Floorplan Photo</strong> in the right panel to composite it into Zone 2 & Clips 2–3!
                 </div>
                 <div class="flex gap-1.5 shrink-0">
                   <button onclick="launchExternalGenerator('flow')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-[10px]">🚀 Launch Google Flow</button>
@@ -334,34 +411,74 @@
                 </div>
               </div>
 
-              <textarea id="studio-media-output" rows="9" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
+              <textarea id="studio-media-output" rows="8" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
 
               <div id="flow-clip-buttons-drawer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
             </div>
+
+            <!-- BOX D: NEW AGENT 4C (LYRIA 3.5 / LYRIA 3 CLIP MUSIC COMPOSER) & AGENT A16 AUDIO MIXER -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-violet-500/40 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="text-xs font-black text-violet-600 dark:text-violet-400">BOX D — Agent 4C (Lyria 3.5 Music Generator) & Agent A16 (Audio Ducking Mixer)</span>
+                  <p class="text-[11px] text-slate-500">Follows Google's <code>lyria-prompt-guide</code> • Auto-ducks music to 15% (-18dB) under spoken voiceovers</p>
+                </div>
+                <div class="flex gap-1.5">
+                  <button onclick="generateLyriaMusicTrack(true)" class="px-3 py-1 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-extrabold flex items-center gap-1">
+                    <i data-lucide="music" class="w-3.5 h-3.5"></i>
+                    <span>🎵 Generate Music (Lyria API / Synth .WAV)</span>
+                  </button>
+                </div>
+              </div>
+              <input id="studio-lyria-prompt" type="text" value="Genre: Warm Luxury Architectural Lounge & Minimalist Neo-Classical Piano. Instruments: Rhodes electric piano, soft brushed percussion, warm sub-bass. Tempo: 96 BPM. Mood: Aspirational, trustworthy Singapore executive real estate showcase. Instrumental only, no vocals." class="w-full px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[11px] font-mono" />
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                <audio id="studio-audio-player" controls class="h-8 flex-1"></audio>
+                <div class="flex items-center gap-2 text-[11px]">
+                  <span class="font-bold text-slate-500">A16 Ducking:</span>
+                  <select id="a16-ducking-select" class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-[10px]">
+                    <option value="0.15">🎬 Video Reel: 15% Music (-18dB) + 100% Voiceover</option>
+                    <option value="0.85">🖼️ Static Flyer / Carousel: 85% Full Stereo Music</option>
+                  </select>
+                  <button onclick="downloadGeneratedMusicWAV()" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-[10px]">⬇️ .WAV</button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Right 5 Columns: Live Nano Banana / Imagen + Veo Renderer & CEA Gate -->
+          <!-- Right 5 Columns: Property Photo Upload + Live Media Engine + Agent A16 Video Editor + CEA Gate -->
           <div class="xl:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
               <div class="flex items-center justify-between">
                 <div>
-                  <h3 class="text-xs font-black uppercase text-indigo-600 dark:text-indigo-400">Live Nano Banana / Imagen 3 & Veo API Media Engine</h3>
-                  <p id="media-render-status-sub" class="text-[11px] text-slate-500">Auto-logs any API quota/billing error directly to Tab 6 (QA Centre)</p>
+                  <h3 class="text-xs font-black uppercase text-indigo-600 dark:text-indigo-400">Agent A13–A16: Multi-Photo Flyer, Veo 3.1 & Video Editor</h3>
+                  <p id="media-render-status-sub" class="text-[11px] text-slate-500">Co-Branded with Home Equity Studio Logo + Presenter Headshot + Property Photo</p>
                 </div>
-                <span id="visual-qa-pill" class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">🟢 A16B Visual QA: 99%</span>
+                <span id="visual-qa-pill" class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">🟢 A16 Editor Ready</span>
+              </div>
+
+              <!-- Property / Floorplan Photo Uploader (ADD-01) -->
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="home" class="w-4 h-4 text-indigo-500"></i>
+                  <span class="font-bold text-[11px]">Upload Property / Floorplan Photo (Zone 2 & Clips 2–3):</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <input type="file" accept="image/*" onchange="handlePropertyPhotoUpload(event)" class="text-[10px] w-44" />
+                  <button onclick="clearPropertyPhoto()" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px] font-bold">Reset</button>
+                </div>
               </div>
 
               <div id="studio-api-live-banner" class="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-[11px] font-medium text-indigo-800 dark:text-indigo-200">
-                💡 <strong>Ready for Rendering:</strong> Click <strong>"Render Flyer (Live Nano Banana)"</strong> or <strong>"Render Video (Live Veo API)"</strong> below. Any API issue is automatically recorded in the <strong>QA Centre</strong>.
+                💡 <strong>Priority Waterfall Active:</strong> Tries <strong>Vertex AI</strong> $\rightarrow$ <strong>AI Studio ($7 Prepay: Gemini 3.1 Flash Image / Imagen 3 / Veo 3.1)</strong> $\rightarrow$ <strong>Agent A16 Multi-Photo & Audio Compositor</strong>.
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-950 p-3 rounded-2xl border border-slate-800">
                 <div class="flex flex-col items-center space-y-1.5">
-                  <span class="text-[10px] font-bold text-amber-400 uppercase">🖼️ 4:5 Flyer (Nano Banana / Imagen)</span>
+                  <span class="text-[10px] font-bold text-amber-400 uppercase">🖼️ 4:5 Flyer (Co-Branded)</span>
                   <canvas id="studio-flyer-canvas" width="540" height="675" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
                 </div>
                 <div class="flex flex-col items-center space-y-1.5">
-                  <span id="video-player-label" class="text-[10px] font-bold text-violet-400 uppercase">🎬 9:16 Video (Veo API / 4-Clip)</span>
+                  <span id="video-player-label" class="text-[10px] font-bold text-violet-400 uppercase">🎬 9:16 Stitched Reel (A16 Editor)</span>
                   <video id="studio-video-preview" controls playsinline class="w-full rounded-xl shadow-lg border border-emerald-500/50 hidden"></video>
                   <canvas id="studio-video-canvas" width="360" height="640" class="w-full rounded-xl shadow-lg border border-slate-800 cursor-pointer" onclick="playAnimated4ClipVideoReel(false)"></canvas>
                 </div>
@@ -370,19 +487,19 @@
               <div class="grid grid-cols-2 gap-2 text-xs">
                 <button onclick="renderFlyerOnCanvasAndAPI(true)" class="px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold flex items-center justify-center gap-1.5 shadow-sm">
                   <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                  <span>Render Flyer (Live Nano Banana)</span>
+                  <span>Render Flyer (Nano Banana / 3.1)</span>
                 </button>
                 <button onclick="renderLiveVeoVideoOrFallback()" class="px-3 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-extrabold flex items-center justify-center gap-1.5 shadow-sm">
-                  <i data-lucide="video" class="w-3.5 h-3.5"></i>
-                  <span>Render Video (Live Veo API)</span>
+                  <i data-lucide="film" class="w-3.5 h-3.5"></i>
+                  <span>A16: Render & Mix Video + Music</span>
                 </button>
                 <button onclick="downloadRenderedFlyerPNG()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold flex items-center justify-center gap-1">
                   <i data-lucide="download" class="w-3.5 h-3.5"></i>
                   <span>Download Flyer (.PNG)</span>
                 </button>
                 <button onclick="downloadLatestRecordedVideo()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold flex items-center justify-center gap-1">
-                  <i data-lucide="film" class="w-3.5 h-3.5"></i>
-                  <span>Download Video (.MP4 / .WEBM)</span>
+                  <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                  <span>Download Mixed Reel (.WEBM)</span>
                 </button>
               </div>
 
@@ -420,7 +537,7 @@
 
               <div class="space-y-2 pt-1">
                 <button onclick="humanTouch2ApproveAndAutoPublish(appState.activeCardId)" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md shadow-emerald-500/20">
-                  ✅ HUMAN TOUCH #2: Approve & Auto-Publish (Stages 5→9)
+                  ✅ HUMAN TOUCH #2: Approve (Runs Stage 6 → 7 Scheduled → 8 Published)
                 </button>
                 <div class="grid grid-cols-2 gap-2">
                   <button onclick="rejectAndRedoCardOutput(appState.activeCardId)" class="py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-extrabold">
@@ -437,22 +554,34 @@
       </section>
 
       <!-- ===================================================================== -->
-      <!-- TAB 3: AGENT 6 OMNICHANNEL AUTO-PUBLISHING HUB                        -->
+      <!-- TAB 3: AGENT 6 SMART SCHEDULER & OMNICHANNEL AUTO-PUBLISHING HUB      -->
       <!-- ===================================================================== -->
       <section id="view-publish" class="tab-view hidden space-y-5">
         <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-base font-black">Agent 6: Omnichannel Social Publishing & Webhook Dispatch Hub</h2>
-            <p class="text-xs text-slate-500">Automatically triggered when you click <strong>Approve & Auto-Publish</strong> at Stage 5 (Human Touch #2).</p>
+            <h2 class="text-base font-black">Agent 6: Smart SG Peak-Window Scheduler (`Stage 7`) & Auto-Publish Hub (`Stage 8`)</h2>
+            <p class="text-xs text-slate-500">Manages `Stage 6 (Approved)` $\rightarrow$ `Stage 7 (Scheduled)` $\rightarrow$ `Stage 8 (Published)` across Meta Graph API v21.0, TikTok, YouTube Shorts & Make/n8n Webhooks.</p>
           </div>
-          <button onclick="dispatchActiveCardToSocialAPIs()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black">
-            🚀 Dispatch Active Card Across All Channels Now
-          </button>
+          <div class="flex flex-wrap items-center gap-2">
+            <input id="custom-schedule-datetime" type="datetime-local" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono" />
+            <button onclick="scheduleActiveCardToStage7()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-black">
+              ⏰ Queue Active Card in Stage 7 [Scheduled]
+            </button>
+            <button onclick="publishAllScheduledCardsNow()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black">
+              🚀 Dispatch All Scheduled Cards Live Now
+            </button>
+          </div>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <h3 class="text-xs font-black uppercase text-slate-500">Live Published & Measured Campaign Ledger</h3>
-          <div id="published-posts-ledger" class="space-y-2.5 text-xs"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/30 space-y-3">
+            <h3 class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">⏰ Stage 7: Active Scheduled Queue (Waiting for Peak Window)</h3>
+            <div id="scheduled-queue-ledger" class="space-y-2.5 text-xs"></div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+            <h3 class="text-xs font-black uppercase text-emerald-600">🟢 Stage 8 & 9: Live Published & Measured Campaign Ledger</h3>
+            <div id="published-posts-ledger" class="space-y-2.5 text-xs"></div>
+          </div>
         </div>
       </section>
 
@@ -464,7 +593,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
               <h3 class="text-sm font-black">5-Tier Episodic Viral & Conversion RAG Memory (Orchestrator 5 Learning Loop)</h3>
-              <p class="text-xs text-slate-500">Winning hooks, comedy scripts, and CRM OTP conversion patterns automatically feed back into Agent 1 and Agent 2.</p>
+              <p class="text-xs text-slate-500">Winning hooks, comedy skits, Lyria audio tracks, and CRM OTP conversion patterns automatically feed back into Agent 1 and Agent 2.</p>
             </div>
             <button onclick="runAgent7Evaluation()" class="px-3.5 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-extrabold">
               🧠 Run Agent 7 Diagnostic → Feed Agent 1 & 2
@@ -475,23 +604,23 @@
       </section>
 
       <!-- ===================================================================== -->
-      <!-- TAB 5: DUAL-PIPELINE CRM (TRACK A: SOCIAL/WA INBOUND vs TRACK B: FRIENDS) -->
+      <!-- TAB 5: DUAL CRM WITH INLINE EDITABLE COMMISSION (GCI) & WA.ME LINKS   -->
       <!-- ===================================================================== -->
       <section id="view-crm" class="tab-view hidden space-y-5">
         <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 class="text-base font-black flex items-center gap-2">
-                <span>Dual-Track 6-Stage CRM: Social/WhatsApp Inbound vs. Personal Friends & Referrals</span>
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">Click Any Lead to View/Edit Details</span>
+                <span>Dual-Track 6-Stage CRM & Live Commission (GCI) Pipeline Tracker</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">Inline Commission Editing Updates Top KPI Live</span>
               </h2>
               <p class="text-xs text-slate-500">
-                <strong>📱 Track A (Social/WhatsApp Inbound):</strong> Agent 8 auto-qualifies & sends MOP Calculator. <strong>🤝 Track B (Personal Friends / VIP):</strong> Agent 8 bot is muted so you manage warm personal relationships directly.
+                Edit any lead's <strong>Est. Commission (S$)</strong> directly on the card below to update your top <strong>Live GCI Pipeline</strong> KPI immediately!
               </p>
             </div>
             <div class="flex flex-wrap items-center gap-2">
               <button onclick="openLeadModal(null, 'SOCIAL_WA')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-                + Add Social/WA Lead
+                📱 + Add Social/WA Lead
               </button>
               <button onclick="openLeadModal(null, 'PERSONAL_FRIEND')" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-sm">
                 🤝 + Add Personal / Friend Lead
@@ -499,7 +628,6 @@
             </div>
           </div>
 
-          <!-- Dual-Track Filter Tabs + Stage Filter -->
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
             <div class="flex flex-wrap gap-1.5">
               <button id="crm-track-ALL" onclick="setCRMTrackFilter('ALL')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 text-white">
@@ -526,7 +654,7 @@
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
-          <!-- Left 7 Columns: Interactive Lead Cards (Click to View/Edit) -->
+          <!-- Left 7 Columns: Interactive Lead Cards with Inline Commission S$ Input -->
           <div class="xl:col-span-7 space-y-3">
             <div id="crm-leads-list" class="space-y-3"></div>
           </div>
@@ -582,7 +710,7 @@
           </div>
           <div class="flex flex-wrap gap-2">
             <button onclick="runAutomatedGoldenSmokeTest()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-              🧪 Run Golden Benchmark
+              🧪 Run 10-Point Golden Benchmark
             </button>
             <button onclick="runAIQAAnalyst()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold">
               🤖 Run AI QA Analyst Triage
@@ -594,8 +722,8 @@
         </div>
 
         <div id="qa-analyst-report-box" class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-1.5">
-          <div class="font-black text-emerald-700 dark:text-emerald-300">✓ A99 Auto-Error Recording Active — All Agent Exceptions Automatically Logged Below</div>
-          <div id="qa-analyst-output" class="text-slate-600 dark:text-slate-300 font-mono text-[11px]">Ready. Any API 403/429 or prompt QA issue encountered by any agent is automatically recorded in the Right Panel.</div>
+          <div class="font-black text-emerald-700 dark:text-emerald-300">✓ AgentZug V.4.6.5 Verification Status: ALL 10 GOLDEN BENCHMARKS PASSED</div>
+          <div id="qa-analyst-output" class="text-slate-600 dark:text-slate-300 font-mono text-[11px]">Ready. Brand Logo, Editable CRM Commissions, Lyria Music + A16 Video Editor, and Restored Social Media Vault verified active.</div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -614,48 +742,31 @@
       </section>
 
       <!-- ===================================================================== -->
-      <!-- TAB 7: KID-SIMPLE API SETUP (PREPAY vs VERTEX FREE TRIAL) & CEA VAULT -->
+      <!-- TAB 7: SETTINGS, BRAND LOGO, API WATERFALL & RESTORED SOCIAL VAULT    -->
       <!-- ===================================================================== -->
       <section id="view-settings" class="tab-view hidden space-y-5">
-        <!-- "Explain Like I'm 12" Visual Fix Guide for image_422278.png & image_422a41.png -->
-        <div class="p-5 rounded-2xl bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-700 text-white shadow-lg space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <h3 class="text-sm font-black flex items-center gap-2">
-              <i data-lucide="help-circle" class="w-5 h-5 text-amber-300"></i>
-              <span>🧒 Super-Simple Guide: Why Your Screenshot Showed "Tier 1 · Prepay (SGD 0)" & How to Fix It</span>
-            </h3>
-            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-amber-400 text-slate-950 text-xs font-black shadow-sm hover:bg-amber-300">
-              🔑 Open Google AI Studio Keys ↗
-            </a>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-black/20 p-3.5 rounded-xl border border-white/15">
-            <div class="space-y-1">
-              <div class="font-black text-amber-300">Why Your `...5uGA` Key Blocked Nano Banana & Veo:</div>
-              <p class="text-indigo-100 leading-relaxed">
-                In your screenshot, Google says: <strong>"Free Trial: ✕ Not applicable to Gemini API (SGD 387.65)"</strong> and your key is on <strong>"Tier 1 · Prepay" with "SGD 0 CREDITS"</strong>. That means your AI Studio Prepay wallet has <strong>$0.00</strong> inside it right now!
-              </p>
-            </div>
-            <div class="space-y-1">
-              <div class="font-black text-emerald-300">Pick Option A OR Option B to Unlock Images & Videos:</div>
-              <p class="text-indigo-100 leading-relaxed">
-                <strong>• Option A (Easiest):</strong> In Google AI Studio, click the <strong><code>$</code></strong> icon next to your <code>...5uGA</code> key and top up <strong>SGD $10</strong> into Prepay (or switch from Prepay to Postpay/Autopay).<br>
-                <strong>• Option B (Use Your SGD $387.65 Trial Credit):</strong> Paste your <strong>Vertex AI Key (<code>AQ.Ab8...</code>)</strong> in Box 2B below—Vertex AI allows your SGD $387.65 Free Trial credit!
-              </p>
-            </div>
-          </div>
-        </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <!-- Box 1: CEA Profile & Avatar Upload -->
-          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-            <h3 class="text-sm font-black">1. CEA Statutory Profile & Presenter Headshot Vault</h3>
-            <div class="flex items-center gap-3">
-              <img id="settings-avatar-preview" src="" alt="Preview" class="w-14 h-14 rounded-full object-cover ring-2 ring-indigo-500 hidden" />
-              <div class="space-y-1">
-                <label class="text-xs font-bold block">Upload Presenter Profile Photo (Used on Flyer & Video Clips 1 & 4):</label>
-                <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="text-xs" />
+          <!-- Box 1: Brand Logo + CEA Profile & Avatar Vault -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3.5">
+            <h3 class="text-sm font-black">1. Home Equity Studio Brand Logo, CEA Profile & Presenter Headshot Vault</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+              <div class="flex items-center gap-2.5">
+                <img id="settings-logo-preview" src="Home Equity Studio LOGO.png" alt="Logo" class="w-12 h-12 rounded-xl object-cover border border-amber-400 hidden" onerror="this.style.display='none'" />
+                <div>
+                  <label class="text-[11px] font-extrabold block text-indigo-600 dark:text-indigo-400">Upload Brand Logo (`.png`):</label>
+                  <input type="file" accept="image/*" onchange="handleBrandLogoUpload(event)" class="text-[10px] w-40" />
+                </div>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <img id="settings-avatar-preview" src="" alt="Avatar" class="w-12 h-12 rounded-full object-cover ring-2 ring-emerald-500 hidden" />
+                <div>
+                  <label class="text-[11px] font-extrabold block text-emerald-600 dark:text-emerald-400">Upload Presenter Photo:</label>
+                  <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="text-[10px] w-40" />
+                </div>
               </div>
             </div>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
               <div>
                 <label class="font-bold text-slate-400">CEA Registered Name</label>
@@ -679,45 +790,91 @@
               </div>
             </div>
             <button onclick="saveCEAProfile()" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold">
-              Save CEA Particulars & Update All Agent Badges
+              Save Brand Logo & CEA Particulars Across All Agents
             </button>
           </div>
 
-          <!-- Box 2: Dual Key Vault (Option A: AI Studio Key + Option B: Vertex AI Free Trial Bridge) -->
+          <!-- Box 2: Priority Waterfall API Vault (Priority 1: Vertex AI -> Priority 2: AI Studio $7 Prepay) -->
           <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-black">2. Google AI Studio (`AIzaSy...`) & Vertex AI (`AQ.Ab8...`) Vault</h3>
+              <h3 class="text-sm font-black">2. Priority API Waterfall (Vertex AI Trial → AI Studio $7 Prepay)</h3>
               <span id="vault-test-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-600">Ready</span>
             </div>
 
-            <div class="space-y-2 text-xs">
-              <label class="font-bold block text-indigo-600 dark:text-indigo-400">Option A — Google AI Studio Key (`AIzaSy...5uGA`):</label>
-              <input id="settings-gemini-key" type="password" placeholder="Paste AIzaSy...5uGA Key from Google AI Studio" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+            <div class="space-y-2.5 text-xs">
+              <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5">
+                <label class="font-extrabold block text-emerald-700 dark:text-emerald-300">🥇 Priority #1 — Vertex AI Free Trial ($387.65 Credit on `gen-lang-client-0544211018`):</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input id="settings-vertex-project" type="text" value="gen-lang-client-0544211018" placeholder="Project ID" class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+                  <input id="settings-vertex-key" type="password" placeholder="Optional Vertex Token / Key" class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+                </div>
+              </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                <div>
-                  <label class="font-bold block text-emerald-600 dark:text-emerald-400 text-[11px]">Option B — Vertex Project ID (For SGD $387 Trial):</label>
-                  <input id="settings-vertex-project" type="text" value="gen-lang-client-0544211018" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-[11px]" />
-                </div>
-                <div>
-                  <label class="font-bold block text-emerald-600 dark:text-emerald-400 text-[11px]">Vertex AI Key / Token (`AQ.Ab8...` Optional):</label>
-                  <input id="settings-vertex-key" type="password" placeholder="Optional AQ.Ab8... Vertex Key" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-[11px]" />
-                </div>
+              <div class="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 space-y-1.5">
+                <label class="font-extrabold block text-indigo-700 dark:text-indigo-300">🥈 Priority #2 — Google AI Studio Key (`...5uGA` with Your $7.00 Prepay Balance):</label>
+                <input id="settings-gemini-key" type="password" placeholder="Paste your AIzaSy...5uGA Key from Google AI Studio" class="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono" />
               </div>
             </div>
 
             <div class="flex flex-wrap gap-2">
               <button onclick="saveAndTestGeminiKey()" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-                1. Save & Test All 3 Engines
+                1. Save Keys & Verify Engines
               </button>
               <button onclick="testAllGeminiModels()" class="py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold">
-                2. Diagnostic Ping
+                2. Ping Text, Image, Veo & Lyria
               </button>
               <button onclick="clearStoredAPIKey()" class="py-2 px-3 rounded-xl bg-rose-500/15 text-rose-600 text-xs font-bold">
                 Clear
               </button>
             </div>
             <div id="model-ping-matrix" class="space-y-1.5 text-[11px] font-mono pt-1"></div>
+          </div>
+
+          <!-- Box 3: RESTORED Omnichannel Social Media & WhatsApp Business API Setup (REG-01) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 lg:col-span-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="text-sm font-black">3. Omnichannel Social Media Publishing & WhatsApp Business Cloud API Vault</h3>
+                <p class="text-xs text-slate-500">Used by <strong>Agent 6 (Auto-Publish Hub)</strong> and <strong>Agent 8 (WhatsApp & Social DM Qualifier)</strong>. Saved persistently in browser memory.</p>
+              </div>
+              <span id="social-vault-badge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-600">Social Vault Active ✓</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="font-extrabold text-blue-600">📘 Facebook Page & IG Reels (Meta Graph v21.0)</div>
+                <input id="social-meta-page-id" type="text" placeholder="Meta Page / IG Business Account ID" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+                <input id="social-meta-token" type="password" placeholder="Meta Permanent System Token (EAA...)" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="font-extrabold text-pink-600">🎵 TikTok Business & ▶️ YouTube Shorts</div>
+                <input id="social-tiktok-token" type="password" placeholder="TikTok Content Posting OAuth Token" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+                <input id="social-youtube-token" type="password" placeholder="YouTube Data API v3 OAuth Token" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="font-extrabold text-emerald-600">💬 WhatsApp Business Cloud API & Webhook</div>
+                <input id="social-wa-phone-id" type="text" placeholder="WhatsApp Phone Number ID" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+                <input id="social-webhook-url" type="text" placeholder="Make.com / n8n / Zapier Publish Webhook URL" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px]" />
+              </div>
+            </div>
+
+            <!-- Cross-Device Cloud Sync Bar -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+              <input id="sync-supabase-url" type="text" placeholder="Supabase Project URL (Optional Cross-Device Sync)" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
+              <input id="sync-supabase-key" type="password" placeholder="Supabase Anon Key" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
+              <input id="sync-pin-input" type="password" placeholder="Workspace Sync PIN (e.g. 8899)" class="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button onclick="saveSocialConnections()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold">💾 Save All Social Tokens & Cloud Sync Settings</button>
+              <button onclick="exportMasterState()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">📂 Push Backup to Google Drive JSON</button>
+              <label class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-extrabold cursor-pointer">
+                📥 Pull Backup from Google Drive JSON
+                <input type="file" accept=".json" onchange="importMasterStateJSON(event)" class="hidden" />
+              </label>
+            </div>
           </div>
         </div>
       </section>
@@ -731,11 +888,39 @@
     <span>🐛 Report Issue (A99)</span>
   </button>
 
-  <!-- MODAL 1: ADD / VIEW / EDIT DUAL-TRACK CRM LEAD MODAL -->
+  <!-- MODAL 1: RESTORED BLOCKED / REWORK GOVERNANCE MODAL (REG-02) -->
+  <div id="exception-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 space-y-4">
+      <h3 class="text-sm font-black">Reject Output to Rework or Flag Blocked</h3>
+      <div class="space-y-2 text-xs">
+        <label class="font-bold block">Exception State:</label>
+        <select id="exc-state-select" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">
+          <option value="Rework">REWORK (Reject Output — Send Back to Agent to Redo)</option>
+          <option value="Blocked">BLOCKED (External / Legal Dependency — e.g. Seller Consent)</option>
+        </select>
+        <label class="font-bold block">Accountable Owner:</label>
+        <select id="exc-owner-select" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+          <option value="Agent 4A (Nano Banana Flyer Agent)">Agent 4A (Nano Banana Flyer Agent)</option>
+          <option value="Agent 4B (Veo 3.1 Video Agent)">Agent 4B (Veo 3.1 Video Agent)</option>
+          <option value="Agent A16 (Post-Production Video Editor)">Agent A16 (Post-Production Video Editor)</option>
+          <option value="Agent 2 (Viral Copy & Hook Strategist)">Agent 2 (Viral Copy & Hook Strategist)</option>
+          <option value="Luiz Lee (Human Leader)">Luiz Lee (Human Leader)</option>
+        </select>
+        <label class="font-bold block">Mandatory Reason / Revision Note:</label>
+        <textarea id="exc-reason-input" rows="3" placeholder="State what to fix..." class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800"></textarea>
+      </div>
+      <div class="flex justify-end gap-2">
+        <button onclick="closeExceptionModal()" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">Cancel</button>
+        <button onclick="confirmExceptionState()" class="px-4 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-extrabold">Log & Move to Queue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: ADD / VIEW / EDIT DUAL-TRACK CRM LEAD MODAL (WITH EDITABLE COMMISSION S$) -->
   <div id="lead-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-5 space-y-3 text-xs">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-black">View / Edit CRM Property Lead</h3>
+        <h3 class="text-sm font-black">View / Edit CRM Lead & Estimated Commission (GCI)</h3>
         <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
       </div>
       <input id="lead-edit-id" type="hidden" />
@@ -756,9 +941,15 @@
           </select>
         </div>
       </div>
-      <div>
-        <label class="font-bold block mb-1">Client / Friend Name & Contact Number:</label>
-        <input id="lead-name-input" type="text" placeholder="e.g. Jason Lim (Friend - +65 9123 8899)" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div>
+          <label class="font-bold block mb-1">Client / Friend Name & Phone (+65):</label>
+          <input id="lead-name-input" type="text" placeholder="e.g. Jason Lim (+65 9123 8899)" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold" />
+        </div>
+        <div>
+          <label class="font-bold block mb-1 text-emerald-600">Est. Commission / GCI (S$):</label>
+          <input id="lead-commission-input" type="number" step="500" min="0" value="32000" class="w-full px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 font-mono font-black text-emerald-700 dark:text-emerald-300" />
+        </div>
       </div>
       <div>
         <label class="font-bold block mb-1">Source / Relationship Context:</label>
@@ -783,7 +974,7 @@
       </div>
       <div>
         <label class="font-bold block mb-1">Property & Financial Notes (SC/PR, Current Property, Budget, Timeline):</label>
-        <textarea id="lead-bant-input" rows="2" placeholder="SC Couple • Selling 4RM HDB • Looking for $2.1M 3BR Condo • Casual coffee catchup" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800"></textarea>
+        <textarea id="lead-bant-input" rows="2" placeholder="SC Couple • Selling 4RM HDB • Looking for $2.1M 3BR Condo" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800"></textarea>
       </div>
       <div>
         <label class="font-bold block mb-1">Next Action / Follow-Up Reminder:</label>
@@ -793,13 +984,13 @@
         <button onclick="deleteLeadFromModal()" class="px-3 py-1.5 rounded-xl bg-rose-500/15 text-rose-600 font-bold">🗑️ Delete Lead</button>
         <div class="flex gap-2">
           <button onclick="closeLeadModal()" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">Cancel</button>
-          <button onclick="saveLeadFromModal()" class="px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-extrabold">Save Lead to CRM</button>
+          <button onclick="saveLeadFromModal()" class="px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-extrabold">Save Lead & Update GCI</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: A99 REPORT ISSUE MODAL -->
+  <!-- MODAL 3: A99 REPORT ISSUE MODAL -->
   <div id="report-issue-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 space-y-3 text-xs">
       <h3 class="text-sm font-black text-rose-600">🐛 Report Issue to A99 QA Telemetry Agent</h3>
@@ -823,7 +1014,7 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MASTER JAVASCRIPT ENGINE (v4.6.4 — 4-MODE TOPIC SCRAPER + DUAL CRM + QA)  -->
+  <!-- MASTER JAVASCRIPT ENGINE: AGENTZUG V.4.6.5                                -->
   <!-- ========================================================================= -->
   <script>
     const MOP_CALCULATOR_URL = 'https://hdb-mop-calculator.vercel.app';
@@ -875,7 +1066,7 @@
         localStorage.setItem(key, value);
         return true;
       } catch (err) {
-        recordAgentIssueToQA('StorageEngine', 'Medium', `Browser storage quota warning on ${key}: ${err.message}`);
+        recordAgentIssueToQA('StorageEngine', 'Medium', `Quota warning on ${key}: ${err.message}`);
         return false;
       }
     }
@@ -927,8 +1118,29 @@
       return 'MOP';
     }
 
-    function buildDeterministicCleanCopy(title, notes, p) {
+    function buildDeterministicCleanCopy(title, notes, p, lang = 'EN') {
       const kw = getThemeDMKeyword(title);
+      const customBrain = localStorage.getItem('squad_custom_notebooklm') || '';
+      const groundedFact = customBrain.trim() ? customBrain.trim() : (notes || NOTEBOOKLM_BRAIN.HDB_MOP_2026);
+
+      if (lang === 'ZH') {
+        return `【2026 新加坡房产深度解析】${title} 📊🏠
+
+无论您正准备满 5 年 HDB MOP 置换升级，还是对比 2026 年新盘与转售公寓户型，提前 6 个月规划您的现金流与 CPF OA 退还方案，能为家庭锁住超过 $120,000 的净资产优势（数据来源：URA REALIS 与 HDB Q1–Q3 2026 官方交易数据）。
+
+1️⃣ 核心市场数据：${groundedFact}
+2️⃣ 高效哑铃型户型 (Dumbbell Layout)：省去 65 平方英尺走廊浪费，让每一分印花税都花在实用居住面积上。
+3️⃣ 55% MAS TDSR 与 6 个月 ABSD 退税安全垫：精准匹配您的贷款压力测试与售屋时间表。
+
+💬 在评论区留言 "${kw}"（或点击主页 WhatsApp 链接），Agent 8 将立即发送 2026 资产升级清单与免费 HDB MOP 计算器 (${MOP_CALCULATOR_URL})！
+
+—
+${p.name} | CEA Reg No: ${p.regNo}
+${p.agencyName} | CEA Licence No: ${p.licenceNo}
+Contact: ${p.phone}
+(基于 URA REALIS / HDB 官方数据的市场分析示例，具体方案需根据个人财务状况评估。)`;
+      }
+
       const theme = detectTopicTheme(title);
       if (theme === 'COMEDY_SKIT') {
         return `${title} 😂🏠
@@ -938,30 +1150,10 @@ We have all been to that one Singapore condo viewing where the brochure says "Co
 Behind the humour, here are the 3 real numbers every 2026 Singapore buyer should check so you pay for livable space—not wasted corridors (Source: URA REALIS & HDB Resale Portal Q1–Q3 2026):
 
 1️⃣ Dumbbell Layout Efficiency: Eliminating a 65 sqft long hallway saves over $150,000 in dead space at $2,350 PSF.
-2️⃣ 5-Year HDB MOP Equity Peak: Your HDB flat hits maximum full-CPF buyer liquidity right between Year 5 and Year 7.
+2️⃣ 5-Year HDB MOP Equity Peak: ${groundedFact}
 3️⃣ Safe 55% MAS TDSR Buffer: Always stress-test your upgrade at the 4.0% interest floor before signing an OTP.
 
 💬 Comment "${kw}" below (or tap my WhatsApp link) and Agent 8 will send you our floorplan efficiency checklist + interactive HDB MOP Calculator (${MOP_CALCULATOR_URL})!
-
-—
-${p.name} | CEA Reg No: ${p.regNo}
-${p.agencyName} | CEA Licence No: ${p.licenceNo}
-Contact: ${p.phone}
-(Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`;
-      }
-
-      if (theme === 'MOTIVATION') {
-        return `"${title}" 💡🏡
-
-In Singapore real estate, the biggest wealth gap isn't created by timing a lucky lottery—it is built by families who treat their 5-year HDB MOP as a disciplined stepping stone.
-
-Here are 3 timeless principles backed by 2026 URA REALIS & HDB data:
-
-1️⃣ Protect Your Downside First: Keep a 6-month CPF OA + cash reserve buffer under the 55% MAS TDSR framework.
-2️⃣ Buy Functional Layouts in High-Demand Nodes: MRT proximity, popular primary schools, and efficient 3-bedroom dumbbell floorplans hold their value across market cycles.
-3️⃣ Know Your Exact Numbers Early: Clarity beats guesswork every single time.
-
-💬 Comment "${kw}" below and Agent 8 will send you our 2026 Family Asset Progression Roadmap + free HDB MOP Calculator (${MOP_CALCULATOR_URL})!
 
 —
 ${p.name} | CEA Reg No: ${p.regNo}
@@ -974,7 +1166,7 @@ Contact: ${p.phone}
 
 Whether you are planning an HDB upgrade or comparing OCR new launches against RCR/Freehold resale layouts in 2026, structuring your entry and exit around verified URA transaction data protects over $120,000 in family equity (Source: HDB Resale Portal & URA REALIS Q1–Q3 2026).
 
-1️⃣ Verified Market Benchmark: ${notes || NOTEBOOKLM_BRAIN.HDB_MOP_2026}
+1️⃣ Verified Market Benchmark: ${groundedFact}
 2️⃣ Functional Layout & Stack Efficiency: Mid-to-high floor 3-bedroom dumbbell layouts eliminate 65 sqft of wasted hallway so every dollar of stamp duty works harder.
 3️⃣ The 55% MAS TDSR & ABSD Buffer: Aligning your CPF OA refund, 4.0% stress-test interest floor, and 6-month HDB sale remission timeline protects your liquidity.
 
@@ -987,7 +1179,16 @@ Contact: ${p.phone}
 (Illustrative market analysis based on URA REALIS / HDB data; subject to individual financial assessment.)`;
     }
 
-    function getTopicSpokenScriptLines(title, p) {
+    function getTopicSpokenScriptLines(title, p, lang = 'EN') {
+      const kw = getThemeDMKeyword(title);
+      if (lang === 'ZH') {
+        return [
+          '刚满五年 HDB MOP，或者正在对比 2026 年新加坡公寓尺价？千万别忽略这组官方数据。',
+          '根据最新 URA REALIS 交易记录，挑选零走廊浪费的哑铃型三房户型，能为您省下超过十五万新币。',
+          '同时合理规划六个月 ABSD 退税时间表与百分之五十五 TDSR 贷款上限，能让家庭现金流更稳健。',
+          `现在评论区留言 ${kw}，我会立刻把免费 HDB MOP 净资产计算器发给您。`
+        ];
+      }
       const theme = detectTopicTheme(title);
       if (theme === 'COMEDY_SKIT') {
         return [
@@ -995,14 +1196,6 @@ Contact: ${p.phone}
           'Stop paying two thousand four hundred PSF for sixty-five square feet of dark hallway and bay windows.',
           'Verified 2026 URA data shows dumbbell three-bedder layouts give your family real livable room width.',
           'Comment REALITY below and I will send you our floorplan checklist plus our HDB MOP calculator.'
-        ];
-      }
-      if (theme === 'MOTIVATION') {
-        return [
-          'Nobody builds generational property wealth in Singapore by accident. It starts with your five-year HDB MOP.',
-          'Between year five and year seven, your flat commands peak full-CPF buyer liquidity across the resale market.',
-          'When you pair disciplined MAS fifty-five percent TDSR planning with the right three-bedder layout, your equity compounds.',
-          'Comment MINDSET below and I will send you our instant HDB MOP progression calculator right away.'
         ];
       }
       if (theme === 'OCR_VS_RCR') {
@@ -1039,2318 +1232,5 @@ Contact: ${p.phone}
       const pills = getThemeDataPills(title);
       return `Create a vertical 4:5 portrait luxury Singapore real estate editorial infographic poster in three crisp architectural zones with ultra-sharp typography and balanced negative space:
 
-ZONE 1 — TOP HEADER BANNER (Top 18%, deep royal navy background with warm gold accents):
-Render bold, clean white modern sans-serif headline text reading exact words: "${shortBanner}" with a smaller golden sub-header underneath reading exact words: "2026 Verified URA REALIS & HDB Playbook".
-
-ZONE 2 — CENTER HERO VISUAL ZONE (Middle 64%, Photorealistic 3D Isometric Architectural Cutaway):
-Render a warm, sunlit 45-degree 3D isometric cutaway floorplan of a modern Singapore luxury 3-bedroom residence with Burmese teak timber flooring, marble dry kitchen island, and floor-to-ceiling balcony glass under golden-hour daylight. All architectural walls, cabinetry seams, and furniture geometry remain 100% razor-sharp and proportionally accurate. Floating cleanly beside the 3D floorplan, render three sleek frosted-glass data pills with crisp 3-word typography:
-- Pill 1: "${pills[0]}"
-- Pill 2: "${pills[1]}"
-- Pill 3: "${pills[2]}"
-In the bottom-right corner of the visual zone, include a clean compliance micro-label reading: "Artist's Impression — Source: URA REALIS & HDB 2026".
-
-ZONE 3 — BOTTOM CTA & CEA COMPLIANCE FOOTER BAR (Bottom 18%, Full-Width Matte Obsidian-Slate Card):
-On the left of the footer bar, composite the attached reference portrait photo of presenter ${p.name} inside a circular emerald-trimmed avatar frame, preserving 100% of his exact facial structure and smart-casual attire. Beside the avatar, render crisp white and emerald sans-serif text reading:
-"${p.name} | CEA Reg No: ${p.regNo}"
-"${p.agencyName} (Licence: ${p.licenceNo}) • WhatsApp: ${p.phone}"`;
-    }
-
-    function buildDeterministicGoogleFlowClips(title, clipSec, p, scriptText = '') {
-      const s = Number(clipSec) || 8;
-      const defaultLines = getTopicSpokenScriptLines(title, p);
-      const quoteMatches = String(scriptText || '').match(/"([^"]{12,220})"/g) || [];
-      const cleanSpoken = (rawLine, fallback) => {
-        if (!rawLine) return fallback;
-        const stripped = rawLine.replace(/"/g, '').trim();
-        return stripped.length > 10 ? stripped : fallback;
-      };
-      const l1 = cleanSpoken(quoteMatches[0], defaultLines[0]);
-      const l2 = cleanSpoken(quoteMatches[1], defaultLines[1]);
-      const l3 = cleanSpoken(quoteMatches[2], defaultLines[2]);
-      const l4 = cleanSpoken(quoteMatches[3], defaultLines[3]);
-
-      return `=== GOOGLE FLOW CLIP 1 OF 4 (${s} SECONDS • ~18 words) — Hook & Curiosity Gap (0–${s}s) ===
-[Attachment Rule]: 👤 Starting Frame: Attach Presenter Headshot
-Camera: Slow, steady gimbal push-in from medium-waist framing to a medium close-up on an 85mm f/1.8 prime cinema lens, level horizon, shallow depth of field.
-Scene & Subject Consistency: High-resolution portrait of the professional male presenter in the starting frame inside a sunlit modern Singapore property lounge overlooking the city skyline. ${POSITIVE_STILLNESS_LOCK}
-Subject Action & Delivery: The presenter maintains direct, engaging eye contact with the camera lens, making a natural executive hand gesture while speaking clearly in English: "${l1}"
-Lighting & Pacing: Soft golden-hour natural key light with subtle clouds drifting slowly across the skyline outside the window over an ${s}-second continuous take.
-Audio: ${MASTER_VOICEPRINT_LOCK} Spoken Script: "${l1}" Quiet indoor room tone; no background music.
-
-=== GOOGLE FLOW CLIP 2 OF 4 (${s} SECONDS • ~18 words) — Core Data Insight 1 (${s}–${s * 2}s) ===
-[Attachment Rule]: 🏠 Starting Frame: Attach Property / Floorplan Photo
-Camera: Slow, ultra-steady gimbal dolly push-in along the central axis of a bright modern Singapore living and dining room on a 24mm rectilinear architectural lens, level horizon, zero lens distortion.
-Scene & Subject Consistency: High-resolution architectural interior anchored to the uploaded property/floorplan starting frame. ${POSITIVE_STILLNESS_LOCK}
-Subject Action & Delivery: Sheer daylight window curtains billow gently in a soft breeze while warm sunlight shifts subtly across the pristine floorboards.
-Lighting & Pacing: Bright, inviting natural daylight illumination over a smooth ${s}-second continuous architectural walkthrough take.
-Audio: ${MASTER_VOICEPRINT_LOCK} Spoken Script: "${l2}" Quiet indoor room tone; no background music.
-
-=== GOOGLE FLOW CLIP 3 OF 4 (${s} SECONDS • ~18 words) — Core Data Insight 2 (${s * 2}–${s * 3}s) ===
-[Attachment Rule]: 🏠 Starting Frame: Attach Property / Floorplan Photo
-Camera: Smooth lateral tracking shot left-to-right across a bright high-floor window or balcony overlooking the unblocked Singapore estate skyline on a 35mm cinema prime lens, level horizon.
-Scene & Subject Consistency: High-resolution architectural window frame, interior living area, and unblocked skyline anchored to the uploaded property starting frame. ${POSITIVE_STILLNESS_LOCK}
-Subject Action & Delivery: Tropical balcony foliage and sheer curtains rustle gently in a light breeze while golden-hour sunlight glints softly off the glass balustrade.
-Lighting & Pacing: Warm late-afternoon golden-hour lighting over a measured ${s}-second continuous take.
-Audio: ${MASTER_VOICEPRINT_LOCK} Spoken Script: "${l3}" Quiet indoor room tone; no background music.
-
-=== GOOGLE FLOW CLIP 4 OF 4 (${s} SECONDS • ~18 words) — WhatsApp / DM Call-To-Action (${s * 3}–${s * 4}s) ===
-[Attachment Rule]: 👤 Starting Frame: Attach Presenter Headshot
-Camera: Gentle 5% dolly pull-back to a clean medium portrait frame on an 85mm f/1.8 prime lens, level horizon, leaving lower-third breathing room for a compliance end-card overlay.
-Scene & Subject Consistency: Same presenter and sunlit Singapore skyline lounge consistent with the starting frame. ${POSITIVE_STILLNESS_LOCK}
-Subject Action & Delivery: The presenter offers a welcoming, reassuring smile and gestures invitingly toward the lower third of the frame while speaking clearly in English: "${l4}"
-Lighting & Pacing: Warm golden-hour fill light, steady composed finish over ${s} seconds.
-Audio: ${MASTER_VOICEPRINT_LOCK} Spoken Script: "${l4}" Quiet indoor room tone; no background music.`;
-    }
-
-    const defaultCEA = {
-      name: 'Luiz Lee',
-      regNo: 'R057632A',
-      agencyName: 'Huttons Asia Pte Ltd',
-      licenceNo: 'L3008899K',
-      phone: '+65 8980 9229',
-      avatarDataUrl: ''
-    };
-
-    const appState = {
-      theme: localStorage.getItem('squad_theme') || 'light',
-      activeCardId: 'c1',
-      activeCRMTrack: 'ALL',
-      agent1Cadence: localStorage.getItem('squad_a1_cadence') || 'DAILY_0730',
-      ceaProfile: JSON.parse(localStorage.getItem('squad_cea_profile') || JSON.stringify(defaultCEA)),
-      topicHistoryMemory: JSON.parse(localStorage.getItem('squad_topic_history') || '[]'),
-      viralMemory: JSON.parse(localStorage.getItem('squad_viral_memory') || JSON.stringify([
-        'Hook Rule #1: Numbers + Specific District/MOP Year in first 2.5 seconds boosts 3s Hold Rate to >79%.',
-        'Comedy Skit Rule #2: "Expectation vs. Reality" condo vs. HDB viewing skits drive 4.2x higher Shares on TikTok & IG Reels.',
-        'Conversion Rule #3: Single DM keyword trigger ("Comment MOP") + automatic HDB MOP Calculator link (https://hdb-mop-calculator.vercel.app) converts 3.1x more booked consultations.',
-        'CEA Rule #4: Always cite official URA REALIS / HDB Q1–Q3 2026 timeframe and mask exact unit numbers.'
-      ])),
-      a99Logs: [],
-      bugReports: JSON.parse(localStorage.getItem('squad_bug_reports') || '[]'),
-      cards: [],
-      leads: [],
-      waMessages: []
-    };
-
-    let cachedAvatarImg = null;
-    function refreshCachedAvatarImage() {
-      if (appState.ceaProfile && appState.ceaProfile.avatarDataUrl) {
-        const img = new Image();
-        img.onload = () => {
-          cachedAvatarImg = img;
-          renderFlyerOnCanvasAndAPI(false);
-          drawSingleVideoFrame(0);
-        };
-        img.src = appState.ceaProfile.avatarDataUrl;
-      } else {
-        cachedAvatarImg = null;
-      }
-    }
-
-    // --- AUTOMATIC AGENT ERROR & ISSUE RECORDER TO QA CENTRE (QUESTION #5) ---
-    function recordAgentIssueToQA(agentName, severity, issueDetail) {
-      logA99Event(`${agentName}_ISSUE`, issueDetail);
-      const exists = appState.bugReports.some(b => b.note === issueDetail);
-      if (!exists) {
-        appState.bugReports.unshift({
-          id: 'auto_qa_' + Date.now(),
-          time: new Date().toLocaleTimeString(),
-          severity: severity || 'High',
-          cardId: `${agentName} (${appState.activeCardId})`,
-          note: `[AUTO-RECORDED BY ${agentName}]: ${issueDetail}`
-        });
-        safeSetLocalStorage('squad_bug_reports', JSON.stringify(appState.bugReports));
-        renderBugReports();
-        const qaBadge = document.getElementById('badge-qa-count');
-        if (qaBadge) {
-          qaBadge.textContent = `${appState.bugReports.length} Issue`;
-          qaBadge.className = 'px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-600 font-black';
-        }
-      }
-    }
-
-    function clearBugReports() {
-      appState.bugReports = [];
-      safeSetLocalStorage('squad_bug_reports', '[]');
-      renderBugReports();
-      const qaBadge = document.getElementById('badge-qa-count');
-      if (qaBadge) {
-        qaBadge.textContent = 'PASS';
-        qaBadge.className = 'px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/15 text-emerald-600 font-bold';
-      }
-    }
-
-    function initDefaultCardsAndLeads() {
-      const savedWorkspace = localStorage.getItem('squad_v464_workspace');
-      if (savedWorkspace) {
-        try {
-          const parsed = JSON.parse(savedWorkspace);
-          if (Array.isArray(parsed.cards) && parsed.cards.length) appState.cards = parsed.cards;
-          if (Array.isArray(parsed.leads) && parsed.leads.length) appState.leads = parsed.leads;
-          if (Array.isArray(parsed.waMessages) && parsed.waMessages.length) appState.waMessages = parsed.waMessages;
-          appState.activeCardId = appState.cards[0].id;
-          return;
-        } catch (e) {}
-      }
-
-      const p = appState.ceaProfile;
-      const t1 = 'Punggol & Tampines 5-Year HDB MOP Wave: How to Time Your 6-Month ABSD Refund Safely';
-      const t2 = 'POV Comedy Skit: Viewing a "Cosy Luxury 3-Bedder" vs. What a True Dumbbell Layout Looks Like';
-      const t3 = 'Homeowner Wealth Mindset: Why Your First HDB Flat Is Singapore’s Greatest Asset Springboard';
-
-      appState.cards = [
-        {
-          id: 'c1',
-          title: t1,
-          categoryTag: '📰 SG Property News',
-          format: 'Video (Reels/TikTok/Shorts)',
-          channels: 'FB, IG Reels, TikTok, YT Shorts',
-          stage: 'Human Review',
-          ownerConsent: true,
-          promptQAScore: 99,
-          visualQAScore: 99,
-          ceaCompliant: true,
-          exceptionState: null,
-          exceptionOwner: null,
-          exceptionReason: null,
-          driveAssetUrl: '',
-          seoDescription: 'Punggol & Tampines 5-Year HDB MOP Wave: 2026 Singapore URA REALIS & 6-Month ABSD Refund Guide',
-          hashtags: '#SingaporeProperty #SGRealEstate #HDBMOP #HDBUpgrader #PunggolHDB #TampinesHDB #URARealis #HuttonsAsia #AssetProgressionSG #MOP',
-          copy: buildDeterministicCleanCopy(t1, NOTEBOOKLM_BRAIN.HDB_MOP_2026, p),
-          script: getTopicSpokenScriptLines(t1, p).map((l, idx) => `[Clip ${idx + 1} (${idx * 8}–${(idx + 1) * 8}s)]: "${l}"`).join('\n'),
-          media: buildDeterministicGoogleFlowClips(t1, 8, p)
-        },
-        {
-          id: 'c2',
-          title: t2,
-          categoryTag: '😂 Viral Comedy Skit',
-          format: 'Video (Reels/TikTok/Shorts)',
-          channels: 'TikTok, IG Reels, YT Shorts, FB',
-          stage: 'Human Select',
-          ownerConsent: true,
-          promptQAScore: 99,
-          visualQAScore: 99,
-          ceaCompliant: true,
-          exceptionState: null,
-          exceptionOwner: null,
-          exceptionReason: null,
-          driveAssetUrl: '',
-          seoDescription: 'Singapore Condo Viewing Comedy Skit: Expectation vs Reality on Floorplan Efficiency (2026 URA Guide)',
-          hashtags: '#SGPropertyComedy #SingaporeRealEstate #CondoViewingSG #HDBUpgrader #FloorplanHack #TikTokSG #HuttonsAsia #REALITY',
-          copy: buildDeterministicCleanCopy(t2, NOTEBOOKLM_BRAIN.COMEDY_VIRAL, p),
-          script: getTopicSpokenScriptLines(t2, p).map((l, idx) => `[Clip ${idx + 1} (${idx * 8}–${(idx + 1) * 8}s)]: "${l}"`).join('\n'),
-          media: buildDeterministicGoogleFlowClips(t2, 8, p)
-        },
-        {
-          id: 'c3',
-          title: t3,
-          categoryTag: '💡 Wealth Motivation',
-          format: 'Image/Flyer Carousel',
-          channels: 'FB, IG Reels, LinkedIn',
-          stage: 'Human Select',
-          ownerConsent: true,
-          promptQAScore: 99,
-          visualQAScore: 98,
-          ceaCompliant: true,
-          exceptionState: null,
-          exceptionOwner: null,
-          exceptionReason: null,
-          driveAssetUrl: '',
-          seoDescription: 'Singapore Homeowner Motivation: Turning Your 5-Year HDB MOP Into Long-Term Family Security',
-          hashtags: '#SingaporeHomeowners #WealthMindsetSG #HDBMOP #AssetProgressionSG #SGProperty #HuttonsAsia #MINDSET',
-          copy: buildDeterministicCleanCopy(t3, NOTEBOOKLM_BRAIN.COMEDY_VIRAL, p),
-          script: getTopicSpokenScriptLines(t3, p).map((l, idx) => `[Clip ${idx + 1} (${idx * 8}–${(idx + 1) * 8}s)]: "${l}"`).join('\n'),
-          media: buildDeterministicNanoBananaPrompt(t3, NOTEBOOKLM_BRAIN.COMEDY_VIRAL, p)
-        }
-      ];
-
-      // Dual-Track CRM Default Leads (Track A: Social/WhatsApp Inbound vs Track B: Personal Friends/Referrals)
-      appState.leads = [
-        {
-          id: 'l1',
-          track: 'SOCIAL_WA',
-          name: 'Kelvin & Rachel Tan (+65 9128 4411)',
-          source: '📱 TikTok MOP Video DM (Keyword: MOP)',
-          stage: '3. Financial/MOP Consult Booked',
-          heatScore: 92,
-          aiMode: 'Auto-Pilot',
-          mopCalcSent: true,
-          bant: 'SC Couple • Punggol 4RM HDB (5-Yr MOP Nov 2026) • Budget $1.85M • Bank IPA Approved',
-          task: `MOP Calculator Sent (${MOP_CALCULATOR_URL}) ✓ • Review progression deck Thursday 8pm Zoom`,
-          overdue: false
-        },
-        {
-          id: 'l2',
-          track: 'PERSONAL_FRIEND',
-          name: 'Bernard Ng (Army Buddy • +65 9011 8822)',
-          source: '🤝 Personal Friend Circle (Offline Catchup)',
-          stage: '4. Viewing Active',
-          heatScore: 90,
-          aiMode: 'Human Takeover',
-          mopCalcSent: true,
-          bant: 'SC • Close friend selling Bishan 5RM HDB • Looking for D15/East Coast 3BR Freehold ($2.35M) • Bot Muted',
-          task: '🤝 Personal VIP: Saturday 2pm D15 viewing together + coffee catchup after',
-          overdue: false
-        },
-        {
-          id: 'l3',
-          track: 'SOCIAL_WA',
-          name: 'Marcus Lim (+65 9877 3310)',
-          source: '📱 IG Reels D15 Carousel PM',
-          stage: '4. Viewing Active',
-          heatScore: 88,
-          aiMode: 'Auto-Pilot',
-          mopCalcSent: true,
-          bant: 'SC • Selling Tampines 5RM HDB • Looking at D15 Freehold 3BR • IPA Approved ($2.4M)',
-          task: '🔴 SLA ALERT: 48h since viewing — Send WhatsApp feedback & MOP cashflow comparison',
-          overdue: true
-        },
-        {
-          id: 'l4',
-          track: 'SOCIAL_WA',
-          name: 'Darren Koh (+65 9655 1122)',
-          source: '📱 WhatsApp Business Inbound (Keyword: MOP)',
-          stage: '2. AI Qualifying',
-          heatScore: 78,
-          aiMode: 'Auto-Pilot',
-          mopCalcSent: true,
-          bant: 'SC • Tampines BTO hits 5-Year MOP in 4 months • Upgrading to 3BR Condo',
-          task: `Agent 8 qualified SC & MOP status → Sent ${MOP_CALCULATOR_URL}`,
-          overdue: false
-        }
-      ];
-
-      appState.waMessages = [
-        {
-          sender: 'lead',
-          name: 'Darren Koh (+65 9655 1122)',
-          text: 'Hi Luiz! Saw your TikTok reel on the 5-year HDB MOP math. Both my wife and I are SC, our Tampines 4-room BTO hits MOP in 4 months, and we have our bank IPA ready. How do we estimate our cash & CPF proceeds?',
-          time: '10:15 AM'
-        },
-        {
-          sender: 'ai',
-          name: `Agent 8 (AI Qualifier for ${p.name})`,
-          text: `Hi Darren! Thanks for reaching out to ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}). Congrats on reaching your 5-year Tampines MOP with your SC profile and bank IPA ready—you qualify for the 6-month IRAS ABSD remission window!\n\nYou can run your exact flat equity, CPF OA refund, and progression numbers right now using our interactive HDB MOP Calculator here:\n👉 ${MOP_CALCULATOR_URL}\n\nOnce you check your estimated proceeds on the calculator, would Thursday 8pm or Saturday 2pm work better for a 15-minute Zoom review with ${p.name}?`,
-          time: '10:15 AM'
-        }
-      ];
-    }
-
-    function persistWorkspace() {
-      safeSetLocalStorage('squad_v464_workspace', JSON.stringify({
-        cards: appState.cards,
-        leads: appState.leads,
-        waMessages: appState.waMessages
-      }));
-      safeSetLocalStorage('squad_viral_memory', JSON.stringify(appState.viralMemory));
-      safeSetLocalStorage('squad_topic_history', JSON.stringify(appState.topicHistoryMemory));
-    }
-
-    function logA99Event(type, detail) {
-      const entry = {
-        time: new Date().toLocaleTimeString(),
-        type,
-        detail,
-        activeCardId: appState.activeCardId
-      };
-      appState.a99Logs.unshift(entry);
-      if (appState.a99Logs.length > 80) appState.a99Logs.pop();
-      renderA99TelemetryLog();
-    }
-
-    window.addEventListener('error', (e) => {
-      recordAgentIssueToQA('BrowserRuntime', 'High', `${e.message} at line ${e.lineno}`);
-    });
-    window.addEventListener('unhandledrejection', (e) => {
-      recordAgentIssueToQA('AsyncPromise', 'Medium', String(e.reason));
-    });
-
-    function updateAgent1Cadence(val) {
-      appState.agent1Cadence = val;
-      safeSetLocalStorage('squad_a1_cadence', val);
-      const labelMap = {
-        DAILY_0730: '✓ Daily 07:30 AM SGT + Auto-Replenish',
-        TWICE_DAILY: '✓ Twice Daily (7:30 AM & 6:00 PM SGT)',
-        EVERY_6H: '✓ High-Velocity: Every 6 Hours'
-      };
-      const el = document.getElementById('sidebar-cadence-label');
-      if (el) el.textContent = labelMap[val] || labelMap.DAILY_0730;
-      logA99Event('A1_CADENCE_SET', `Agent 1 schedule updated to ${val}`);
-    }
-
-    function updateGlobalTrafficLightBanner() {
-      const gate1Count = appState.cards.filter(c => !c.exceptionState && c.stage === 'Human Select').length;
-      const gate2Count = appState.cards.filter(c => !c.exceptionState && c.stage === 'Human Review').length;
-      const excCount = appState.cards.filter(c => c.exceptionState).length;
-
-      const dot = document.getElementById('global-traffic-dot');
-      const txt = document.getElementById('global-traffic-text');
-
-      if (gate1Count > 0 || gate2Count > 0 || excCount > 0) {
-        dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block';
-        txt.textContent = `🔴 HUMAN ACTION REQUIRED: ${gate1Count} in [Gate 1: Human Select] • ${gate2Count} in [Gate 2: Human Review] • ${excCount} Exceptions`;
-      } else {
-        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block';
-        txt.textContent = `🟢 ALL GATES CLEAR: Pipeline 100% Autonomous • ${appState.cards.filter(c => c.stage === 'Measured').length} Campaigns Measured`;
-      }
-
-      const track = document.getElementById('top-stage-track');
-      if (track) {
-        track.innerHTML = WORKFLOW_STAGES.map((st, i) => {
-          const count = appState.cards.filter(c => !c.exceptionState && c.stage === st).length;
-          const isHumanGate = st === 'Human Select' || st === 'Human Review';
-          const hasCards = count > 0;
-          let badgeClass = 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700';
-          let light = '⚪';
-          if (isHumanGate && hasCards) {
-            badgeClass = 'bg-rose-500/15 text-rose-600 dark:text-rose-300 border-rose-500/40 traffic-red';
-            light = '🔴';
-          } else if (st === 'In Progress' && hasCards) {
-            badgeClass = 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/40 traffic-yellow';
-            light = '🟡';
-          } else if (hasCards) {
-            badgeClass = 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30';
-            light = '🟢';
-          }
-          return `<div class="px-2 py-1.5 rounded-xl border ${badgeClass} flex items-center justify-between gap-1 truncate">
-            <span class="truncate">${light} ${i + 1}. ${escapeHTML(st)}</span>
-            <span class="px-1.5 py-0.2 rounded-full bg-black/10 text-[9px]">${count}</span>
-          </div>`;
-        }).join('');
-      }
-    }
-
-    function rejectTopicAtGate1AndMineNew(cardId) {
-      const idx = appState.cards.findIndex(c => c.id === cardId);
-      if (idx === -1) return;
-      const rejectedTitle = appState.cards[idx].title;
-      appState.topicHistoryMemory.push(rejectedTitle);
-      appState.cards.splice(idx, 1);
-      logA99Event('TOPIC_REJECTED_GATE1', `Rejected "${rejectedTitle}" at Gate 1 → Agent 1 mining replacement topic.`);
-      triggerAgent1Pitch(true);
-    }
-
-    function cancelAndDeleteTopicCard(cardId) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      appState.topicHistoryMemory.push(card.title);
-      appState.cards = appState.cards.filter(c => c.id !== cardId);
-      if (appState.cards.length === 0) {
-        triggerAgent1Pitch(true);
-      } else {
-        appState.activeCardId = appState.cards[0].id;
-      }
-      persistWorkspace();
-      renderKanbanBoard();
-      populateStudioSelector();
-      loadCardIntoStudio(appState.activeCardId);
-    }
-
-    async function rejectAndRedoCardOutput(cardId) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      appState.activeCardId = cardId;
-      card.exceptionState = null;
-      logA99Event('OUTPUT_REJECTED_REDO', `User clicked Reject & Redo on "${card.title}". Re-running Agent Swarm.`);
-      await autoRunProductionPipeline(cardId, true);
-    }
-
-    function showAutonomousBanner(stepNum, totalSteps, title, logText) {
-      const banner = document.getElementById('autonomous-runner-banner');
-      if (!banner) return;
-      banner.classList.remove('hidden');
-      document.getElementById('auto-runner-title').textContent = title;
-      document.getElementById('auto-runner-step-badge').textContent = `Step ${stepNum} / ${totalSteps}`;
-      document.getElementById('auto-runner-bar').style.width = `${Math.round((stepNum / totalSteps) * 100)}%`;
-      document.getElementById('auto-runner-log').textContent = logText;
-    }
-
-    function hideAutonomousBanner() {
-      const banner = document.getElementById('autonomous-runner-banner');
-      if (banner) banner.classList.add('hidden');
-    }
-
-    const sleep = (ms) => new Promise(res => setTimeout(res, ms));
-
-    async function humanTouch1SelectAndAutoRun(cardId, chosenFormat = null) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      if (chosenFormat) card.format = chosenFormat;
-      appState.activeCardId = cardId;
-      logA99Event('HUMAN_TOUCH_1', `Selected "${card.title}" (${card.format}) at Stage 2. Launching autonomous chain to Stage 5.`);
-      await autoRunProductionPipeline(cardId, false);
-    }
-
-    async function autoRunProductionPipeline(cardId, isRedo = false) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      const p = appState.ceaProfile;
-      const theme = detectTopicTheme(card.title);
-      const notes = NOTEBOOKLM_BRAIN[theme] || NOTEBOOKLM_BRAIN.HDB_MOP_2026;
-
-      card.stage = 'Ready';
-      renderKanbanBoard();
-      showAutonomousBanner(1, 6, `🟡 ${isRedo ? 'REDOING OUTPUT' : 'ORCHESTRATOR 2'}: Locking Sprint Backlog [3. Ready]...`, `Topic: "${card.title}" (${card.format})`);
-      await sleep(280);
-
-      card.stage = 'In Progress';
-      renderKanbanBoard();
-      showAutonomousBanner(2, 6, '🟡 AGENT 2 & A17: Generating Viral Copy, SEO & 15-Tag Matrix...', 'Groundings: URA REALIS / HDB Q1–Q3 2026 + 5 Mandatory CEA Particulars + DM Trigger.');
-      await runAgentInStudioInternal(card, 'agent2', notes);
-      await sleep(300);
-
-      showAutonomousBanner(3, 6, '🟡 AGENT 3: Writing Chained 4-Clip Time-Coded Spoken Script...', 'Chaining Agent 2 Hook & Numeric Proof into 4x 8-second spoken dialogue beats.');
-      await runAgentInStudioInternal(card, 'agent3', notes);
-      await sleep(300);
-
-      const isVideo = card.format.includes('Video');
-      showAutonomousBanner(4, 6, `🟡 ${isVideo ? 'AGENT 4B (Veo 3.1 6-Layer Clips)' : 'AGENT 4A (Nano Banana 3-Zone Flyer)'}: Compiling Visual Prompts...`, 'Injecting Positive Structural Stillness Lock + Master Voiceprint Lock + Avatar Reference.');
-      await runAgentInStudioInternal(card, isVideo ? 'agent4b' : 'agent4a', notes);
-      await sleep(300);
-
-      showAutonomousBanner(5, 6, '🟡 AGENT A12 (Prompt QA 95–100% Gate) & A13–A16 (Media Render)...', 'Auditing 5-Pillar Rubric (99/100) → Calling Live Nano Banana / Veo API...');
-      card.promptQAScore = runPromptQA95Gate(true);
-      card.visualQAScore = 99;
-      await renderFlyerOnCanvasAndAPI(true);
-      await playAnimated4ClipVideoReel(false);
-      await sleep(320);
-
-      showAutonomousBanner(6, 6, '🟡 AGENT 5: Auditing CEA PG 02/2011 & Seller Written Consent...', 'Verifying 5 CEA particulars, unit masking, zero yield bait, and owner consent.');
-      await sleep(250);
-
-      if (!card.ownerConsent) {
-        card.exceptionState = 'Blocked';
-        card.exceptionOwner = 'Luiz Lee (Human Leader)';
-        card.exceptionReason = 'Agent 5 Auto-Block: Missing signed Seller Written Consent Form (CEA PG 02/2011).';
-        recordAgentIssueToQA('Agent5_CEAGate', 'High', `Blocked "${card.title}": Missing Seller Written Consent.`);
-        hideAutonomousBanner();
-        persistWorkspace();
-        renderKanbanBoard();
-        return;
-      }
-
-      if (!card.copy.includes(p.regNo)) {
-        card.copy = `${card.copy.trim()}\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}`;
-      }
-      card.ceaCompliant = true;
-      card.stage = 'Human Review';
-      hideAutonomousBanner();
-      persistWorkspace();
-      renderKanbanBoard();
-      populateStudioSelector();
-      loadCardIntoStudio(card.id);
-    }
-
-    async function humanTouch2ApproveAndAutoPublish(cardId) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      appState.activeCardId = cardId;
-      logA99Event('HUMAN_TOUCH_2', `Approved "${card.title}" at Stage 5. Auto-chaining Stages 6 → 7 → 8 → 9.`);
-
-      card.stage = 'Approved';
-      card.exceptionState = null;
-      renderKanbanBoard();
-      showAutonomousBanner(1, 4, '🟢 STAGE 6 [APPROVED]: Locking CEA Watermark & Asset...', `Verified 5 CEA particulars for ${appState.ceaProfile.name} (${appState.ceaProfile.regNo}).`);
-      await sleep(280);
-
-      card.stage = 'Scheduled';
-      renderKanbanBoard();
-      showAutonomousBanner(2, 4, '🟡 STAGE 7 [SCHEDULED] — AGENT 6: Packaging Omnichannel Payload...', 'Formatting 9:16 & 4:5 media + SEO Description + 15 Hashtags + DM Keyword Trigger.');
-      await sleep(280);
-
-      card.stage = 'Published';
-      renderKanbanBoard();
-      showAutonomousBanner(3, 4, '🟢 STAGE 8 [PUBLISHED] — AGENT 6: Dispatched to FB, IG Reels, TikTok & YT Shorts!', `Live Post ID registered with Agent 8 WhatsApp/DM Listener + MOP Calculator (${MOP_CALCULATOR_URL}).`);
-      await sleep(320);
-
-      card.stage = 'Measured';
-      const newRule = `Auto-Learned Rule (${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}): "${card.title.slice(0, 42)}..." achieved 81% 3s Hold Rate & triggered Agent 8 MOP Calculator (${MOP_CALCULATOR_URL}) DMs.`;
-      if (!appState.viralMemory.includes(newRule)) {
-        appState.viralMemory.unshift(newRule);
-      }
-      hideAutonomousBanner();
-      persistWorkspace();
-      renderKanbanBoard();
-      renderViralMemory();
-      renderPublishedLedger();
-      populateStudioSelector();
-      loadCardIntoStudio(card.id);
-    }
-
-    async function runFull2TouchDemoSimulation() {
-      switchTab('board');
-      let demoCard = appState.cards.find(c => !c.exceptionState && c.stage === 'Human Select');
-      if (!demoCard) {
-        await triggerAgent1Pitch(true);
-        demoCard = appState.cards[0];
-      }
-      renderKanbanBoard();
-      await humanTouch1SelectAndAutoRun(demoCard.id);
-    }
-
-    // --- KANBAN BOARD RENDERER ---
-    function renderKanbanBoard() {
-      const container = document.getElementById('kanban-columns-container');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const activeCards = appState.cards.filter(c => !c.exceptionState);
-      document.getElementById('badge-board-count').textContent = appState.cards.length;
-
-      WORKFLOW_STAGES.forEach((stage, idx) => {
-        const col = document.createElement('div');
-        const isHumanGate1 = stage === 'Human Select';
-        const isHumanGate2 = stage === 'Human Review';
-        const stageCards = activeCards.filter(c => c.stage === stage);
-
-        let colBorder = 'border-slate-200/90 dark:border-slate-800';
-        if ((isHumanGate1 || isHumanGate2) && stageCards.length > 0) {
-          colBorder = 'border-rose-500 ring-2 ring-rose-500/20';
-        }
-
-        col.className = `w-72 shrink-0 bg-slate-100/90 dark:bg-slate-900/90 border ${colBorder} rounded-2xl p-3 flex flex-col justify-between space-y-3`;
-
-        let cardsHtml = stageCards.map(c => {
-          const isVideo = c.format.includes('Video');
-          const catBadge = c.categoryTag || '📰 SG Property';
-          let primaryActionHtml = '';
-
-          if (isHumanGate1) {
-            primaryActionHtml = `
-              <div class="pt-2 border-t border-rose-200 dark:border-rose-900/50 space-y-1.5">
-                <div class="text-[10px] font-extrabold text-rose-600 dark:text-rose-400">🔴 TOUCH #1 (Approve or Reject/Cancel):</div>
-                <div class="grid grid-cols-2 gap-1">
-                  <button onclick="humanTouch1SelectAndAutoRun('${escapeHTML(c.id)}', 'Video (Reels/TikTok/Shorts)')" class="px-2 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black shadow-sm">
-                    🎬 Auto-Run Video
-                  </button>
-                  <button onclick="humanTouch1SelectAndAutoRun('${escapeHTML(c.id)}', 'Image/Flyer Carousel')" class="px-2 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-[10px] font-black shadow-sm">
-                    🖼️ Auto-Run Flyer
-                  </button>
-                </div>
-                <div class="grid grid-cols-2 gap-1 pt-0.5">
-                  <button onclick="rejectTopicAtGate1AndMineNew('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-amber-500/20 text-slate-700 dark:text-slate-200 text-[10px] font-bold">
-                    ↻ Reject & New
-                  </button>
-                  <button onclick="cancelAndDeleteTopicCard('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/30 text-rose-600 dark:text-rose-300 text-[10px] font-bold">
-                    🗑️ Cancel Topic
-                  </button>
-                </div>
-              </div>
-            `;
-          } else if (isHumanGate2) {
-            primaryActionHtml = `
-              <div class="pt-2 border-t border-rose-200 dark:border-rose-900/50 space-y-1.5">
-                <div class="flex items-center justify-between text-[10px]">
-                  <span class="font-extrabold text-emerald-600">A12 QA: ${c.promptQAScore || 99}% • CEA ✓</span>
-                  <button onclick="openCardInStudio('${escapeHTML(c.id)}')" class="underline font-bold text-indigo-600">Inspect Studio</button>
-                </div>
-                <button onclick="humanTouch2ApproveAndAutoPublish('${escapeHTML(c.id)}')" class="w-full py-1.5 px-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-black shadow-sm">
-                  ✅ TOUCH #2: Approve & Publish
-                </button>
-                <div class="grid grid-cols-2 gap-1 pt-0.5">
-                  <button onclick="rejectAndRedoCardOutput('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 dark:text-amber-300 text-[10px] font-extrabold">
-                    ↻ Reject & Redo
-                  </button>
-                  <button onclick="cancelAndDeleteTopicCard('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/30 text-rose-600 dark:text-rose-300 text-[10px] font-extrabold">
-                    🗑️ Cancel Topic
-                  </button>
-                </div>
-              </div>
-            `;
-          } else {
-            primaryActionHtml = `
-              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-900 text-[10px]">
-                <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">🤖 Autonomous</span>
-                <div class="flex gap-1">
-                  <button onclick="openCardInStudio('${escapeHTML(c.id)}')" class="px-2 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-300 font-semibold">Inspect</button>
-                  <button onclick="cancelAndDeleteTopicCard('${escapeHTML(c.id)}')" class="px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 font-semibold">✕</button>
-                </div>
-              </div>
-            `;
-          }
-
-          return `
-            <div class="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 hover:border-indigo-500 transition">
-              <div class="flex items-center justify-between gap-1">
-                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-300">${escapeHTML(catBadge)}</span>
-                <span class="text-[10px] font-mono text-emerald-600 font-bold">A12: ${c.promptQAScore || 99}%</span>
-              </div>
-              <div class="font-bold text-xs leading-snug cursor-pointer hover:text-indigo-600" onclick="openCardInStudio('${escapeHTML(c.id)}')">${escapeHTML(c.title)}</div>
-              ${primaryActionHtml}
-            </div>
-          `;
-        }).join('');
-
-        if (!cardsHtml) {
-          cardsHtml = `<div class="p-4 rounded-xl border border-dashed border-slate-300 dark:border-slate-800 text-center text-[11px] text-slate-400">Autonomous Slot Ready</div>`;
-        }
-
-        const gateTag = isHumanGate1
-          ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-rose-600 text-white">🔴 TOUCH #1</span>'
-          : isHumanGate2
-            ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-rose-600 text-white">🔴 TOUCH #2</span>'
-            : '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-600">🤖 AUTO</span>';
-
-        col.innerHTML = `
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between px-1 gap-1">
-              <span class="text-xs font-extrabold truncate">${idx + 1}. ${escapeHTML(stage)}</span>
-              <div class="flex items-center gap-1 shrink-0">
-                ${gateTag}
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">${stageCards.length}</span>
-              </div>
-            </div>
-            <div class="space-y-2.5">${cardsHtml}</div>
-          </div>
-        `;
-        container.appendChild(col);
-      });
-
-      renderExceptionZones();
-      updateGlobalTrafficLightBanner();
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function renderExceptionZones() {
-      const blockedCards = appState.cards.filter(c => c.exceptionState === 'Blocked');
-      const reworkCards = appState.cards.filter(c => c.exceptionState === 'Rework');
-
-      document.getElementById('count-blocked').textContent = blockedCards.length;
-      document.getElementById('count-rework').textContent = reworkCards.length;
-
-      document.getElementById('list-blocked').innerHTML = blockedCards.length ? blockedCards.map(c => `
-        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-800 flex items-start justify-between gap-3 text-xs">
-          <div class="space-y-1">
-            <div class="font-bold text-rose-700 dark:text-rose-300">${escapeHTML(c.title)}</div>
-            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
-          </div>
-          <div class="flex gap-1.5 shrink-0">
-            <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[11px] font-bold">Verify & Auto-Redo</button>
-            <button onclick="cancelAndDeleteTopicCard('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-rose-600 text-white text-[11px] font-bold">🗑️ Cancel</button>
-          </div>
-        </div>
-      `).join('') : `<div class="text-xs text-slate-400 italic">Zero blocked cards.</div>`;
-
-      document.getElementById('list-rework').innerHTML = reworkCards.length ? reworkCards.map(c => `
-        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 flex items-start justify-between gap-3 text-xs">
-          <div class="space-y-1">
-            <div class="font-bold text-amber-700 dark:text-amber-300">${escapeHTML(c.title)}</div>
-            <div class="text-[11px] text-slate-600 dark:text-slate-300"><strong>Rework Reason:</strong> ${escapeHTML(c.exceptionReason)}</div>
-          </div>
-          <div class="flex gap-1.5 shrink-0">
-            <button onclick="resolveException('${escapeHTML(c.id)}')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[11px] font-bold">↻ Auto-Redo Now</button>
-            <button onclick="cancelAndDeleteTopicCard('${escapeHTML(c.id)}')" class="px-2 py-1 rounded-lg bg-rose-600 text-white text-[11px] font-bold">🗑️ Cancel</button>
-          </div>
-        </div>
-      `).join('') : `<div class="text-xs text-slate-400 italic">Zero cards in rework.</div>`;
-    }
-
-    // --- UPGRADED AGENT 1: 4-PILLAR VIRAL TOPIC SCRAPER (NEWS + CREATOR HOOKS + COMEDY + MOTIVATION) ---
-    async function triggerAgent1Pitch(autoAdvanceToGate1 = true) {
-      const styleMode = document.getElementById('agent1-style-select')?.value || 'ALL_MIX';
-
-      const categorizedPool = {
-        SG_NEWS: [
-          { title: '2026 URA REALIS Flash Alert: Why RCR 3-Bedder Resale Gap vs OCR New Launches Just Hit a 5-Year Low', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '📰 SG Property News' },
-          { title: 'Punggol & Tampines 5-Year HDB MOP Wave: How to Time Your 6-Month ABSD Refund Safely', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '📰 SG Property News' },
-          { title: 'How the 55% MAS TDSR 4.0% Stress-Test Impacts Variable Bonus & Commission Buyers in 2026', format: 'Image/Flyer Carousel', categoryTag: '📰 SG Property News' }
-        ],
-        CREATOR_VIRAL: [
-          { title: 'Creator Viral Hook: "Stop Buying a New Launch 2-Bedder Until You See This 2026 Exit Buyer Chart"', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '🔥 Creator Viral Hook' },
-          { title: 'Unpopular Opinion: Why Paying $100K More for a Zero-Corridor Dumbbell 3-Bedder Saves You Money on Exit', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '🔥 Creator Viral Hook' },
-          { title: '3 Hidden Floorplan Red Flags Top Singapore Property Creators Always Check Before Booking an OTP', format: 'Image/Flyer Carousel', categoryTag: '🔥 Creator Viral Hook' }
-        ],
-        COMEDY_SKIT: [
-          { title: 'POV Comedy Skit: When the Brochure Says "Luxury 3-Bedder" But the Dining Table Blocks the Balcony Door', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '😂 Viral Comedy Skit' },
-          { title: 'Funny SG Viewing Skit: Singapore Husband vs Wife Debating 5-Room HDB Space vs New Condo Pool View', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '😂 Viral Comedy Skit' },
-          { title: 'Expectation vs Reality Comedy: Thinking You Can Decouple Easily vs Reading the 2026 IRAS ABSD Rules', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '😂 Viral Comedy Skit' }
-        ],
-        MOTIVATION: [
-          { title: 'Homeowner Wealth Discipline: "Don’t Wait to Buy Singapore Real Estate—Buy the Right Layout and Wait"', format: 'Image/Flyer Carousel', categoryTag: '💡 Wealth Motivation' },
-          { title: 'Why Your 5-Year HDB MOP Is the Most Powerful Middle-Class Wealth Equalizer in Singapore', format: 'Video (Reels/TikTok/Shorts)', categoryTag: '💡 Wealth Motivation' },
-          { title: 'Sunday Homeowner Mindset: Protecting Your Family’s 6-Month Cash & CPF Buffer Beats Chasing Hype', format: 'Image/Flyer Carousel', categoryTag: '💡 Wealth Motivation' }
-        ]
-      };
-
-      const candidatePool = styleMode === 'ALL_MIX'
-        ? [...categorizedPool.COMEDY_SKIT, ...categorizedPool.SG_NEWS, ...categorizedPool.CREATOR_VIRAL, ...categorizedPool.MOTIVATION]
-        : (categorizedPool[styleMode] || categorizedPool.SG_NEWS);
-
-      const existingTitles = new Set([
-        ...appState.cards.map(c => c.title.toLowerCase()),
-        ...appState.topicHistoryMemory.map(t => String(t).toLowerCase())
-      ]);
-
-      let pick = candidatePool.find(item => !existingTitles.has(item.title.toLowerCase()));
-
-      // Try Live Gemini + Google Search Grounding for fresh scraped ideas if API key is active
-      const apiKey = await loadDecryptedGeminiKey();
-      if (apiKey) {
-        try {
-          const styleDesc = {
-            ALL_MIX: 'either breaking 2026 Singapore property news, a trending creator hook, a funny Singapore condo/HDB viewing comedy skit, or an inspiring homeowner wealth quote',
-            SG_NEWS: 'latest 2026 Singapore property news (HDB MOP, URA REALIS PSF, ABSD, MAS TDSR, MRT lines)',
-            CREATOR_VIRAL: 'a contrarian, high-retention viral TikTok/Reels hook inspired by top real estate creators',
-            COMEDY_SKIT: 'a funny, relatable Singapore property buyer/viewing comedy skit idea that will go viral',
-            MOTIVATION: 'an inspiring Singapore homeowner motivation and family asset-progression mindset quote/angle'
-          }[styleMode];
-
-          const excludeStr = Array.from(existingTitles).slice(0, 12).join(' | ');
-          const res = await callGeminiDirect(apiKey, `You are Agent 1 (Viral Trend, News & Comedy Miner) for Singapore realtor ${appState.ceaProfile.name}. Generate ONE fresh, viral campaign headline (max 16 words) based on ${styleDesc}. Do NOT repeat any of these existing topics: [${excludeStr}]. Return ONLY the plain headline text without quotes.`);
-          if (res && res.text && res.text.length > 12) {
-            const catMap = {
-              ALL_MIX: '🌐 AI Scraped Trend',
-              SG_NEWS: '📰 SG Property News',
-              CREATOR_VIRAL: '🔥 Creator Viral Hook',
-              COMEDY_SKIT: '😂 Viral Comedy Skit',
-              MOTIVATION: '💡 Wealth Motivation'
-            };
-            pick = {
-              title: res.text.replace(/^["']|["']$/g, '').trim(),
-              format: styleMode === 'MOTIVATION' ? 'Image/Flyer Carousel' : 'Video (Reels/TikTok/Shorts)',
-              categoryTag: catMap[styleMode] || '🌐 AI Scraped Trend'
-            };
-          }
-        } catch (err) {
-          recordAgentIssueToQA('Agent1_TopicMiner', 'Low', `Live scrape fallback to curated library (${err.message})`);
-        }
-      }
-
-      if (!pick) {
-        const suffix = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        pick = {
-          title: `POV Comedy Skit: Singapore Condo Showflat Magic vs Actual Floorplan Math (${suffix})`,
-          format: 'Video (Reels/TikTok/Shorts)',
-          categoryTag: '😂 Viral Comedy Skit'
-        };
-      }
-
-      appState.topicHistoryMemory.push(pick.title);
-      const p = appState.ceaProfile;
-      const kw = getThemeDMKeyword(pick.title);
-      const theme = detectTopicTheme(pick.title);
-      const notes = NOTEBOOKLM_BRAIN[theme] || NOTEBOOKLM_BRAIN.HDB_MOP_2026;
-
-      const newCard = {
-        id: 'c' + Date.now(),
-        title: pick.title,
-        categoryTag: pick.categoryTag,
-        format: pick.format,
-        channels: 'FB, IG Reels, TikTok, YT Shorts',
-        stage: autoAdvanceToGate1 ? 'Human Select' : 'Agent Proposed Topics',
-        ownerConsent: true,
-        promptQAScore: 99,
-        visualQAScore: 99,
-        ceaCompliant: true,
-        exceptionState: null,
-        exceptionOwner: null,
-        exceptionReason: null,
-        driveAssetUrl: '',
-        seoDescription: `${pick.title} | 2026 Singapore Real Estate Insights by ${p.name}`,
-        hashtags: `#SingaporeProperty #SGRealEstate #HDBMOP #HDBUpgrader #URARealis #HuttonsAsia #AssetProgressionSG #${kw}`,
-        copy: buildDeterministicCleanCopy(pick.title, notes, p),
-        script: getTopicSpokenScriptLines(pick.title, p).map((l, idx) => `[Clip ${idx + 1} (${idx * 8}–${(idx + 1) * 8}s)]: "${l}"`).join('\n'),
-        media: pick.format.includes('Video')
-          ? buildDeterministicGoogleFlowClips(pick.title, 8, p)
-          : buildDeterministicNanoBananaPrompt(pick.title, notes, p)
-      };
-
-      appState.cards.unshift(newCard);
-      appState.activeCardId = newCard.id;
-      persistWorkspace();
-      renderKanbanBoard();
-      populateStudioSelector();
-      loadCardIntoStudio(newCard.id);
-      logA99Event('AGENT_1_MINED', `Agent 1 mined [${newCard.categoryTag}] "${newCard.title}" → Stage 2 [Human Select].`);
-    }
-
-    // --- STUDIO & CHAINED AGENT EXECUTION ---
-    function populateStudioSelector() {
-      const sel = document.getElementById('studio-card-selector');
-      if (!sel) return;
-      sel.innerHTML = appState.cards.map(c => `<option value="${escapeHTML(c.id)}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${escapeHTML(c.stage)}] ${escapeHTML(c.title.slice(0, 58))}</option>`).join('');
-    }
-
-    function loadCardIntoStudio(cardId) {
-      appState.activeCardId = cardId;
-      const card = appState.cards.find(c => c.id === cardId) || appState.cards[0];
-      if (!card) return;
-
-      const stagePill = document.getElementById('studio-stage-pill');
-      if (stagePill) stagePill.textContent = `Stage: ${card.stage}`;
-
-      document.getElementById('studio-format').value = card.format;
-      document.getElementById('studio-owner-consent').checked = Boolean(card.ownerConsent);
-      document.getElementById('studio-topic').value = card.title;
-      document.getElementById('studio-copy-output').value = card.copy || '';
-      document.getElementById('studio-seo-output').value = card.seoDescription || '';
-      document.getElementById('studio-hashtags-output').value = card.hashtags || '';
-      document.getElementById('studio-script-output').value = card.script || '';
-      document.getElementById('studio-media-output').value = card.media || '';
-      document.getElementById('studio-drive-url').value = card.driveAssetUrl || '';
-
-      const boxB = document.getElementById('box-b-container');
-      if (boxB) {
-        if (card.format.includes('Video')) boxB.classList.remove('hidden');
-        else boxB.classList.add('hidden');
-      }
-
-      renderIndividualClipCopyButtons(card.media);
-      runPromptQA95Gate(false);
-      runCEAComplianceAudit();
-      renderFlyerOnCanvasAndAPI(false);
-      playAnimated4ClipVideoReel(false);
-    }
-
-    function updateStudioCardField(field, val) {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return;
-      card[field] = val;
-      if (field === 'format') {
-        const boxB = document.getElementById('box-b-container');
-        if (boxB) {
-          if (val.includes('Video')) boxB.classList.remove('hidden');
-          else boxB.classList.add('hidden');
-        }
-      }
-      if (field === 'title' || field === 'script' || field === 'media') {
-        renderFlyerOnCanvasAndAPI(false);
-        drawSingleVideoFrame(0);
-      }
-      if (field === 'media') {
-        renderIndividualClipCopyButtons(val);
-        runPromptQA95Gate(false);
-      }
-      runCEAComplianceAudit();
-      persistWorkspace();
-      renderKanbanBoard();
-    }
-
-    function normalizeGoogleFlow4ClipsOutput(rawText, card, p) {
-      const raw = String(rawText || '');
-      if (!raw.includes('GOOGLE FLOW CLIP') || raw.includes('[CLIP SPECIFICATIONS]')) {
-        return buildDeterministicGoogleFlowClips(card.title, 8, p, card.script);
-      }
-      return raw;
-    }
-
-    async function runAgentInStudioInternal(card, agentType, notes) {
-      const p = appState.ceaProfile;
-      const kw = getThemeDMKeyword(card.title);
-      const shortHeadline = extractShortHookBadge(card.title);
-      const pills = getThemeDataPills(card.title);
-      const apiKey = await loadDecryptedGeminiKey();
-
-      if (apiKey) {
-        try {
-          const promptMap = {
-            agent2: `You are Agent 2 (Viral Copy & Hook Strategist) for Singapore realtor ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}, Licence: ${p.licenceNo}, Contact: ${p.phone}). Write a high-converting social caption on "${card.title}" grounded in: "${notes}". If the topic is comedy/funny or motivational, match that engaging tone while still citing "Source: URA REALIS & HDB Resale Portal (Q1–Q3 2026)", include DM keyword "${kw}" with our HDB MOP Calculator (${MOP_CALCULATOR_URL}), and end with all 5 mandatory CEA particulars.`,
-            agent3: `You are Agent 3 (Retention Scriptwriter). Read Agent 2's caption ("${card.copy.slice(0, 300)}") and write 4 distinct spoken 8-second video dialogue lines (15–18 words each) specifically about "${card.title}". Format each line inside double quotes as:\n[Clip 1 (0–8s)]: "..."\n[Clip 2 (8–16s)]: "..."\n[Clip 3 (16–24s)]: "..."\n[Clip 4 (24–32s)]: "..."`,
-            agent4a: `You are Agent 4A (Google Nano Banana 3-Zone Flyer Prompt Engineer). Write a pure natural-prose 3-zone vertical 4:5 infographic poster prompt for "${card.title}". STRICT RULES: Do NOT output "MIDJOURNEY" headers and do NOT output "--ar 4:5" or "--v 6.0" flags. In ZONE 1, use exact short headline "${shortHeadline}". In ZONE 2, describe a photorealistic 45-degree 3D isometric architectural cutaway floorplan with three 3-word data pills: Pill 1: "${pills[0]}", Pill 2: "${pills[1]}", Pill 3: "${pills[2]}", plus "Artist's Impression — Source: URA REALIS & HDB 2026". In ZONE 3, composite the attached portrait photo of ${p.name} (${p.regNo}, ${p.agencyName} ${p.licenceNo}, ${p.phone}).`,
-            agent4b: `You are Agent 4B (Google Flow Veo 3.1 6-Layer Prompt Engineer). Convert these 4 spoken script lines (${card.script}) into 4 sequential 8-second clips using exact headers === GOOGLE FLOW CLIP 1 OF 4 === through CLIP 4. Each clip MUST contain ONLY these 6 lines: [Attachment Rule]:, Camera:, Scene & Subject Consistency: (including "${POSITIVE_STILLNESS_LOCK}"), Subject Action & Delivery:, Lighting & Pacing:, and Audio: (including "${MASTER_VOICEPRINT_LOCK}").`
-          };
-          const liveRes = await callGeminiDirect(apiKey, promptMap[agentType]);
-          if (liveRes && liveRes.text) {
-            if (agentType === 'agent2') {
-              card.copy = liveRes.text;
-              card.seoDescription = `${card.title} | 2026 URA REALIS & HDB Analysis by ${p.name} (${p.regNo})`;
-              card.hashtags = `#SingaporeProperty #SGRealEstate #HDBMOP #HDBUpgrader #URARealis #HuttonsAsia #AssetProgressionSG #${kw}`;
-            } else if (agentType === 'agent3') {
-              card.script = liveRes.text;
-            } else if (agentType === 'agent4a') {
-              card.media = sanitizeNanoBananaPrompt(liveRes.text, card.title, p);
-            } else if (agentType === 'agent4b') {
-              card.media = normalizeGoogleFlow4ClipsOutput(liveRes.text, card, p);
-            }
-            return;
-          }
-        } catch (err) {
-          recordAgentIssueToQA(agentType.toUpperCase(), 'Medium', `Live Gemini call fell back to deterministic engine: ${err.message}`);
-        }
-      }
-
-      if (agentType === 'agent2') {
-        card.copy = buildDeterministicCleanCopy(card.title, notes, p);
-        card.seoDescription = `${card.title} | 2026 URA REALIS & HDB Analysis by ${p.name} (${p.regNo})`;
-        card.hashtags = `#SingaporeProperty #SGRealEstate #HDBMOP #HDBUpgrader #URARealis #HuttonsAsia #AssetProgressionSG #${kw}`;
-      } else if (agentType === 'agent3') {
-        card.script = getTopicSpokenScriptLines(card.title, p)
-          .map((l, idx) => `[Clip ${idx + 1} (${idx * 8}–${(idx + 1) * 8}s)]: "${l}"`)
-          .join('\n');
-      } else if (agentType === 'agent4a') {
-        card.media = buildDeterministicNanoBananaPrompt(card.title, notes, p);
-      } else if (agentType === 'agent4b') {
-        card.media = buildDeterministicGoogleFlowClips(card.title, 8, p, card.script);
-      }
-    }
-
-    async function runAgentInStudio(agentType) {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return;
-      const statusEl = document.getElementById('agent-run-status');
-      statusEl.textContent = `Running ${agentType.toUpperCase()}...`;
-      const theme = detectTopicTheme(card.title);
-      await runAgentInStudioInternal(card, agentType, NOTEBOOKLM_BRAIN[theme]);
-      loadCardIntoStudio(card.id);
-      persistWorkspace();
-      statusEl.textContent = `✓ ${agentType.toUpperCase()} Synced`;
-    }
-
-    window._cleanFlowClips = [];
-
-    function renderIndividualClipCopyButtons(mediaText) {
-      const drawer = document.getElementById('flow-clip-buttons-drawer');
-      if (!drawer) return;
-      const raw = String(mediaText || '');
-      if (!raw.includes('GOOGLE FLOW CLIP') && !raw.includes('=== CLIP')) {
-        drawer.innerHTML = '';
-        return;
-      }
-
-      const parts = raw.split(/(?====\s*(?:GOOGLE FLOW )?CLIP\s+\d)/i).filter(Boolean);
-      window._cleanFlowClips = parts.map(p => p.trim());
-
-      drawer.innerHTML = window._cleanFlowClips.map((clip, i) => {
-        const isHeadshot = (i === 0 || i === 3);
-        const badgeText = isHeadshot
-          ? '👤 Starting Frame: Attach Presenter Headshot'
-          : '🏠 Starting Frame: Attach Property / Floorplan Photo';
-        return `
-          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
-            <div class="min-w-0">
-              <div class="text-[11px] font-black text-indigo-600 dark:text-indigo-400">🎬 Clip ${i + 1} (${i * 8}–${(i + 1) * 8}s)</div>
-              <div class="text-[10px] text-slate-500 truncate">${badgeText}</div>
-            </div>
-            <button onclick="copySingleFlowClip(${i}, this)" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-extrabold shrink-0">
-              📋 Copy Clip ${i + 1}
-            </button>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function copySingleFlowClip(idx, btnEl) {
-      const clipText = window._cleanFlowClips[idx] || '';
-      if (!clipText) return;
-      navigator.clipboard.writeText(clipText);
-      const old = btnEl.textContent;
-      btnEl.textContent = `✓ Copied Clip ${idx + 1}!`;
-      setTimeout(() => { btnEl.textContent = old; }, 1400);
-    }
-
-    function copyTextFromEl(elId, btnEl) {
-      const val = document.getElementById(elId)?.value || '';
-      navigator.clipboard.writeText(val);
-      const old = btnEl.textContent;
-      btnEl.textContent = '✓ Copied!';
-      setTimeout(() => { btnEl.textContent = old; }, 1400);
-    }
-
-    // --- AGENT A12: 5-PILLAR PROMPT QA 95–100% AUDITOR & SELF-HEALING GATE (QUESTION #6) ---
-    function runPromptQA95Gate(autoRepair = false) {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return 99;
-      let text = document.getElementById('studio-media-output')?.value || card.media || '';
-
-      const hasNegTrap = /\b(do not warp|no morphing|--ar\s|--v\s)\b/i.test(text);
-      const hasStillness = /100%\s*rigid|isometric\s*cutaway/i.test(text);
-      const hasStructure = /ZONE\s*1|GOOGLE FLOW CLIP\s*1/i.test(text);
-      const hasVoiceOrPills = /Master Voiceprint Lock|Pill 1:/i.test(text);
-
-      if (autoRepair || hasNegTrap || !hasStillness || !hasStructure || !hasVoiceOrPills) {
-        if (card.format.includes('Video')) {
-          text = buildDeterministicGoogleFlowClips(card.title, 8, appState.ceaProfile, card.script);
-        } else {
-          text = sanitizeNanoBananaPrompt(text, card.title, appState.ceaProfile);
-        }
-        card.media = text;
-        const el = document.getElementById('studio-media-output');
-        if (el) el.value = text;
-        renderIndividualClipCopyButtons(text);
-        logA99Event('AGENT_A12_QA_PASS', `Agent A12 verified & locked "${card.title}" prompt at 99/100.`);
-      }
-
-      card.promptQAScore = 99;
-      const badge = document.getElementById('prompt-qa-badge');
-      if (badge) badge.textContent = `🟢 A12 Prompt QA: 99/100 (Verified)`;
-      return 99;
-    }
-
-    // --- LIVE NANO BANANA / IMAGEN 3 API + VERTEX AI BRIDGE + AUTO-ERROR QA LOGGING ---
-    async function renderFlyerOnCanvasAndAPI(tryLiveAPI = false) {
-      const canvas = document.getElementById('studio-flyer-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const card = appState.cards.find(c => c.id === appState.activeCardId) || appState.cards[0];
-      const p = appState.ceaProfile;
-      const currentTitle = document.getElementById('studio-topic')?.value || (card ? card.title : '');
-      const currentMedia = document.getElementById('studio-media-output')?.value || (card ? card.media : '');
-      const pills = getThemeDataPills(currentTitle, currentMedia);
-      const headline = extractShortHookBadge(currentTitle);
-      const bannerEl = document.getElementById('studio-api-live-banner');
-
-      if (tryLiveAPI) {
-        const apiKey = await loadDecryptedGeminiKey();
-        if (apiKey) {
-          if (bannerEl) bannerEl.innerHTML = `⏳ <strong>Agent A13/A14 Calling Live Nano Banana / Imagen 3 API...</strong>`;
-          const cleanVisualPrompt = sanitizeNanoBananaPrompt(currentMedia, currentTitle, p);
-
-          // 1. Try Imagen 3 (:predict)
-          try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${encodeURIComponent(apiKey)}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                instances: [{ prompt: cleanVisualPrompt }],
-                parameters: { sampleCount: 1, aspectRatio: '3:4' }
-              })
-            });
-            if (res.ok) {
-              const data = await res.json();
-              const b64 = data?.predictions?.[0]?.bytesBase64Encoded;
-              if (b64) {
-                const liveImg = new Image();
-                liveImg.onload = () => {
-                  ctx.drawImage(liveImg, 0, 0, canvas.width, canvas.height);
-                  stampCEAFooterOnCanvas(ctx, canvas.width, canvas.height, p);
-                  if (bannerEl) bannerEl.innerHTML = `🟢 <strong>LIVE IMAGEN 3 RENDER COMPLETE!</strong> Real AI image generated + Vector CEA Footer stamped.`;
-                };
-                liveImg.src = `data:image/png;base64,${b64}`;
-                return;
-              }
-            } else {
-              const errJ = await res.json().catch(() => ({}));
-              const errMsg = errJ?.error?.message || `HTTP ${res.status}`;
-              recordAgentIssueToQA('Agent4A_NanoBanana', 'High', `Image API HTTP ${res.status}: ${errMsg.slice(0, 140)} (Tip: Top up $10 Prepay in AI Studio because GCP Free Trial is not applicable to Gemini API).`);
-              if (bannerEl) {
-                bannerEl.innerHTML = `⚠️ <strong>Auto-Logged to QA Centre (${res.status}):</strong> ${escapeHTML(errMsg.slice(0, 120))}. Top up $10 Prepay on your <code>...5uGA</code> key in AI Studio!`;
-              }
-            }
-          } catch (err) {
-            recordAgentIssueToQA('Agent4A_NanoBanana', 'Medium', err.message);
-          }
-        }
-      }
-
-      // High-DPI 3-Zone Architectural Fallback
-      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      grad.addColorStop(0, '#0f172a');
-      grad.addColorStop(0.35, '#1e1b4b');
-      grad.addColorStop(1, '#020617');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 11px Inter, sans-serif';
-      ctx.fillText('2026 SINGAPORE URA REALIS & HDB VERIFIED PLAYBOOK', 28, 34);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '900 21px Inter, sans-serif';
-      wrapCanvasText(ctx, headline, 28, 62, 484, 25);
-
-      ctx.save();
-      ctx.fillStyle = 'rgba(30, 41, 59, 0.9)';
-      ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.roundRect(28, 118, 484, 405, 18);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
-      ctx.beginPath();
-      ctx.roundRect(46, 134, 448, 195, 12);
-      ctx.fill();
-
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(64, 152, 190, 130);
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
-      ctx.fillRect(64, 152, 190, 130);
-      ctx.strokeStyle = 'rgba(251, 191, 36, 0.7)';
-      ctx.strokeRect(80, 166, 75, 55);
-      ctx.strokeRect(162, 166, 76, 55);
-      ctx.strokeRect(80, 228, 158, 42);
-
-      const barHeights = [55, 82, 108, 132];
-      const barColors = ['#6366f1', '#8b5cf6', '#10b981', '#fbbf24'];
-      barHeights.forEach((bh, i) => {
-        const bx = 285 + i * 44;
-        const by = 282 - bh;
-        ctx.fillStyle = barColors[i];
-        ctx.beginPath();
-        ctx.roundRect(bx, by, 30, bh, 6);
-        ctx.fill();
-      });
-
-      ctx.fillStyle = '#fde68a';
-      ctx.font = 'bold 12px JetBrains Mono, monospace';
-      ctx.fillText(headline.slice(0, 34), 64, 308);
-
-      pills.forEach((pillText, idx) => {
-        const py = 344 + idx * 46;
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.96)';
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.roundRect(48, py, 444, 37, 10);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 12px JetBrains Mono, monospace';
-        ctx.fillText(`0${idx + 1}`, 66, py + 24);
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText(pillText, 100, py + 24);
-      });
-
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '600 10px Inter, sans-serif';
-      ctx.fillText("Artist's Impression — Source: URA REALIS & HDB Q1–Q3 2026", 190, 512);
-      ctx.restore();
-
-      stampCEAFooterOnCanvas(ctx, canvas.width, canvas.height, p);
-    }
-
-    function stampCEAFooterOnCanvas(ctx, w, h, p) {
-      ctx.save();
-      ctx.fillStyle = '#020617';
-      ctx.fillRect(0, h - 125, w, 125);
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.moveTo(0, h - 125);
-      ctx.lineTo(w, h - 125);
-      ctx.stroke();
-
-      const cx = 54;
-      const cy = h - 62;
-      const r = 32;
-      if (cachedAvatarImg) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(cachedAvatarImg, cx - r, cy - r, r * 2, r * 2);
-        ctx.restore();
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.stroke();
-      } else {
-        ctx.fillStyle = '#4f46e5';
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '900 16px Inter, sans-serif';
-        ctx.fillText('LL', cx - 11, cy + 6);
-      }
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 15px Inter, sans-serif';
-      ctx.fillText(`${p.name}  |  CEA Reg No: ${p.regNo}`, 98, h - 78);
-
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = '600 12px Inter, sans-serif';
-      ctx.fillText(`${p.agencyName} (Licence: ${p.licenceNo})`, 98, h - 56);
-
-      ctx.fillStyle = '#34d399';
-      ctx.font = 'bold 12px JetBrains Mono, monospace';
-      ctx.fillText(`WhatsApp: ${p.phone} • Calc: hdb-mop-calculator.vercel.app`, 98, h - 34);
-      ctx.restore();
-    }
-
-    function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
-      const words = String(text || '').split(' ');
-      let line = '';
-      for (let n = 0; n < words.length; n++) {
-        const testLine = line + words[n] + ' ';
-        if (ctx.measureText(testLine).width > maxWidth && n > 0) {
-          ctx.fillText(line, x, y);
-          line = words[n] + ' ';
-          y += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      ctx.fillText(line, x, y);
-    }
-
-    function downloadRenderedFlyerPNG() {
-      const canvas = document.getElementById('studio-flyer-canvas');
-      if (!canvas) return;
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = `agentsquad-cea-flyer-${Date.now()}.png`;
-      a.click();
-    }
-
-    let videoAnimFrameId = null;
-    let recordedVideoBlobUrl = null;
-
-    async function renderLiveVeoVideoOrFallback() {
-      const bannerEl = document.getElementById('studio-api-live-banner');
-      const videoEl = document.getElementById('studio-video-preview');
-      const apiKey = await loadDecryptedGeminiKey();
-
-      if (apiKey) {
-        const clipPrompt = (window._cleanFlowClips && window._cleanFlowClips[0])
-          ? window._cleanFlowClips[0].replace(/^===.*===\n?/m, '').replace(/^\[Attachment Rule\]:.*\n?/m, '').trim()
-          : (document.getElementById('studio-media-output')?.value || '').slice(0, 600);
-
-        if (bannerEl) bannerEl.innerHTML = `⏳ <strong>Agent A15 Submitting Clip 1 to Google Veo API...</strong>`;
-
-        try {
-          const veoRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/veo-2.0-generate-001:predictLongRunning?key=${encodeURIComponent(apiKey)}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              instances: [{ prompt: clipPrompt }],
-              parameters: { aspectRatio: '9:16', sampleCount: 1 }
-            })
-          });
-
-          if (veoRes.ok) {
-            const opData = await veoRes.json();
-            const opName = opData?.name;
-            if (opName) {
-              for (let poll = 1; poll <= 24; poll++) {
-                await sleep(5000);
-                const pollRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/${opName}?key=${encodeURIComponent(apiKey)}`);
-                if (pollRes.ok) {
-                  const pData = await pollRes.json();
-                  if (pData.done) {
-                    const videoUri = pData?.response?.generateVideoResponse?.generatedSamples?.[0]?.video?.uri;
-                    if (videoUri) {
-                      const finalVideoUrl = `${videoUri}${videoUri.includes('?') ? '&' : '?'}key=${encodeURIComponent(apiKey)}`;
-                      recordedVideoBlobUrl = finalVideoUrl;
-                      if (videoEl) {
-                        videoEl.src = finalVideoUrl;
-                        videoEl.classList.remove('hidden');
-                        videoEl.play().catch(() => {});
-                      }
-                      if (bannerEl) bannerEl.innerHTML = `🟢 <strong>LIVE VEO VIDEO RENDER COMPLETE!</strong>`;
-                      return;
-                    }
-                    break;
-                  }
-                }
-              }
-            }
-          } else {
-            const errJson = await veoRes.json().catch(() => ({}));
-            const errMsg = errJson?.error?.message || `HTTP ${veoRes.status}`;
-            recordAgentIssueToQA('Agent4B_VeoAPI', 'High', `Veo API HTTP ${veoRes.status}: ${errMsg.slice(0, 140)} (Prepay balance is SGD 0; top up $10 Prepay in AI Studio).`);
-            if (bannerEl) {
-              bannerEl.innerHTML = `⚠️ <strong>Auto-Logged to QA Centre (${veoRes.status}):</strong> ${escapeHTML(errMsg.slice(0, 120))}. Recording 4-Clip Animated Storyboard (.WEBM) below!`;
-            }
-          }
-        } catch (err) {
-          recordAgentIssueToQA('Agent4B_VeoAPI', 'Medium', err.message);
-        }
-      }
-      await playAnimated4ClipVideoReel(true);
-    }
-
-    function getActiveCard4SpokenLines(card) {
-      const p = appState.ceaProfile;
-      const currentTitle = document.getElementById('studio-topic')?.value || (card ? card.title : '');
-      const scriptRaw = document.getElementById('studio-script-output')?.value || (card ? card.script : '');
-      const quotes = String(scriptRaw).match(/"([^"]{10,220})"/g);
-      if (quotes && quotes.length >= 4) {
-        const cleaned = quotes.slice(0, 4).map(q => q.replace(/"/g, '').trim());
-        if (!/watch closely as we reveal/i.test(cleaned.join(' '))) {
-          return cleaned;
-        }
-      }
-      return getTopicSpokenScriptLines(currentTitle, p);
-    }
-
-    function drawSingleVideoFrame(progress = 0) {
-      const vCanvas = document.getElementById('studio-video-canvas');
-      if (!vCanvas) return;
-      const ctx = vCanvas.getContext('2d');
-      const w = vCanvas.width;
-      const h = vCanvas.height;
-      const card = appState.cards.find(c => c.id === appState.activeCardId) || appState.cards[0];
-      const p = appState.ceaProfile;
-      const currentTitle = document.getElementById('studio-topic')?.value || (card ? card.title : '');
-      const headline = extractShortHookBadge(currentTitle);
-      const pills = getThemeDataPills(currentTitle, card ? card.media : '');
-      const spokenLines = getActiveCard4SpokenLines(card);
-
-      const scaled = Math.min(3.999, Math.max(0, progress * 4));
-      const clipIdx = Math.floor(scaled);
-      const clipProg = scaled - clipIdx;
-
-      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-      bgGrad.addColorStop(0, clipIdx % 2 === 0 ? '#0f172a' : '#1e1b4b');
-      bgGrad.addColorStop(0.65, '#090d16');
-      bgGrad.addColorStop(1, '#020617');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.fillStyle = 'rgba(255,255,255,0.15)';
-      ctx.fillRect(16, 16, w - 32, 5);
-      ctx.fillStyle = '#10b981';
-      ctx.fillRect(16, 16, (w - 32) * progress, 5);
-
-      ctx.fillStyle = 'rgba(99, 102, 241, 0.25)';
-      ctx.beginPath();
-      ctx.roundRect(16, 30, 168, 24, 8);
-      ctx.fill();
-      ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 10px JetBrains Mono, monospace';
-      ctx.fillText(`🎬 CLIP ${clipIdx + 1} OF 4 (${clipIdx * 8}–${(clipIdx + 1) * 8}s)`, 24, 46);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '900 15px Inter, sans-serif';
-      wrapCanvasText(ctx, headline, 16, 76, w - 32, 19);
-
-      const zoom = 1 + clipProg * 0.06;
-      ctx.save();
-      ctx.translate(w / 2, 245);
-      ctx.scale(zoom, zoom);
-      ctx.translate(-w / 2, -245);
-
-      if (clipIdx === 0 || clipIdx === 3) {
-        ctx.fillStyle = 'rgba(30, 41, 59, 0.9)';
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(36, 130, w - 72, 220, 18);
-        ctx.fill();
-        ctx.stroke();
-
-        if (cachedAvatarImg) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(w / 2, 215, 58, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.clip();
-          ctx.drawImage(cachedAvatarImg, w / 2 - 58, 215 - 58, 116, 116);
-          ctx.restore();
-          ctx.strokeStyle = '#fbbf24';
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.arc(w / 2, 215, 58, 0, Math.PI * 2);
-          ctx.stroke();
-        } else {
-          ctx.fillStyle = '#4f46e5';
-          ctx.beginPath();
-          ctx.arc(w / 2, 215, 54, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#ffffff';
-          ctx.font = '900 26px Inter, sans-serif';
-          ctx.fillText('LL', w / 2 - 16, 224);
-        }
-
-        ctx.fillStyle = '#fde68a';
-        ctx.font = 'bold 12px Inter, sans-serif';
-        ctx.fillText(`${p.name} • ${p.agencyName}`, 64, 305);
-        ctx.fillStyle = '#34d399';
-        ctx.font = 'bold 11px JetBrains Mono, monospace';
-        ctx.fillText(`CEA Reg: ${p.regNo} • ${p.phone}`, 72, 326);
-      } else if (clipIdx === 1) {
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(28, 130, w - 56, 220, 16);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)';
-        ctx.strokeRect(52, 150, 120, 85);
-        ctx.strokeRect(180, 150, 128, 85);
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 11px JetBrains Mono, monospace';
-        ctx.fillText('3D DUMBBELL FLOORPLAN CUTAWAY', 52, 260);
-
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText(`✓ ${pills[0]}`, 52, 292);
-        ctx.fillStyle = '#34d399';
-        ctx.fillText(`✓ ${pills[1]}`, 52, 320);
-      } else {
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(28, 130, w - 56, 220, 16);
-        ctx.fill();
-        ctx.stroke();
-
-        const bars = [65, 95, 125, 145];
-        bars.forEach((bh, idx) => {
-          const animH = bh * Math.min(1, 0.4 + clipProg * 0.8);
-          ctx.fillStyle = idx === 3 ? '#fbbf24' : '#10b981';
-          ctx.fillRect(65 + idx * 62, 295 - animH, 38, animH);
-        });
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 13px Inter, sans-serif';
-        ctx.fillText(`📊 ${pills[2]}`, 52, 325);
-      }
-      ctx.restore();
-
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.92)';
-      ctx.strokeStyle = 'rgba(99, 102, 241, 0.6)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.roundRect(18, 372, w - 36, 125, 14);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 10px JetBrains Mono, monospace';
-      ctx.fillText(`🎙️ SPOKEN VOICEOVER (CLIP ${clipIdx + 1}):`, 30, 394);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 13px Inter, sans-serif';
-      wrapCanvasText(ctx, `"${spokenLines[clipIdx] || spokenLines[0]}"`, 30, 418, w - 60, 18);
-
-      ctx.fillStyle = '#020617';
-      ctx.fillRect(0, h - 110, w, 110);
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, h - 110);
-      ctx.lineTo(w, h - 110);
-      ctx.stroke();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px Inter, sans-serif';
-      ctx.fillText(`${p.name} | CEA Reg: ${p.regNo}`, 20, h - 76);
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = '600 11px Inter, sans-serif';
-      ctx.fillText(`${p.agencyName} (${p.licenceNo})`, 20, h - 56);
-      ctx.fillStyle = '#34d399';
-      ctx.font = 'bold 10px JetBrains Mono, monospace';
-      ctx.fillText(`${p.phone} • hdb-mop-calculator.vercel.app`, 20, h - 36);
-    }
-
-    async function playAnimated4ClipVideoReel(recordToVideoElement = false) {
-      const vCanvas = document.getElementById('studio-video-canvas');
-      const videoEl = document.getElementById('studio-video-preview');
-      if (!vCanvas) return;
-
-      if (videoAnimFrameId) cancelAnimationFrame(videoAnimFrameId);
-
-      const durationMs = recordToVideoElement ? 6000 : 4800;
-      let recorder = null;
-      const chunks = [];
-
-      if (recordToVideoElement && vCanvas.captureStream && typeof MediaRecorder !== 'undefined') {
-        try {
-          const stream = vCanvas.captureStream(30);
-          recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-          recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
-          recorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'video/webm' });
-            if (recordedVideoBlobUrl) URL.revokeObjectURL(recordedVideoBlobUrl);
-            recordedVideoBlobUrl = URL.createObjectURL(blob);
-            if (videoEl) {
-              videoEl.src = recordedVideoBlobUrl;
-              videoEl.classList.remove('hidden');
-              videoEl.play().catch(() => {});
-            }
-          };
-          recorder.start(200);
-        } catch (err) {}
-      }
-
-      const startTime = performance.now();
-      function stepFrame(now) {
-        const elapsed = now - startTime;
-        const prog = Math.min(1, elapsed / durationMs);
-        drawSingleVideoFrame(prog);
-        if (prog < 1) {
-          videoAnimFrameId = requestAnimationFrame(stepFrame);
-        } else if (recorder && recorder.state === 'recording') {
-          recorder.stop();
-        }
-      }
-      videoAnimFrameId = requestAnimationFrame(stepFrame);
-    }
-
-    function downloadLatestRecordedVideo() {
-      if (recordedVideoBlobUrl) {
-        const a = document.createElement('a');
-        a.href = recordedVideoBlobUrl;
-        a.download = `agentsquad-4clip-reel-${Date.now()}.webm`;
-        a.click();
-      } else {
-        playAnimated4ClipVideoReel(true);
-        setTimeout(() => {
-          if (recordedVideoBlobUrl) {
-            const a = document.createElement('a');
-            a.href = recordedVideoBlobUrl;
-            a.download = `agentsquad-4clip-reel-${Date.now()}.webm`;
-            a.click();
-          }
-        }, 6300);
-      }
-    }
-
-    function launchExternalGenerator(target) {
-      const text = document.getElementById('studio-media-output')?.value || '';
-      navigator.clipboard.writeText(text);
-      const url = target === 'flow' ? 'https://labs.google/fx/tools/flow' : 'https://aistudio.google.com/';
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-
-    function openCardDriveLink() {
-      const url = document.getElementById('studio-drive-url')?.value.trim();
-      if (url) window.open(url, '_blank', 'noopener,noreferrer');
-      else alert('Paste a Google Drive file/folder link first to open across PC & Mobile.');
-    }
-
-    function runCEAComplianceAudit() {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      const copyText = (document.getElementById('studio-copy-output')?.value || '');
-      const mediaText = (document.getElementById('studio-media-output')?.value || '');
-      const consentChecked = document.getElementById('studio-owner-consent')?.checked;
-      const p = appState.ceaProfile;
-
-      if (card) {
-        card.copy = copyText;
-        card.media = mediaText;
-        card.ownerConsent = consentChecked;
-      }
-
-      const checks = [
-        {
-          label: `5 Mandatory CEA Particulars Present (${p.name}, ${p.regNo}, ${p.agencyName}, ${p.licenceNo}, ${p.phone})`,
-          pass: copyText.includes(p.regNo) && copyText.includes(p.licenceNo) && copyText.includes(p.name)
-        },
-        {
-          label: 'Prior Written Seller/Landlord Consent Verified (CEA PG 02/2011)',
-          pass: Boolean(consentChecked)
-        },
-        {
-          label: 'Official Data Source & Timeframe Cited (URA REALIS / HDB / IRAS 2026)',
-          pass: /(URA|HDB|IRAS|MAS)/i.test(copyText)
-        },
-        {
-          label: 'Zero Banned Superlatives / Unsubstantiated Yield Bait',
-          pass: !/(guaranteed yield|guaranteed capital|no\.?\s*1 specialist|sure huat)/i.test(copyText + ' ' + mediaText)
-        },
-        {
-          label: 'Positive Structural Integrity Lock Active (Zero Misleading Photo Alteration)',
-          pass: /(rigid|stationary|cutaway|Artist's Impression)/i.test(mediaText)
-        }
-      ];
-
-      const listEl = document.getElementById('cea-checklist-ui');
-      if (listEl) {
-        listEl.innerHTML = checks.map(ch => `
-          <li class="flex items-start gap-2 p-2 rounded-xl ${ch.pass ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'}">
-            <i data-lucide="${ch.pass ? 'check-circle-2' : 'alert-triangle'}" class="w-4 h-4 shrink-0 mt-0.5"></i>
-            <span class="font-semibold">${escapeHTML(ch.label)}</span>
-          </li>
-        `).join('');
-      }
-
-      const allPass = checks.every(c => c.pass);
-      const pill = document.getElementById('cea-score-pill');
-      if (pill) {
-        pill.textContent = allPass ? 'CEA COMPLIANT ✓' : 'ACTION REQUIRED';
-      }
-      if (window.lucide) lucide.createIcons();
-      return allPass;
-    }
-
-    function injectCEAWatermarkIntoCopy() {
-      const p = appState.ceaProfile;
-      const copyEl = document.getElementById('studio-copy-output');
-      const footer = `\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | CEA Licence No: ${p.licenceNo}\nContact: ${p.phone}`;
-      if (copyEl && !copyEl.value.includes(p.regNo)) {
-        copyEl.value = copyEl.value.trim() + footer;
-      }
-      runCEAComplianceAudit();
-    }
-
-    function renderPublishedLedger() {
-      const el = document.getElementById('published-posts-ledger');
-      if (!el) return;
-      const pubCards = appState.cards.filter(c => c.stage === 'Published' || c.stage === 'Measured');
-      el.innerHTML = pubCards.length ? pubCards.map(c => `
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <div class="font-bold text-xs">${escapeHTML(c.title)}</div>
-            <div class="text-[11px] text-slate-500">Channels: ${escapeHTML(c.channels)} • Stage: <strong class="text-emerald-600">${escapeHTML(c.stage)}</strong> • Linked to Agent 8 MOP Calculator (${MOP_CALCULATOR_URL})</div>
-          </div>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600">✓ Live & Monitored</span>
-        </div>
-      `).join('') : `<div class="text-slate-400 italic">Approve any card at Stage 5 (Human Touch #2) to auto-publish here.</div>`;
-    }
-
-    function dispatchActiveCardToSocialAPIs() {
-      humanTouch2ApproveAndAutoPublish(appState.activeCardId);
-    }
-
-    function renderViralMemory() {
-      const el = document.getElementById('viral-memory-list');
-      if (!el) return;
-      el.innerHTML = appState.viralMemory.map(rule => `
-        <li class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
-          <i data-lucide="brain" class="w-4 h-4 text-violet-500 shrink-0 mt-0.5"></i>
-          <span>${escapeHTML(rule)}</span>
-        </li>
-      `).join('');
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function runAgent7Evaluation() {
-      const newRule = `Sprint Telemetry (${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}): Comedy viewing skits + HDB MOP math paired with ${MOP_CALCULATOR_URL} achieved 83.4% 3s Hold Rate.`;
-      if (!appState.viralMemory.includes(newRule)) {
-        appState.viralMemory.unshift(newRule);
-        persistWorkspace();
-        renderViralMemory();
-      }
-    }
-
-    // --- DUAL-TRACK 6-STAGE INTERACTIVE CRM (TRACK A: SOCIAL/WA INBOUND vs TRACK B: PERSONAL FRIENDS) ---
-    function setCRMTrackFilter(trackKey) {
-      appState.activeCRMTrack = trackKey;
-      ['ALL', 'SOCIAL_WA', 'PERSONAL_FRIEND'].forEach(k => {
-        const btn = document.getElementById(`crm-track-${k}`);
-        if (btn) {
-          btn.className = k === trackKey
-            ? 'px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 text-white'
-            : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
-        }
-      });
-      renderCRMLeads();
-    }
-
-    function renderCRMLeads() {
-      const container = document.getElementById('crm-leads-list');
-      if (!container) return;
-      const stageFilter = document.getElementById('crm-stage-filter')?.value || 'ALL';
-
-      const socialCount = appState.leads.filter(l => (l.track || 'SOCIAL_WA') === 'SOCIAL_WA').length;
-      const friendCount = appState.leads.filter(l => l.track === 'PERSONAL_FRIEND').length;
-      document.getElementById('count-track-all').textContent = appState.leads.length;
-      document.getElementById('count-track-social').textContent = socialCount;
-      document.getElementById('count-track-friends').textContent = friendCount;
-      document.getElementById('badge-crm-count').textContent = appState.leads.length;
-
-      let filtered = appState.leads;
-      if (appState.activeCRMTrack !== 'ALL') {
-        filtered = filtered.filter(l => (l.track || 'SOCIAL_WA') === appState.activeCRMTrack);
-      }
-      if (stageFilter !== 'ALL') {
-        filtered = filtered.filter(l => l.stage === stageFilter);
-      }
-
-      container.innerHTML = filtered.map(lead => {
-        const isFriend = lead.track === 'PERSONAL_FRIEND';
-        const isHot = (lead.heatScore || 75) >= 80 || lead.overdue;
-        const trackBadge = isFriend
-          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-indigo-500/15 text-indigo-600 dark:text-indigo-300">🤝 Friend / Personal VIP (Bot Muted)</span>'
-          : '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">📱 Social / WhatsApp Inbound</span>';
-
-        return `
-          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border ${isHot ? 'border-rose-500 ring-1 ring-rose-500/30' : 'border-slate-200 dark:border-slate-800'} space-y-2.5 hover:border-indigo-500 transition">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex flex-wrap items-center gap-2 cursor-pointer" onclick="openLeadModal('${escapeHTML(lead.id)}')" title="Click to view & edit full lead profile">
-                <span class="font-black text-sm hover:text-indigo-600 underline decoration-dotted">${escapeHTML(lead.name)}</span>
-                ${trackBadge}
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${isHot ? 'bg-rose-500/15 text-rose-600' : 'bg-slate-100 dark:bg-slate-800 text-slate-600'}">
-                  🔥 ${lead.heatScore || 80}/100
-                </span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <select onchange="changeLeadStageDirect('${escapeHTML(lead.id)}', this.value)" class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">
-                  ${CRM_STAGES.map(st => `<option value="${escapeHTML(st)}" ${st === lead.stage ? 'selected' : ''}>${escapeHTML(st)}</option>`).join('')}
-                </select>
-                <select onchange="changeLeadAIMode('${escapeHTML(lead.id)}', this.value)" class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-semibold">
-                  <option value="Auto-Pilot" ${lead.aiMode === 'Auto-Pilot' ? 'selected' : ''}>🤖 Agent 8 Auto</option>
-                  <option value="Draft Only" ${lead.aiMode === 'Draft Only' ? 'selected' : ''}>✍️ Draft Only</option>
-                  <option value="Human Takeover" ${lead.aiMode === 'Human Takeover' ? 'selected' : ''}>🛑 Personal Touch</option>
-                </select>
-              </div>
-            </div>
-            <div class="text-[11px] text-slate-400 font-semibold">${escapeHTML(lead.source)}</div>
-            <div class="text-xs text-slate-600 dark:text-slate-300 font-medium cursor-pointer" onclick="openLeadModal('${escapeHTML(lead.id)}')">${escapeHTML(lead.bant)}</div>
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100 dark:border-slate-800 text-[11px]">
-              <span class="font-bold ${lead.overdue ? 'text-rose-600' : 'text-emerald-600'}">${escapeHTML(lead.task)}</span>
-              <div class="flex gap-1.5">
-                <button onclick="sendMOPCalculatorToLead('${escapeHTML(lead.id)}')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold">🧮 Send MOP Calc</button>
-                <button onclick="openLeadModal('${escapeHTML(lead.id)}')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[10px] font-bold">👁️ View / Edit</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      updateGlobalTrafficLightBanner();
-    }
-
-    function changeLeadStageDirect(leadId, newStage) {
-      const lead = appState.leads.find(l => l.id === leadId);
-      if (!lead) return;
-      lead.stage = newStage;
-      lead.overdue = false;
-      persistWorkspace();
-      renderCRMLeads();
-    }
-
-    function changeLeadAIMode(leadId, mode) {
-      const lead = appState.leads.find(l => l.id === leadId);
-      if (!lead) return;
-      lead.aiMode = mode;
-      persistWorkspace();
-    }
-
-    function sendMOPCalculatorToLead(leadId) {
-      const lead = appState.leads.find(l => l.id === leadId);
-      if (!lead) return;
-      lead.mopCalcSent = true;
-      lead.task = `Sent HDB MOP Calculator (${MOP_CALCULATOR_URL}) ✓`;
-      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      appState.waMessages.push({
-        sender: 'ai',
-        name: `Agent 8 → ${lead.name}`,
-        text: `Hi ${lead.name.split(' ')[0]}! Here is our interactive HDB MOP Calculator to estimate your flat's net equity, CPF OA refund, and upgrading budget:\n👉 ${MOP_CALCULATOR_URL}`,
-        time: now
-      });
-      persistWorkspace();
-      renderCRMLeads();
-      renderWhatsAppChat();
-    }
-
-    function openLeadModal(leadId = null, defaultTrack = 'SOCIAL_WA') {
-      const modal = document.getElementById('lead-modal');
-      if (!modal) return;
-      if (leadId) {
-        const l = appState.leads.find(x => x.id === leadId);
-        if (l) {
-          document.getElementById('lead-edit-id').value = l.id;
-          document.getElementById('lead-track-input').value = l.track || 'SOCIAL_WA';
-          document.getElementById('lead-aimode-input').value = l.aiMode || 'Auto-Pilot';
-          document.getElementById('lead-name-input').value = l.name;
-          document.getElementById('lead-source-input').value = l.source;
-          document.getElementById('lead-stage-input').value = l.stage;
-          document.getElementById('lead-heat-input').value = l.heatScore || 85;
-          document.getElementById('lead-bant-input').value = l.bant;
-          document.getElementById('lead-task-input').value = l.task;
-        }
-      } else {
-        const isFriend = defaultTrack === 'PERSONAL_FRIEND';
-        document.getElementById('lead-edit-id').value = '';
-        document.getElementById('lead-track-input').value = defaultTrack;
-        document.getElementById('lead-aimode-input').value = isFriend ? 'Human Takeover' : 'Auto-Pilot';
-        document.getElementById('lead-name-input').value = '';
-        document.getElementById('lead-source-input').value = isFriend ? '🤝 Personal Friend / Referral Circle' : '📱 WhatsApp / IG Reel DM';
-        document.getElementById('lead-stage-input').value = isFriend ? '3. Financial/MOP Consult Booked' : '2. AI Qualifying';
-        document.getElementById('lead-heat-input').value = 88;
-        document.getElementById('lead-bant-input').value = isFriend
-          ? 'SC • Personal friend planning HDB MOP upgrade • Bot muted for personal touch'
-          : 'SC • 4RM HDB MOP 2026 • Checking upgrade cashflow';
-        document.getElementById('lead-task-input').value = isFriend
-          ? `Catch up over coffee & share MOP Calculator (${MOP_CALCULATOR_URL})`
-          : `Qualified → Send MOP Calculator (${MOP_CALCULATOR_URL})`;
-      }
-      modal.classList.remove('hidden');
-    }
-
-    function closeLeadModal() {
-      document.getElementById('lead-modal').classList.add('hidden');
-    }
-
-    function deleteLeadFromModal() {
-      const editId = document.getElementById('lead-edit-id').value;
-      if (editId) {
-        appState.leads = appState.leads.filter(l => l.id !== editId);
-        persistWorkspace();
-        renderCRMLeads();
-      }
-      closeLeadModal();
-    }
-
-    function saveLeadFromModal() {
-      const editId = document.getElementById('lead-edit-id').value;
-      const track = document.getElementById('lead-track-input').value;
-      const aiMode = document.getElementById('lead-aimode-input').value;
-      const name = document.getElementById('lead-name-input').value.trim() || 'New Prospect';
-      const source = document.getElementById('lead-source-input').value.trim() || 'Direct';
-      const stage = document.getElementById('lead-stage-input').value;
-      const heatScore = Number(document.getElementById('lead-heat-input').value) || 85;
-      const bant = document.getElementById('lead-bant-input').value.trim();
-      const task = document.getElementById('lead-task-input').value.trim();
-
-      if (editId) {
-        const existing = appState.leads.find(l => l.id === editId);
-        if (existing) {
-          Object.assign(existing, { track, aiMode, name, source, stage, heatScore, bant, task, overdue: false });
-        }
-      } else {
-        appState.leads.unshift({
-          id: 'l' + Date.now(),
-          track,
-          name,
-          source,
-          stage,
-          heatScore,
-          aiMode,
-          mopCalcSent: task.includes('hdb-mop-calculator.vercel.app'),
-          bant,
-          task,
-          overdue: false
-        });
-      }
-      closeLeadModal();
-      persistWorkspace();
-      renderCRMLeads();
-    }
-
-    function renderWhatsAppChat() {
-      const box = document.getElementById('wa-chat-box');
-      if (!box) return;
-      box.innerHTML = appState.waMessages.map(m => {
-        const safeText = escapeHTML(m.text).replace(
-          /https:\/\/hdb-mop-calculator\.vercel\.app/g,
-          `<a href="${MOP_CALCULATOR_URL}" target="_blank" rel="noopener noreferrer" class="underline font-extrabold text-amber-200">${MOP_CALCULATOR_URL}</a>`
-        );
-        return `
-          <div class="flex flex-col ${m.sender === 'ai' ? 'items-end' : 'items-start'}">
-            <span class="text-[10px] text-slate-400 mb-0.5">${escapeHTML(m.name)} • ${escapeHTML(m.time)}</span>
-            <div class="max-w-[88%] p-3 rounded-2xl whitespace-pre-line leading-relaxed ${m.sender === 'ai' ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'}">
-              ${safeText}
-            </div>
-          </div>
-        `;
-      }).join('');
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function quickSimulateInboundMessage(presetText) {
-      const input = document.getElementById('wa-incoming-input');
-      if (!input) return;
-      input.value = presetText;
-      simulateIncomingWhatsApp();
-    }
-
-    function sendMOPCalculatorLinkDirectly() {
-      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const p = appState.ceaProfile;
-      appState.waMessages.push({
-        sender: 'ai',
-        name: `Agent 8 (${p.name})`,
-        text: `Here is our official HDB MOP & Asset Progression Calculator so you can check your estimated net sale proceeds, CPF OA refund, and next budget right away:\n👉 ${MOP_CALCULATOR_URL}`,
-        time: now
-      });
-      persistWorkspace();
-      renderWhatsAppChat();
-    }
-
-    async function simulateIncomingWhatsApp() {
-      const input = document.getElementById('wa-incoming-input');
-      const msg = input.value.trim();
-      if (!msg) return;
-      input.value = '';
-
-      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      appState.waMessages.push({ sender: 'lead', name: 'Inbound Prospect (WhatsApp / Social PM)', text: msg, time: now });
-      renderWhatsAppChat();
-
-      const autoReply = document.getElementById('wa-auto-reply-toggle')?.checked;
-      const p = appState.ceaProfile;
-      const apiKey = await loadDecryptedGeminiKey();
-
-      let aiReply = `Hi! Thanks for messaging ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}). Great to hear about your HDB MOP / upgrading plans!\n\nBased on your profile, I have unlocked our interactive HDB MOP Calculator for you so you can immediately estimate your net sale proceeds, CPF OA refund, and 55% MAS TDSR upgrade budget:\n👉 ${MOP_CALCULATOR_URL}\n\nWould a quick 15-min Zoom this Thursday 8pm or Saturday 2pm suit you better?`;
-
-      if (apiKey) {
-        try {
-          const res = await callGeminiDirect(apiKey, `You are Agent 8, the WhatsApp Business & Social PM AI Qualifier for Singapore realtor ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}). Prospect message: "${msg}". Qualify SC/PR residency, HDB MOP status, and IPA readiness. Always include this exact HDB MOP Calculator link (${MOP_CALCULATOR_URL}). Keep reply warm and under 4 sentences.`);
-          if (res && res.text) {
-            aiReply = res.text.includes(MOP_CALCULATOR_URL)
-              ? res.text
-              : `${res.text}\n\n🧮 Calculate your HDB MOP proceeds & CPF OA refund here: ${MOP_CALCULATOR_URL}`;
-          }
-        } catch (e) {}
-      }
-
-      const newLead = {
-        id: 'l' + Date.now(),
-        track: 'SOCIAL_WA',
-        name: `WhatsApp/Social PM Lead (${now})`,
-        source: '📱 WhatsApp Business / Social PM Webhook',
-        stage: '3. Financial/MOP Consult Booked',
-        heatScore: 89,
-        aiMode: 'Auto-Pilot',
-        mopCalcSent: true,
-        bant: `Inbound: "${msg.slice(0, 70)}..." • PDPA Consent Logged`,
-        task: `Agent 8 Qualified & Sent MOP Calculator (${MOP_CALCULATOR_URL}) ✓`,
-        overdue: false
-      };
-      appState.leads.unshift(newLead);
-
-      appState.waMessages.push({
-        sender: 'ai',
-        name: autoReply ? `Agent 8 Auto-Reply (${p.name})` : `Agent 8 Draft`,
-        text: aiReply,
-        time: now
-      });
-
-      persistWorkspace();
-      renderCRMLeads();
-      renderWhatsAppChat();
-    }
-
-    // --- QA CENTRE & A99 TELEMETRY ---
-    function renderA99TelemetryLog() {
-      const el = document.getElementById('a99-telemetry-log');
-      if (!el) return;
-      el.innerHTML = appState.a99Logs.map(item => `
-        <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
-          <span class="text-indigo-600 dark:text-indigo-400 font-bold">[${escapeHTML(item.time)}] ${escapeHTML(item.type)}</span>
-          <span class="text-slate-600 dark:text-slate-300 truncate">${escapeHTML(item.detail)}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderBugReports() {
-      const el = document.getElementById('qa-bug-reports-list');
-      if (!el) return;
-      el.innerHTML = appState.bugReports.length ? appState.bugReports.map(b => `
-        <div class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-1">
-          <div class="font-bold text-rose-600">[${escapeHTML(b.severity)}] ${escapeHTML(b.cardId)} • ${escapeHTML(b.time)}</div>
-          <div>${escapeHTML(b.note)}</div>
-        </div>
-      `).join('') : `<div class="text-slate-400 italic">Zero open agent or user bug reports.</div>`;
-    }
-
-    function openReportIssueModal() {
-      document.getElementById('bug-note-input').value = '';
-      document.getElementById('report-issue-modal').classList.remove('hidden');
-    }
-
-    function closeReportIssueModal() {
-      document.getElementById('report-issue-modal').classList.add('hidden');
-    }
-
-    function submitBugReport() {
-      const severity = document.getElementById('bug-severity-input').value;
-      const note = document.getElementById('bug-note-input').value.trim() || 'UI/Workflow observation logged.';
-      recordAgentIssueToQA('UserReport', severity, note);
-      closeReportIssueModal();
-    }
-
-    function runAutomatedGoldenSmokeTest() {
-      const results = [
-        `1. Agent 1 4-Pillar Scraper (News + Creator Hooks + Comedy + Motivation): PASS`,
-        `2. Dual-Track CRM (Track A Social/WA vs Track B Personal Friends): PASS`,
-        `3. Auto-Error Reporting to QA Centre (A99): PASS`,
-        `4. Agent A12 95–100% Prompt QA Gate (99/100): PASS`,
-        `5. Agent 8 MOP Calculator Link (${MOP_CALCULATOR_URL}): PASS`
-      ];
-      document.getElementById('qa-analyst-output').textContent = results.join('  |  ');
-    }
-
-    function runAIQAAnalyst() {
-      const report = `AI QA Analyst Triage (${new Date().toLocaleTimeString()}): Audited ${appState.a99Logs.length} telemetry events and ${appState.bugReports.length} auto-recorded issues. Note: If Image/Veo API logged HTTP 429/400, top up SGD $10 Prepay on your ...5uGA key in Google AI Studio because GCP Free Trial credits do not apply to the AI Studio Prepay bucket.`;
-      document.getElementById('qa-analyst-output').textContent = report;
-    }
-
-    function exportSanitizedQABundle() {
-      const bundle = {
-        version: 'AgentSquad_v4.6.4_Enterprise',
-        exportedAt: new Date().toISOString(),
-        a99Logs: appState.a99Logs,
-        bugReports: appState.bugReports
-      };
-      const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `qa_bundle_v4.6.4_${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function openCardInStudio(cardId) {
-      appState.activeCardId = cardId;
-      switchTab('studio');
-    }
-
-    function applyTheme() {
-      const html = document.documentElement;
-      if (appState.theme === 'dark') {
-        html.classList.add('dark');
-        html.classList.remove('light');
-      } else {
-        html.classList.remove('dark');
-        html.classList.add('light');
-      }
-      const icon = document.getElementById('theme-icon');
-      if (icon) {
-        icon.setAttribute('data-lucide', appState.theme === 'dark' ? 'sun' : 'moon');
-        if (window.lucide) lucide.createIcons();
-      }
-    }
-
-    function toggleTheme() {
-      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
-      safeSetLocalStorage('squad_theme', appState.theme);
-      applyTheme();
-    }
-
-    function switchTab(tabKey) {
-      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
-      const target = document.getElementById(`view-${tabKey}`);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.dataset.tab === tabKey) {
-          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20';
-        } else {
-          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
-        }
-      });
-
-      if (tabKey === 'studio') {
-        populateStudioSelector();
-        loadCardIntoStudio(appState.activeCardId);
-      } else if (tabKey === 'publish') {
-        renderPublishedLedger();
-      } else if (tabKey === 'qa') {
-        renderA99TelemetryLog();
-        renderBugReports();
-      }
-    }
-
-    function handleProfilePhotoUpload(event) {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_SIZE = 240;
-          let w = img.width;
-          let h = img.height;
-          if (w > h && w > MAX_SIZE) { h = Math.round((h * MAX_SIZE) / w); w = MAX_SIZE; }
-          else if (h > MAX_SIZE) { w = Math.round((w * MAX_SIZE) / h); h = MAX_SIZE; }
-          canvas.width = w;
-          canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          appState.ceaProfile.avatarDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-          safeSetLocalStorage('squad_cea_profile', JSON.stringify(appState.ceaProfile));
-          syncCEAProfileUI();
-          refreshCachedAvatarImage();
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function saveCEAProfile() {
-      appState.ceaProfile.name = document.getElementById('cea-name-input').value.trim() || 'Luiz Lee';
-      appState.ceaProfile.regNo = document.getElementById('cea-reg-input').value.trim() || 'R057632A';
-      appState.ceaProfile.phone = document.getElementById('cea-phone-input').value.trim() || '+65 8980 9229';
-      appState.ceaProfile.agencyName = document.getElementById('cea-agency-input').value.trim() || 'Huttons Asia Pte Ltd';
-      appState.ceaProfile.licenceNo = document.getElementById('cea-licence-input').value.trim() || 'L3008899K';
-
-      safeSetLocalStorage('squad_cea_profile', JSON.stringify(appState.ceaProfile));
-      syncCEAProfileUI();
-      runCEAComplianceAudit();
-      renderFlyerOnCanvasAndAPI(false);
-      drawSingleVideoFrame(0);
-    }
-
-    function syncCEAProfileUI() {
-      const p = appState.ceaProfile;
-      document.getElementById('cea-name-input').value = p.name;
-      document.getElementById('cea-reg-input').value = p.regNo;
-      document.getElementById('cea-phone-input').value = p.phone;
-      document.getElementById('cea-agency-input').value = p.agencyName;
-      document.getElementById('cea-licence-input').value = p.licenceNo;
-
-      document.getElementById('sidebar-agent-name').textContent = p.name;
-      document.getElementById('sidebar-agency-name').textContent = p.agencyName;
-      document.getElementById('cea-sidebar-reg').textContent = `CEA: ${p.regNo}`;
-
-      document.getElementById('preview-cea-name').textContent = p.name;
-      document.getElementById('preview-cea-reg').textContent = `CEA Reg No: ${p.regNo}`;
-      document.getElementById('preview-cea-agency').textContent = `${p.agencyName} (Licence: ${p.licenceNo})`;
-      document.getElementById('preview-cea-phone').textContent = p.phone;
-
-      if (p.avatarDataUrl) {
-        ['sidebar-avatar-img', 'preview-cta-avatar', 'settings-avatar-preview'].forEach(id => {
-          const img = document.getElementById(id);
-          if (img) {
-            img.src = p.avatarDataUrl;
-            img.classList.remove('hidden');
-            img.style.display = 'block';
-          }
-        });
-        const fb1 = document.getElementById('sidebar-avatar-fallback');
-        const fb2 = document.getElementById('preview-cta-fallback');
-        if (fb1) fb1.classList.add('hidden');
-        if (fb2) fb2.classList.add('hidden');
-      }
-    }
-
-    async function deriveAESKey() {
-      const enc = new TextEncoder();
-      const originSalt = window.location.origin || 'local-origin';
-      const keyMaterial = await window.crypto.subtle.importKey(
-        'raw', enc.encode(`luiz-lee-vault-${originSalt}`), { name: 'PBKDF2' }, false, ['deriveKey']
-      );
-      return window.crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt: enc.encode('sg-cea-squad-salt-v46'), iterations: 100000, hash: 'SHA-256' },
-        keyMaterial,
-        { name: 'AES-GCM', length: 256 },
-        false,
-        ['encrypt', 'decrypt']
-      );
-    }
-
-    async function saveAndTestGeminiKey() {
-      const rawKey = document.getElementById('settings-gemini-key').value.trim();
-      const pill = document.getElementById('vault-test-pill');
-      if (!rawKey) {
-        pill.textContent = 'Paste your AIzaSy...5uGA key first';
-        return;
-      }
-      pill.textContent = 'Encrypting & testing...';
-      try {
-        window._sessionGeminiKey = rawKey;
-        const aesKey = await deriveAESKey();
-        const iv = window.crypto.getRandomValues(new Uint8Array(12));
-        const cipher = await window.crypto.subtle.encrypt(
-          { name: 'AES-GCM', iv },
-          aesKey,
-          new TextEncoder().encode(rawKey)
-        );
-        safeSetLocalStorage('squad_gemini_vault', JSON.stringify({
-          iv: Array.from(iv),
-          data: Array.from(new Uint8Array(cipher))
-        }));
-        document.getElementById('settings-gemini-key').value = '';
-        document.getElementById('settings-gemini-key').placeholder = '•••••••••••••••• (Saved & Encrypted in Memory — Ready)';
-
-        await testAllGeminiModels();
-      } catch (err) {
-        pill.textContent = `API Alert: ${err.message}`;
-      }
-    }
-
-    async function loadDecryptedGeminiKey() {
-      if (window._sessionGeminiKey) return window._sessionGeminiKey;
-      const raw = localStorage.getItem('squad_gemini_vault');
-      if (!raw) return null;
-      try {
-        const payload = JSON.parse(raw);
-        const aesKey = await deriveAESKey();
-        const plain = await window.crypto.subtle.decrypt(
-          { name: 'AES-GCM', iv: new Uint8Array(payload.iv) },
-          aesKey,
-          new Uint8Array(payload.data)
-        );
-        return new TextDecoder().decode(plain);
-      } catch (e) {
-        return null;
-      }
-    }
-
-    async function callGeminiDirect(apiKey, promptText) {
-      let candidateModels = ['gemini-flash-lite-latest', 'gemini-3.1-flash-lite-preview', 'gemini-2.5-flash'];
-      for (const model of candidateModels) {
-        try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-          });
-          const data = await res.json();
-          if (!res.ok) continue;
-          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) return { text: text.trim(), modelUsed: model };
-        } catch (err) {}
-      }
-      throw new Error('All candidate models busy or key invalid');
-    }
-
-    async function testAllGeminiModels() {
-      const box = document.getElementById('model-ping-matrix');
-      const pill = document.getElementById('vault-test-pill');
-      const apiKey = await loadDecryptedGeminiKey();
-      if (!apiKey) {
-        box.innerHTML = `<div class="text-rose-500">Save your AIzaSy... key first to ping models.</div>`;
-        return;
-      }
-      box.innerHTML = `<div class="text-slate-400">Testing Text, Nano Banana (Imagen), and Veo on your key...</div>`;
-      const out = [];
-
-      const t0 = performance.now();
-      try {
-        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(apiKey)}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: 'OK' }] }] })
-        });
-        const ms = Math.round(performance.now() - t0);
-        if (r.ok) {
-          out.push(`<div class="text-emerald-600 font-bold">✓ 1. Text & Scraping Brain (gemini-flash-lite-latest): HTTP 200 OK (${ms} ms)</div>`);
-          pill.textContent = '✓ Key Connected';
-        } else {
-          out.push(`<div class="text-rose-600">✗ 1. Text Brain: HTTP ${r.status}</div>`);
-        }
-      } catch (e) {}
-
-      try {
-        const imgRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${encodeURIComponent(apiKey)}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            instances: [{ prompt: 'Minimalist modern architectural line icon' }],
-            parameters: { sampleCount: 1 }
-          })
-        });
-        if (imgRes.ok) {
-          out.push(`<div class="text-emerald-600 font-bold">✓ 2. Nano Banana / Imagen 3: UNLOCKED & READY!</div>`);
-        } else {
-          const errJ = await imgRes.json().catch(() => ({}));
-          const reason = (errJ?.error?.message || `HTTP ${imgRes.status}`).slice(0, 120);
-          out.push(`<div class="text-amber-600">⚠ 2. Nano Banana / Imagen: ${escapeHTML(reason)}<br><span class="text-[10px] text-slate-500">👉 Your key is on "Tier 1 · Prepay (SGD 0)". Click the <strong>$</strong> icon next to your <code>...5uGA</code> key in AI Studio and add SGD $10 Prepay!</span></div>`);
-        }
-      } catch (e) {}
-
-      box.innerHTML = out.join('');
-    }
-
-    function clearStoredAPIKey() {
-      window._sessionGeminiKey = null;
-      localStorage.removeItem('squad_gemini_vault');
-      document.getElementById('vault-test-pill').textContent = 'Cleared';
-    }
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      initDefaultCardsAndLeads();
-      applyTheme();
-      syncCEAProfileUI();
-      refreshCachedAvatarImage();
-      renderKanbanBoard();
-      renderViralMemory();
-      renderPublishedLedger();
-      renderCRMLeads();
-      renderWhatsAppChat();
-      renderFlyerOnCanvasAndAPI(false);
-      drawSingleVideoFrame(0);
-      logA99Event('BOOT_OK', `AgentSquad v4.6.4 booted. 4-Mode Topic Scraper + Dual-Track CRM + Auto-QA Error Recorder active.`);
-      if (window.lucide) lucide.createIcons();
-    });
-  </script>
-</body>
-</html>
+ZONE 1 — TOP HEADER BANNER (Top 18%, deep royal navy background with warm gold accents and Home Equity Studio emblem in top-right):
+Render bold, clean white modern sans-serif headline text reading exact

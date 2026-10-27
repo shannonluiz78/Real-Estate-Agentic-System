@@ -25,15 +25,10 @@
     .custom-scroll::-webkit-scrollbar { height: 8px; width: 6px; }
     .custom-scroll::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); border-radius: 9999px; }
     .custom-scroll::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.5); border-radius: 9999px; }
-    @keyframes pulse-yellow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
-      50% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
-    }
     @keyframes pulse-red {
       0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); }
       50% { box-shadow: 0 0 0 8px rgba(244, 63, 94, 0); }
     }
-    .traffic-yellow { animation: pulse-yellow 1.6s infinite; }
     .traffic-red { animation: pulse-red 1.6s infinite; }
   </style>
 </head>
@@ -56,7 +51,7 @@
             <span class="font-black text-lg tracking-tight">AgentZug V.4.6.5</span>
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30">HOME EQUITY STUDIO</span>
           </div>
-          <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">PLAN TODAY | UPGRADE TOMORROW • Full-Bleed 9:16 Reel + Baked AI Voiceover OS</div>
+          <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">PLAN TODAY | UPGRADE TOMORROW • 6-Concept Social Image & Google Flow OS</div>
           <div id="global-telemetry-banner" class="flex items-center gap-2 text-[11px] font-semibold pt-0.5">
             <span id="global-traffic-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block"></span>
             <span id="global-traffic-text" class="text-rose-600 dark:text-rose-400">🔴 Human Gate 1 (Select) & Gate 2 (Review) Armed</span>
@@ -75,12 +70,12 @@
           <span class="font-black text-sm text-indigo-600 dark:text-indigo-400">2 Clicks Max</span>
         </div>
         <div class="px-3 border-r border-slate-300 dark:border-slate-700">
-          <span class="text-[10px] text-slate-400 uppercase font-bold block">Reel Audio Engine</span>
-          <span id="kpi-api-priority" class="font-black text-sm text-emerald-600 dark:text-emerald-400">Gemini TTS Voice + 95BPM Beat</span>
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">Visual Concepts</span>
+          <span id="kpi-api-priority" class="font-black text-sm text-emerald-600 dark:text-emerald-400">6 Daring Styles + Flow</span>
         </div>
         <div class="px-3 border-r border-slate-300 dark:border-slate-700">
           <span class="text-[10px] text-slate-400 uppercase font-bold block">A12 Prompt QA</span>
-          <span id="kpi-prompt-qa" class="font-black text-sm text-emerald-600 dark:text-emerald-400">99% Pass</span>
+          <span id="kpi-prompt-qa" class="font-black text-sm text-emerald-600 dark:text-emerald-400">100% Pass</span>
         </div>
         <div class="px-2.5">
           <span class="text-[10px] text-slate-400 uppercase font-bold block">Hot Leads (≥80)</span>
@@ -139,7 +134,7 @@
           </button>
           <button data-tab="studio" onclick="switchTab('studio')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4"></i> 2. Content Factory & Post-Prod</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">Pro Reel</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">6 Styles</span>
           </button>
           <button data-tab="publish" onclick="switchTab('publish')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <span class="flex items-center gap-2"><i data-lucide="share-2" class="w-4 h-4"></i> 3. Publishing Hub & Schedule</span>
@@ -179,8 +174,8 @@
       <!-- AUTONOMOUS SWARM PROGRESS BANNER -->
       <div id="autonomous-runner-banner" class="hidden p-4 rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white border border-indigo-500/40 shadow-xl space-y-3">
         <div class="flex items-center justify-between">
-          <span id="auto-runner-title" class="font-black text-sm tracking-wide">🟡 AUTONOMOUS AGENT SWARM RUNNING (FULL-BLEED REEL + AI VOICEOVER MUX)...</span>
-          <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 5</span>
+          <span id="auto-runner-title" class="font-black text-sm tracking-wide">🟡 AUTONOMOUS AGENT SWARM RUNNING (MULTI-CONCEPT VISUAL ENGINE)...</span>
+          <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 4</span>
         </div>
         <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
           <div id="auto-runner-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-indigo-400 h-full transition-all duration-300" style="width: 20%"></div>
@@ -240,15 +235,24 @@
             <span class="text-xs font-black uppercase text-indigo-600">Active Card:</span>
             <select id="studio-card-selector" onchange="loadCardIntoStudio(this.value)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold"></select>
             <select id="studio-format" onchange="updateStudioCardField('format', this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
-              <option value="Video (Reels/TikTok/Shorts)">🎬 9:16 Video Reel (Veo 3.1 + Lyria Audio)</option>
-              <option value="Image/Flyer Carousel">🖼️ 4:5 Property Flyer (Nano Banana / Imagen 3)</option>
+              <option value="Image/Flyer Carousel">🖼️ 4:5 Social Media Image / Poster (Nano Banana / Midjourney)</option>
+              <option value="Video (Reels/TikTok/Shorts)">🎬 9:16 Video Prompt Pack (For Google Flow Veo 3.1)</option>
+            </select>
+            <!-- NEW: 6 Daring Social Media Visual Concept Archetypes -->
+            <select id="studio-visual-concept" onchange="onVisualConceptChanged(this.value)" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/40 text-xs font-extrabold">
+              <option value="VS_SPLIT">⚔️ Concept 1: Dramatic Split-Screen "VS" Showdown</option>
+              <option value="EDITORIAL_COVER">📰 Concept 2: Architectural Digest Magazine Cover</option>
+              <option value="DATA_RECEIPT">📊 Concept 3: Viral "Truth Receipt" Financial Breakdown</option>
+              <option value="POV_LIFESTYLE">🌅 Concept 4: First-Person POV Penthouse Balcony Sunset</option>
+              <option value="STREET_AERIAL">🚁 Concept 5: Drone Twilight MRT & Skyline Masterplan</option>
+              <option value="ISOMETRIC_3D">🏠 Concept 6: 3D Isometric Architectural Cutaway</option>
             </select>
             <select id="studio-generator-select" onchange="reformatPromptForGenerator(this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
-              <option value="GOOGLE_FLOW">Target: Google Flow (Veo 3.1 Modern Social Reel)</option>
-              <option value="NANO_BANANA">Target: Nano Banana (3-Zone Prose)</option>
-              <option value="MIDJOURNEY">Target: Midjourney v6.1 (--ar 4:5)</option>
-              <option value="KLING_AI">Target: Kling AI 1.6 Pro</option>
-              <option value="HAILUO_AI">Target: Hailuo Director I2V</option>
+              <option value="NANO_BANANA">Prompt Syntax: Google Nano Banana (Natural Prose)</option>
+              <option value="MIDJOURNEY">Prompt Syntax: Midjourney v6.1 (--ar 4:5)</option>
+              <option value="GOOGLE_FLOW">Prompt Syntax: Google Flow (Veo 3.1 6-Layer Video)</option>
+              <option value="KLING_AI">Prompt Syntax: Kling AI 1.6 Pro</option>
+              <option value="HAILUO_AI">Prompt Syntax: Hailuo Director I2V</option>
             </select>
             <button id="lang-toggle-btn" onclick="toggleBilingualOutput()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
               🌐 Output: <span id="current-lang-label" class="text-indigo-600">EN</span>
@@ -259,9 +263,9 @@
             </label>
           </div>
           <div class="flex gap-2">
-            <button onclick="rejectAndRedoCardOutput(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-extrabold flex items-center gap-1">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-              <span>↻ Redo Swarm (New Visuals)</span>
+            <button onclick="cycleNextDaringConcept()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-extrabold flex items-center gap-1 cursor-pointer">
+              <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
+              <span>🎲 Switch Daring Concept</span>
             </button>
             <button onclick="openExceptionModal(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-amber-600/20 text-amber-500 border border-amber-500/30 text-xs font-extrabold">
               🚩 Flag Rework/Block
@@ -299,8 +303,8 @@
               <div class="flex items-center justify-between">
                 <span class="text-xs font-extrabold text-indigo-600">BOX A — Agent 2 & A17: Viral Caption, SEO & 15-Tag Matrix</span>
                 <div class="flex gap-1.5">
-                  <button id="btn-regen-copy" onclick="regenerateBoxACopy()" class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-400 hover:bg-indigo-500/25 text-[11px] font-bold">✨ Live AI Rewrite (Syncs A→B→C)</button>
-                  <button onclick="copyTextFromEl('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">📋 Copy</button>
+                  <button id="btn-regen-copy" onclick="regenerateBoxACopy()" class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-400 hover:bg-indigo-500/25 text-[11px] font-bold">✨ Live AI Rewrite (New Angle & Concept)</button>
+                  <button onclick="copyTextFromEl('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">📋 Copy Caption</button>
                 </div>
               </div>
               <textarea id="studio-copy-output" rows="6" oninput="updateStudioCardField('copy', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
@@ -310,10 +314,10 @@
               </div>
             </div>
 
-            <!-- Box B: Spoken Script Storyboard -->
+            <!-- Box B: Spoken Script Storyboard (Shown only when Video Format is selected) -->
             <div id="box-b-container" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-violet-600">STEP 1 (BOX B) — Agent 3: 4-Clip Spoken Script (Auto-Synthesizes Into Downloaded Video Voiceover!)</span>
+                <span class="text-xs font-extrabold text-violet-600">STEP 1 (BOX B) — Agent 3: 4-Clip Spoken Dialogue Script (Auto-Syncs Into Google Flow Prompts Below)</span>
                 <button onclick="copyTextFromEl('studio-script-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">📋 Copy Script</button>
               </div>
               <textarea id="studio-script-output" rows="4" oninput="onBoxBScriptEdited(this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
@@ -322,136 +326,93 @@
             <!-- Box C: Production Prompts + Prompt QA Gate -->
             <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-indigo-500/40 space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="text-xs font-black text-emerald-600">STEP 2 (BOX C) — Agent 4A/4B Modern Social Reel Prompts (Veo 3.1 / Nano Banana)</span>
+                <div>
+                  <span class="text-xs font-black text-emerald-600 block">BOX C — Agent 4A/4B Daring Visual Prompt (Paste into Nano Banana / Midjourney / Google Flow)</span>
+                  <span id="active-concept-badge" class="text-[10px] font-mono text-amber-400">Active Concept: ⚔️ Split-Screen VS Showdown</span>
+                </div>
                 <div class="flex items-center gap-1.5">
                   <span id="prompt-qa-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A12 Prompt QA: 100/100</span>
-                  <button onclick="enforceA12PromptQAGate()" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold">✨ Enforce 100% Social Reel Style</button>
-                  <button onclick="copyTextFromEl('studio-media-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">📋 Copy Master Prompt</button>
+                  <button onclick="cycleNextDaringConcept()" class="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-[10px] font-bold">🎲 Try Next Concept</button>
+                  <button onclick="copyTextFromEl('studio-media-output', this)" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold">📋 Copy Master Prompt</button>
                 </div>
               </div>
-              <div class="grid grid-cols-5 gap-1 text-[10px] font-mono bg-slate-100 dark:bg-slate-950 p-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <span class="text-emerald-500 font-bold">✓ Walk&Talk Hook: 20/20</span>
-                <span class="text-emerald-500 font-bold">✓ Stillness Lock: 20/20</span>
-                <span class="text-emerald-500 font-bold">✓ 6-Layer Veo: 20/20</span>
-                <span class="text-emerald-500 font-bold">✓ Voiceprint: 20/20</span>
-                <span class="text-emerald-500 font-bold">✓ URA Math: 20/20</span>
-              </div>
-              <textarea id="studio-media-output" rows="10" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
+              <textarea id="studio-media-output" rows="11" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
               <div id="flow-clip-buttons-drawer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
-              <div class="flex flex-wrap gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
-                <a href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 text-[11px] font-bold flex items-center gap-1.5 hover:bg-indigo-500/25">
-                  <span>🚀 Launch Google Flow (Veo 3.1 Web)</span>
+              <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 text-xs font-extrabold flex items-center gap-1.5 hover:bg-amber-500/25">
+                  <span>🍌 Open Google AI Studio (Nano Banana Image)</span>
                 </a>
-                <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 text-[11px] font-bold flex items-center gap-1.5 hover:bg-amber-500/25">
-                  <span>🍌 Launch Google AI Studio (Nano Banana)</span>
+                <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold flex items-center gap-1.5 hover:bg-emerald-500/25">
+                  <span>✨ Open Gemini Web (Nano Banana)</span>
+                </a>
+                <a href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 text-xs font-extrabold flex items-center gap-1.5 hover:bg-indigo-500/25">
+                  <span>🚀 Open Google Flow (Veo 3.1 Video)</span>
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Right 5 Columns: Full-Bleed 9:16 Modern Social Reel Studio & CEA Review -->
+          <!-- Right 5 Columns: 6-Concept 1080×1350 Social Poster Studio & CEA Review -->
           <div class="xl:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
               <div class="flex items-center justify-between">
                 <div>
-                  <h3 class="text-xs font-black uppercase text-indigo-600">Full-Bleed 9:16 Modern Social Reel + Baked AI Voiceover Studio</h3>
-                  <p id="media-engine-status-text" class="text-[10px] text-emerald-500 font-mono">🟢 Ready: Gemini 2.5 TTS Voiceover + 95 BPM Beat Baked Into .WEBM</p>
+                  <h3 class="text-xs font-black uppercase text-indigo-600">6-Concept 1080×1350 Social Media Image Studio</h3>
+                  <p id="media-engine-status-text" class="text-[10px] text-emerald-500 font-mono">🟢 Per-Card Photo Isolation Active • 6 Distinct Poster Layouts</p>
                 </div>
                 <span id="visual-qa-pill" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A16B QA: 100%</span>
               </div>
 
-              <!-- Property Photo & External Multi-Clip Veo Uploaders -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
-                  <span class="font-bold block text-[11px]">🏠 Upload Property / Floorplan Photo:</span>
-                  <span class="text-[10px] text-slate-500 block mb-1">Full-bleed background in Flyer & Video</span>
-                  <input type="file" accept="image/*" onchange="handlePropertyPhotoUpload(event)" class="text-[10px] w-full" />
-                </div>
-                <div class="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30">
-                  <span class="font-bold block text-[11px] text-indigo-400">📥 Import Veo 3.1 Clips (.MP4):</span>
-                  <span class="text-[10px] text-slate-400 block mb-1">Loads external Google Flow render</span>
-                  <input type="file" accept="video/*" multiple onchange="handleExternalVeoVideoUpload(event)" class="text-[10px] w-full" />
-                </div>
-              </div>
-
-              <!-- Reel Duration, Baked AI Voiceover & 95 BPM Beat Controls -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
-                <div class="space-y-1.5">
-                  <div>
-                    <span class="font-bold text-[10px] text-slate-400 uppercase block mb-0.5">Reel Duration (or Auto-Match Voice):</span>
-                    <select id="reel-duration-select" class="w-full px-2 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-[11px] font-bold text-indigo-400">
-                      <option value="16" selected>⏱️ 16 Seconds (4s × 4 Clips — Fast IG/TikTok Pace)</option>
-                      <option value="24">⏱️ 24 Seconds (6s × 4 Clips — Deep Data Pace)</option>
-                      <option value="32">⏱️ 32 Seconds (8s × 4 Clips — Full Veo 3.1 Spec)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <span class="font-bold text-[10px] text-slate-400 uppercase block mb-0.5">AI Voiceover Profile (Gemini 2.5 TTS):</span>
-                    <select id="tts-voice-select" class="w-full px-2 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-[11px] font-bold text-emerald-400">
-                      <option value="Orus" selected>🎙️ Orus (Executive Male Baritone — Default)</option>
-                      <option value="Charon">🎙️ Charon (Deep Authoritative Advisor)</option>
-                      <option value="Puck">🎙️ Puck (High-Energy Creator Hook)</option>
-                      <option value="Aoede">🎙️ Aoede (Warm Professional Female)</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="flex flex-col justify-center gap-1.5 pt-1">
-                  <label class="flex items-center gap-1.5 text-[11px] font-bold text-amber-400 cursor-pointer">
-                    <input id="voiceover-tts-checkbox" type="checkbox" checked class="rounded text-amber-500" />
-                    <span>🎙️ Bake AI Voiceover Into Downloaded Video</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 cursor-pointer">
-                    <input id="mux-music-checkbox" type="checkbox" checked class="rounded text-emerald-600" />
-                    <span>🥁 Bake 95 BPM Luxury Beat + Rhodes Into Video</span>
-                  </label>
-                  <div class="flex items-center gap-2 pt-0.5">
-                    <span class="text-[10px] font-bold text-slate-400">Music Vol:</span>
-                    <input id="music-volume-slider" type="range" min="15" max="90" value="48" class="w-24 accent-emerald-500" />
-                  </div>
-                </div>
-              </div>
-
-              <!-- High-DPI Canvas & Video Live Preview -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
-                <div class="space-y-1">
-                  <div class="text-[10px] font-mono text-amber-400 font-bold px-1">4:5 Modern Editorial Flyer</div>
-                  <canvas id="studio-flyer-canvas" width="1080" height="1350" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
-                </div>
-                <div class="space-y-1 flex flex-col justify-between">
-                  <div class="flex items-center justify-between px-1">
-                    <span class="text-[10px] font-mono text-violet-400 font-bold">9:16 Full-Bleed Social Reel</span>
-                    <span id="live-render-timer" class="text-[10px] font-mono text-emerald-400 font-bold">00:00 / 00:16</span>
-                  </div>
-                  <canvas id="studio-video-canvas" width="720" height="1280" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
-                  <video id="studio-video-preview" controls class="w-full rounded-xl shadow-lg border-2 border-emerald-500 hidden mt-1"></video>
-                </div>
-              </div>
-
-              <!-- Media Action Buttons -->
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <button id="btn-render-flyer" onclick="renderFlyerCanvas(true)" class="py-2.5 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm cursor-pointer">
-                  <i data-lucide="image" class="w-3.5 h-3.5"></i>
-                  <span>🍌 Render New HD Flyer</span>
-                </button>
-                <button id="btn-render-video" onclick="renderLiveVeoVideoOrFallback()" class="py-2.5 px-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm cursor-pointer">
-                  <i data-lucide="video" class="w-3.5 h-3.5"></i>
-                  <span>🎬 Render Pro Reel (Voice+Beat)</span>
-                </button>
-                <button onclick="downloadRenderedFlyerPNG()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[11px] font-bold">⬇️ Download HD Flyer (.PNG)</button>
-                <button onclick="downloadLatestRecordedVideo()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[11px] font-bold">⬇️ Download Reel+Voice (.WEBM)</button>
-              </div>
-
-              <!-- Agent 4C Standalone Music Preview -->
-              <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 space-y-2 text-xs">
+              <!-- Per-Card Property Photo Uploader (WITH 1-CLICK CLEAR BUTTON — NEVER STUCK ACROSS TOPICS!) -->
+              <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2 text-xs">
                 <div class="flex items-center justify-between">
                   <div>
-                    <span class="font-bold text-violet-700 dark:text-violet-300 block">Agent 4C: 95 BPM Luxury Real Estate Beat (.WAV)</span>
-                    <span class="text-[10px] text-slate-500">Rhodes Chords + Deep Sub-Bass + Soft Kick & Shaker Groove</span>
+                    <span class="font-bold block text-[11px]">🏠 Custom Photo for THIS Topic Only:</span>
+                    <span id="custom-photo-status" class="text-[10px] text-slate-500">Using AI / Topic-Matched Photography (Not stuck across topics)</span>
                   </div>
-                  <button onclick="generateLyriaMusicTrack()" class="px-2.5 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-[10px] font-bold">🎵 Preview 95 BPM Beat</button>
+                  <button id="btn-clear-card-photo" onclick="clearCardPropertyPhoto()" class="hidden px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-[10px] font-extrabold">
+                    ✕ Clear Uploaded Photo
+                  </button>
                 </div>
-                <audio id="lyria-audio-player" controls class="w-full h-8 hidden"></audio>
+                <input id="property-photo-input" type="file" accept="image/*" onchange="handlePropertyPhotoUpload(event)" class="text-[10px] w-full" />
               </div>
+
+              <!-- High-DPI 1080×1350 Social Poster Preview -->
+              <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between px-1">
+                  <span id="flyer-preview-label" class="text-[11px] font-mono text-amber-400 font-bold">4:5 Social Media Post (1080×1350 HD)</span>
+                  <span class="text-[10px] font-mono text-slate-400">CEA Footer Stamped ✓</span>
+                </div>
+                <canvas id="studio-flyer-canvas" width="1080" height="1350" class="w-full max-w-[440px] mx-auto rounded-xl shadow-2xl border border-slate-800 block"></canvas>
+              </div>
+
+              <!-- Image Action Buttons -->
+              <div class="grid grid-cols-3 gap-2 text-xs">
+                <button id="btn-render-flyer" onclick="renderFlyerCanvas(true)" class="py-2.5 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm cursor-pointer">
+                  <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                  <span>🍌 New Visual Photo</span>
+                </button>
+                <button onclick="cycleNextDaringConcept()" class="py-2.5 px-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm cursor-pointer">
+                  <i data-lucide="layout" class="w-3.5 h-3.5"></i>
+                  <span>🎲 Change Layout Style</span>
+                </button>
+                <button onclick="downloadRenderedFlyerPNG()" class="py-2.5 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm cursor-pointer">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>⬇️ Download (.PNG)</span>
+                </button>
+              </div>
+
+              <!-- Optional: Import & Preview External Google Flow .MP4 Video -->
+              <details class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs">
+                <summary class="font-bold text-indigo-400 cursor-pointer flex items-center justify-between">
+                  <span>📥 Optional: Attach Rendered Google Flow Video (.MP4) to This Card</span>
+                  <span class="text-[10px] font-mono">For Stage 8 Auto-Publish</span>
+                </summary>
+                <div class="pt-2.5 space-y-2">
+                  <input id="external-veo-input" type="file" accept="video/*" onchange="handleExternalVeoVideoUpload(event)" class="text-[10px] w-full" />
+                  <video id="studio-video-preview" controls class="w-full rounded-xl shadow-lg border-2 border-emerald-500 hidden mt-2"></video>
+                </div>
+              </details>
             </div>
 
             <!-- Agent 5 CEA Compliance Gate & Touch #2 -->
@@ -612,7 +573,7 @@
           <!-- 2. Priority API Router (Vertex AI + AI Studio) -->
           <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-black">2. Priority API Router (Gemini 2.5 TTS Voice, Nano Banana & Veo 3.1)</h3>
+              <h3 class="text-sm font-black">2. Priority API Router (Gemini 2.5 Flash, Nano Banana & Flow)</h3>
               <span id="vault-test-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600">Active</span>
             </div>
             <div class="space-y-2">
@@ -629,7 +590,7 @@
                 <input id="settings-vertex-token" type="password" placeholder="AQ.Ab8... or ya29..." class="w-full px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
               </div>
             </div>
-            <button onclick="saveAndTestGeminiKey()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold transition">Save & Verify Text, Gemini TTS Voiceover & Media Engines</button>
+            <button onclick="saveAndTestGeminiKey()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold transition">Save & Verify Gemini 2.5 Flash & Nano Banana Models</button>
             <div id="model-ping-matrix" class="text-[11px] font-mono space-y-1 pt-1"></div>
           </div>
 
@@ -685,8 +646,8 @@
         <option value="Blocked">BLOCKED (Missing Seller Written Consent Form)</option>
       </select>
       <select id="exc-owner-select" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">
-        <option value="Agent_4B_Video">Accountable: Agent 4B (Video Prompt Engine)</option>
-        <option value="Agent_4A_Flyer">Accountable: Agent 4A (Flyer Compositor)</option>
+        <option value="Agent_4A_Flyer">Accountable: Agent 4A (Visual Concept & Flyer)</option>
+        <option value="Agent_4B_Video">Accountable: Agent 4B (Google Flow Prompt Engine)</option>
         <option value="Agent_2_Copy">Accountable: Agent 2 (Copy & CEA Particulars)</option>
         <option value="Human_Realtor">Accountable: Human Realtor (Written Consent)</option>
       </select>
@@ -740,12 +701,30 @@
       'Agent Proposed Topics', 'Human Select', 'Ready', 'In Progress',
       'Human Review', 'Approved', 'Scheduled', 'Published', 'Measured'
     ];
+
+    // 6 DARING SOCIAL MEDIA VISUAL CONCEPT ARCHETYPES (NO MORE REPETITIVE 3D CUTAWAY!)
+    const VISUAL_CONCEPT_KEYS = [
+      'VS_SPLIT',
+      'EDITORIAL_COVER',
+      'DATA_RECEIPT',
+      'POV_LIFESTYLE',
+      'STREET_AERIAL',
+      'ISOMETRIC_3D'
+    ];
+    const VISUAL_CONCEPT_LABELS = {
+      VS_SPLIT: '⚔️ Concept 1: Dramatic Split-Screen "VS" Showdown',
+      EDITORIAL_COVER: '📰 Concept 2: Architectural Digest Magazine Cover',
+      DATA_RECEIPT: '📊 Concept 3: Viral "Truth Receipt" Financial Breakdown',
+      POV_LIFESTYLE: '🌅 Concept 4: First-Person POV Penthouse Balcony Sunset',
+      STREET_AERIAL: '🚁 Concept 5: Drone Twilight MRT & Skyline Masterplan',
+      ISOMETRIC_3D: '🏠 Concept 6: 3D Isometric Architectural Cutaway'
+    };
+
     window._cleanFlowClips = [];
-    window._latestRecordedVideoUrl = null;
     window._cachedAIFlyerImage = {};
-    window._cachedAIVideoScenes = {};
+    window._cachedSecondaryImage = {};
+    window._cardCustomPhotos = {}; // STRICTLY SCOPED BY CARD.ID — NEVER STUCK ACROSS TOPICS!
     window._renderOffsetCounter = 0;
-    window._videoOffsetCounter = 0;
 
     const LUXURY_SG_ARCH_LIBRARY = [
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1080&q=85',
@@ -763,20 +742,16 @@
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1080&q=85',
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1080&q=85',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1080&q=85',
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1080&q=85',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1080&q=85',
-      'https://images.unsplash.com/photo-1600566753086-2d87185b9fd2?auto=format&fit=crop&w=1080&q=85',
-      'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1080&q=85',
-      'https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?auto=format&fit=crop&w=1080&q=85'
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1080&q=85'
     ];
 
     const SG_TOPIC_POOL = [
-      { pillar: 'SG_NEWS', title: 'Why 5-Year HDB MOP Owners Lose S$128K in Equity Velocity Waiting for Year 7 (2026 Punggol & Tampines PSF Math)', shortHeadline: '5-YEAR HDB MOP EQUITY WINDOW', hookAlert: '🚨 $128,000 HDB MOP TIMING TRAP', pills: ['Record Resale Demand', 'Peak Year-5 Equity', '6-Month ABSD Refund'], keyword: 'MOP' },
-      { pillar: 'CREATOR_VIRAL', title: 'District 15 Freehold 3-Bedder Dumbbell Layout (S$2,320 PSF) vs. OCR New Launch (S$2,450+ PSF)', shortHeadline: 'D15 FREEHOLD VS OCR LAUNCH PSF', hookAlert: '⚠️ STOP OVERPAYING $2,450 PSF IN OCR', pills: ['Zero Wasted Corridor', '$2,320 PSF Freehold', '1,087 Sqft Dumbbell'], keyword: 'D15' },
-      { pillar: 'COMEDY_SKIT', title: 'POV: Developer Brochure Says Spacious Luxury 3-Bedder vs. Actual King Bed + Wardrobe Math', shortHeadline: 'BROCHURE VS REAL FLOORPLAN MATH', hookAlert: '🛑 75 SQFT CORRIDOR WASTE EXPOSED', pills: ['Check Usable Sqft', 'Zero Bay WindowLoss', 'True Master Bedroom'], keyword: 'FLOORPLAN' },
-      { pillar: 'SG_NEWS', title: 'IRAS 6-Month ABSD Remission Timeline: How HDB Upgraders Avoid Temporary Cashflow Traps in 2026', shortHeadline: '2026 ABSD REMISSION TIMELINE', hookAlert: '🚨 6-MONTH IRAS ABSD DEADLINE CHECK', pills: ['6-Month Sale Window', '20% ABSD Refunded', '55% TDSR Stress-Test'], keyword: 'ABSD' },
-      { pillar: 'MOTIVATION', title: 'Why Buying a $2M OCR Mega-Launch in 2026 Is Actually a Massive Downgrade', shortHeadline: 'BUYING $2M OCR MEGA-LAUNCH 2026', hookAlert: '⚠️ THE $2M OCR SHOEBOX TRAP IN 2026', pills: ['$2,150+ PSF OCR Cap', 'High Competition Exit', 'RCR Freehold Value'], keyword: 'UPGRADE' },
-      { pillar: 'CREATOR_VIRAL', title: 'Executive Condo (EC) S$16K Income Ceiling vs. Resale RCR Condo: 5-Year Net Equity Comparison', shortHeadline: 'NEW EC VS RESALE RCR CONDO', hookAlert: '🔥 NEW EC VS RESALE RCR EQUITY MATH', pills: ['$16K Income Cap', 'Zero ABSD Upfront', '30% MSR vs 55% TDSR'], keyword: 'EC' }
+      { pillar: 'SG_NEWS', visualConcept: 'DATA_RECEIPT', heroStat: 'S$ 128,000', title: 'Why 5-Year HDB MOP Owners Lose S$128K in Equity Velocity Waiting for Year 7 (2026 Punggol & Tampines PSF Math)', shortHeadline: '5-YEAR HDB MOP EQUITY WINDOW', hookAlert: '🚨 $128,000 HDB MOP TIMING TRAP', pills: ['Record Resale Demand', 'Peak Year-5 Equity', '6-Month ABSD Refund'], keyword: 'MOP' },
+      { pillar: 'CREATOR_VIRAL', visualConcept: 'VS_SPLIT', heroStat: '$2,320 vs $2,450', title: 'District 15 Freehold 3-Bedder Dumbbell Layout (S$2,320 PSF) vs. OCR New Launch (S$2,450+ PSF)', shortHeadline: 'D15 FREEHOLD VS OCR LAUNCH PSF', hookAlert: '⚠️ STOP OVERPAYING $2,450 PSF IN OCR', pills: ['Zero Wasted Corridor', '$2,320 PSF Freehold', '1,087 Sqft Dumbbell'], keyword: 'D15' },
+      { pillar: 'COMEDY_SKIT', visualConcept: 'POV_LIFESTYLE', heroStat: '75 SQFT LOST', title: 'POV: Developer Brochure Says Spacious Luxury 3-Bedder vs. Actual King Bed + Wardrobe Math', shortHeadline: 'BROCHURE VS REAL FLOORPLAN MATH', hookAlert: '🛑 75 SQFT CORRIDOR WASTE EXPOSED', pills: ['Check Usable Sqft', 'Zero Bay WindowLoss', 'True Master Bedroom'], keyword: 'FLOORPLAN' },
+      { pillar: 'SG_NEWS', visualConcept: 'EDITORIAL_COVER', heroStat: '6-MONTH RULE', title: 'IRAS 6-Month ABSD Remission Timeline: How HDB Upgraders Avoid Temporary Cashflow Traps in 2026', shortHeadline: '2026 ABSD REMISSION TIMELINE', hookAlert: '🚨 6-MONTH IRAS ABSD DEADLINE CHECK', pills: ['6-Month Sale Window', '20% ABSD Refunded', '55% TDSR Stress-Test'], keyword: 'ABSD' },
+      { pillar: 'MOTIVATION', visualConcept: 'VS_SPLIT', heroStat: '$2.0M DOWNGRADE?', title: 'Why Buying a $2M OCR Mega-Launch in 2026 Is Actually a Massive Downgrade', shortHeadline: 'BUYING $2M OCR MEGA-LAUNCH 2026', hookAlert: '⚠️ THE $2M OCR SHOEBOX TRAP IN 2026', pills: ['$2,150+ PSF OCR Cap', 'High Competition Exit', 'RCR Freehold Value'], keyword: 'UPGRADE' },
+      { pillar: 'CREATOR_VIRAL', visualConcept: 'STREET_AERIAL', heroStat: '$16K EC CAP', title: 'Executive Condo (EC) S$16K Income Ceiling vs. Resale RCR Condo: 5-Year Net Equity Comparison', shortHeadline: 'NEW EC VS RESALE RCR CONDO', hookAlert: '🔥 NEW EC VS RESALE RCR EQUITY MATH', pills: ['$16K Income Cap', 'Zero ABSD Upfront', '30% MSR vs 55% TDSR'], keyword: 'EC' }
     ];
 
     const appState = {
@@ -797,12 +772,10 @@
         avatarDataUrl: '',
         brandLogoDataUrl: ''
       })),
-      uploadedPropertyPhoto: null,
-      uploadedPropertyBase64: null,
       topicHistoryMemory: JSON.parse(localStorage.getItem('squad_topic_history') || '[]'),
       viralMemory: JSON.parse(localStorage.getItem('squad_viral_memory') || JSON.stringify([
-        'Hook #1: Steadicam walk-and-talk hook with a specific dollar figure in 0–3s boosts 3s Hold Rate to >84%.',
-        'Conversion #2: Delivering HDB MOP Calculator via wa.me increases viewing bookings 3.1x.',
+        'Concept #1: Split-Screen "VS" Showdown posters outperform generic 3D floorplans by 2.4x on IG saves.',
+        'Concept #2: "Truth Receipt" financial breakdown graphics drive 3.1x higher WhatsApp MOP calculator clicks.',
         'Prompt #3: Positive Structural Lock eliminates background warping in Google Flow Veo 3.1.'
       ])),
       a99Logs: [],
@@ -856,6 +829,26 @@
       } catch (e) {}
     }
 
+    // DETECT BEST DARING VISUAL CONCEPT BY TOPIC (OR ROTATE)
+    function inferVisualConceptForTopic(title = '', fallbackIdx = 0) {
+      if (/\bvs\.?\b|compare|downgrade|shoebox/i.test(title)) return 'VS_SPLIT';
+      if (/\$128k|\$2m|cpf|accrued|math|lose|suicid|trap/i.test(title)) return 'DATA_RECEIPT';
+      if (/pov|brochure|viewing|balcony|lifestyle/i.test(title)) return 'POV_LIFESTYLE';
+      if (/mrt|masterplan|transformation|ec\b|bayshore/i.test(title)) return 'STREET_AERIAL';
+      if (/iras|absd|tdsr|policy|timeline/i.test(title)) return 'EDITORIAL_COVER';
+      return VISUAL_CONCEPT_KEYS[fallbackIdx % VISUAL_CONCEPT_KEYS.length];
+    }
+
+    function extractHeroStat(titleOrCard) {
+      if (titleOrCard && typeof titleOrCard === 'object' && titleOrCard.heroStat) return titleOrCard.heroStat;
+      const t = typeof titleOrCard === 'object' ? (titleOrCard.title || '') : String(titleOrCard || '');
+      const dollarMatch = t.match(/S?\$\d[\d,.]*[KM]?(\s*\+?\s*PSF)?/i);
+      if (dollarMatch) return dollarMatch[0].toUpperCase();
+      if (/99-year|cpf/i.test(t)) return '2.5% CPF ACCRUED';
+      if (/5-year|mop/i.test(t)) return 'YEAR 5–7 WINDOW';
+      return '2026 URA DATA';
+    }
+
     function makeCleanBannerHeadline(titleOrCard) {
       if (titleOrCard && typeof titleOrCard === 'object') {
         if (titleOrCard.shortHeadline) return titleOrCard.shortHeadline;
@@ -907,31 +900,121 @@
     }
 
     // ============================================================================
-    // UPGRADED 100/100 MODERN SOCIAL MEDIA REEL VEO 3.1 PROMPTS (RYAN SERHANT / PLB STYLE)
+    // 6 DARING SOCIAL MEDIA IMAGE PROMPT CONCEPTS + GOOGLE FLOW 6-LAYER PROMPTS
     // ============================================================================
-    function buildSyncedBoxCMediaPrompt(titleOrCard, format, scriptText) {
-      const bannerHeadline = makeCleanBannerHeadline(titleOrCard);
-      const pills = getTopicPills(titleOrCard);
+    function buildSyncedBoxCMediaPrompt(titleOrCard, format, scriptText, conceptOverride = null) {
+      const cardObj = (titleOrCard && typeof titleOrCard === 'object') ? titleOrCard : { title: String(titleOrCard || '') };
+      const bannerHeadline = makeCleanBannerHeadline(cardObj);
+      const hookAlert = getHookAlertBadge(cardObj);
+      const pills = getTopicPills(cardObj);
+      const heroStat = extractHeroStat(cardObj);
+      const concept = conceptOverride || cardObj.visualConcept || inferVisualConceptForTopic(cardObj.title);
       const rawLines = String(scriptText || '').split('\n').map(l => l.trim()).filter(Boolean);
 
       if (format === 'Image/Flyer Carousel') {
-        return `Create a vertical 4:5 portrait luxury Singapore real estate editorial infographic poster in crisp architectural photography and 3D isometric visualization style.
+        if (concept === 'VS_SPLIT') {
+          return `Create a vertical 4:5 high-contrast split-screen "VS Showdown" Singapore real estate social media poster in dramatic commercial photography style (NO 3D floorplan cutaway).
 
-ZONE 1 — TOP HEADER BANNER (Top 18% on deep obsidian navy background with brushed champagne gold accents):
-Render bold, clean modern sans-serif headline text in luminous gold and white reading exact words: "${bannerHeadline}" with a clean subtitle underneath reading exact words: "2026 Singapore URA REALIS Property Playbook".
+TOP HEADER BANNER (Deep obsidian navy bar with crimson & gold accents):
+Render bold sans-serif headline text reading exact words: "${bannerHeadline}" with a red alert pill badge reading: "${hookAlert.replace(/^[🚨⚠️🛑🔥]\s*/, '')}".
 
-ZONE 2 — CENTER HERO VISUAL (Middle 64%):
-A photorealistic, sunlit 45-degree 3D isometric architectural cutaway floorplan of a modern luxury Singapore 3-bedroom residence with warm Burmese teak timber flooring, marble dry kitchen island, and floor-to-ceiling balcony glass overlooking the Singapore skyline in golden hour light. All walls, cabinetry, and furniture geometry are razor-sharp and proportionally accurate.
-Floating neatly beside the 3D cutaway are three sleek frosted-glass data pills with crisp white typography reading exact words:
+CENTER SPLIT-SCREEN SHOWDOWN VISUAL:
+Divide the center canvas vertically into two contrasting worlds separated by a glowing gold lightning divider and a bold circular center badge reading "VS":
+- LEFT SIDE (The Buyer Trap — Cool desaturated steel-blue lighting): A cramped, high-density suburban condominium shoebox interior with narrow corridor and tight balcony, labeled with a red frosted-glass pill reading exact words: "${pills[0]}".
+- RIGHT SIDE (The Smart Upgrade — Warm golden-hour sunlit luxury): An expansive, wide-frontage Singapore freehold living and dining room with Italian marble island and unblocked greenery view, labeled with a glowing emerald glass pill reading exact words: "${pills[1]}" and a gold pill reading: "${pills[2]}".
+Include a subtle micro-label reading: "Artist's Impression — URA REALIS 2026".
+
+BOTTOM BRANDING FOOTER:
+Dark luxury compliance capsule with circular realtor portrait frame on left and statutory credentials on right.`;
+        }
+
+        if (concept === 'EDITORIAL_COVER') {
+          return `Create a vertical 4:5 Architectural Digest & Forbes Asia style luxury magazine cover poster for Singapore real estate (NO 3D floorplan cutaway).
+
+FULL-BLEED HERO PHOTOGRAPHY:
+Low-angle architectural twilight photography of an iconic ultra-luxury Singapore residential tower and sky-bridge with warm interior cove lighting glowing against a deep sapphire dusk sky and infinity pool reflections.
+
+MAGAZINE MASTHEAD & EDITORIAL OVERLAYS:
+Across the upper sky area, render giant, ultra-clean high-fashion editorial masthead typography in brushed champagne gold reading exact words: "${bannerHeadline}".
+In the lower-middle foreground, float a sleek translucent dark-glass editorial callout card featuring a giant gold metric reading: "${heroStat}" paired with three crisp bullet tags reading exact words: "${pills[0]}", "${pills[1]}", and "${pills[2]}".
+Include a subtle micro-label reading: "Artist's Impression — URA REALIS 2026".
+
+BOTTOM BRANDING FOOTER:
+Floating obsidian glass compliance capsule with realtor portrait and statutory particulars.`;
+        }
+
+        if (concept === 'DATA_RECEIPT') {
+          return `Create a vertical 4:5 viral financial "Truth Receipt & Equity Breakdown" dark-mode social media infographic poster (NO 3D floorplan cutaway).
+
+BACKGROUND & ATMOSPHERE:
+ moody, softly blurred twilight view of the Singapore Marina Bay financial skyline seen through rain-speckled penthouse glass, overlaid with a razor-sharp dark obsidian glassmorphic financial dashboard card in the center.
+
+CENTER FINANCIAL BREAKDOWN CARD:
+At the top of the glass card, render a glowing crimson warning header reading exact words: "${bannerHeadline}".
+Directly below, spotlight a massive, luminous 3D gold and emerald hero number reading exact words: "${heroStat}".
+Underneath the hero number, render three horizontal comparison progress bars with crisp white labels reading exact words:
+- Bar 1 (Red Warning Bar): "${pills[0]}"
+- Bar 2 (Emerald Growth Bar): "${pills[1]}"
+- Bar 3 (Gold Strategy Bar): "${pills[2]}"
+Include a subtle footer note on the card reading: "Verified URA REALIS & HDB 2026 Data".
+
+BOTTOM BRANDING FOOTER:
+Structured dark navy compliance footer bar for realtor portrait and CEA statutory particulars.`;
+        }
+
+        if (concept === 'POV_LIFESTYLE') {
+          return `Create a vertical 4:5 first-person POV luxury Singapore penthouse lifestyle photograph designed for high-engagement Instagram & LinkedIn carousels (NO 3D floorplan cutaway).
+
+FIRST-PERSON POV SCENE:
+Shot on a 24mm f/1.4 prime lens from an eye-level first-person perspective standing on a sunlit high-floor Singapore sky-terrace balcony at golden hour. In the immediate foreground, a marble bistro table holds a ceramic espresso cup and an architectural portfolio. Beyond the frameless glass balustrade stretches an unblocked panoramic view of the Singapore East Coast and city skyline bathed in warm sunset light.
+
+FLOATING GLASS CALLOUT TAGS:
+Top editorial headline in crisp white & gold typography reading exact words: "${bannerHeadline}".
+Floating naturally in the mid-ground air are three modern Apple-Vision-style frosted glass UI tags with glowing icons reading exact words:
+- Tag 1: "${pills[0]}"
+- Tag 2: "${pills[1]}"
+- Tag 3: "${pills[2]}"
+
+BOTTOM BRANDING FOOTER:
+Sleek dark glass compliance capsule at the bottom edge.`;
+        }
+
+        if (concept === 'STREET_AERIAL') {
+          return `Create a vertical 4:5 cinematic drone twilight masterplan photograph of a prime Singapore residential precinct (NO 3D floorplan cutaway).
+
+AERIAL DRONE SCENE:
+High-altitude 45-degree helicopter/drone photography at blue hour overlooking a lush Singapore residential enclave, illuminated MRT station hub, and glowing condominium sky-gardens connected by tree-lined boulevards.
+
+ARCHITECTURAL CALLOUT PINS:
+Bold top sky headline reading exact words: "${bannerHeadline}".
+Anchored to key buildings in the aerial view are three glowing gold architectural location pins with sleek dark callout boxes reading exact words:
+- Pin 1: "${pills[0]}"
+- Pin 2: "${pills[1]}"
+- Pin 3: "${pills[2]}"
+Include a subtle micro-label reading: "Artist's Impression — URA Master Plan Context".
+
+BOTTOM BRANDING FOOTER:
+Structured dark navy compliance footer bar at the bottom.`;
+        }
+
+        // Concept 6: Classic 3D Isometric Cutaway
+        return `Create a vertical 4:5 portrait luxury Singapore real estate editorial infographic poster in 3D isometric visualization style.
+
+ZONE 1 — TOP HEADER BANNER:
+Render bold, clean modern sans-serif headline text in luminous gold and white reading exact words: "${bannerHeadline}" with a clean subtitle underneath reading: "2026 Singapore URA REALIS Property Playbook".
+
+ZONE 2 — CENTER HERO VISUAL:
+A photorealistic, sunlit 45-degree 3D isometric architectural cutaway floorplan of a modern luxury Singapore 3-bedroom residence with warm Burmese teak timber flooring, marble dry kitchen island, and floor-to-ceiling balcony glass.
+Floating neatly beside the 3D cutaway are three sleek frosted-glass data pills reading exact words:
 - Pill 1: "${pills[0]}"
 - Pill 2: "${pills[1]}"
 - Pill 3: "${pills[2]}"
-Include a subtle, legible micro-label in the lower corner reading: "Artist's Impression — Source: URA REALIS 2026".
 
-ZONE 3 — BOTTOM BRANDING FOOTER (Bottom 18%):
-A structured dark navy luxury compliance banner with clean space for the realtor portrait badge and statutory particulars.`;
+ZONE 3 — BOTTOM BRANDING FOOTER:
+Structured dark navy luxury compliance banner at the bottom.`;
       }
 
+      // Google Flow (Veo 3.1) 4-Clip Prompts for Video Format
       return [1, 2, 3, 4].map(n => {
         const lineStr = rawLines[n - 1] || `"Comment MOP below for our progression calculator."`;
         const quoteMatch = lineStr.match(/"([^"]+)"/);
@@ -973,12 +1056,14 @@ Audio: Master Voiceprint Lock — Consistent 38-year-old Singaporean English pro
       }).join('\n\n');
     }
 
-    function generateCardAssetsFromTopic(title, format = 'Video (Reels/TikTok/Shorts)', keyword = 'MOP', existingCard = null) {
+    function generateCardAssetsFromTopic(title, format = 'Image/Flyer Carousel', keyword = 'MOP', existingCard = null) {
       const p = appState.ceaProfile;
       const isZh = appState.bilingualMode === 'ZH';
       const bannerHeadline = makeCleanBannerHeadline(existingCard || title);
       const hookAlert = getHookAlertBadge(existingCard || title);
       const pills = getTopicPills(existingCard || title);
+      const heroStat = extractHeroStat(existingCard || title);
+      const visualConcept = existingCard?.visualConcept || inferVisualConceptForTopic(title, appState.cards.length);
 
       const copy = isZh
         ? `【2026新加坡房产深度解析】${title} 📈\n\n• 依据 URA REALIS 与 HDB 官方真实交易数据整理（已隐去具体门牌号以严格符合CEA规范）\n• 核心指标对比：${pills.join(' | ')}\n• 满5年MOP屋主如何安全规划6个月IRAS ABSD退税与55% TDSR贷款压力测试？\n\n💬 留言 "${keyword}" 或点击下方 WhatsApp 免费领取 HDB MOP 升级计算器：${MOP_CALCULATOR_URL}\n\n—\n${p.name} | CEA Reg No: ${p.regNo}\n${p.agencyName} | Licence: ${p.licenceNo}\nWhatsApp: ${p.phone}`
@@ -991,9 +1076,12 @@ Audio: Master Voiceprint Lock — Consistent 38-year-old Singaporean English pro
         `[Clip 4 (24-32s)]: "Comment ${keyword} right now or tap my WhatsApp link to run our free Singapore property progression calculator."`
       ];
       const script = existingCard?.script || scriptLines.join('\n');
-      const media = buildSyncedBoxCMediaPrompt(existingCard || { title, shortHeadline: bannerHeadline, hookAlert, pills }, format, script);
+      const tempCardObj = { title, shortHeadline: bannerHeadline, hookAlert, pills, heroStat, visualConcept };
+      const media = buildSyncedBoxCMediaPrompt(tempCardObj, format, script, visualConcept);
 
       return {
+        visualConcept,
+        heroStat,
         shortHeadline: bannerHeadline,
         hookAlert,
         pills,
@@ -1010,7 +1098,7 @@ Audio: Master Voiceprint Lock — Consistent 38-year-old Singaporean English pro
       const p = appState.ceaProfile;
       const prompt = `You are Orchestrator 2 of AgentZug V.4.6.5 for Singapore realtor ${p.name} (CEA Reg No: ${p.regNo}, ${p.agencyName}, Licence: ${p.licenceNo}, Phone: ${p.phone}).
 Topic: "${card.title}"
-Format: "${card.format}"
+Visual Concept Archetype: "${VISUAL_CONCEPT_LABELS[card.visualConcept] || card.visualConcept}"
 Language: ${appState.bilingualMode === 'ZH' ? 'Simplified Chinese (keep CEA block in English)' : 'English'}
 
 Return ONLY valid JSON with keys:
@@ -1018,6 +1106,7 @@ Return ONLY valid JSON with keys:
   "copy": "Viral Singapore property caption with scroll-stopping 1st sentence hook, 3 URA REALIS/HDB numeric bullets (unit numbers masked), CTA to comment MOP for ${MOP_CALCULATOR_URL}, and full 5 CEA particulars at bottom",
   "script": "4 lines formatted exactly as [Clip 1 (0-8s)]: \\"...\\" through [Clip 4 (24-32s)]: \\"...\\" (Clip 1 MUST be a punchy 14-17 word contrarian hook; Clips 2-3 hard URA math; Clip 4 WhatsApp/DM CTA)",
   "shortHeadline": "MAX 5 WORDS COMPLETE HEADLINE IN ALL CAPS",
+  "heroStat": "MAX 12 CHARS GIANT POWER STAT (e.g. 'S$ 128,000' or '2.5% CPF TRAP' or '$2,320 PSF')",
   "hookAlert": "🚨 MAX 6 WORDS SCROLL-STOPPING HOOK ALERT IN ALL CAPS",
   "pills": ["Max 3 Words", "Max 3 Words", "Max 3 Words"]
 }`;
@@ -1030,7 +1119,7 @@ Return ONLY valid JSON with keys:
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { responseMimeType: 'application/json', temperature: 0.45 }
+              generationConfig: { responseMimeType: 'application/json', temperature: 0.55 }
             })
           });
           if (res.ok) {
@@ -1040,10 +1129,11 @@ Return ONLY valid JSON with keys:
             if (parsed.copy) card.copy = parsed.copy;
             if (parsed.script) card.script = parsed.script;
             if (parsed.shortHeadline) card.shortHeadline = parsed.shortHeadline;
+            if (parsed.heroStat) card.heroStat = parsed.heroStat;
             if (parsed.hookAlert) card.hookAlert = parsed.hookAlert;
             if (Array.isArray(parsed.pills) && parsed.pills.length === 3) card.pills = parsed.pills;
-            card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script);
-            logA99Telemetry(`Live ${m} synced Viral Hook Copy -> 4-Clip Script -> Modern Social Reel Prompts.`);
+            card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script, card.visualConcept);
+            logA99Telemetry(`Live ${m} generated daring ${card.visualConcept} concept & prompt.`);
             return;
           }
         } catch (err) {}
@@ -1054,11 +1144,35 @@ Return ONLY valid JSON with keys:
       const card = appState.cards.find(c => c.id === appState.activeCardId);
       if (!card) return;
       card.script = newScriptVal;
-      card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script);
+      card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script, card.visualConcept);
       document.getElementById('studio-media-output').value = card.media;
       renderIndividualClipCopyButtons(card.media);
-      drawVideoCanvas(0, 1.04, 0, null, 0.1, 0.5);
       saveWorkspaceState();
+    }
+
+    // SWITCH OR CYCLE DARING VISUAL CONCEPT ARCHETYPE
+    function onVisualConceptChanged(newConcept) {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (!card) return;
+      card.visualConcept = newConcept;
+      card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script, newConcept);
+      document.getElementById('studio-media-output').value = card.media;
+      const badge = document.getElementById('active-concept-badge');
+      if (badge) badge.textContent = `Active Concept: ${VISUAL_CONCEPT_LABELS[newConcept] || newConcept}`;
+      renderIndividualClipCopyButtons(card.media);
+      renderFlyerCanvas(false);
+      saveWorkspaceState();
+      showToast(`🎨 Switched Poster & Prompt to ${VISUAL_CONCEPT_LABELS[newConcept]}!`, 'info');
+    }
+
+    function cycleNextDaringConcept() {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (!card) return;
+      const curIdx = VISUAL_CONCEPT_KEYS.indexOf(card.visualConcept || 'VS_SPLIT');
+      const nextConcept = VISUAL_CONCEPT_KEYS[(curIdx + 1) % VISUAL_CONCEPT_KEYS.length];
+      const sel = document.getElementById('studio-visual-concept');
+      if (sel) sel.value = nextConcept;
+      onVisualConceptChanged(nextConcept);
     }
 
     function initDefaultData() {
@@ -1069,21 +1183,23 @@ Return ONLY valid JSON with keys:
         try { appState.cards = JSON.parse(savedCards); } catch (e) {}
       }
       if (!appState.cards || appState.cards.length === 0) {
-        const c1Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[0].title, 'Video (Reels/TikTok/Shorts)', 'MOP');
-        const c2Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[1].title, 'Video (Reels/TikTok/Shorts)', 'D15');
-        const c3Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[4].title, 'Video (Reels/TikTok/Shorts)', 'UPGRADE');
+        const c1Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[0].title, 'Image/Flyer Carousel', 'MOP', SG_TOPIC_POOL[0]);
+        const c2Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[1].title, 'Image/Flyer Carousel', 'D15', SG_TOPIC_POOL[1]);
+        const c3Assets = generateCardAssetsFromTopic(SG_TOPIC_POOL[4].title, 'Image/Flyer Carousel', 'UPGRADE', SG_TOPIC_POOL[4]);
 
         appState.cards = [
-          { id: 'c1', title: SG_TOPIC_POOL[0].title, format: 'Video (Reels/TikTok/Shorts)', stage: 'Human Select', ownerConsent: true, promptQAScore: 100, ...c1Assets },
-          { id: 'c2', title: SG_TOPIC_POOL[1].title, format: 'Video (Reels/TikTok/Shorts)', stage: 'Human Review', ownerConsent: true, promptQAScore: 100, ...c2Assets },
-          { id: 'c3', title: SG_TOPIC_POOL[4].title, format: 'Video (Reels/TikTok/Shorts)', stage: 'Human Review', ownerConsent: true, promptQAScore: 100, ...c3Assets }
+          { id: 'c1', title: SG_TOPIC_POOL[0].title, format: 'Image/Flyer Carousel', stage: 'Human Select', ownerConsent: true, promptQAScore: 100, ...c1Assets },
+          { id: 'c2', title: SG_TOPIC_POOL[1].title, format: 'Image/Flyer Carousel', stage: 'Human Review', ownerConsent: true, promptQAScore: 100, ...c2Assets },
+          { id: 'c3', title: SG_TOPIC_POOL[4].title, format: 'Image/Flyer Carousel', stage: 'Human Review', ownerConsent: true, promptQAScore: 100, ...c3Assets }
         ];
       } else {
-        appState.cards.forEach(c => {
+        appState.cards.forEach((c, idx) => {
+          if (!c.visualConcept) c.visualConcept = inferVisualConceptForTopic(c.title, idx);
+          if (!c.heroStat) c.heroStat = extractHeroStat(c);
           c.shortHeadline = makeCleanBannerHeadline(c);
           c.hookAlert = getHookAlertBadge(c);
           c.pills = getTopicPills(c);
-          c.media = buildSyncedBoxCMediaPrompt(c, c.format, c.script);
+          c.media = buildSyncedBoxCMediaPrompt(c, c.format, c.script, c.visualConcept);
         });
       }
 
@@ -1100,7 +1216,7 @@ Return ONLY valid JSON with keys:
       }
 
       appState.waMessages = [
-        { sender: 'client', name: 'Kelvin Tan (+65 9128 4411)', text: 'Hi Luiz, saw your Punggol 5-Year MOP video! How do I check our net cash proceeds?' },
+        { sender: 'client', name: 'Kelvin Tan (+65 9128 4411)', text: 'Hi Luiz, saw your Punggol 5-Year MOP breakdown! How do I check our net cash proceeds?' },
         { sender: 'agent8', name: 'Agent 8 Auto-Pilot', text: `Hi Kelvin! Great to connect. You can calculate your exact HDB MOP net cash & CPF refund using our interactive calculator here: ${MOP_CALCULATOR_URL} — are you and your spouse both Singapore Citizens?` }
       ];
 
@@ -1111,11 +1227,12 @@ Return ONLY valid JSON with keys:
     function resetDemoBoardState() {
       localStorage.removeItem('squad_cards_v465');
       window._cachedAIFlyerImage = {};
-      window._cachedAIVideoScenes = {};
+      window._cachedSecondaryImage = {};
+      window._cardCustomPhotos = {};
       appState.cards = [];
       initDefaultData();
       renderKanban();
-      showToast('Kanban Board & Media Cache reset!', 'info');
+      showToast('Kanban Board & Custom Photos reset!', 'info');
     }
 
     function recalculateTotalGCI() {
@@ -1134,6 +1251,7 @@ Return ONLY valid JSON with keys:
       saveWorkspaceState();
     }
 
+    // AGENT 1: + MINE TOPIC (AUTO-ROTATES DARING VISUAL CONCEPTS & CLEARS ANY STUCK PHOTO!)
     async function triggerAgent1Pitch() {
       const btn = document.getElementById('btn-mine-topic');
       const mode = document.getElementById('agent1-style-select')?.value || 'ALL_MIX';
@@ -1180,17 +1298,28 @@ Return ONLY valid JSON with keys:
         const fallbackPool = pool.length > 0 ? pool : SG_TOPIC_POOL.filter(item => !existingTitles.has(item.title.toLowerCase()));
         chosenTopic = fallbackPool[0] || {
           pillar: mode,
-          title: `2026 Singapore District ${Math.floor(Math.random() * 18) + 9} Upgrader PSF Arbitrage & ABSD Timeline`,
+          title: `2026 Singapore District ${Math.floor(Math.random() * 18) + 9} Upgrader PSF Arbitrage vs. OCR New Launch`,
           keyword: 'UPGRADE'
         };
       }
 
+      // Rotate to a distinct visual concept so consecutive topics never look the same!
+      const prevConcept = appState.cards[0]?.visualConcept || '';
+      let nextConcept = chosenTopic.visualConcept || inferVisualConceptForTopic(chosenTopic.title, appState.cards.length);
+      if (nextConcept === prevConcept) {
+        const nextIdx = (VISUAL_CONCEPT_KEYS.indexOf(prevConcept) + 1) % VISUAL_CONCEPT_KEYS.length;
+        nextConcept = VISUAL_CONCEPT_KEYS[nextIdx];
+      }
+
       const newId = 'c' + Date.now().toString().slice(-5);
-      const assets = generateCardAssetsFromTopic(chosenTopic.title, 'Video (Reels/TikTok/Shorts)', chosenTopic.keyword || 'MOP');
+      // Ensure the new card has ZERO inherited custom photo
+      delete window._cardCustomPhotos[newId];
+
+      const assets = generateCardAssetsFromTopic(chosenTopic.title, 'Image/Flyer Carousel', chosenTopic.keyword || 'MOP', { ...chosenTopic, visualConcept: nextConcept });
       const newCard = {
         id: newId,
         title: chosenTopic.title,
-        format: 'Video (Reels/TikTok/Shorts)',
+        format: 'Image/Flyer Carousel',
         stage: 'Human Select',
         ownerConsent: true,
         promptQAScore: 100,
@@ -1210,7 +1339,7 @@ Return ONLY valid JSON with keys:
       switchTab('board');
       renderKanban();
       scrollToKanbanStage('Human Select');
-      showToast(`✨ Agent 1 mined new topic into [2. Human Select]!`, 'info');
+      showToast(`✨ Mined new topic with [${VISUAL_CONCEPT_LABELS[nextConcept]}] concept!`, 'info');
     }
 
     async function runInteractiveFullDemo() {
@@ -1221,7 +1350,7 @@ Return ONLY valid JSON with keys:
         targetCard = appState.cards[0];
       }
       showToast('🚀 Starting 2-Touch Autonomous Demo on: ' + targetCard.title.slice(0, 38) + '...', 'info');
-      await humanTouch1Run(targetCard.id, 'Video (Reels/TikTok/Shorts)');
+      await humanTouch1Run(targetCard.id, 'Image/Flyer Carousel');
     }
 
     function switchTab(tabKey) {
@@ -1290,9 +1419,9 @@ Return ONLY valid JSON with keys:
         
         let cardsHtml = stageCards.map(c => `
           <div class="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold text-indigo-500">${escapeHTML(c.format)}</span>
-              <span class="text-[10px] font-mono text-emerald-500">QA ${c.promptQAScore || 100}%</span>
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[10px] font-bold text-amber-400 truncate">${escapeHTML(VISUAL_CONCEPT_LABELS[c.visualConcept] || 'Social Poster')}</span>
+              <span class="text-[10px] font-mono text-emerald-500 shrink-0">QA 100%</span>
             </div>
             <div onclick="appState.activeCardId='${c.id}'; switchTab('studio');" class="font-bold text-xs cursor-pointer hover:text-indigo-400 transition">${escapeHTML(c.title)}</div>
             ${isProp ? `
@@ -1302,8 +1431,8 @@ Return ONLY valid JSON with keys:
             ${isGate1 ? `
               <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1.5">
                 <div class="grid grid-cols-2 gap-1">
-                  <button onclick="humanTouch1Run('${c.id}', 'Video (Reels/TikTok/Shorts)')" class="py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px]">🎬 Auto-Run Video</button>
-                  <button onclick="humanTouch1Run('${c.id}', 'Image/Flyer Carousel')" class="py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-[10px]">🖼️ Auto-Run Flyer</button>
+                  <button onclick="humanTouch1Run('${c.id}', 'Image/Flyer Carousel')" class="py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-[10px]">🖼️ Auto-Run Poster</button>
+                  <button onclick="humanTouch1Run('${c.id}', 'Video (Reels/TikTok/Shorts)')" class="py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px]">🎬 Flow Prompts</button>
                 </div>
                 <div class="flex gap-1">
                   <button onclick="appState.activeCardId='${c.id}'; switchTab('studio');" class="flex-1 py-1 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">Inspect Studio</button>
@@ -1401,22 +1530,21 @@ Return ONLY valid JSON with keys:
       banner.classList.remove('hidden');
 
       card.stage = 'Ready'; renderKanban();
-      bar.style.width = '20%'; badge.textContent = 'Step 1 / 5';
-      log.textContent = '🟢 Stage 3 [Ready]: Calling Gemini 2.5 Flash for Chained Copy (Box A) -> Script (Box B) -> Modern Reel Prompts (Box C)...';
+      bar.style.width = '25%'; badge.textContent = 'Step 1 / 4';
+      log.textContent = `🟢 Stage 3 [Ready]: Calling Gemini 2.5 Flash for [${VISUAL_CONCEPT_LABELS[card.visualConcept]}] Concept & Copy...`;
       const freshAssets = generateCardAssetsFromTopic(card.title, card.format, 'MOP', card);
       Object.assign(card, freshAssets);
       await enrichCardWithLiveGeminiText(card);
 
       card.stage = 'In Progress'; renderKanban();
-      bar.style.width = '55%'; badge.textContent = 'Step 2 / 5';
-      log.textContent = '🟡 Stage 4 [In Progress]: Rendering Full-Bleed 9:16 Pro Reel with Gemini TTS Voiceover + 95 BPM Beat...';
+      bar.style.width = '65%'; badge.textContent = 'Step 2 / 4';
+      log.textContent = '🟡 Stage 4 [In Progress]: Rendering 1080×1350 Social Poster & Prompt QA 100/100 Gate...';
 
       switchTab('studio');
       await renderFlyerCanvas(true);
-      await renderLiveVeoVideoOrFallback();
 
-      bar.style.width = '95%'; badge.textContent = 'Step 5 / 5';
-      log.textContent = '🟢 Agent A16 Voice+Beat Muxer + Agent 5 CEA Gate Passed! Advancing to Stage 5 [Human Review]...';
+      bar.style.width = '100%'; badge.textContent = 'Step 4 / 4';
+      log.textContent = '🟢 Agent 5 CEA PG 02/2011 Gate Passed! Advancing to Stage 5 [Human Review]...';
       await new Promise(r => setTimeout(r, 250));
 
       card.stage = 'Human Review';
@@ -1424,7 +1552,7 @@ Return ONLY valid JSON with keys:
       saveWorkspaceState();
       renderKanban();
       populateStudioSelector();
-      showToast('🔴 Swarm complete! Full-Bleed Reel with Baked Voiceover & Beat ready at [5. Human Review].', 'success');
+      showToast(`🔴 Swarm complete! Rendered [${VISUAL_CONCEPT_LABELS[card.visualConcept]}] at [5. Human Review].`, 'success');
     }
 
     function humanTouch2ApproveAndAutoPublish(cardId) {
@@ -1506,14 +1634,18 @@ Return ONLY valid JSON with keys:
       sel.innerHTML = appState.cards.map(c => `<option value="${c.id}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${c.stage}] ${escapeHTML(c.title.slice(0, 60))}</option>`).join('');
     }
 
+    // LOAD CARD INTO STUDIO (RESETS FILE PICKER SO CUSTOM PHOTO IS NEVER STUCK!)
     async function loadCardIntoStudio(cardId) {
       appState.activeCardId = cardId;
       const card = appState.cards.find(c => c.id === cardId) || appState.cards[0];
       if (!card) return;
-      card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script);
+
+      if (!card.visualConcept) card.visualConcept = inferVisualConceptForTopic(card.title, 0);
+      card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script, card.visualConcept);
 
       document.getElementById('studio-topic').value = card.title || '';
-      document.getElementById('studio-format').value = card.format || 'Video (Reels/TikTok/Shorts)';
+      document.getElementById('studio-format').value = card.format || 'Image/Flyer Carousel';
+      document.getElementById('studio-visual-concept').value = card.visualConcept;
       document.getElementById('studio-owner-consent').checked = card.ownerConsent !== false;
       document.getElementById('studio-copy-output').value = card.copy || '';
       document.getElementById('studio-seo-output').value = card.seoDescription || '';
@@ -1521,18 +1653,48 @@ Return ONLY valid JSON with keys:
       document.getElementById('studio-script-output').value = card.script || '';
       document.getElementById('studio-media-output').value = card.media || '';
 
+      const badge = document.getElementById('active-concept-badge');
+      if (badge) badge.textContent = `Active Concept: ${VISUAL_CONCEPT_LABELS[card.visualConcept] || card.visualConcept}`;
+
+      // Reset file input element so previous card's filename is never stuck in the input!
+      const fileInp = document.getElementById('property-photo-input');
+      if (fileInp) fileInp.value = '';
+      updateCustomPhotoUIStatus(card.id);
+
       const boxB = document.getElementById('box-b-container');
       if (boxB) boxB.classList.toggle('hidden', card.format === 'Image/Flyer Carousel');
 
       renderIndividualClipCopyButtons(card.media || '');
       renderCEAChecklist(card);
 
-      if (!window._cachedAIFlyerImage[card.id] && !appState.uploadedPropertyPhoto) {
+      if (!window._cachedAIFlyerImage[card.id] && !window._cardCustomPhotos[card.id]) {
         await renderFlyerCanvas(true);
       } else {
         await renderFlyerCanvas(false);
       }
-      drawVideoCanvas(0, 1.04, 0, null, 0.1, 0.35);
+    }
+
+    function updateCustomPhotoUIStatus(cardId) {
+      const hasCustom = Boolean(window._cardCustomPhotos[cardId]);
+      const statusTxt = document.getElementById('custom-photo-status');
+      const clearBtn = document.getElementById('btn-clear-card-photo');
+      if (statusTxt) {
+        statusTxt.textContent = hasCustom
+          ? '✅ Custom uploaded photo active for THIS card only'
+          : 'Using AI / Topic-Matched Photography (Not stuck across topics)';
+        statusTxt.className = hasCustom ? 'text-[10px] text-emerald-400 font-bold' : 'text-[10px] text-slate-500';
+      }
+      if (clearBtn) clearBtn.classList.toggle('hidden', !hasCustom);
+    }
+
+    function clearCardPropertyPhoto() {
+      const cardId = appState.activeCardId;
+      delete window._cardCustomPhotos[cardId];
+      const fileInp = document.getElementById('property-photo-input');
+      if (fileInp) fileInp.value = '';
+      updateCustomPhotoUIStatus(cardId);
+      renderFlyerCanvas(true);
+      showToast('✕ Cleared custom photo from this topic! Reverted to dynamic visual.', 'info');
     }
 
     function sanitizeForGoogleFlowPolicy(promptText) {
@@ -1591,7 +1753,7 @@ Return ONLY valid JSON with keys:
       if (k === 'format' || k === 'title') {
         const boxB = document.getElementById('box-b-container');
         if (boxB) boxB.classList.toggle('hidden', card.format === 'Image/Flyer Carousel');
-        card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script);
+        card.media = buildSyncedBoxCMediaPrompt(card, card.format, card.script, card.visualConcept);
         document.getElementById('studio-media-output').value = card.media;
       }
       if (k === 'media' || k === 'format' || k === 'title') renderIndividualClipCopyButtons(card.media);
@@ -1605,27 +1767,16 @@ Return ONLY valid JSON with keys:
       if (!card) return;
       const btn = document.getElementById('btn-regen-copy');
       if (btn) { btn.disabled = true; btn.textContent = '⏳ Calling Gemini 2.5...'; }
+      // Rotate to next daring concept on rewrite so user gets a fresh idea
+      const curIdx = VISUAL_CONCEPT_KEYS.indexOf(card.visualConcept || 'VS_SPLIT');
+      card.visualConcept = VISUAL_CONCEPT_KEYS[(curIdx + 1) % VISUAL_CONCEPT_KEYS.length];
       const assets = generateCardAssetsFromTopic(card.title, card.format, 'MOP', card);
       Object.assign(card, assets);
       await enrichCardWithLiveGeminiText(card);
       loadCardIntoStudio(card.id);
       saveWorkspaceState();
-      if (btn) { btn.disabled = false; btn.textContent = '✨ Live AI Rewrite (Syncs A→B→C)'; }
-      showToast('✨ Live Gemini 2.5 synced Viral Hook Copy -> Script -> Modern Reel Prompts!', 'success');
-    }
-
-    function enforceA12PromptQAGate() {
-      const card = appState.cards.find(c => c.id === appState.activeCardId);
-      if (!card) return;
-      card.media = sanitizeForGoogleFlowPolicy(
-        buildSyncedBoxCMediaPrompt(card, card.format, card.script)
-      );
-      card.promptQAScore = 100;
-      document.getElementById('studio-media-output').value = card.media;
-      document.getElementById('prompt-qa-badge').textContent = '🟢 A12 Prompt QA: 100/100';
-      renderIndividualClipCopyButtons(card.media);
-      saveWorkspaceState();
-      showToast('✨ Agent A12 enforced 100/100 Modern Social Reel Style & Voiceprint Lock!', 'success');
+      if (btn) { btn.disabled = false; btn.textContent = '✨ Live AI Rewrite (New Angle & Concept)'; }
+      showToast(`✨ Generated fresh copy & [${VISUAL_CONCEPT_LABELS[card.visualConcept]}] prompt!`, 'success');
     }
 
     function reformatPromptForGenerator(gen) {
@@ -1634,13 +1785,18 @@ Return ONLY valid JSON with keys:
       const bannerHeadline = makeCleanBannerHeadline(card);
       const pills = getTopicPills(card);
       if (gen === 'MIDJOURNEY') {
-        card.media = `/imagine prompt: Vertical 4:5 luxury Singapore real estate editorial infographic poster, headline "${bannerHeadline}", 45-degree 3D isometric architectural cutaway floorplan of a sunlit Singapore 3-bedroom condominium with Burmese teak flooring and marble kitchen island, three floating frosted glass pills "${pills[0]}", "${pills[1]}", "${pills[2]}", deep obsidian navy and brushed champagne gold palette, ultra-sharp commercial typography --ar 4:5 --v 6.1 --stylize 250`;
+        const basePrompt = buildSyncedBoxCMediaPrompt(card, 'Image/Flyer Carousel', card.script, card.visualConcept).replace(/\n+/g, ' ');
+        card.media = `/imagine prompt: ${basePrompt} --ar 4:5 --v 6.1 --stylize 300 --no blurry text, warped geometry`;
       } else if (gen === 'NANO_BANANA') {
-        card.media = buildSyncedBoxCMediaPrompt(card, 'Image/Flyer Carousel', card.script);
+        card.format = 'Image/Flyer Carousel';
+        document.getElementById('studio-format').value = card.format;
+        card.media = buildSyncedBoxCMediaPrompt(card, 'Image/Flyer Carousel', card.script, card.visualConcept);
       } else if (gen === 'HAILUO_AI') {
         card.media = `[Push in] Slow, stabilized gimbal dolly push-in across a sunlit luxury Singapore condominium living room and marble island anchored to the uploaded starting frame. Sheer white balcony curtains billow gently in a soft breeze while all walls, cabinetry, and furniture geometry remain 100% stationary and structurally locked.`;
       } else {
-        card.media = buildSyncedBoxCMediaPrompt(card, 'Video (Reels/TikTok/Shorts)', card.script);
+        card.format = 'Video (Reels/TikTok/Shorts)';
+        document.getElementById('studio-format').value = card.format;
+        card.media = buildSyncedBoxCMediaPrompt(card, 'Video (Reels/TikTok/Shorts)', card.script, card.visualConcept);
       }
       document.getElementById('studio-media-output').value = card.media;
       renderIndividualClipCopyButtons(card.media);
@@ -1660,23 +1816,12 @@ Return ONLY valid JSON with keys:
       ].join('');
     }
 
-    async function rejectAndRedoCardOutput(cardId) {
-      const card = appState.cards.find(c => c.id === cardId);
-      if (!card) return;
-      window._renderOffsetCounter += 4;
-      window._videoOffsetCounter += 5;
-      delete window._cachedAIFlyerImage[card.id];
-      delete window._cachedAIVideoScenes[card.id];
-      await regenerateBoxACopy();
-      await renderFlyerCanvas(true);
-      await renderLiveVeoVideoOrFallback();
-    }
-
     function cancelAndDeleteTopicCard(cardId) {
       if (appState.cards.length <= 1) {
         showToast('Cannot delete the last remaining card on the board.', 'warn');
         return;
       }
+      delete window._cardCustomPhotos[cardId];
       appState.cards = appState.cards.filter(c => c.id !== cardId);
       appState.activeCardId = appState.cards[0].id;
       saveWorkspaceState();
@@ -1771,7 +1916,7 @@ Return ONLY valid JSON with keys:
     }
 
     // ============================================================================
-    // HIGH-DPI 1080×1350 MODERN EDITORIAL FLYER COMPOSITOR
+    // 6-CONCEPT DARING SOCIAL MEDIA POSTER COMPOSITOR (1080×1350 HD)
     // ============================================================================
     async function renderFlyerCanvas(fetchNewAI = false) {
       const canvas = document.getElementById('studio-flyer-canvas');
@@ -1781,753 +1926,289 @@ Return ONLY valid JSON with keys:
       ctx.imageSmoothingQuality = 'high';
 
       const card = appState.cards.find(c => c.id === appState.activeCardId) || appState.cards[0];
+      if (!card) return;
+      const concept = card.visualConcept || 'VS_SPLIT';
       const bannerHeadline = makeCleanBannerHeadline(card);
+      const hookAlert = getHookAlertBadge(card);
       const pills = getTopicPills(card);
+      const heroStat = extractHeroStat(card);
       const btn = document.getElementById('btn-render-flyer');
 
-      if (fetchNewAI && card) {
+      if (fetchNewAI) {
         window._renderOffsetCounter++;
-        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳ Rendering 1080p Flyer...</span>'; }
-        const imagePrompt = `Photorealistic 45-degree 3D isometric architectural cutaway floorplan of a modern luxury Singapore 3-bedroom condominium unit with Burmese teak wood flooring, marble kitchen island, sunlit balcony overlooking Singapore skyline, Octane Render, topic ${bannerHeadline}`;
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳ Loading Visuals...</span>'; }
         const seed = Math.abs(card.title.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) + window._renderOffsetCounter;
-        const aiImg = await loadPhotorealisticAIImageElement(imagePrompt, seed, true);
-        if (aiImg) window._cachedAIFlyerImage[card.id] = aiImg;
-        if (btn) { btn.disabled = false; btn.innerHTML = '<i data-lucide="image" class="w-3.5 h-3.5"></i><span>🍌 Render New HD Flyer</span>'; lucide.createIcons(); }
+        const [img1, img2] = await Promise.all([
+          loadPhotorealisticAIImageElement(card.media, seed, true),
+          loadPhotorealisticAIImageElement(card.media, seed + 5, false)
+        ]);
+        if (img1) window._cachedAIFlyerImage[card.id] = img1;
+        if (img2) window._cachedSecondaryImage[card.id] = img2;
+        if (btn) { btn.disabled = false; btn.innerHTML = '<i data-lucide="image" class="w-3.5 h-3.5"></i><span>🍌 New Visual Photo</span>'; lucide.createIcons(); }
       }
 
-      // Full-Bleed Architectural Background Image with Editorial Gradient Overlay
-      const heroImg = appState.uploadedPropertyPhoto || (card ? window._cachedAIFlyerImage[card.id] : null);
+      // IMPORTANT: Only use custom uploaded photo if uploaded specifically for THIS card.id!
+      const customCardImg = window._cardCustomPhotos[card.id] || null;
+      const primaryImg = customCardImg || window._cachedAIFlyerImage[card.id];
+      const secondaryImg = window._cachedSecondaryImage[card.id] || primaryImg;
+
       ctx.fillStyle = '#090d16';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      if (heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
-        ctx.drawImage(heroImg, 0, 0, canvas.width, canvas.height);
+      // -------------------------------------------------------------------------
+      // CONCEPT 1: DRAMATIC SPLIT-SCREEN "VS" SHOWDOWN
+      // -------------------------------------------------------------------------
+      if (concept === 'VS_SPLIT') {
+        if (primaryImg && primaryImg.complete && primaryImg.naturalWidth > 0) {
+          ctx.save();
+          ctx.beginPath(); ctx.rect(0, 180, 536, 920); ctx.clip();
+          ctx.filter = 'saturate(0.55) brightness(0.75) contrast(1.1)';
+          ctx.drawImage(primaryImg, -120, 180, 820, 920);
+          ctx.restore();
+        }
+        if (secondaryImg && secondaryImg.complete && secondaryImg.naturalWidth > 0) {
+          ctx.save();
+          ctx.beginPath(); ctx.rect(544, 180, 536, 920); ctx.clip();
+          ctx.drawImage(secondaryImg, 340, 180, 820, 920);
+          ctx.restore();
+        }
+        // Center Gold Divider Line & Giant "VS" Badge
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillRect(536, 180, 8, 920);
+        drawRoundedRect(ctx, 476, 560, 128, 128, 64, '#e11d48', '#fbbf24', 6);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 48px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('VS', 540, 642);
+        ctx.textAlign = 'left';
+
+        // Left vs Right Comparison Cards
+        drawRoundedRect(ctx, 36, 860, 460, 195, 24, 'rgba(15, 23, 42, 0.92)', '#f43f5e', 3);
+        ctx.fillStyle = '#fda4af'; ctx.font = '800 18px JetBrains Mono, monospace';
+        ctx.fillText('⚠️ THE BUYER TRAP', 64, 908);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 30px Inter, sans-serif';
+        ctx.fillText(pills[0], 64, 958);
+        ctx.fillStyle = '#94a3b8'; ctx.font = '600 20px Inter, sans-serif';
+        ctx.fillText('Compressed Exit Liquidity', 64, 1005);
+
+        drawRoundedRect(ctx, 584, 860, 460, 195, 24, 'rgba(6, 78, 59, 0.94)', '#10b981', 3);
+        ctx.fillStyle = '#6ee7b7'; ctx.font = '800 18px JetBrains Mono, monospace';
+        ctx.fillText('✅ SMART UPGRADE EDGE', 612, 908);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 30px Inter, sans-serif';
+        ctx.fillText(pills[1], 612, 958);
+        ctx.fillStyle = '#fde68a'; ctx.font = '700 22px Inter, sans-serif';
+        ctx.fillText(`✦ ${pills[2]}`, 612, 1008);
+
+        // Top Header Bar
+        ctx.fillStyle = '#020617'; ctx.fillRect(0, 0, canvas.width, 180);
+        drawRoundedRect(ctx, 44, 24, 480, 42, 12, '#e11d48', null, 0);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 18px JetBrains Mono, monospace';
+        ctx.fillText(hookAlert.slice(0, 34), 62, 51);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 38px Inter, sans-serif';
+        ctx.fillText(bannerHeadline, 44, 128);
       }
 
-      // Top & Bottom Editorial Luxury Gradients
-      const topGrad = ctx.createLinearGradient(0, 0, 0, 340);
-      topGrad.addColorStop(0, 'rgba(2, 6, 23, 0.94)');
-      topGrad.addColorStop(0.7, 'rgba(2, 6, 23, 0.65)');
-      topGrad.addColorStop(1, 'rgba(2, 6, 23, 0)');
-      ctx.fillStyle = topGrad;
-      ctx.fillRect(0, 0, canvas.width, 340);
+      // -------------------------------------------------------------------------
+      // CONCEPT 2: ARCHITECTURAL DIGEST / FORBES MAGAZINE COVER
+      // -------------------------------------------------------------------------
+      else if (concept === 'EDITORIAL_COVER') {
+        if (primaryImg && primaryImg.complete && primaryImg.naturalWidth > 0) {
+          ctx.drawImage(primaryImg, 0, 0, canvas.width, canvas.height);
+        }
+        const topG = ctx.createLinearGradient(0, 0, 0, 460);
+        topG.addColorStop(0, 'rgba(2,6,23,0.92)'); topG.addColorStop(1, 'rgba(2,6,23,0)');
+        ctx.fillStyle = topG; ctx.fillRect(0, 0, canvas.width, 460);
 
-      const botGrad = ctx.createLinearGradient(0, 820, 0, canvas.height);
-      botGrad.addColorStop(0, 'rgba(2, 6, 23, 0)');
-      botGrad.addColorStop(0.35, 'rgba(2, 6, 23, 0.85)');
-      botGrad.addColorStop(1, 'rgba(2, 6, 23, 0.98)');
-      ctx.fillStyle = botGrad;
-      ctx.fillRect(0, 820, canvas.width, 530);
+        const botG = ctx.createLinearGradient(0, 700, 0, canvas.height);
+        botG.addColorStop(0, 'rgba(2,6,23,0)'); botG.addColorStop(1, 'rgba(2,6,23,0.96)');
+        ctx.fillStyle = botG; ctx.fillRect(0, 700, canvas.width, 650);
 
-      // Top Glassmorphic Pill Tag
-      drawRoundedRect(ctx, 48, 42, 520, 48, 24, 'rgba(15, 23, 42, 0.78)', 'rgba(251, 191, 36, 0.65)', 2);
-      ctx.fillStyle = '#fbbf24'; ctx.font = '800 18px JetBrains Mono, monospace';
-      ctx.fillText('✦ HOME EQUITY STUDIO • URA REALIS 2026', 72, 72);
+        // Giant Editorial Masthead
+        ctx.fillStyle = '#fbbf24'; ctx.font = '900 22px JetBrains Mono, monospace';
+        ctx.fillText('SINGAPORE PROPERTY DIGEST  •  2026 SPECIAL ISSUE', 56, 72);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 68px Inter, sans-serif';
+        const words = bannerHeadline.split(' ');
+        ctx.fillText(words.slice(0, 3).join(' '), 52, 160);
+        ctx.fillStyle = '#fde68a';
+        ctx.fillText(words.slice(3).join(' ') || '2026 PLAYBOOK', 52, 238);
 
-      // Bold Editorial Headline
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 44px Inter, sans-serif';
-      const titleWords = bannerHeadline.split(' ');
-      let line1 = '', line2 = '';
-      titleWords.forEach(w => {
-        if (ctx.measureText(line1 + w + ' ').width < 980) line1 += w + ' ';
-        else line2 += w + ' ';
-      });
-      ctx.fillText(line1.trim(), 48, 148);
-      if (line2.trim()) {
-        ctx.fillStyle = '#34d399';
-        ctx.fillText(line2.trim(), 48, 202);
+        // Magazine Cover Left Callout Column
+        drawRoundedRect(ctx, 52, 740, 976, 310, 32, 'rgba(15, 23, 42, 0.86)', 'rgba(251, 191, 36, 0.7)', 3);
+        ctx.fillStyle = '#fbbf24'; ctx.font = '900 64px Inter, sans-serif';
+        ctx.fillText(heroStat, 92, 845);
+        ctx.fillStyle = '#94a3b8'; ctx.font = '700 20px JetBrains Mono, monospace';
+        ctx.fillText('VERIFIED 2026 URA REALIS BENCHMARK', 92, 885);
+
+        pills.forEach((pText, i) => {
+          drawRoundedRect(ctx, 92 + i * 305, 925, 285, 84, 18, 'rgba(30, 41, 59, 0.95)', '#34d399', 2);
+          ctx.fillStyle = '#ffffff'; ctx.font = '800 22px Inter, sans-serif';
+          ctx.fillText(`✦ ${pText}`, 114 + i * 305, 976);
+        });
       }
 
-      // Three Modern Glassmorphic Data Cards
-      pills.forEach((pillText, idx) => {
-        const px = 48 + idx * 334;
-        const py = 975;
-        drawRoundedRect(ctx, px, py, 316, 86, 22, 'rgba(15, 23, 42, 0.88)', 'rgba(251, 191, 36, 0.75)', 2.5);
-        ctx.fillStyle = '#fbbf24'; ctx.font = '800 14px JetBrains Mono, monospace';
-        ctx.fillText(`KEY METRIC 0${idx + 1}`, px + 22, py + 30);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 22px Inter, sans-serif';
-        ctx.fillText(pillText, px + 22, py + 64);
-      });
+      // -------------------------------------------------------------------------
+      // CONCEPT 3: VIRAL "TRUTH RECEIPT" FINANCIAL DATA BREAKDOWN
+      // -------------------------------------------------------------------------
+      else if (concept === 'DATA_RECEIPT') {
+        if (primaryImg && primaryImg.complete && primaryImg.naturalWidth > 0) {
+          ctx.save();
+          ctx.filter = 'blur(6px) brightness(0.38)';
+          ctx.drawImage(primaryImg, 0, 0, canvas.width, canvas.height);
+          ctx.restore();
+        }
+        // Center Dark Glass Financial Receipt Card
+        drawRoundedRect(ctx, 64, 70, 952, 980, 40, 'rgba(15, 23, 42, 0.92)', '#fbbf24', 4);
+        drawRoundedRect(ctx, 110, 115, 860, 74, 18, 'rgba(225, 29, 72, 0.92)', null, 0);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 26px JetBrains Mono, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(hookAlert, 540, 162);
 
-      // Floating Glass CEA Compliance Capsule Footer
-      drawRoundedRect(ctx, 44, canvas.height - 235, 992, 190, 36, 'rgba(15, 23, 42, 0.92)', 'rgba(16, 185, 129, 0.65)', 3);
+        ctx.fillStyle = '#94a3b8'; ctx.font = '800 22px JetBrains Mono, monospace';
+        ctx.fillText('2026 SINGAPORE EQUITY & CASHFLOW AUDIT', 540, 248);
+
+        // Giant Hero Dollar/Metric Stat
+        ctx.fillStyle = '#34d399'; ctx.font = '900 104px Inter, sans-serif';
+        ctx.fillText(heroStat, 540, 375);
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 34px Inter, sans-serif';
+        ctx.fillText(bannerHeadline, 540, 445);
+        ctx.textAlign = 'left';
+
+        // 3 Horizontal Financial Progress Bars
+        const barColors = ['#f43f5e', '#10b981', '#fbbf24'];
+        const barWidths = [560, 810, 740];
+        const barLabels = ['RISK / COST FACTOR', 'EQUITY VELOCITY EDGE', 'SAFE UPGRADE BUFFER'];
+        pills.forEach((pText, idx) => {
+          const by = 510 + idx * 165;
+          ctx.fillStyle = '#cbd5e1'; ctx.font = '800 19px JetBrains Mono, monospace';
+          ctx.fillText(`0${idx + 1}. ${barLabels[idx]}: ${pText.toUpperCase()}`, 120, by);
+          drawRoundedRect(ctx, 120, by + 22, 840, 68, 18, '#1e293b', 'rgba(255,255,255,0.12)', 2);
+          drawRoundedRect(ctx, 120, by + 22, barWidths[idx], 68, 18, barColors[idx], null, 0);
+          ctx.fillStyle = '#ffffff'; ctx.font = '900 25px Inter, sans-serif';
+          ctx.fillText(pText, 148, by + 65);
+        });
+      }
+
+      // -------------------------------------------------------------------------
+      // CONCEPT 4, 5, 6: POV LIFESTYLE / DRONE MASTERPLAN / 3D CUTAWAY
+      // -------------------------------------------------------------------------
+      else {
+        if (primaryImg && primaryImg.complete && primaryImg.naturalWidth > 0) {
+          ctx.drawImage(primaryImg, 0, 0, canvas.width, canvas.height);
+        }
+        const topGrad = ctx.createLinearGradient(0, 0, 0, 340);
+        topGrad.addColorStop(0, 'rgba(2, 6, 23, 0.94)');
+        topGrad.addColorStop(1, 'rgba(2, 6, 23, 0)');
+        ctx.fillStyle = topGrad; ctx.fillRect(0, 0, canvas.width, 340);
+
+        const botGrad = ctx.createLinearGradient(0, 800, 0, canvas.height);
+        botGrad.addColorStop(0, 'rgba(2, 6, 23, 0)');
+        botGrad.addColorStop(1, 'rgba(2, 6, 23, 0.98)');
+        ctx.fillStyle = botGrad; ctx.fillRect(0, 800, canvas.width, 550);
+
+        drawRoundedRect(ctx, 48, 42, 560, 48, 24, 'rgba(15, 23, 42, 0.82)', '#fbbf24', 2);
+        ctx.fillStyle = '#fbbf24'; ctx.font = '800 18px JetBrains Mono, monospace';
+        ctx.fillText(`✦ ${VISUAL_CONCEPT_LABELS[concept].replace(/^.*?: /, '').toUpperCase()}`, 72, 72);
+
+        ctx.fillStyle = '#ffffff'; ctx.font = '900 44px Inter, sans-serif';
+        const titleWords = bannerHeadline.split(' ');
+        let line1 = '', line2 = '';
+        titleWords.forEach(w => {
+          if (ctx.measureText(line1 + w + ' ').width < 980) line1 += w + ' ';
+          else line2 += w + ' ';
+        });
+        ctx.fillText(line1.trim(), 48, 148);
+        if (line2.trim()) {
+          ctx.fillStyle = '#34d399';
+          ctx.fillText(line2.trim(), 48, 202);
+        }
+
+        // Floating Glass Callout Pins
+        pills.forEach((pillText, idx) => {
+          const px = 48 + idx * 334;
+          const py = 965;
+          drawRoundedRect(ctx, px, py, 316, 94, 22, 'rgba(15, 23, 42, 0.9)', '#34d399', 2.5);
+          ctx.fillStyle = '#fbbf24'; ctx.font = '800 15px JetBrains Mono, monospace';
+          ctx.fillText(`URA INSIGHT 0${idx + 1}`, px + 22, py + 32);
+          ctx.fillStyle = '#ffffff'; ctx.font = '900 22px Inter, sans-serif';
+          ctx.fillText(pillText, px + 22, py + 68);
+        });
+      }
+
+      // -------------------------------------------------------------------------
+      // UNIVERSAL FLOATING GLASS CEA COMPLIANCE CAPSULE FOOTER (ALL 6 CONCEPTS)
+      // -------------------------------------------------------------------------
+      drawRoundedRect(ctx, 40, canvas.height - 220, 1000, 184, 34, 'rgba(15, 23, 42, 0.95)', 'rgba(16, 185, 129, 0.75)', 3);
 
       const avatarEl = document.getElementById('sidebar-avatar-img');
-      let textLeftX = 80;
+      let textLeftX = 76;
       if (avatarEl && avatarEl.complete && avatarEl.naturalWidth > 0) {
         ctx.save();
         ctx.beginPath();
-        ctx.arc(136, canvas.height - 140, 66, 0, Math.PI * 2);
+        ctx.arc(130, canvas.height - 128, 64, 0, Math.PI * 2);
         ctx.closePath();
         ctx.clip();
-        ctx.drawImage(avatarEl, 70, canvas.height - 206, 132, 132);
+        ctx.drawImage(avatarEl, 66, canvas.height - 192, 128, 128);
         ctx.restore();
         ctx.strokeStyle = '#10b981'; ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.arc(136, canvas.height - 140, 66, 0, Math.PI * 2); ctx.stroke();
-        textLeftX = 226;
+        ctx.beginPath(); ctx.arc(130, canvas.height - 128, 64, 0, Math.PI * 2); ctx.stroke();
+        textLeftX = 216;
       }
 
       const logoEl = document.getElementById('header-brand-logo');
       if (logoEl && logoEl.complete && logoEl.naturalWidth > 0) {
         ctx.save();
-        drawRoundedRect(ctx, canvas.width - 196, canvas.height - 204, 128, 128, 24, '#0f172a', '#6366f1', 3);
+        drawRoundedRect(ctx, canvas.width - 192, canvas.height - 192, 126, 126, 22, '#0f172a', '#6366f1', 3);
         ctx.clip();
-        ctx.drawImage(logoEl, canvas.width - 196, canvas.height - 204, 128, 128);
+        ctx.drawImage(logoEl, canvas.width - 192, canvas.height - 192, 126, 126);
         ctx.restore();
       }
 
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 28px Inter, sans-serif';
-      ctx.fillText(`${appState.ceaProfile.name}  •  CEA: ${appState.ceaProfile.regNo}`, textLeftX, canvas.height - 160);
-      ctx.fillStyle = '#cbd5e1'; ctx.font = '600 22px Inter, sans-serif';
-      ctx.fillText(`${appState.ceaProfile.agencyName} (Licence: ${appState.ceaProfile.licenceNo})`, textLeftX, canvas.height - 118);
-      ctx.fillStyle = '#34d399'; ctx.font = 'bold 20px JetBrains Mono, monospace';
-      ctx.fillText(`📲 ${appState.ceaProfile.phone} • hdb-mop-calculator.vercel.app`, textLeftX, canvas.height - 76);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 27px Inter, sans-serif';
+      ctx.fillText(`${appState.ceaProfile.name}  •  CEA: ${appState.ceaProfile.regNo}`, textLeftX, canvas.height - 148);
+      ctx.fillStyle = '#cbd5e1'; ctx.font = '600 21px Inter, sans-serif';
+      ctx.fillText(`${appState.ceaProfile.agencyName} (Licence: ${appState.ceaProfile.licenceNo})`, textLeftX, canvas.height - 108);
+      ctx.fillStyle = '#34d399'; ctx.font = 'bold 19px JetBrains Mono, monospace';
+      ctx.fillText(`📲 ${appState.ceaProfile.phone} • hdb-mop-calculator.vercel.app`, textLeftX, canvas.height - 68);
     }
 
     function downloadRenderedFlyerPNG() {
       const canvas = document.getElementById('studio-flyer-canvas');
       const a = document.createElement('a');
-      a.download = `AgentZug_HD_Flyer_${Date.now()}.png`;
+      a.download = `AgentZug_Social_Post_${Date.now()}.png`;
       a.href = canvas.toDataURL('image/png');
       a.click();
-      showToast('⬇️ Downloaded Modern Editorial 1080×1350 Flyer (.PNG)!', 'success');
+      showToast('⬇️ Downloaded 1080×1350 Social Post (.PNG)!', 'success');
     }
 
-    // ============================================================================
-    // FULL-BLEED 9:16 MODERN SOCIAL MEDIA REEL COMPOSITOR (720×1280)
-    // ============================================================================
-    function drawVideoCanvas(clipIdx = 0, zoomScale = 1.05, panX = 0, customSceneImg = null, overallProgress = 0, clipProgress = 0.5) {
-      const canvas = document.getElementById('studio-video-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-
-      const card = appState.cards.find(c => c.id === appState.activeCardId) || appState.cards[0];
-      const bannerHeadline = makeCleanBannerHeadline(card);
-      const hookAlert = getHookAlertBadge(card);
-      const pills = getTopicPills(card);
-
-      ctx.fillStyle = '#090d16';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // 1. FULL-BLEED 9:16 EDGE-TO-EDGE CINEMA BACKGROUND (Fills entire 720×1280 screen!)
-      const scenes = card && window._cachedAIVideoScenes[card.id];
-      const sourceImg = customSceneImg || (scenes && scenes[clipIdx]) || (card && window._cachedAIFlyerImage[card.id]) || appState.uploadedPropertyPhoto;
-
-      if (sourceImg && sourceImg.complete && sourceImg.naturalWidth > 0) {
-        ctx.save();
-        // Smooth whip-pan transition effect on first 8% of clip
-        const transitionOffset = (clipProgress < 0.08 && clipIdx > 0) ? (1 - clipProgress / 0.08) * 90 : 0;
-        const w = canvas.width * zoomScale;
-        const h = canvas.height * zoomScale;
-        const dx = -(w - canvas.width) / 2 + panX + transitionOffset;
-        const dy = -(h - canvas.height) / 2;
-        ctx.drawImage(sourceImg, dx, dy, w, h);
-        ctx.restore();
-      }
-
-      // 2. CINEMATIC SOCIAL REEL TOP & BOTTOM VIGNETTE GRADIENTS
-      const topGrad = ctx.createLinearGradient(0, 0, 0, 290);
-      topGrad.addColorStop(0, 'rgba(2, 6, 23, 0.88)');
-      topGrad.addColorStop(0.65, 'rgba(2, 6, 23, 0.45)');
-      topGrad.addColorStop(1, 'rgba(2, 6, 23, 0)');
-      ctx.fillStyle = topGrad;
-      ctx.fillRect(0, 0, canvas.width, 290);
-
-      const botGrad = ctx.createLinearGradient(0, 620, 0, canvas.height);
-      botGrad.addColorStop(0, 'rgba(2, 6, 23, 0)');
-      botGrad.addColorStop(0.42, 'rgba(2, 6, 23, 0.78)');
-      botGrad.addColorStop(1, 'rgba(2, 6, 23, 0.96)');
-      ctx.fillStyle = botGrad;
-      ctx.fillRect(0, 620, canvas.width, 660);
-
-      // 3. INSTAGRAM / TIKTOK 4-SEGMENT STORY PROGRESS BARS AT VERY TOP
-      for (let s = 0; s < 4; s++) {
-        const segX = 24 + s * 170;
-        const segW = 160;
-        drawRoundedRect(ctx, segX, 18, segW, 6, 3, 'rgba(255, 255, 255, 0.25)', null, 0);
-        let fillPct = 0;
-        if (s < clipIdx) fillPct = 1;
-        else if (s === clipIdx) fillPct = clipProgress;
-        if (fillPct > 0) {
-          drawRoundedRect(ctx, segX, 18, Math.max(8, segW * fillPct), 6, 3, '#34d399', null, 0);
-        }
-      }
-
-      // 4. FLOATING TOP GLASSMORPHIC BRAND PILL + LIVE AUDIO WAVEFORM
-      drawRoundedRect(ctx, 24, 38, 430, 48, 24, 'rgba(15, 23, 42, 0.72)', 'rgba(255, 255, 255, 0.22)', 1.5);
-      ctx.fillStyle = '#f43f5e';
-      ctx.beginPath(); ctx.arc(48, 62, 6, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#ffffff'; ctx.font = '800 15px Inter, sans-serif';
-      ctx.fillText('HOME EQUITY STUDIO  •  SG PROPERTY', 64, 67);
-
-      // Live Animated Audio Equalizer Pill (Top Right)
-      drawRoundedRect(ctx, 474, 38, 222, 48, 24, 'rgba(15, 23, 42, 0.72)', 'rgba(52, 211, 153, 0.45)', 1.5);
-      for (let b = 0; b < 5; b++) {
-        const bh = 10 + Math.abs(Math.sin((overallProgress * 45) + b * 1.3)) * 20;
-        ctx.fillStyle = '#34d399';
-        ctx.fillRect(494 + b * 8, 62 - bh / 2, 5, bh);
-      }
-      ctx.fillStyle = '#6ee7b7'; ctx.font = 'bold 14px JetBrains Mono, monospace';
-      ctx.fillText('VOICE + 95BPM', 544, 67);
-
-      // 5. SCENE-SPECIFIC MODERN SOCIAL REEL OVERLAYS
-      const avatarEl = document.getElementById('sidebar-avatar-img');
-      if (clipIdx === 0) {
-        // SCENE 1: Modern Scroll-Stopping Viral Hook Card (Upper-Center Safe Zone)
-        const pulse = 1 + Math.sin(clipProgress * Math.PI * 4) * 0.015;
-        ctx.save();
-        ctx.translate(360, 165);
-        ctx.scale(pulse, pulse);
-        drawRoundedRect(ctx, -330, -48, 660, 96, 24, 'rgba(15, 23, 42, 0.84)', 'rgba(244, 63, 94, 0.85)', 3);
-        drawRoundedRect(ctx, -310, -34, 155, 28, 8, '#e11d48', null, 0);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 13px JetBrains Mono, monospace';
-        ctx.fillText('⚡ 2026 URA ALERT', -296, -15);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 22px Inter, sans-serif';
-        ctx.fillText(hookAlert.replace(/^[🚨⚠️🛑🔥]\s*/, ''), -140, -13);
-        ctx.fillStyle = '#fbbf24'; ctx.font = '800 18px Inter, sans-serif';
-        ctx.fillText(bannerHeadline, -308, 26);
-        ctx.restore();
-
-        // Floating Creator PiP with Speaking Pulse Ring
-        if (avatarEl && avatarEl.complete && avatarEl.naturalWidth > 0) {
-          ctx.save();
-          ctx.beginPath(); ctx.arc(106, 755, 68, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
-          ctx.drawImage(avatarEl, 38, 687, 136, 136);
-          ctx.restore();
-          ctx.strokeStyle = '#34d399'; ctx.lineWidth = 4;
-          ctx.beginPath(); ctx.arc(106, 755, 68, 0, Math.PI * 2); ctx.stroke();
-
-          drawRoundedRect(ctx, 190, 705, 502, 100, 22, 'rgba(15, 23, 42, 0.84)', 'rgba(255, 255, 255, 0.2)', 1.5);
-          ctx.fillStyle = '#34d399'; ctx.font = '800 15px JetBrains Mono, monospace';
-          ctx.fillText('🎙️ LUIZ LEE • SINGAPORE ASSET STRATEGY', 214, 742);
-          ctx.fillStyle = '#ffffff'; ctx.font = '900 22px Inter, sans-serif';
-          ctx.fillText(`${pills[0]}  •  ${pills[1]}`, 214, 780);
-        }
-      } else if (clipIdx === 1 || clipIdx === 2) {
-        // SCENES 2 & 3: Sleek Apple-Style Glassmorphic URA Analytics Cards
-        drawRoundedRect(ctx, 28, 665, 664, 165, 26, 'rgba(15, 23, 42, 0.84)', 'rgba(251, 191, 36, 0.55)', 2);
-        ctx.fillStyle = '#fbbf24'; ctx.font = '800 15px JetBrains Mono, monospace';
-        ctx.fillText(`📊 URA REALIS VERIFIED BENCHMARK • SCENE 0${clipIdx + 1}`, 54, 702);
-
-        const animFactor = Math.min(1, 0.35 + clipProgress * 0.85);
-        // Metric Pill 1
-        drawRoundedRect(ctx, 54, 720, 295, 86, 18, 'rgba(30, 41, 59, 0.9)', 'rgba(244, 63, 94, 0.6)', 2);
-        ctx.fillStyle = '#fda4af'; ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText('BENCHMARK COMPARISON', 74, 748);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 21px Inter, sans-serif';
-        ctx.fillText(pills[clipIdx - 1] || pills[0], 74, 784);
-
-        // Metric Pill 2 (Animated Highlight)
-        drawRoundedRect(ctx, 368, 720, Math.round(298 * animFactor), 86, 18, 'rgba(6, 78, 59, 0.92)', '#10b981', 2.5);
-        ctx.fillStyle = '#6ee7b7'; ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText('UPGRADER ADVANTAGE', 388, 748);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 21px Inter, sans-serif';
-        ctx.fillText(pills[clipIdx] || pills[2], 388, 784);
-      } else {
-        // SCENE 4: High-Converting WhatsApp / DM Action Card
-        drawRoundedRect(ctx, 28, 690, 664, 135, 26, 'rgba(6, 78, 59, 0.9)', '#34d399', 3);
-        ctx.fillStyle = '#a7f3d0'; ctx.font = '800 16px JetBrains Mono, monospace';
-        ctx.fillText('📲 FREE 2026 HDB MOP & ABSD PROGRESSION TOOL', 54, 732);
-        ctx.fillStyle = '#ffffff'; ctx.font = '900 26px Inter, sans-serif';
-        ctx.fillText('Comment "MOP" or WhatsApp +65 8980 9229', 54, 774);
-        ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 17px JetBrains Mono, monospace';
-        ctx.fillText('🔗 https://hdb-mop-calculator.vercel.app', 54, 806);
-      }
-
-      // 6. MODERN TIKTOK / CAPCUT PRO DYNAMIC POP-IN KINETIC SUBTITLES
-      const lines = (card?.script || '').split('\n');
-      const rawSub = (lines[clipIdx] || '"Comment MOP below for our progression calculator!"').replace(/^\[Clip \d.*?:\s*/, '');
-      drawRoundedRect(ctx, 24, 852, 672, 232, 28, 'rgba(2, 6, 23, 0.82)', 'rgba(255, 255, 255, 0.18)', 2);
-
-      const words = rawSub.split(/\s+/).filter(Boolean);
-      const activeWordIdx = Math.min(words.length - 1, Math.floor(clipProgress * words.length));
-
-      ctx.font = '900 27px Inter, sans-serif';
-      let currentLineWords = [];
-      const wrappedLines = [];
-      words.forEach((w, idx) => {
-        const testStr = [...currentLineWords.map(o => o.w), w].join(' ');
-        if (ctx.measureText(testStr).width > 610 && currentLineWords.length > 0) {
-          wrappedLines.push(currentLineWords);
-          currentLineWords = [{ w, idx }];
-        } else {
-          currentLineWords.push({ w, idx });
-        }
-      });
-      if (currentLineWords.length > 0) wrappedLines.push(currentLineWords);
-
-      let y = 910;
-      wrappedLines.slice(0, 4).forEach(lineArr => {
-        // Center-align each subtitle line like modern IG/TikTok Reels
-        const fullLineStr = lineArr.map(o => o.w).join(' ');
-        let x = (canvas.width - ctx.measureText(fullLineStr).width) / 2;
-        lineArr.forEach(item => {
-          const isCurrent = item.idx === activeWordIdx;
-          const isSpoken = item.idx < activeWordIdx;
-          const ww = ctx.measureText(item.w).width;
-          if (isCurrent) {
-            drawRoundedRect(ctx, x - 8, y - 29, ww + 16, 38, 10, '#10b981', '#fbbf24', 2);
-            ctx.fillStyle = '#ffffff';
-          } else if (isSpoken) {
-            ctx.fillStyle = '#fbbf24';
-          } else {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
-          }
-          ctx.fillText(item.w, x, y);
-          x += ctx.measureText(item.w + ' ').width;
-        });
-        y += 44;
-      });
-
-      // 7. SLEEK FLOATING GLASS CEA COMPLIANCE CAPSULE (BOTTOM SAFE ZONE)
-      drawRoundedRect(ctx, 24, 1106, 672, 148, 28, 'rgba(15, 23, 42, 0.9)', 'rgba(16, 185, 129, 0.6)', 2.5);
-
-      let footerTextX = 48;
-      if (avatarEl && avatarEl.complete && avatarEl.naturalWidth > 0) {
-        ctx.save();
-        ctx.beginPath(); ctx.arc(88, 1180, 46, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
-        ctx.drawImage(avatarEl, 42, 1134, 92, 92);
-        ctx.restore();
-        ctx.strokeStyle = '#10b981'; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.arc(88, 1180, 46, 0, Math.PI * 2); ctx.stroke();
-        footerTextX = 150;
-      }
-
-      const logoEl = document.getElementById('header-brand-logo');
-      if (logoEl && logoEl.complete && logoEl.naturalWidth > 0) {
-        ctx.save();
-        drawRoundedRect(ctx, canvas.width - 134, 1134, 92, 92, 18, '#0f172a', '#6366f1', 2);
-        ctx.clip();
-        ctx.drawImage(logoEl, canvas.width - 134, 1134, 92, 92);
-        ctx.restore();
-      }
-
-      ctx.fillStyle = '#ffffff'; ctx.font = '900 21px Inter, sans-serif';
-      ctx.fillText(`${appState.ceaProfile.name}  •  CEA: ${appState.ceaProfile.regNo}`, footerTextX, 1158);
-      ctx.fillStyle = '#cbd5e1'; ctx.font = '600 17px Inter, sans-serif';
-      ctx.fillText(`${appState.ceaProfile.agencyName} (Lic: ${appState.ceaProfile.licenceNo})`, footerTextX, 1188);
-      ctx.fillStyle = '#34d399'; ctx.font = 'bold 16px JetBrains Mono, monospace';
-      ctx.fillText(`${appState.ceaProfile.phone} • hdb-mop-calculator.vercel.app`, footerTextX, 1218);
-    }
-
-    // ============================================================================
-    // LIVE GOOGLE GEMINI 2.5 FLASH NATIVE TTS VOICEOVER DECODER (BAKED INTO VIDEO!)
-    // ============================================================================
-    async function fetchGeminiTTSAudioBuffer(audioCtx, scriptText) {
-      const key = appState.geminiKey?.trim();
-      if (!key || key.length < 15) return null;
-      const voiceName = document.getElementById('tts-voice-select')?.value || 'Orus';
-      const statusEl = document.getElementById('media-engine-status-text');
-
-      // Clean the 4-clip script into natural spoken paragraphs
-      const cleanSpoken = String(scriptText || '')
-        .split('\n')
-        .map(l => l.replace(/^\[Clip \d.*?:\s*/i, '').replace(/^["']|["']$/g, '').trim())
-        .filter(Boolean)
-        .join(' ');
-
-      const ttsModels = ['gemini-2.5-flash-preview-tts', 'gemini-2.0-flash-exp'];
-      for (const m of ttsModels) {
-        try {
-          if (statusEl) statusEl.textContent = `⏳ Synthesizing Studio AI Voiceover (${m} • Voice: ${voiceName})...`;
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(key)}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [{
-                  text: `Read this Singapore real estate script clearly in a confident, warm, professional advisory tone at a steady 145 words per minute pace: ${cleanSpoken}`
-                }]
-              }],
-              generationConfig: {
-                responseModalities: ['AUDIO'],
-                speechConfig: {
-                  voiceConfig: {
-                    prebuiltVoiceConfig: { voiceName }
-                  }
-                }
-              }
-            })
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            const parts = data?.candidates?.[0]?.content?.parts || [];
-            const audioPart = parts.find(p => p.inlineData && p.inlineData.data);
-            if (audioPart) {
-              const b64 = audioPart.inlineData.data;
-              const mime = audioPart.inlineData.mimeType || '';
-              const binary = atob(b64);
-
-              // Decode 16-bit 24kHz PCM (standard Gemini TTS output) into WebAudio AudioBuffer
-              if (/pcm|L16/i.test(mime) || !mime.includes('wav')) {
-                const sampleCount = Math.floor(binary.length / 2);
-                const audioBuf = audioCtx.createBuffer(1, sampleCount, 24000);
-                const channel = audioBuf.getChannelData(0);
-                const view = new DataView(new ArrayBuffer(binary.length));
-                for (let i = 0; i < binary.length; i++) view.setUint8(i, binary.charCodeAt(i));
-                for (let i = 0; i < sampleCount; i++) {
-                  channel[i] = view.getInt16(i * 2, true) / 32768.0;
-                }
-                logA99Telemetry(`Gemini TTS (${voiceName}) synthesized ${Math.round(audioBuf.duration)}s studio voiceover into video stream.`);
-                return audioBuf;
-              } else {
-                const arrBuf = new ArrayBuffer(binary.length);
-                const u8 = new Uint8Array(arrBuf);
-                for (let i = 0; i < binary.length; i++) u8[i] = binary.charCodeAt(i);
-                const decoded = await audioCtx.decodeAudioData(arrBuf);
-                return decoded;
-              }
-            }
-          }
-        } catch (err) {
-          console.warn(`TTS model ${m} notice:`, err);
-        }
-      }
-      return null;
-    }
-
-    // ============================================================================
-    // 4-LAYER 95 BPM MODERN LUXURY REAL ESTATE BEAT + RHODES + SUB-BASS + VOICE MUXER
-    // ============================================================================
-    function schedule95BpmLuxuryBeatAndVoice(audioCtx, dest, durationSec, voiceBuffer = null, includeMusic = true) {
-      const now = audioCtx.currentTime + 0.05;
-      const sliderVal = parseInt(document.getElementById('music-volume-slider')?.value || '48', 10) / 100;
-
-      // 1. If Gemini TTS Voiceover Buffer exists, play it at 100% clarity into both Recorder & Speakers!
-      if (voiceBuffer) {
-        const voiceSource = audioCtx.createBufferSource();
-        voiceSource.buffer = voiceBuffer;
-        const voiceGain = audioCtx.createGain();
-        voiceGain.gain.setValueAtTime(1.15, now);
-        voiceSource.connect(voiceGain);
-        voiceGain.connect(dest);
-        voiceGain.connect(audioCtx.destination);
-        voiceSource.start(now);
-      }
-
-      if (!includeMusic) return;
-
-      // 2. Schedule 95 BPM Modern Luxury Real Estate Beat (Rhodes + Sub-Bass + Soft Kick + Crisp Shaker)
-      const musicMaster = audioCtx.createGain();
-      // Audible, rich background level (auto-ducked slightly when voiceover is present)
-      const targetMusicGain = voiceBuffer ? (sliderVal * 0.65) : (sliderVal * 1.15);
-      musicMaster.gain.setValueAtTime(targetMusicGain, now);
-      musicMaster.connect(dest);
-      musicMaster.connect(audioCtx.destination);
-
-      const bpm = 95;
-      const beatSec = 60 / bpm; // ~0.631s per beat
-      const barSec = beatSec * 4; // ~2.526s per bar
-      const totalBars = Math.ceil(durationSec / barSec);
-
-      const chordProg = [
-        { root: 87.31, notes: [174.61, 220.00, 261.63, 329.63, 392.00] }, // Fmaj9
-        { root: 73.42, notes: [146.83, 174.61, 220.00, 261.63, 329.63] }, // Dm11
-        { root: 110.00, notes: [220.00, 261.63, 329.63, 392.00, 493.88] }, // Am9
-        { root: 65.41, notes: [130.81, 164.81, 196.00, 246.94, 293.66] }  // Cmaj9
-      ];
-
-      // Create white-noise buffer for crisp modern hi-hat/shaker groove
-      const noiseBuf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.08, audioCtx.sampleRate);
-      const noiseData = noiseBuf.getChannelData(0);
-      for (let i = 0; i < noiseData.length; i++) noiseData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.02));
-
-      for (let bar = 0; bar < totalBars; bar++) {
-        const barStart = now + bar * barSec;
-        const chordObj = chordProg[bar % chordProg.length];
-
-        // Layer A: Deep Warm Sub-Bass on Beats 1 and 2.5
-        [0, beatSec * 2.5].forEach((offset, bIdx) => {
-          const t0 = barStart + offset;
-          const dur = bIdx === 0 ? beatSec * 2.2 : beatSec * 1.4;
-          const bassOsc = audioCtx.createOscillator();
-          const bassGain = audioCtx.createGain();
-          bassOsc.type = 'triangle';
-          bassOsc.frequency.setValueAtTime(chordObj.root, t0);
-          bassGain.gain.setValueAtTime(0.001, t0);
-          bassGain.gain.linearRampToValueAtTime(0.32, t0 + 0.05);
-          bassGain.gain.exponentialRampToValueAtTime(0.02, t0 + dur);
-          bassOsc.connect(bassGain);
-          bassGain.connect(musicMaster);
-          bassOsc.start(t0);
-          bassOsc.stop(t0 + dur);
-        });
-
-        // Layer B: Warm Rhodes Electric Piano Chords
-        chordObj.notes.forEach((freq, nIdx) => {
-          const osc = audioCtx.createOscillator();
-          const noteGain = audioCtx.createGain();
-          osc.type = nIdx % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(freq, barStart);
-          noteGain.gain.setValueAtTime(0.001, barStart);
-          noteGain.gain.linearRampToValueAtTime(0.18 / (nIdx * 0.35 + 1), barStart + 0.12);
-          noteGain.gain.exponentialRampToValueAtTime(0.015, barStart + barSec - 0.04);
-          osc.connect(noteGain);
-          noteGain.connect(musicMaster);
-          osc.start(barStart);
-          osc.stop(barStart + barSec);
-        });
-
-        // Layer C: Soft Modern Reel Kick Pulse on Beats 1 & 3 + Crisp Shaker on 8th Notes
-        for (let beat = 0; beat < 4; beat++) {
-          const btTime = barStart + beat * beatSec;
-          if (beat === 0 || beat === 2) {
-            const kickOsc = audioCtx.createOscillator();
-            const kickGain = audioCtx.createGain();
-            kickOsc.type = 'sine';
-            kickOsc.frequency.setValueAtTime(115, btTime);
-            kickOsc.frequency.exponentialRampToValueAtTime(42, btTime + 0.12);
-            kickGain.gain.setValueAtTime(0.38, btTime);
-            kickGain.gain.exponentialRampToValueAtTime(0.001, btTime + 0.18);
-            kickOsc.connect(kickGain);
-            kickGain.connect(musicMaster);
-            kickOsc.start(btTime);
-            kickOsc.stop(btTime + 0.19);
-          }
-
-          // 8th-note soft high-passed shaker
-          [0, beatSec * 0.5].forEach(subOff => {
-            const hatTime = btTime + subOff;
-            const noiseSrc = audioCtx.createBufferSource();
-            noiseSrc.buffer = noiseBuf;
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'highpass';
-            filter.frequency.setValueAtTime(5500, hatTime);
-            const hatGain = audioCtx.createGain();
-            hatGain.gain.setValueAtTime(subOff === 0 ? 0.08 : 0.045, hatTime);
-            noiseSrc.connect(filter);
-            filter.connect(hatGain);
-            hatGain.connect(musicMaster);
-            noiseSrc.start(hatTime);
-          });
-        }
-      }
-    }
-
-    async function renderLiveVeoVideoOrFallback() {
-      const btn = document.getElementById('btn-render-video');
-      const canvas = document.getElementById('studio-video-canvas');
-      const videoEl = document.getElementById('studio-video-preview');
-      const statusEl = document.getElementById('media-engine-status-text');
-      const timerEl = document.getElementById('live-render-timer');
-      let totalSeconds = parseInt(document.getElementById('reel-duration-select')?.value || '16', 10);
-      const muxMusic = document.getElementById('mux-music-checkbox')?.checked !== false;
-      const bakeVoice = document.getElementById('voiceover-tts-checkbox')?.checked !== false;
-      const card = appState.cards.find(c => c.id === appState.activeCardId) || appState.cards[0];
-
-      window._videoOffsetCounter += 4;
-      if (btn) { btn.disabled = true; btn.innerHTML = `<span>⏳ Synthesizing Voice + 4K Scenes...</span>`; }
-
-      // 1. Load 4 Fresh 4K Architectural Scenes in Parallel
-      const baseSeed = Math.abs((card?.title || '').split('').reduce((a, b) => a + b.charCodeAt(0), 0)) + window._videoOffsetCounter;
-      const scenePromises = [0, 1, 2, 3].map(i =>
-        loadPhotorealisticAIImageElement(`Scene ${i + 1}`, baseSeed + i * 3, (i === 0))
-      );
-
-      // 2. Initialize WebAudio Context & Generate Real Gemini TTS Voiceover Buffer
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const audioCtx = new AudioCtx();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
-      const dest = audioCtx.createMediaStreamDestination();
-
-      const [sceneImages, voiceBuffer] = await Promise.all([
-        Promise.all(scenePromises),
-        bakeVoice ? fetchGeminiTTSAudioBuffer(audioCtx, card?.script || '') : Promise.resolve(null)
-      ]);
-      if (card) window._cachedAIVideoScenes[card.id] = sceneImages;
-
-      // Sync reel duration to match full spoken voiceover if voiceover is longer than selected preset
-      if (voiceBuffer && voiceBuffer.duration > 6) {
-        totalSeconds = Math.max(totalSeconds, Math.ceil(voiceBuffer.duration) + 1);
-      }
-
-      if (statusEl) {
-        statusEl.textContent = voiceBuffer
-          ? `🎙️ Recording ${totalSeconds}s Pro Reel (Gemini TTS Voiceover + 95 BPM Beat Baked Into File)...`
-          : `🥁 Recording ${totalSeconds}s Pro Reel (95 BPM Luxury Beat Baked Into File)...`;
-      }
-
-      // 3. Schedule Both AI Voiceover + 95 BPM Luxury Beat into the MediaRecorder Stream
-      schedule95BpmLuxuryBeatAndVoice(audioCtx, dest, totalSeconds + 0.5, voiceBuffer, muxMusic);
-
-      const canvasStream = canvas.captureStream ? canvas.captureStream(25) : null;
-      let combinedStream = canvasStream;
-      if (canvasStream && dest.stream.getAudioTracks().length > 0) {
-        combinedStream = new MediaStream([
-          ...canvasStream.getVideoTracks(),
-          ...dest.stream.getAudioTracks()
-        ]);
-      }
-
-      let recorder = null;
-      const chunks = [];
-      if (combinedStream && typeof MediaRecorder !== 'undefined') {
-        const mimeTypes = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
-        const supportedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
-        recorder = supportedMime ? new MediaRecorder(combinedStream, { mimeType: supportedMime }) : new MediaRecorder(combinedStream);
-        recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
-        recorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'video/webm' });
-          window._latestRecordedVideoUrl = URL.createObjectURL(blob);
-          if (videoEl) {
-            videoEl.src = window._latestRecordedVideoUrl;
-            videoEl.muted = false;
-            videoEl.classList.remove('hidden');
-            videoEl.play().catch(() => {});
-          }
-          setTimeout(() => audioCtx.close().catch(() => {}), 400);
+    // PER-CARD PROPERTY PHOTO UPLOADER (NEVER STUCK ACROSS OTHER TOPICS!)
+    function handlePropertyPhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const targetCardId = appState.activeCardId;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          window._cardCustomPhotos[targetCardId] = img;
+          updateCustomPhotoUIStatus(targetCardId);
+          renderFlyerCanvas(false);
+          showToast('🏠 Custom photo attached to THIS topic only! (Other topics unaffected)', 'success');
         };
-        recorder.start();
-      }
-
-      const fps = 25;
-      const frameIntervalMs = 1000 / fps;
-      const secondsPerClip = totalSeconds / 4;
-      const stepsPerClip = Math.round(secondsPerClip * fps);
-      const totalSteps = 4 * stepsPerClip;
-
-      for (let c = 0; c < 4; c++) {
-        for (let step = 0; step < stepsPerClip; step++) {
-          const globalStep = c * stepsPerClip + step;
-          const overallProgress = (globalStep + 1) / totalSteps;
-          const clipProgress = (step + 1) / stepsPerClip;
-          const elapsedSec = Math.min(totalSeconds, Math.floor(overallProgress * totalSeconds));
-          if (timerEl) {
-            timerEl.textContent = `00:${String(elapsedSec).padStart(2, '0')} / 00:${String(totalSeconds).padStart(2, '0')}`;
-          }
-
-          const zoom = (c % 2 === 0) ? (1.03 + clipProgress * 0.14) : (1.17 - clipProgress * 0.12);
-          const panX = (c % 2 === 1) ? ((clipProgress - 0.5) * 48) : 0;
-          drawVideoCanvas(c, zoom, panX, sceneImages[c], overallProgress, clipProgress);
-          await new Promise(r => setTimeout(r, frameIntervalMs));
-        }
-      }
-
-      if (recorder && recorder.state !== 'inactive') recorder.stop();
-      if (statusEl) {
-        statusEl.textContent = voiceBuffer
-          ? `🟢 Rendered ${totalSeconds}s Full-Bleed Reel with Baked Gemini TTS Voiceover + 95 BPM Beat!`
-          : `🟢 Rendered ${totalSeconds}s Full-Bleed Reel with Baked 95 BPM Luxury Beat!`;
-      }
-      if (btn) { btn.disabled = false; btn.innerHTML = '<i data-lucide="video" class="w-3.5 h-3.5"></i><span>🎬 Render Pro Reel (Voice+Beat)</span>'; lucide.createIcons(); }
-      showToast(`🎬 ${totalSeconds}s Pro Reel recorded with Baked Audio! Click Download to verify.`, 'success');
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
     async function handleExternalVeoVideoUpload(e) {
       const files = Array.from(e.target.files || []);
       if (files.length === 0) return;
       const url = URL.createObjectURL(files[0]);
-      window._latestRecordedVideoUrl = url;
       const videoEl = document.getElementById('studio-video-preview');
       if (videoEl) {
         videoEl.src = url;
         videoEl.classList.remove('hidden');
         videoEl.play().catch(() => {});
       }
-      showToast(`📥 Loaded ${files.length} Veo 3.1 / Google Flow video clip(s) into Studio!`, 'success');
-    }
-
-    function downloadLatestRecordedVideo() {
-      if (!window._latestRecordedVideoUrl) {
-        showToast('Click "Render Pro Reel (Voice+Beat)" first to generate the reel!', 'warn');
-        return;
-      }
-      const a = document.createElement('a');
-      a.download = `AgentZug_Pro_Reel_Voice_And_Beat_${Date.now()}.webm`;
-      a.href = window._latestRecordedVideoUrl;
-      a.click();
-      showToast('⬇️ Downloaded Full-Bleed Reel with Baked Voiceover + Beat (.WEBM)!', 'success');
-    }
-
-    // STANDALONE 16s 95 BPM LUXURY BEAT + RHODES + SUB-BASS .WAV EXPORT
-    function generateLyriaMusicTrack() {
-      const sampleRate = 44100;
-      const durationSeconds = 16;
-      const numSamples = sampleRate * durationSeconds;
-      const buffer = new ArrayBuffer(44 + numSamples * 2);
-      const view = new DataView(buffer);
-
-      const writeStr = (offset, str) => { for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i)); };
-      writeStr(0, 'RIFF');
-      view.setUint32(4, 36 + numSamples * 2, true);
-      writeStr(8, 'WAVE');
-      writeStr(12, 'fmt ');
-      view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true);
-      view.setUint16(22, 1, true);
-      view.setUint32(24, sampleRate, true);
-      view.setUint32(28, sampleRate * 2, true);
-      view.setUint16(32, 2, true);
-      view.setUint16(34, 16, true);
-      writeStr(36, 'data');
-      view.setUint32(40, numSamples * 2, true);
-
-      const bpm = 95;
-      const beatSec = 60 / bpm;
-      const barSec = beatSec * 4;
-      const chords = [
-        { root: 87.31, notes: [174.61, 220.00, 261.63, 329.63, 392.00] },
-        { root: 73.42, notes: [146.83, 174.61, 220.00, 261.63, 329.63] },
-        { root: 110.00, notes: [220.00, 261.63, 329.63, 392.00, 493.88] },
-        { root: 65.41, notes: [130.81, 164.81, 196.00, 246.94, 293.66] }
-      ];
-
-      for (let i = 0; i < numSamples; i++) {
-        const t = i / sampleRate;
-        const barIdx = Math.floor(t / barSec) % 4;
-        const localBarT = t % barSec;
-        const localBeatT = t % beatSec;
-        const beatInBar = Math.floor(localBarT / beatSec);
-        const chordObj = chords[barIdx];
-
-        const chordEnv = Math.min(1, localBarT / 0.12) * Math.exp(-localBarT * 0.45);
-        let sample = 0;
-        // Rhodes Chords
-        chordObj.notes.forEach((f, idx) => {
-          sample += Math.sin(2 * Math.PI * f * t) * (0.14 / (idx * 0.35 + 1)) * chordEnv;
-        });
-        // Deep Sub-Bass
-        sample += Math.sin(2 * Math.PI * chordObj.root * t) * 0.24 * Math.exp(-localBarT * 0.6);
-        // Soft Kick on Beats 1 and 3
-        if ((beatInBar === 0 || beatInBar === 2) && localBeatT < 0.16) {
-          const kickFreq = 110 * Math.exp(-localBeatT * 14) + 42;
-          sample += Math.sin(2 * Math.PI * kickFreq * localBeatT) * 0.32 * Math.exp(-localBeatT * 16);
-        }
-
-        const pcm = Math.max(-1, Math.min(1, sample)) * 32767;
-        view.setInt16(44 + i * 2, pcm, true);
-      }
-
-      const blob = new Blob([buffer], { type: 'audio/wav' });
-      const url = URL.createObjectURL(blob);
-      const player = document.getElementById('lyria-audio-player');
-      if (player) {
-        player.src = url;
-        player.classList.remove('hidden');
-        player.play().catch(() => {});
-      }
-      showToast('🎵 Agent 4C composed 95 BPM Luxury Beat + Rhodes + Sub-Bass (.WAV)!', 'success');
-    }
-
-    function handlePropertyPhotoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        appState.uploadedPropertyBase64 = ev.target.result;
-        const img = new Image();
-        img.onload = () => {
-          appState.uploadedPropertyPhoto = img;
-          renderFlyerCanvas(false);
-          drawVideoCanvas(1, 1.04, 0, img, 0.5, 0.5);
-          showToast('🏠 Property photo loaded into Full-Bleed Flyer & Video compositor!', 'success');
-        };
-        img.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
+      showToast(`📥 Attached Google Flow video (${files[0].name}) to this card!`, 'success');
     }
 
     function renderViralMemory() {
@@ -2700,12 +2381,12 @@ Return ONLY valid JSON with keys:
 
     function runGoldenSmokeTest() {
       const checks = [
-        '✅ Check 1: Gemini 2.5 Native TTS Voiceover Baked Directly Into Downloaded .WEBM Video',
-        '✅ Check 2: 4-Layer 95 BPM Luxury Beat (Rhodes + Sub-Bass + Kick + Shaker) Active',
-        '✅ Check 3: Full-Bleed 9:16 Edge-to-Edge Social Reel Layout Active',
-        '✅ Check 4: 4-Segment Story Progress Bar & Glassmorphic Data Cards Active',
-        '✅ Check 5: Modern Walk-and-Talk & Speed-Ramped Veo 3.1 Prompts Active in Box C',
-        '✅ Check 6: Box B Spoken Script -> Box C 6-Layer Prompts 100% Synced',
+        '✅ Check 1: Per-Card Custom Photo Isolation Active (Never Stuck Across New Topics)',
+        '✅ Check 2: 6 Daring Social Media Visual Concepts Active (VS Split, Editorial Cover, Truth Receipt, POV, Drone, 3D)',
+        '✅ Check 3: Auto-Rotating Visual Archetypes on Every New Topic Mined',
+        '✅ Check 4: 1080×1350 High-DPI Multi-Layout Poster Compositor Verified',
+        '✅ Check 5: Policy-Safe Google Flow (Veo 3.1) 4-Clip Prompt Splitter Active',
+        '✅ Check 6: Agent 5 CEA PG 02/2011 Statutory Footer Capsule Verified',
         '✅ Check 7: Dual-Track CRM Inline Commission -> Live #kpi-gci Sync Verified',
         '✅ Check 8: Persistent Browser Vault Hydrated'
       ];
@@ -2786,7 +2467,7 @@ Return ONLY valid JSON with keys:
         localStorage.setItem('squad_cea_profile', JSON.stringify(appState.ceaProfile));
         hydrateSettingsInputs();
         renderFlyerCanvas(false);
-        showToast('👤 Presenter Headshot updated & stamped onto flyer/video!', 'success');
+        showToast('👤 Presenter Headshot updated & stamped onto poster!', 'success');
       };
       reader.readAsDataURL(file);
     }
@@ -2800,7 +2481,7 @@ Return ONLY valid JSON with keys:
         localStorage.setItem('squad_cea_profile', JSON.stringify(appState.ceaProfile));
         hydrateSettingsInputs();
         renderFlyerCanvas(false);
-        showToast('🏢 Brand Logo updated & stamped onto flyer/video!', 'success');
+        showToast('🏢 Brand Logo updated & stamped onto poster!', 'success');
       };
       reader.readAsDataURL(file);
     }
@@ -2819,7 +2500,7 @@ Return ONLY valid JSON with keys:
       localStorage.setItem('squad_vertex_project', proj);
       localStorage.setItem('squad_vertex_token', token);
 
-      if (matrix) matrix.innerHTML = `<div class="text-amber-400">⏳ Pinging Google AI Studio, Gemini 2.5 TTS Voiceover & Media Engines...</div>`;
+      if (matrix) matrix.innerHTML = `<div class="text-amber-400">⏳ Pinging Google AI Studio & Multi-Concept Image Engines...</div>`;
 
       if (!key) {
         if (matrix) matrix.innerHTML = `<div class="text-rose-400">Please paste your AIzaSy... key in the first box above.</div>`;
@@ -2837,12 +2518,12 @@ Return ONLY valid JSON with keys:
           if (matrix) {
             matrix.innerHTML = `
               <div class="text-emerald-400">✓ Text Brain: gemini-2.5-flash & gemini-flash-lite-latest (HTTP 200 OK • ${ms} ms)</div>
-              <div class="text-emerald-400">✓ Voiceover Engine: gemini-2.5-flash-preview-tts (Bakes Spoken Voice Directly Into .WEBM)</div>
-              <div class="text-emerald-400">✓ Music Engine: 95 BPM Luxury Beat (Rhodes + Sub-Bass + Soft Kick + Shaker)</div>
-              <div class="text-emerald-400">✓ Visual Engine: Full-Bleed 9:16 Social Reel + Modern Walk-and-Talk Veo 3.1 Prompts</div>
+              <div class="text-emerald-400">✓ Image Prompt Engine: 6 Daring Social Media Archetypes Active</div>
+              <div class="text-emerald-400">✓ Per-Card Custom Photo Isolation: Active (Zero Cross-Topic Bleed)</div>
+              <div class="text-emerald-400">✓ Video Prompt Engine: Google Flow (Veo 3.1) 6-Layer Policy-Safe Handoff</div>
             `;
           }
-          showToast(`✅ Verified ${modelNames.length} Google AI models + Gemini TTS Voiceover Muxer (${ms} ms)!`, 'success');
+          showToast(`✅ Verified ${modelNames.length} Google AI models (${ms} ms)!`, 'success');
         } else {
           const err = await res.json().catch(() => ({}));
           if (matrix) matrix.innerHTML = `<div class="text-rose-400">⚠️ API Error: ${escapeHTML(err?.error?.message || res.statusText)}</div>`;
@@ -2922,7 +2603,7 @@ Return ONLY valid JSON with keys:
       renderCRM();
       renderWhatsAppChat();
       renderViralMemory();
-      logA99Telemetry('AgentZug V.4.6.5 Initialized — Full-Bleed 9:16 Social Reel + Gemini TTS Voiceover Muxer Online.');
+      logA99Telemetry('AgentZug V.4.6.5 Initialized — 6 Daring Visual Concepts & Per-Card Photo Isolation Online.');
       lucide.createIcons();
     });
   </script>

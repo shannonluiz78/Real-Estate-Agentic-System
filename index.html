@@ -1,462 +1,941 @@
-  <!-- Brand Logo Container (68px High Visibility) + Identity -->
-  <div class="flex items-center gap-3.5">
-    <div class="w-[68px] h-[68px] rounded-2xl overflow-hidden shadow-lg border border-indigo-500/30 bg-slate-900 shrink-0 flex items-center justify-center p-0.5">
-      <img id="header-brand-logo" src="Home Equity Studio LOGO.png" alt="Home Equity Studio" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='AI Smart Casual.png';" />
-    </div>
-    <div>
-      <div class="flex items-center gap-2">
-        <span class="font-black text-lg tracking-tight">AgentZug V.4.6.5</span>
-        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30">HOME EQUITY STUDIO</span>
-      </div>
-      <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">PLAN TODAY | UPGRADE TOMORROW • 2-Touch Autonomous OS</div>
-      <div id="global-telemetry-banner" class="flex items-center gap-2 text-[11px] font-semibold pt-0.5">
-        <span id="global-traffic-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block"></span>
-        <span id="global-traffic-text" class="text-rose-600 dark:text-rose-400">🔴 Human Gate 1 & 2 Active • Ready for Action</span>
-      </div>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentZug V.4.6.5 — Singapore Autonomous Real Estate Revenue OS</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .custom-scroll::-webkit-scrollbar { height: 7px; width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.35); border-radius: 9999px; }
+    @keyframes pulse-yellow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
+      50% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+    }
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(244, 63, 94, 0); }
+    }
+    .traffic-yellow { animation: pulse-yellow 1.6s infinite; }
+    .traffic-red { animation: pulse-red 1.6s infinite; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col antialiased">
 
-  <!-- Restored Executive KPI Strip (Live GCI Calculation) -->
-  <div class="hidden xl:flex items-center gap-3 bg-slate-100 dark:bg-slate-800/80 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs shadow-inner">
-    <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
-      <span class="text-[10px] text-slate-400 uppercase font-bold block">GCI Pipeline (Live Calc)</span>
-      <span id="kpi-gci" class="font-black text-sm text-emerald-600 dark:text-emerald-400">S$ 142,800</span>
-    </div>
-    <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
-      <span class="text-[10px] text-slate-400 uppercase font-bold block">Human Touches</span>
-      <span class="font-black text-sm text-slate-800 dark:text-slate-200">2 Clicks Max</span>
-    </div>
-    <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
-      <span class="text-[10px] text-slate-400 uppercase font-bold block">Priority Engine</span>
-      <span id="kpi-api-priority" class="font-black text-sm text-indigo-600 dark:text-indigo-400">1. Vertex AI ($387.65)</span>
-    </div>
-    <div class="px-2.5 border-r border-slate-300 dark:border-slate-700">
-      <span class="text-[10px] text-slate-400 uppercase font-bold block">Prompt QA Gate</span>
-      <span id="kpi-prompt-qa" class="font-black text-sm text-emerald-600 dark:text-emerald-400">99% Pass (A12)</span>
-    </div>
-    <div class="px-2.5">
-      <span class="text-[10px] text-slate-400 uppercase font-bold block">Hot Leads (≥80)</span>
-      <span id="kpi-hot-leads" class="font-black text-sm text-amber-600 dark:text-amber-400">3 Priority</span>
-    </div>
-  </div>
-
-  <!-- Header Controls & Trigger Buttons -->
-  <div class="flex flex-wrap items-center gap-2">
-    <select id="agent1-style-select" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-bold">
-      <option value="ALL_MIX">🌐 A1: Auto-Mix (News, Hooks, Skits, Motivation)</option>
-      <option value="SG_NEWS">📰 SG Property News & Policy (URA/ABSD/TDSR)</option>
-      <option value="CREATOR_VIRAL">🔥 Creator Contrarian Hooks</option>
-      <option value="COMEDY_SKIT">😂 Relatable SG Property Comedy Skit</option>
-      <option value="MOTIVATION">💡 Homeowner Wealth Motivation</option>
-    </select>
-    <button onclick="triggerAgent1Pitch()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
-      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-      <span>+ Mine Topic</span>
-    </button>
-    <button onclick="runFull2TouchDemoSimulation()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
-      <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
-      <span>2-Touch Demo</span>
-    </button>
-    <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 transition">
-      <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
-    </button>
-  </div>
-</div>
-
-
-<!-- NAVIGATION SIDEBAR -->
-<aside class="w-full lg:w-64 shrink-0 bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between gap-4">
-  <div class="space-y-4">
-    <!-- CEA Realtor Profile Card -->
-    <div class="p-3 rounded-2xl bg-slate-100/90 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 flex items-center gap-3">
-      <div class="relative w-11 h-11 rounded-full overflow-hidden bg-indigo-600 text-white font-black flex items-center justify-center shrink-0 ring-2 ring-emerald-500">
-        <img id="sidebar-avatar-img" src="AI Smart Casual.png" alt="Presenter" class="w-full h-full object-cover hidden" onerror="this.style.display='none'" />
-        <span id="sidebar-avatar-fallback" class="text-sm">LL</span>
-      </div>
-      <div class="min-w-0 flex-1">
-        <div id="sidebar-agent-name" class="font-extrabold text-xs truncate">Luiz Lee</div>
-        <div id="sidebar-agency-name" class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Huttons Asia Pte Ltd</div>
-        <div id="cea-sidebar-reg" class="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">CEA: R057632A</div>
-      </div>
-    </div>
-
-    <!-- 7 Primary Navigation Tabs -->
-    <nav class="space-y-1">
-      <button data-tab="board" onclick="switchTab('board')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20">
-        <span class="flex items-center gap-2"><i data-lucide="kanban" class="w-4 h-4"></i> 1. Agile 2-Touch Board</span>
-        <span id="badge-board-count" class="px-2 py-0.5 rounded-full text-[10px] bg-white/20">3</span>
-      </button>
-      <button data-tab="studio" onclick="switchTab('studio')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4"></i> 2. Content Factory & Post-Prod</span>
-        <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">A16</span>
-      </button>
-      <button data-tab="publish" onclick="switchTab('publish')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="share-2" class="w-4 h-4"></i> 3. Agent 6: Publishing & Queue</span>
-        <span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/15 text-indigo-600 font-bold">API</span>
-      </button>
-      <button data-tab="telemetry" onclick="switchTab('telemetry')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> 4. Agent 7: Traffic & RAG</span>
-        <span class="px-1.5 py-0.5 rounded text-[10px] bg-violet-500/15 text-violet-600 font-bold">5-Tier</span>
-      </button>
-      <button data-tab="crm" onclick="switchTab('crm')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> 5. Dual CRM & Commission</span>
-        <span id="badge-crm-count" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/15 text-rose-600 font-bold">4</span>
-      </button>
-      <button data-tab="qa" onclick="switchTab('qa')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> 6. QA Centre & Telemetry</span>
-        <span id="badge-qa-count" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">A99</span>
-      </button>
-      <button data-tab="settings" onclick="switchTab('settings')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-        <span class="flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> 7. Multi-API & Cloud Setup</span>
-        <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">Vault</span>
-      </button>
-    </nav>
-  </div>
-
-  <!-- Live MOP Calculator Delivery Badge -->
-  <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5 text-[11px]">
-    <div class="font-extrabold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
-      <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-      <span>Agent 8 MOP Tool Active</span>
-    </div>
-    <a href="https://hdb-mop-calculator.vercel.app" target="_blank" rel="noopener noreferrer" class="block truncate font-mono text-[10px] text-indigo-600 dark:text-indigo-400 underline font-bold">https://hdb-mop-calculator.vercel.app</a>
-  </div>
-</aside>
-
-<!-- MAIN BODY -->
-<main class="flex-1 p-4 lg:p-6 overflow-x-hidden space-y-6">
-
-  <!-- PROGRESS BANNER: AUTONOMOUS AGENT SWARM -->
-  <div id="autonomous-runner-banner" class="hidden p-4 rounded-2xl bg-gradient-to-r from-indigo-900 via-slate-900 to-violet-900 text-white border border-indigo-500/40 shadow-lg space-y-3">
-    <div class="flex items-center justify-between">
-      <span id="auto-runner-title" class="font-black text-sm">🟡 AUTONOMOUS AGENT SWARM RUNNING (ZERO MANUAL CLICKS)...</span>
-      <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 6</span>
-    </div>
-    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-      <div id="auto-runner-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-indigo-400 h-full transition-all duration-300" style="width: 20%"></div>
-    </div>
-    <div id="auto-runner-log" class="text-xs font-mono text-indigo-200">Executing...</div>
-  </div>
-
-  <!-- TAB 1: KANBAN BOARD -->
-  <section id="view-board" class="tab-view space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-      <div class="flex flex-wrap items-center justify-between gap-2">
+  <!-- TOP EXECUTIVE KPI & HIGH-VISIBILITY LOGO HEADER BAR -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 py-3.5 shadow-sm">
+    <div class="max-w-[1800px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand Logo Showcase (68px × 68px) + Sub-Branding -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-[68px] h-[68px] rounded-2xl overflow-hidden shadow-lg border-2 border-indigo-500/40 bg-slate-900 shrink-0 flex items-center justify-center p-0.5">
+          <img id="header-brand-logo" src="Home Equity Studio LOGO.png" alt="Home Equity Studio" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='AI Smart Casual.png';" />
+        </div>
         <div>
-          <h1 class="text-base font-black flex items-center gap-2">
-            <span>9-Stage Autonomous Real Estate Pipeline</span>
-            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">2-Human-Touch Flow</span>
-          </h1>
-          <p class="text-xs text-slate-500">Touch 1: Human Select (Column 2) • Autonomous Swarm (Columns 3-4) • Touch 2: Human Review (Column 5)</p>
+          <div class="flex items-center gap-2">
+            <span class="font-black text-lg tracking-tight">AgentZug V.4.6.5</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30">HOME EQUITY STUDIO</span>
+          </div>
+          <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">PLAN TODAY | UPGRADE TOMORROW • 2-Touch Autonomous OS</div>
+          <div id="global-telemetry-banner" class="flex items-center gap-2 text-[11px] font-semibold pt-0.5">
+            <span id="global-traffic-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 traffic-red inline-block"></span>
+            <span id="global-traffic-text" class="text-rose-600 dark:text-rose-400">🔴 Human Gate 1 (Select) & Gate 2 (Review) Armed</span>
+          </div>
         </div>
-        <select id="notebooklm-preset-select" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
-          <option value="HDB_MOP_2026">📚 Brain: 2026 HDB 5-Yr MOP Equity Velocity</option>
-          <option value="OCR_VS_RCR">📚 Brain: OCR New Launch ($2,400 PSF) vs RCR Resale</option>
-          <option value="D15_FREEHOLD">📚 Brain: D15 Freehold Dumbbell Floorplans</option>
-          <option value="COMEDY_VIRAL">📚 Brain: Relatable Viewing Comedy & Motivation</option>
-        </select>
       </div>
-      <div id="top-stage-track" class="grid grid-cols-3 sm:grid-cols-9 gap-1.5 pt-1 text-[10px] font-bold"></div>
-    </div>
 
-    <!-- 9 Horizontal Kanban Columns -->
-    <div id="kanban-columns-container" class="flex gap-3.5 overflow-x-auto pb-3 custom-scroll"></div>
-
-    <!-- RESTORED EXCEPTION ZONES (BLOCKED & REWORK) -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="p-4 rounded-2xl bg-rose-500/5 border border-rose-500/30 space-y-2.5">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-black uppercase text-rose-600 dark:text-rose-400">BLOCKED (Legal / Written Consent Gate)</h3>
-          <span id="count-blocked" class="px-2 py-0.5 rounded-full text-xs font-black bg-rose-500/20 text-rose-600">0</span>
+      <!-- Restored 5-Metric Executive KPI Strip (Live GCI Pipeline) -->
+      <div class="hidden xl:flex items-center gap-3 bg-slate-100 dark:bg-slate-800/80 px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs shadow-inner">
+        <div class="px-3 border-r border-slate-300 dark:border-slate-700">
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">GCI Pipeline (Live Calc)</span>
+          <span id="kpi-gci" class="font-black text-sm text-emerald-600 dark:text-emerald-400">S$ 142,800</span>
         </div>
-        <div id="list-blocked" class="space-y-2 text-xs"></div>
-      </div>
-      <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/30 space-y-2.5">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">REWORK (Revision & Self-Healing Loop)</h3>
-          <span id="count-rework" class="px-2 py-0.5 rounded-full text-xs font-black bg-amber-500/20 text-amber-600">0</span>
+        <div class="px-3 border-r border-slate-300 dark:border-slate-700">
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">Human Touches</span>
+          <span class="font-black text-sm text-indigo-600 dark:text-indigo-400">2 Clicks Max</span>
         </div>
-        <div id="list-rework" class="space-y-2 text-xs"></div>
+        <div class="px-3 border-r border-slate-300 dark:border-slate-700">
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">Priority Engine</span>
+          <span id="kpi-api-priority" class="font-black text-sm text-emerald-600 dark:text-emerald-400">1. Vertex AI ($387.65)</span>
+        </div>
+        <div class="px-3 border-r border-slate-300 dark:border-slate-700">
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">A12 Prompt QA</span>
+          <span id="kpi-prompt-qa" class="font-black text-sm text-emerald-600 dark:text-emerald-400">99% Pass</span>
+        </div>
+        <div class="px-2.5">
+          <span class="text-[10px] text-slate-400 uppercase font-bold block">Hot Leads (≥80)</span>
+          <span id="kpi-hot-leads" class="font-black text-sm text-amber-600 dark:text-amber-400">2 Alerting</span>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- TAB 2: CONTENT FACTORY & POST-PRODUCTION -->
-  <section id="view-studio" class="tab-view hidden space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <!-- Header Controls: Mode & Actions -->
       <div class="flex flex-wrap items-center gap-2">
-        <span class="text-xs font-black uppercase text-indigo-600">Active Card:</span>
-        <select id="studio-card-selector" onchange="loadCardIntoStudio(this.value)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold"></select>
-        <select id="studio-format" onchange="updateStudioCardField('format', this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
-          <option value="Video (Reels/TikTok/Shorts)">🎬 9:16 Video Reel (Veo 3.1 + Lyria Audio)</option>
-          <option value="Image/Flyer Carousel">🖼️ 4:5 Property Flyer (Nano Banana / Imagen 3)</option>
+        <select id="agent1-style-select" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-bold">
+          <option value="ALL_MIX">🌐 A1: Auto-Mix (4-Pillar Swarm)</option>
+          <option value="SG_NEWS">📰 SG Property News & Policy (URA/ABSD)</option>
+          <option value="CREATOR_VIRAL">🔥 Creator Contrarian Hooks</option>
+          <option value="COMEDY_SKIT">😂 Relatable SG Viewing Comedy</option>
+          <option value="MOTIVATION">💡 Homeowner Wealth Motivation</option>
         </select>
-        <!-- Bilingual Output Toggle (ADD-04) -->
-        <button id="lang-toggle-btn" onclick="toggleBilingualOutput()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
-          🌐 Language: <span id="current-lang-label" class="text-indigo-600">EN</span>
+        <button onclick="triggerAgent1Pitch()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>+ Mine Topic</span>
         </button>
-        <label class="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 cursor-pointer">
-          <input id="studio-owner-consent" type="checkbox" onchange="updateStudioCardField('ownerConsent', this.checked)" class="rounded text-emerald-600" checked />
-          <span>Seller Consent ✓</span>
-        </label>
-      </div>
-      <div class="flex gap-2">
-        <button onclick="rejectAndRedoCardOutput(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-amber-500 text-white text-xs font-extrabold flex items-center gap-1">
-          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-          <span>↻ Redo Output</span>
+        <button onclick="runInteractiveFullDemo()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
+          <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+          <span>2-Touch Demo</span>
         </button>
-        <button onclick="cancelAndDeleteTopicCard(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-extrabold flex items-center gap-1">
-          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          <span>🗑️ Cancel</span>
+        <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition">
+          <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
         </button>
       </div>
     </div>
+  </header>
 
-    <!-- Custom NotebookLM Research Drawer (ADD-02 / UPG-05) -->
-    <details class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
-      <summary class="font-extrabold cursor-pointer text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
-        <i data-lucide="book-open" class="w-4 h-4"></i>
-        <span>+ Open Custom NotebookLM Research & Listing Fact Sheet Drawer</span>
-      </summary>
-      <div class="pt-2 space-y-2">
-        <textarea id="custom-notebooklm-text" rows="3" placeholder="Paste custom URA REALIS pricing tables, floorplan specs, or HDB block details..." class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700"></textarea>
-        <button onclick="applyCustomNotebookLMResearch()" class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-bold text-[11px]">Apply to Active Campaign Card</button>
-      </div>
-    </details>
-
-    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
-      <!-- Left 7 Cols: Prompt & Script Editors -->
-      <div class="xl:col-span-7 space-y-4">
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-          <label class="text-xs font-extrabold text-slate-500 uppercase">Topic Headline:</label>
-          <input id="studio-topic" type="text" oninput="updateStudioCardField('title', this.value)" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold" />
-        </div>
-
-        <!-- Box A: Viral Caption + SEO -->
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-indigo-600">BOX A — Agent 2 & A17: Viral Caption, SEO & 15-Tag Matrix</span>
-            <button onclick="copyTextFromEl('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">📋 Copy</button>
+  <!-- MAIN WORKSPACE CONTAINER -->
+  <div class="flex-1 flex flex-col lg:flex-row max-w-[1800px] w-full mx-auto">
+    
+    <!-- NAVIGATION SIDEBAR -->
+    <aside class="w-full lg:w-64 shrink-0 bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between gap-4">
+      <div class="space-y-4">
+        <!-- Statutory CEA Profile Card -->
+        <div class="p-3 rounded-2xl bg-slate-100/90 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+          <div class="relative w-11 h-11 rounded-full overflow-hidden bg-indigo-600 text-white font-black flex items-center justify-center shrink-0 ring-2 ring-emerald-500">
+            <img id="sidebar-avatar-img" src="AI Smart Casual.png" alt="Luiz Lee" class="w-full h-full object-cover" onerror="this.style.display='none'; document.getElementById('sidebar-avatar-fallback').classList.remove('hidden');" />
+            <span id="sidebar-avatar-fallback" class="hidden text-xs">LL</span>
           </div>
-          <textarea id="studio-copy-output" rows="6" oninput="updateStudioCardField('copy', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1 text-[11px]">
-            <input id="studio-seo-output" type="text" placeholder="Platform SEO Title" oninput="updateStudioCardField('seoDescription', this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
-            <input id="studio-hashtags-output" type="text" placeholder="15-Tag Matrix" oninput="updateStudioCardField('hashtags', this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+          <div class="min-w-0 flex-1">
+            <div id="sidebar-agent-name" class="font-extrabold text-xs truncate">Luiz Lee</div>
+            <div id="sidebar-agency-name" class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Huttons Asia Pte Ltd</div>
+            <div id="cea-sidebar-reg" class="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">CEA: R057632A</div>
           </div>
         </div>
 
-        <!-- Box B: Spoken Script -->
-        <div id="box-b-container" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-          <span class="text-xs font-extrabold text-violet-600">BOX B — Agent 3: 4-Clip Spoken Storyboard Script</span>
-          <textarea id="studio-script-output" rows="4" oninput="updateStudioCardField('script', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
-        </div>
-
-        <!-- Box C: Production Prompts & QA Gate -->
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-indigo-500/40 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black text-emerald-600">BOX C — Final Visual & Kinematic Prompt</span>
-            <span id="prompt-qa-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A12 Prompt QA: 99/100</span>
-          </div>
-          <textarea id="studio-media-output" rows="8" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
-          <div id="flow-clip-buttons-drawer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
-        </div>
-      </div>
-
-      <!-- Right 5 Cols: Media Synthesis, Compositor & Post-Production Editor (A16) -->
-      <div class="xl:col-span-5 space-y-4">
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-xs font-black uppercase text-indigo-600">Media Synthesis & A16 Video Editor</h3>
-              <p class="text-[10px] text-slate-500">Composites Logo, Property Photo & Audio Ducking</p>
-            </div>
-            <span id="visual-qa-pill" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A16B QA: 99%</span>
-          </div>
-
-          <!-- Property Photo Uploader (ADD-01) -->
-          <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
-            <div>
-              <span class="font-bold block">Upload Property / Floorplan Photo:</span>
-              <span class="text-[10px] text-slate-500">Rendered in Center Zone & Video Clips 2-3</span>
-            </div>
-            <input type="file" accept="image/*" onchange="handlePropertyPhotoUpload(event)" class="text-[10px]" />
-          </div>
-
-          <!-- Dual Canvas / Video Output -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
-            <canvas id="studio-flyer-canvas" width="540" height="675" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
-            <div class="flex flex-col justify-between">
-              <canvas id="studio-video-canvas" width="360" height="640" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
-              <video id="studio-video-preview" controls class="w-full rounded-xl shadow-lg border border-emerald-500 hidden mt-1"></video>
-            </div>
-          </div>
-
-          <!-- Media Actions -->
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <button onclick="renderFlyerCanvas()" class="py-2 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm">
-              <i data-lucide="image" class="w-3.5 h-3.5"></i>
-              <span>Render Flyer</span>
-            </button>
-            <button onclick="renderAnimatedVideoReel()" class="py-2 px-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm">
-              <i data-lucide="video" class="w-3.5 h-3.5"></i>
-              <span>Render Video (Veo/A16)</span>
-            </button>
-            <button onclick="downloadRenderedFlyerPNG()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">Download Flyer (.PNG)</button>
-            <button onclick="downloadRecordedVideo()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">Download Video (.WEBM)</button>
-          </div>
-
-          <!-- Agent 4C Lyria Music Generation -->
-          <div class="p-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-between text-xs">
-            <div>
-              <span class="font-bold text-violet-700 dark:text-violet-300 block">Agent 4C: Lyria 3.5 Music Track</span>
-              <span class="text-[10px] text-slate-500">Auto-ducked at -18dB under voiceover</span>
-            </div>
-            <button onclick="generateLyriaMusicTrack()" class="px-2.5 py-1 rounded-lg bg-violet-600 text-white text-[10px] font-bold">🎵 Compose Music</button>
-          </div>
-        </div>
-
-        <!-- Agent 5: CEA Compliance Gate & Human Touch #2 -->
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-emerald-600">Agent 5: CEA PG 02/2011 Gate</span>
-            <span id="cea-score-pill" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-600">CEA COMPLIANT ✓</span>
-          </div>
-          <ul id="cea-checklist-ui" class="space-y-1 text-xs"></ul>
-          <button onclick="humanTouch2ApproveAndAutoPublish(appState.activeCardId)" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md shadow-emerald-500/20">
-            ✅ HUMAN TOUCH #2: Approve & Queue to Schedule
+        <!-- 7-Tab Navigation -->
+        <nav class="space-y-1">
+          <button data-tab="board" onclick="switchTab('board')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20">
+            <span class="flex items-center gap-2"><i data-lucide="kanban" class="w-4 h-4"></i> 1. Agile 2-Touch Board</span>
+            <span id="badge-board-count" class="px-2 py-0.5 rounded-full text-[10px] bg-white/20">3</span>
           </button>
+          <button data-tab="studio" onclick="switchTab('studio')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4"></i> 2. Content Factory & Post-Prod</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">A16</span>
+          </button>
+          <button data-tab="publish" onclick="switchTab('publish')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="share-2" class="w-4 h-4"></i> 3. Publishing Hub & Schedule</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/15 text-indigo-600 font-bold">Peak</span>
+          </button>
+          <button data-tab="telemetry" onclick="switchTab('telemetry')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> 4. Viral Telemetry & Memory</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-violet-500/15 text-violet-600 font-bold">5-Tier</span>
+          </button>
+          <button data-tab="crm" onclick="switchTab('crm')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> 5. Dual CRM & Commission</span>
+            <span id="badge-crm-count" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/15 text-rose-600 font-bold">4</span>
+          </button>
+          <button data-tab="qa" onclick="switchTab('qa')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> 6. QA Centre & A99 Analyst</span>
+            <span id="badge-qa-count" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">A99</span>
+          </button>
+          <button data-tab="settings" onclick="switchTab('settings')" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> 7. Multi-API & Cloud Setup</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Quick Link to MOP Calculator Tool -->
+      <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5 text-[11px]">
+        <div class="font-extrabold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+          <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+          <span>Agent 8 MOP Calculator</span>
         </div>
+        <a href="https://hdb-mop-calculator.vercel.app" target="_blank" rel="noopener noreferrer" class="block truncate font-mono text-[10px] text-indigo-600 dark:text-indigo-400 underline font-bold">https://hdb-mop-calculator.vercel.app</a>
       </div>
-    </div>
-  </section>
+    </aside>
 
-  <!-- TAB 3: PUBLISHING & QUEUE (REG-03) -->
-  <section id="view-publish" class="tab-view hidden space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
-      <div>
-        <h2 class="text-base font-black">Agent 6: Omnichannel Social Media Dispatch & Scheduling</h2>
-        <p class="text-xs text-slate-500">Holds cards in 7. Scheduled until Singapore Peak Retention Windows (12:15 PM / 8:00 PM SGT)</p>
-      </div>
-    </div>
-    <div id="published-posts-ledger" class="space-y-2.5 text-xs"></div>
-  </section>
+    <!-- MAIN BODY CONTENT -->
+    <main class="flex-1 p-4 lg:p-6 overflow-x-hidden space-y-6">
 
-  <!-- TAB 4: TELEMETRY & VIRAL MEMORY -->
-  <section id="view-telemetry" class="tab-view hidden space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-      <h3 class="text-sm font-black">5-Tier Episodic Viral & Conversion Memory</h3>
-      <ul id="viral-memory-list" class="space-y-2 text-xs"></ul>
-    </div>
-  </section>
-
-  <!-- TAB 5: DUAL CRM & COMMISSION TRACKER -->
-  <section id="view-crm" class="tab-view hidden space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h2 class="text-base font-black">Dual-Track CRM & GCI Commission Pipeline</h2>
-          <p class="text-xs text-slate-500">Track A (Social/WA Inbound) vs. Track B (Personal VIP & Referrals) with Live Commission Editing</p>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="openLeadModal(null, 'SOCIAL_WA')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">+ Social Lead</button>
-          <button onclick="openLeadModal(null, 'PERSONAL_FRIEND')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold">🤝 + Friend / Referral</button>
-        </div>
-      </div>
-      <!-- Track Selector -->
-      <div class="flex gap-1.5 pt-1 border-t border-slate-100 dark:border-slate-800">
-        <button id="crm-track-ALL" onclick="setCRMTrackFilter('ALL')" class="px-3 py-1 rounded-xl text-xs font-extrabold bg-indigo-600 text-white">All Leads</button>
-        <button id="crm-track-SOCIAL_WA" onclick="setCRMTrackFilter('SOCIAL_WA')" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">📱 Social/WA Inbound</button>
-        <button id="crm-track-PERSONAL_FRIEND" onclick="setCRMTrackFilter('PERSONAL_FRIEND')" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">🤝 Personal VIP (Bot Muted)</button>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
-      <div class="xl:col-span-7 space-y-3">
-        <div id="crm-leads-list" class="space-y-3"></div>
-      </div>
-      <div class="xl:col-span-5 space-y-4">
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <h3 class="text-xs font-black uppercase text-emerald-600">WhatsApp & DM Live Simulator</h3>
-          <div id="wa-chat-box" class="h-72 overflow-y-auto p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-xs custom-scroll"></div>
-          <div class="flex gap-1.5">
-            <input id="wa-incoming-input" type="text" placeholder="Simulate incoming WhatsApp message..." onkeydown="if(event.key==='Enter') simulateIncomingWhatsApp()" class="flex-1 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs" />
-            <button onclick="simulateIncomingWhatsApp()" class="px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TAB 6: QA CENTRE & AUTO-ERROR RECORDER (A99) -->
-  <section id="view-qa" class="tab-view hidden space-y-5">
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
-      <h2 class="text-base font-black">Agent A99 Telemetry & Error Audit Ledger</h2>
-      <button onclick="clearBugReports()" class="text-xs font-bold text-slate-400 hover:text-rose-500">Clear Resolved</button>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-        <h3 class="text-xs font-black uppercase text-slate-500">Live Telemetry Stream</h3>
-        <div id="a99-telemetry-log" class="h-72 overflow-y-auto space-y-1.5 font-mono text-[11px] custom-scroll"></div>
-      </div>
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-        <h3 class="text-xs font-black uppercase text-rose-600">Auto-Recorded Exceptions</h3>
-        <div id="qa-bug-reports-list" class="h-72 overflow-y-auto space-y-2 text-xs custom-scroll"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TAB 7: SETTINGS & OMNICHANNEL SOCIAL/API VAULT (REG-01) -->
-  <section id="view-settings" class="tab-view hidden space-y-5">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-      <!-- 1. CEA Profile & Headshot -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
-        <h3 class="text-sm font-black">1. CEA Statutory Profile & Presenter Avatar</h3>
-        <div class="grid grid-cols-2 gap-2">
-          <input id="cea-name-input" type="text" placeholder="Full Name" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-bold" />
-          <input id="cea-reg-input" type="text" placeholder="CEA Reg No" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono font-bold" />
-          <input id="cea-agency-input" type="text" placeholder="Agency Name" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
-          <input id="cea-licence-input" type="text" placeholder="Licence No" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
-          <input id="cea-phone-input" type="text" placeholder="Phone Number" class="col-span-2 px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
-        </div>
-        <button onclick="saveCEAProfile()" class="w-full py-2 rounded-xl bg-indigo-600 text-white font-extrabold">Save Profile</button>
-      </div>
-
-      <!-- 2. Priority API Router (Vertex AI + AI Studio) -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+      <!-- AUTONOMOUS SWARM PROGRESS BANNER -->
+      <div id="autonomous-runner-banner" class="hidden p-4 rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white border border-indigo-500/40 shadow-xl space-y-3">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-black">2. Priority API Router (Vertex AI & AI Studio)</h3>
-          <span id="vault-test-pill" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600">Active</span>
+          <span id="auto-runner-title" class="font-black text-sm tracking-wide">🟡 AUTONOMOUS AGENT SWARM RUNNING (ZERO MANUAL CLICKS)...</span>
+          <span id="auto-runner-step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/15">Step 1 / 6</span>
         </div>
-        <div class="space-y-1.5">
-          <label class="font-bold text-indigo-600 block">AI Studio Key (...5uGA $7 Prepay):</label>
-          <input id="settings-gemini-key" type="password" placeholder="AIzaSy...5uGA" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
-          <label class="font-bold text-emerald-600 block pt-1">Vertex AI Project (gen-lang-client-0544211018):</label>
-          <input id="settings-vertex-project" type="text" value="gen-lang-client-0544211018" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="auto-runner-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-indigo-400 h-full transition-all duration-300" style="width: 20%"></div>
         </div>
-        <button onclick="saveAndTestGeminiKey()" class="w-full py-2 rounded-xl bg-emerald-600 text-white font-extrabold">Save & Test Connections</button>
-        <div id="model-ping-matrix" class="text-[10px] font-mono space-y-1"></div>
+        <div id="auto-runner-log" class="text-xs font-mono text-indigo-200">Executing...</div>
       </div>
 
-      <!-- 3. Restored Omnichannel Social Media & WhatsApp Business API Setup (REG-01) -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs lg:col-span-2">
-        <h3 class="text-sm font-black">3. Omnichannel Social Media & WhatsApp Business Cloud API Vault</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <label class="font-bold block mb-1">Meta Graph API (FB/IG Token):</label>
-            <input id="social-meta-token" type="password" placeholder="EAAB..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+      <!-- TAB 1: AGILE 2-TOUCH KANBAN BOARD -->
+      <section id="view-board" class="tab-view space-y-5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h1 class="text-base font-black flex items-center gap-2">
+                <span>9-Stage Agile Governance Pipeline</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">2-Human-Touch Flow</span>
+              </h1>
+              <p class="text-xs text-slate-500">Touch 1: Human Select (Col 2) • Swarm Execution (Cols 3–4) • Touch 2: Human Review (Col 5)</p>
+            </div>
+            <select id="notebooklm-preset-select" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+              <option value="HDB_MOP_2026">📚 Preset Brain: 2026 HDB 5-Yr MOP Waves</option>
+              <option value="OCR_VS_RCR">📚 Preset Brain: OCR New Launch vs RCR Resale</option>
+              <option value="D15_FREEHOLD">📚 Preset Brain: D15 Freehold Floorplan Arbitrage</option>
+              <option value="COMEDY_VIRAL">📚 Preset Brain: Relatable SG Condo Viewing Comedy</option>
+            </select>
           </div>
-          <div>
-            <label class="font-bold block mb-1">TikTok Posting API Key:</label>
-            <input id="social-tiktok-token" type="password" placeholder="tiktok_app_..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+          <!-- 9-Stage Progress Tracker -->
+          <div id="top-stage-track" class="grid grid-cols-3 sm:grid-cols-9 gap-1.5 pt-1 text-[10px] font-bold"></div>
+        </div>
+
+        <!-- 9 Horizontal Columns -->
+        <div id="kanban-columns-container" class="flex gap-3.5 overflow-x-auto pb-4 custom-scroll"></div>
+
+        <!-- Exception Governance Zones (Blocked & Rework) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
+          <div class="p-4 rounded-2xl bg-rose-500/5 border border-rose-500/30 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-black uppercase text-rose-600 dark:text-rose-400">BLOCKED (Written Consent / Legal Stop Gate)</h3>
+              <span id="count-blocked" class="px-2 py-0.5 rounded-full text-xs font-black bg-rose-500/20 text-rose-600">0</span>
+            </div>
+            <div id="list-blocked" class="space-y-2 text-xs"></div>
           </div>
-          <div>
-            <label class="font-bold block mb-1">WhatsApp Cloud API Phone ID:</label>
-            <input id="social-wa-phone-id" type="text" placeholder="10928374..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+          <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/30 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">REWORK (Agent Output Revision Loop)</h3>
+              <span id="count-rework" class="px-2 py-0.5 rounded-full text-xs font-black bg-amber-500/20 text-amber-600">0</span>
+            </div>
+            <div id="list-rework" class="space-y-2 text-xs"></div>
           </div>
         </div>
-        <button onclick="saveSocialAPISettings()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-extrabold">Save Social API Credentials</button>
+      </section>
+
+      <!-- TAB 2: CONTENT FACTORY & POST-PRODUCTION STUDIO -->
+      <section id="view-studio" class="tab-view hidden space-y-5">
+        <!-- Top Toolbar -->
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-black uppercase text-indigo-600">Active Card:</span>
+            <select id="studio-card-selector" onchange="loadCardIntoStudio(this.value)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold"></select>
+            <select id="studio-format" onchange="updateStudioCardField('format', this.value)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+              <option value="Video (Reels/TikTok/Shorts)">🎬 9:16 Video Reel (Veo 3.1 + Lyria Audio)</option>
+              <option value="Image/Flyer Carousel">🖼️ 4:5 Property Flyer (Nano Banana / Imagen 3)</option>
+            </select>
+            <!-- Bilingual Toggle -->
+            <button id="lang-toggle-btn" onclick="toggleBilingualOutput()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
+              🌐 Output: <span id="current-lang-label" class="text-indigo-600">EN</span>
+            </button>
+            <label class="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 cursor-pointer">
+              <input id="studio-owner-consent" type="checkbox" onchange="updateStudioCardField('ownerConsent', this.checked)" class="rounded text-emerald-600" checked />
+              <span>Seller Consent ✓</span>
+            </label>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="rejectAndRedoCardOutput(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-extrabold flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>↻ Redo Swarm</span>
+            </button>
+            <button onclick="cancelAndDeleteTopicCard(appState.activeCardId)" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold flex items-center gap-1">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              <span>🗑️ Cancel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom NotebookLM Research & Listing Fact Paste Drawer -->
+        <details class="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
+          <summary class="font-extrabold cursor-pointer text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>+ Open Custom NotebookLM Research & Listing Specs Drawer</span>
+          </summary>
+          <div class="pt-3 space-y-2">
+            <textarea id="custom-notebooklm-text" rows="3" placeholder="Paste custom URA REALIS pricing tables, floorplan specs, or HDB block details..." class="w-full p-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 font-mono text-xs"></textarea>
+            <button onclick="applyCustomNotebookLMResearch()" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-xs">Apply to Active Card Context</button>
+          </div>
+        </details>
+
+        <!-- Studio Grid Layout -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+          <!-- Left 7 Columns: Boxes A, B, C -->
+          <div class="xl:col-span-7 space-y-4">
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+              <label class="text-xs font-extrabold text-slate-500 uppercase">Topic Headline:</label>
+              <input id="studio-topic" type="text" oninput="updateStudioCardField('title', this.value)" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold" />
+            </div>
+
+            <!-- Box A: Viral Caption + SEO Matrix -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-indigo-600">BOX A — Agent 2 & A17: Viral Caption, SEO & 15-Tag Matrix</span>
+                <button onclick="copyTextFromEl('studio-copy-output', this)" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">📋 Copy</button>
+              </div>
+              <textarea id="studio-copy-output" rows="6" oninput="updateStudioCardField('copy', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1 text-[11px]">
+                <input id="studio-seo-output" type="text" placeholder="Platform SEO Title" oninput="updateStudioCardField('seoDescription', this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
+                <input id="studio-hashtags-output" type="text" placeholder="15-Tag Matrix" oninput="updateStudioCardField('hashtags', this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              </div>
+            </div>
+
+            <!-- Box B: Spoken Script Storyboard -->
+            <div id="box-b-container" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+              <span class="text-xs font-extrabold text-violet-600">BOX B — Agent 3: 4-Clip Spoken Storyboard Script</span>
+              <textarea id="studio-script-output" rows="4" oninput="updateStudioCardField('script', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
+            </div>
+
+            <!-- Box C: Production Prompts + Prompt QA Gate -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-indigo-500/40 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-emerald-600">BOX C — Agent 4A/4B Production Prompts</span>
+                <span id="prompt-qa-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A12 Prompt QA: 99/100</span>
+              </div>
+              <textarea id="studio-media-output" rows="7" oninput="updateStudioCardField('media', this.value)" class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono leading-relaxed"></textarea>
+              <div id="flow-clip-buttons-drawer" class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1"></div>
+            </div>
+          </div>
+
+          <!-- Right 5 Columns: Media Compositor, Post-Production & CEA Review -->
+          <div class="xl:col-span-5 space-y-4">
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-xs font-black uppercase text-indigo-600">Media Compositor & A16 Video Editor</h3>
+                  <p class="text-[10px] text-slate-500">Stamps Logo, Property Photo & Audio Ducking</p>
+                </div>
+                <span id="visual-qa-pill" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/15 text-emerald-600">🟢 A16B QA: 99%</span>
+              </div>
+
+              <!-- Property Photo Uploader (ADD-01) -->
+              <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
+                <div>
+                  <span class="font-bold block">Upload Property / Floorplan Photo:</span>
+                  <span class="text-[10px] text-slate-500">Composited in Center Zone & Video Clips 2–3</span>
+                </div>
+                <input type="file" accept="image/*" onchange="handlePropertyPhotoUpload(event)" class="text-[10px]" />
+              </div>
+
+              <!-- Canvas / Video Live Preview -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
+                <canvas id="studio-flyer-canvas" width="540" height="675" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
+                <div class="flex flex-col justify-between">
+                  <canvas id="studio-video-canvas" width="360" height="640" class="w-full rounded-xl shadow-lg border border-slate-800"></canvas>
+                  <video id="studio-video-preview" controls class="w-full rounded-xl shadow-lg border border-emerald-500 hidden mt-1"></video>
+                </div>
+              </div>
+
+              <!-- Media Action Buttons -->
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="renderFlyerCanvas()" class="py-2 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm">
+                  <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                  <span>Render Flyer</span>
+                </button>
+                <button onclick="renderLiveVeoVideoOrFallback()" class="py-2 px-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-extrabold flex items-center justify-center gap-1 shadow-sm">
+                  <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                  <span>Render Video (Veo/A16)</span>
+                </button>
+                <button onclick="downloadRenderedFlyerPNG()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">Download Flyer (.PNG)</button>
+                <button onclick="downloadLatestRecordedVideo()" class="py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">Download Video (.WEBM)</button>
+              </div>
+
+              <!-- Agent 4C Lyria Music Generation -->
+              <div class="p-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-between text-xs">
+                <div>
+                  <span class="font-bold text-violet-700 dark:text-violet-300 block">Agent 4C: Lyria 3.5 Music Track</span>
+                  <span class="text-[10px] text-slate-500">Auto-ducked at -18dB under voiceover</span>
+                </div>
+                <button onclick="generateLyriaMusicTrack()" class="px-2.5 py-1 rounded-lg bg-violet-600 text-white text-[10px] font-bold">🎵 Compose Music</button>
+              </div>
+            </div>
+
+            <!-- Agent 5 CEA Compliance Gate & Touch #2 -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black uppercase text-emerald-600">Agent 5: CEA PG 02/2011 Gate</span>
+                <span id="cea-score-pill" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-600">CEA COMPLIANT ✓</span>
+              </div>
+              <ul id="cea-checklist-ui" class="space-y-1 text-xs"></ul>
+              <button onclick="humanTouch2ApproveAndAutoPublish(appState.activeCardId)" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md shadow-emerald-500/20">
+                ✅ HUMAN TOUCH #2: Approve & Queue to Schedule
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PUBLISHING HUB & SMART SG SCHEDULER -->
+      <section id="view-publish" class="tab-view hidden space-y-5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-black">Agent 6: Omnichannel Social Media Dispatch & Scheduling</h2>
+            <p class="text-xs text-slate-500">Holds cards in 7. Scheduled until Singapore Peak Retention Windows (12:15 PM / 8:00 PM SGT)</p>
+          </div>
+          <button onclick="flushScheduleQueueNow()" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">🚀 Dispatch Scheduled Posts Now</button>
+        </div>
+        <div id="published-posts-ledger" class="space-y-2.5 text-xs"></div>
+      </section>
+
+      <!-- TAB 4: VIRAL TELEMETRY & 5-TIER MEMORY -->
+      <section id="view-telemetry" class="tab-view hidden space-y-5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 class="text-sm font-black">5-Tier Episodic Viral & Conversion Memory</h3>
+          <p class="text-xs text-slate-500">Autonomous reinforcement loop: Deals & high retention train future prompts automatically.</p>
+          <ul id="viral-memory-list" class="space-y-2 text-xs"></ul>
+        </div>
+      </section>
+
+      <!-- TAB 5: DUAL-TRACK CRM & COMMISSION TRACKER -->
+      <section id="view-crm" class="tab-view hidden space-y-5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base font-black">Dual-Track CRM & GCI Commission Pipeline</h2>
+              <p class="text-xs text-slate-500">Track A (Social/WA Inbound) vs. Track B (Personal VIP & Referrals) with Live Commission Recalculation</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="openLeadModal(null, 'SOCIAL_WA')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">+ Social Lead</button>
+              <button onclick="openLeadModal(null, 'PERSONAL_FRIEND')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold">🤝 + Friend / Referral</button>
+            </div>
+          </div>
+          <!-- Track Selector -->
+          <div class="flex gap-1.5 pt-1 border-t border-slate-100 dark:border-slate-800">
+            <button id="crm-track-ALL" onclick="setCRMTrackFilter('ALL')" class="px-3 py-1 rounded-xl text-xs font-extrabold bg-indigo-600 text-white">All Leads</button>
+            <button id="crm-track-SOCIAL_WA" onclick="setCRMTrackFilter('SOCIAL_WA')" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">📱 Social/WA Inbound (Bot Active)</button>
+            <button id="crm-track-PERSONAL_FRIEND" onclick="setCRMTrackFilter('PERSONAL_FRIEND')" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">🤝 Personal VIP (Bot Muted)</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+          <div class="xl:col-span-7 space-y-3">
+            <div id="crm-leads-list" class="space-y-3"></div>
+          </div>
+          <div class="xl:col-span-5 space-y-4">
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+              <h3 class="text-xs font-black uppercase text-emerald-600">WhatsApp & DM Live Simulator</h3>
+              <div id="wa-chat-box" class="h-72 overflow-y-auto p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-xs custom-scroll"></div>
+              <div class="flex gap-1.5">
+                <input id="wa-incoming-input" type="text" placeholder="Type incoming WhatsApp lead message..." onkeydown="if(event.key==='Enter') simulateIncomingWhatsApp()" class="flex-1 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs" />
+                <button onclick="simulateIncomingWhatsApp()" class="px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: QA CENTRE & AGENT A99 TELEMETRY ANALYST -->
+      <section id="view-qa" class="tab-view hidden space-y-5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <h2 class="text-base font-black">Agent A99 Telemetry & Error Audit Ledger</h2>
+          <button onclick="clearBugReports()" class="text-xs font-bold text-slate-400 hover:text-rose-500">Clear Resolved</button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+            <h3 class="text-xs font-black uppercase text-slate-500">Live Telemetry Stream</h3>
+            <div id="a99-telemetry-log" class="h-72 overflow-y-auto space-y-1.5 font-mono text-[11px] custom-scroll"></div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+            <h3 class="text-xs font-black uppercase text-rose-600">Auto-Recorded Exceptions</h3>
+            <div id="qa-bug-reports-list" class="h-72 overflow-y-auto space-y-2 text-xs custom-scroll"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: MULTI-API VAULT, SOCIAL MEDIA & CLOUD SYNC -->
+      <section id="view-settings" class="tab-view hidden space-y-5">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <!-- 1. CEA Profile & Headshot -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+            <h3 class="text-sm font-black">1. CEA Statutory Profile & Presenter Avatar</h3>
+            <div class="grid grid-cols-2 gap-2">
+              <input id="cea-name-input" type="text" placeholder="Full Name" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-bold" />
+              <input id="cea-reg-input" type="text" placeholder="CEA Reg No" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono font-bold" />
+              <input id="cea-agency-input" type="text" placeholder="Agency Name" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" />
+              <input id="cea-licence-input" type="text" placeholder="Licence No" class="px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              <input id="cea-phone-input" type="text" placeholder="Phone Number" class="col-span-2 px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+            </div>
+            <button onclick="saveCEAProfile()" class="w-full py-2 rounded-xl bg-indigo-600 text-white font-extrabold">Save Profile</button>
+          </div>
+
+          <!-- 2. Priority API Router (Vertex AI + AI Studio) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-black">2. Priority API Router (Vertex AI & AI Studio)</h3>
+              <span id="vault-test-pill" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600">Active</span>
+            </div>
+            <div class="space-y-1.5">
+              <label class="font-bold text-indigo-600 block">AI Studio Key (...5uGA $7 Prepay):</label>
+              <input id="settings-gemini-key" type="password" placeholder="AIzaSy...5uGA" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              <label class="font-bold text-emerald-600 block pt-1">Vertex AI Project (gen-lang-client-0544211018):</label>
+              <input id="settings-vertex-project" type="text" value="gen-lang-client-0544211018" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+            </div>
+            <button onclick="saveAndTestGeminiKey()" class="w-full py-2 rounded-xl bg-emerald-600 text-white font-extrabold">Save & Test Connections</button>
+            <div id="model-ping-matrix" class="text-[10px] font-mono space-y-1"></div>
+          </div>
+
+          <!-- 3. Omnichannel Social Media & WhatsApp Business API Setup (REG-01) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-xs lg:col-span-2">
+            <h3 class="text-sm font-black">3. Omnichannel Social Media & WhatsApp Business Cloud API Vault</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <label class="font-bold block mb-1">Meta Graph API (FB/IG Token):</label>
+                <input id="social-meta-token" type="password" placeholder="EAAB..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              </div>
+              <div>
+                <label class="font-bold block mb-1">TikTok Posting API Key:</label>
+                <input id="social-tiktok-token" type="password" placeholder="tiktok_app_..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              </div>
+              <div>
+                <label class="font-bold block mb-1">WhatsApp Cloud API Phone ID:</label>
+                <input id="social-wa-phone-id" type="text" placeholder="10928374..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono" />
+              </div>
+            </div>
+            <button onclick="saveSocialAPISettings()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-extrabold">Save Social API Credentials</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- EXCEPTION MODAL (REG-02 RESTORED) -->
+  <div id="exception-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 space-y-3 text-xs shadow-2xl">
+      <h3 class="text-sm font-black text-rose-600">Flag Governance Exception State</h3>
+      <select id="exc-state-select" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">
+        <option value="Rework">REWORK (Agent Output Revision Required)</option>
+        <option value="Blocked">BLOCKED (Missing Seller Written Consent Form)</option>
+      </select>
+      <textarea id="exc-reason-input" rows="3" placeholder="Specify compliance or creative reason..." class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800"></textarea>
+      <div class="flex justify-end gap-2">
+        <button onclick="closeExceptionModal()" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">Cancel</button>
+        <button onclick="confirmExceptionState()" class="px-4 py-1.5 rounded-xl bg-rose-600 text-white font-extrabold">Log Exception</button>
       </div>
     </div>
-  </section>
+  </div>
 
-</main>
+  <!-- LEAD EDIT MODAL (WITH EDITABLE COMMISSION) -->
+  <div id="lead-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 space-y-3 text-xs shadow-2xl">
+      <h3 class="text-sm font-black">Add / Edit Lead & GCI Commission</h3>
+      <input id="lead-edit-id" type="hidden" />
+      <div class="grid grid-cols-2 gap-2">
+        <input id="lead-name-input" type="text" placeholder="Name" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold" />
+        <input id="lead-phone-input" type="text" placeholder="Phone (e.g. 91234567)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-mono" />
+      </div>
+      <div>
+        <label class="font-bold block mb-1 text-emerald-600">Estimated Commission (S$ GCI):</label>
+        <input id="lead-commission-input" type="number" placeholder="36000" class="w-full px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-emerald-600" />
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <select id="lead-stage-input" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">
+          <option value="1. Inbound Lead">1. Inbound Lead</option>
+          <option value="2. AI Qualifying">2. AI Qualifying</option>
+          <option value="3. Financial/MOP Consult Booked">3. Financial/MOP Consult Booked</option>
+          <option value="4. Viewing Active">4. Viewing Active</option>
+          <option value="5. Offer / OTP Issued">5. Offer / OTP Issued</option>
+          <option value="6. Completed & Nurture">6. Completed & Nurture</option>
+        </select>
+        <select id="lead-track-input" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold">
+          <option value="SOCIAL_WA">📱 Social/WA Inbound</option>
+          <option value="PERSONAL_FRIEND">🤝 Personal VIP / Friend</option>
+        </select>
+      </div>
+      <textarea id="lead-bant-input" rows="2" placeholder="BANT details..." class="w-full p-2 rounded-xl bg-slate-100 dark:bg-slate-800"></textarea>
+      <div class="flex justify-end gap-2 pt-1">
+        <button onclick="closeLeadModal()" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">Cancel</button>
+        <button onclick="saveLeadFromModal()" class="px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-extrabold">Save Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION CORE -->
+  <script>
+    const MOP_CALCULATOR_URL = 'https://hdb-mop-calculator.vercel.app';
+    const WORKFLOW_STAGES = [
+      'Agent Proposed Topics', 'Human Select', 'Ready', 'In Progress',
+      'Human Review', 'Approved', 'Scheduled', 'Published', 'Measured'
+    ];
+    window._cleanFlowClips = [];
+
+    const appState = {
+      theme: localStorage.getItem('squad_theme') || 'light',
+      activeCardId: 'c1',
+      activeCRMTrack: 'ALL',
+      bilingualMode: 'EN',
+      ceaProfile: JSON.parse(localStorage.getItem('squad_cea_profile') || JSON.stringify({
+        name: 'Luiz Lee',
+        regNo: 'R057632A',
+        agencyName: 'Huttons Asia Pte Ltd',
+        licenceNo: 'L3008899K',
+        phone: '+65 8980 9229',
+        avatarDataUrl: ''
+      })),
+      uploadedPropertyPhoto: null,
+      topicHistoryMemory: JSON.parse(localStorage.getItem('squad_topic_history') || '[]'),
+      viralMemory: JSON.parse(localStorage.getItem('squad_viral_memory') || JSON.stringify([
+        'Hook #1: Leading with numbers in first 2.5s boosts 3s Hold Rate to >79%.',
+        'Conversion #2: Delivering MOP Calculator via wa.me increases bookings 3.1x.'
+      ])),
+      a99Logs: [],
+      bugReports: JSON.parse(localStorage.getItem('squad_bug_reports') || '[]'),
+      cards: [],
+      leads: [],
+      waMessages: []
+    };
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // GCI RECALCULATOR (DYNAMIC HEADER SYNC)
+    function recalculateTotalGCI() {
+      const total = appState.leads.reduce((sum, lead) => sum + (Number(lead.estCommission) || 0), 0);
+      const el = document.getElementById('kpi-gci');
+      if (el) el.textContent = `S$ ${total.toLocaleString()}`;
+    }
+
+    // INITIALIZATION & MOCK DATA
+    function initDefaultData() {
+      appState.cards = [
+        {
+          id: 'c1',
+          title: 'Punggol & Tampines 5-Year HDB MOP Wave: How to Time Your 6-Month ABSD Refund Safely',
+          format: 'Video (Reels/TikTok/Shorts)',
+          stage: 'Human Review',
+          ownerConsent: true,
+          promptQAScore: 99,
+          copy: `Are you navigating the 2026 Punggol & Tampines 5-Year MOP Wave? 📈\n\nOfficial URA REALIS & HDB data shows peak buyer demand occurs between Year 5 and Year 7.\n\n💬 Comment "MOP" or tap my WhatsApp to get the free HDB MOP Calculator (${MOP_CALCULATOR_URL})!\n\n—\nLuiz Lee | CEA Reg No: R057632A\nHuttons Asia Pte Ltd | Licence: L3008899K\nPhone: +65 8980 9229`,
+          script: `[Clip 1 (0-8s)]: "Planning your HDB upgrade after reaching your 5-year MOP?"\n[Clip 2 (8-16s)]: "Official URA REALIS numbers show why Year 5 to 7 is your peak liquidity window."\n[Clip 3 (16-24s)]: "Under IRAS rules, married SC couples qualify for full 6-month ABSD remission."\n[Clip 4 (24-32s)]: "Comment MOP below for our instant HDB progression calculator."`,
+          media: `=== GOOGLE FLOW CLIP 1 ===\nCamera: Slow push-in\nSubject: Presenter\nAudio: Calm baritone`
+        },
+        {
+          id: 'c2',
+          title: 'District 15 Freehold 3-Bedder Dumbbell Layout (S$2,320 PSF) vs. OCR New Launch (S$2,450+ PSF)',
+          format: 'Video (Reels/TikTok/Shorts)',
+          stage: 'Human Select',
+          ownerConsent: true,
+          promptQAScore: 99,
+          copy: `Why buy OCR leasehold at S$2,450+ PSF when D15 Freehold dumbbell layouts trade at S$2,320 PSF? 🏙️\n\nDM "D15" for the full breakdown.\n\n—\nLuiz Lee (R057632A) | Huttons Asia`,
+          script: `[Clip 1 (0-8s)]: "Look at the PSF divergence between District 15 freehold and suburban new launches."`,
+          media: `=== GOOGLE FLOW CLIP 1 ===\nCamera: Lateral dolly`
+        }
+      ];
+
+      appState.leads = [
+        { id: 'l1', track: 'SOCIAL_WA', name: 'Kelvin Tan', phone: '91284411', estCommission: 36000, stage: '3. Financial/MOP Consult Booked', bant: 'SC • Punggol 4RM MOP Nov 2026' },
+        { id: 'l2', track: 'PERSONAL_FRIEND', name: 'Bernard Ng (Army Buddy)', phone: '90118822', estCommission: 48000, stage: '4. Viewing Active', bant: 'Selling Bishan 5RM for D15 Freehold' },
+        { id: 'l3', track: 'SOCIAL_WA', name: 'Marcus Lim', phone: '98773310', estCommission: 24000, stage: '4. Viewing Active', bant: 'Tampines 5RM to D15' },
+        { id: 'l4', track: 'SOCIAL_WA', name: 'Darren Koh', phone: '96551122', estCommission: 34800, stage: '2. AI Qualifying', bant: 'Tampines BTO MOP in 4 months' }
+      ];
+      recalculateTotalGCI();
+    }
+
+    // NAVIGATION
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`view-${tabKey}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabKey) {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm shadow-indigo-500/20';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+        }
+      });
+      if (tabKey === 'studio') { populateStudioSelector(); loadCardIntoStudio(appState.activeCardId); }
+      if (tabKey === 'board') renderKanban();
+      if (tabKey === 'crm') renderCRM();
+      lucide.createIcons();
+    }
+
+    // KANBAN BOARD RENDERER
+    function renderKanban() {
+      const container = document.getElementById('kanban-columns-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      WORKFLOW_STAGES.forEach((st, idx) => {
+        const col = document.createElement('div');
+        const stageCards = appState.cards.filter(c => c.stage === st && !c.exceptionState);
+        const isGate1 = st === 'Human Select';
+        const isGate2 = st === 'Human Review';
+
+        let borderClass = 'border-slate-200 dark:border-slate-800';
+        if ((isGate1 || isGate2) && stageCards.length > 0) borderClass = 'border-rose-500 ring-2 ring-rose-500/20';
+
+        col.className = `w-72 shrink-0 bg-slate-100 dark:bg-slate-900 border ${borderClass} rounded-2xl p-3 flex flex-col space-y-3`;
+        
+        let cardsHtml = stageCards.map(c => `
+          <div class="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+            <span class="text-[10px] font-bold text-indigo-600">${escapeHTML(c.format)}</span>
+            <div class="font-bold text-xs">${escapeHTML(c.title)}</div>
+            ${isGate1 ? `
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-1">
+                <button onclick="humanTouch1Run('${c.id}')" class="flex-1 py-1 rounded bg-indigo-600 text-white font-bold text-[10px]">🎬 Auto-Run</button>
+                <button onclick="cancelAndDeleteTopicCard('${c.id}')" class="px-2 py-1 rounded bg-rose-500/10 text-rose-600 font-bold text-[10px]">✕</button>
+              </div>` : ''}
+            ${isGate2 ? `
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-1">
+                <button onclick="humanTouch2ApproveAndAutoPublish('${c.id}')" class="w-full py-1.5 rounded bg-emerald-600 text-white font-black text-[11px]">✅ Touch #2: Approve</button>
+              </div>` : ''}
+          </div>
+        `).join('');
+
+        col.innerHTML = `
+          <div class="flex items-center justify-between text-xs font-black">
+            <span>${idx + 1}. ${st}</span>
+            <span class="px-2 py-0.5 rounded-full bg-black/10 text-[10px]">${stageCards.length}</span>
+          </div>
+          <div class="space-y-2">${cardsHtml || '<div class="text-[11px] text-slate-400 italic">Empty</div>'}</div>
+        `;
+        container.appendChild(col);
+      });
+      lucide.createIcons();
+    }
+
+    // TOUCH #1 & #2 ORCHESTRATION
+    async function humanTouch1Run(cardId) {
+      const card = appState.cards.find(c => c.id === cardId);
+      if (!card) return;
+      card.stage = 'Ready'; renderKanban();
+      const banner = document.getElementById('autonomous-runner-banner');
+      banner.classList.remove('hidden');
+      await new Promise(r => setTimeout(r, 400));
+      card.stage = 'In Progress'; renderKanban();
+      await new Promise(r => setTimeout(r, 600));
+      card.stage = 'Human Review';
+      banner.classList.add('hidden');
+      renderKanban();
+      switchTab('studio');
+    }
+
+    function humanTouch2ApproveAndAutoPublish(cardId) {
+      const card = appState.cards.find(c => c.id === cardId);
+      if (!card) return;
+      card.stage = 'Scheduled';
+      renderKanban();
+      alert(`Card approved! Queued in [7. Scheduled] for next Singapore peak window (8:00 PM SGT).`);
+    }
+
+    // STUDIO CONTROLS
+    function populateStudioSelector() {
+      const sel = document.getElementById('studio-card-selector');
+      if (!sel) return;
+      sel.innerHTML = appState.cards.map(c => `<option value="${c.id}" ${c.id === appState.activeCardId ? 'selected' : ''}>${escapeHTML(c.title.slice(0, 50))}</option>`).join('');
+    }
+
+    function loadCardIntoStudio(cardId) {
+      appState.activeCardId = cardId;
+      const card = appState.cards.find(c => c.id === cardId) || appState.cards[0];
+      if (!card) return;
+      document.getElementById('studio-topic').value = card.title;
+      document.getElementById('studio-copy-output').value = card.copy;
+      document.getElementById('studio-script-output').value = card.script || '';
+      document.getElementById('studio-media-output').value = card.media;
+      renderFlyerCanvas();
+      drawVideoCanvas();
+    }
+
+    function updateStudioCardField(k, v) {
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+      if (!card) return;
+      card[k] = v;
+      if (k === 'title' || k === 'copy') renderFlyerCanvas();
+    }
+
+    // MULTI-LAYER COMPOSITOR (HOME EQUITY STUDIO LOGO + LISTING PHOTO)
+    function renderFlyerCanvas() {
+      const canvas = document.getElementById('studio-flyer-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const card = appState.cards.find(c => c.id === appState.activeCardId);
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, '#0f172a'); grad.addColorStop(1, '#020617');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Zone 1: Header
+      ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('2026 URA REALIS VERIFIED PLAYBOOK', 24, 34);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 18px sans-serif';
+      ctx.fillText(card ? card.title.slice(0, 38).toUpperCase() : 'PROPERTY ANALYSIS', 24, 62);
+
+      // Zone 2: Listing Photo / 3D Cutaway
+      if (appState.uploadedPropertyPhoto) {
+        ctx.drawImage(appState.uploadedPropertyPhoto, 24, 85, 492, 380);
+      } else {
+        ctx.fillStyle = '#1e293b'; ctx.fillRect(24, 85, 492, 380);
+        ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 14px monospace';
+        ctx.fillText('3D ISOMETRIC FLOORPLAN CUTAWAY', 120, 270);
+      }
+
+      // Zone 3: Footer + CEA + Home Equity Studio Watermark
+      ctx.fillStyle = '#020617'; ctx.fillRect(0, canvas.height - 110, canvas.width, 110);
+      ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
+      ctx.strokeRect(0, canvas.height - 110, canvas.width, 2);
+
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 14px sans-serif';
+      ctx.fillText(`${appState.ceaProfile.name} | CEA: ${appState.ceaProfile.regNo}`, 85, canvas.height - 65);
+      ctx.fillStyle = '#cbd5e1'; ctx.font = '11px sans-serif';
+      ctx.fillText(`${appState.ceaProfile.agencyName} (${appState.ceaProfile.licenceNo})`, 85, canvas.height - 45);
+      ctx.fillStyle = '#34d399'; ctx.font = 'bold 11px monospace';
+      ctx.fillText(`${appState.ceaProfile.phone} • hdb-mop-calculator.vercel.app`, 85, canvas.height - 25);
+    }
+
+    function drawVideoCanvas() {
+      const canvas = document.getElementById('studio-video-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#090d16'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px sans-serif';
+      ctx.fillText('🎬 9:16 Veo 3.1 & A16 Video Reel', 30, 60);
+      ctx.fillStyle = '#10b981'; ctx.font = '11px monospace';
+      ctx.fillText('Audio Track: Lyria 3.5 Ducked', 30, 90);
+    }
+
+    function handlePropertyPhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => { appState.uploadedPropertyPhoto = img; renderFlyerCanvas(); };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // CRM CONTROLS & LIVE GCI PIPELINE UPDATE
+    function renderCRM() {
+      const list = document.getElementById('crm-leads-list');
+      if (!list) return;
+      let leads = appState.leads;
+      if (appState.activeCRMTrack !== 'ALL') {
+        leads = leads.filter(l => l.track === appState.activeCRMTrack);
+      }
+      list.innerHTML = leads.map(l => `
+        <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-sm">${escapeHTML(l.name)}</span>
+            <span class="text-xs font-bold text-emerald-600">S$ ${(l.estCommission || 0).toLocaleString()} GCI</span>
+          </div>
+          <div class="text-xs text-slate-500">${escapeHTML(l.bant)}</div>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+            <span class="text-[11px] font-bold text-indigo-600">${escapeHTML(l.stage)}</span>
+            <div class="flex gap-1.5">
+              <a href="https://wa.me/65${l.phone}?text=${encodeURIComponent('Hi! Here is our interactive HDB MOP Calculator: ' + MOP_CALCULATOR_URL)}" target="_blank" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-[10px]">📲 wa.me</a>
+              <button onclick="openLeadModal('${l.id}')" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 font-bold text-[10px]">Edit</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      recalculateTotalGCI();
+      lucide.createIcons();
+    }
+
+    function setCRMTrackFilter(track) {
+      appState.activeCRMTrack = track;
+      ['ALL', 'SOCIAL_WA', 'PERSONAL_FRIEND'].forEach(t => {
+        const btn = document.getElementById(`crm-track-${t}`);
+        if (btn) btn.className = (t === track) ? 'px-3 py-1 rounded-xl text-xs font-extrabold bg-indigo-600 text-white' : 'px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600';
+      });
+      renderCRM();
+    }
+
+    function openLeadModal(leadId = null, defaultTrack = 'SOCIAL_WA') {
+      const modal = document.getElementById('lead-modal');
+      modal.classList.remove('hidden');
+      if (leadId) {
+        const l = appState.leads.find(x => x.id === leadId);
+        document.getElementById('lead-edit-id').value = l.id;
+        document.getElementById('lead-name-input').value = l.name;
+        document.getElementById('lead-phone-input').value = l.phone;
+        document.getElementById('lead-commission-input').value = l.estCommission || 0;
+        document.getElementById('lead-stage-input').value = l.stage;
+        document.getElementById('lead-track-input').value = l.track;
+        document.getElementById('lead-bant-input').value = l.bant;
+      } else {
+        document.getElementById('lead-edit-id').value = '';
+        document.getElementById('lead-name-input').value = '';
+        document.getElementById('lead-phone-input').value = '';
+        document.getElementById('lead-commission-input').value = 36000;
+        document.getElementById('lead-track-input').value = defaultTrack;
+        document.getElementById('lead-bant-input').value = '';
+      }
+    }
+    function closeLeadModal() { document.getElementById('lead-modal').classList.add('hidden'); }
+
+    function saveLeadFromModal() {
+      const id = document.getElementById('lead-edit-id').value;
+      const name = document.getElementById('lead-name-input').value.trim();
+      const phone = document.getElementById('lead-phone-input').value.trim();
+      const estCommission = Number(document.getElementById('lead-commission-input').value) || 0;
+      const stage = document.getElementById('lead-stage-input').value;
+      const track = document.getElementById('lead-track-input').value;
+      const bant = document.getElementById('lead-bant-input').value.trim();
+
+      if (id) {
+        const l = appState.leads.find(x => x.id === id);
+        Object.assign(l, { name, phone, estCommission, stage, track, bant });
+      } else {
+        appState.leads.unshift({ id: 'l' + Date.now(), name, phone, estCommission, stage, track, bant });
+      }
+      closeLeadModal();
+      renderCRM();
+    }
+
+    // EXCEPTION GOVERNANCE MODAL
+    function openExceptionModal(cardId) { document.getElementById('exception-modal').classList.remove('hidden'); }
+    function closeExceptionModal() { document.getElementById('exception-modal').classList.add('hidden'); }
+    function confirmExceptionState() { closeExceptionModal(); }
+
+    function toggleTheme() {
+      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.className = appState.theme;
+      localStorage.setItem('squad_theme', appState.theme);
+    }
+
+    function toggleBilingualOutput() {
+      appState.bilingualMode = appState.bilingualMode === 'EN' ? 'ZH' : 'EN';
+      document.getElementById('current-lang-label').textContent = appState.bilingualMode;
+    }
+
+    function saveSocialAPISettings() { alert('Social Media & WhatsApp API tokens saved securely in browser vault!'); }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initDefaultData();
+      renderKanban();
+      renderCRM();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

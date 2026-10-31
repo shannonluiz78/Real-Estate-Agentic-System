@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentZug V3.7 — Home Equity Studio Autonomous Real Estate OS</title>
+  <title>AgentZug V3.8 — Home Equity Studio 3D Living Office & Media OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Three.js CDN for 3D Roblox-Style Living Office -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -24,32 +26,20 @@
     body { font-family: 'Inter', sans-serif; overflow-x: hidden; background: #060911; color: #f8fafc; }
     .custom-scroll::-webkit-scrollbar { height: 6px; width: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.4); border-radius: 9999px; }
-    @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.85); } 50% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); } }
-    @keyframes pulse-yellow { 0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.9); } 50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } }
-    @keyframes pulse-red { 0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.9); } 50% { box-shadow: 0 0 0 11px rgba(244, 63, 94, 0); } }
-    .halo-green { animation: pulse-green 2s infinite; }
-    .halo-yellow { animation: pulse-yellow 1.5s infinite; }
-    .halo-red { animation: pulse-red 1.3s infinite; }
-    .agent-pin {
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.45); border-radius: 9999px; }
+    .avatar-3d-label {
       position: absolute;
-      transform: translate(-50%, -50%);
-      transition: left 0.85s cubic-bezier(0.22, 1, 0.36, 1), top 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s ease;
-      z-index: 25;
+      pointer-events: auto;
+      cursor: pointer;
+      transform: translate(-50%, -100%);
+      transition: background-color 0.2s, border-color 0.2s;
+      z-index: 20;
     }
-    .agent-pin:hover {
-      transform: translate(-50%, -55%) scale(1.15);
+    .avatar-3d-label:hover {
       z-index: 50;
+      transform: translate(-50%, -106%) scale(1.08);
     }
-    .agent-pin .pin-tooltip {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.18s ease;
-    }
-    .agent-pin:hover .pin-tooltip, .agent-pin.seated .pin-tooltip {
-      opacity: 1;
-    }
-    .kanban-col-compact { min-width: 205px; width: 205px; }
+    .kanban-col-compact { min-width: 210px; width: 210px; }
     @media print {
       header, .no-print { display: none !important; }
       body { background: white !important; color: black !important; }
@@ -62,21 +52,20 @@
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-3.5 py-2 shadow-lg">
     <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-2">
       
-      <!-- Brand Logo Showcase (64px × 64px) & Live Telemetry -->
+      <!-- Brand Logo Container & Live Telemetry -->
       <div class="flex items-center gap-3">
-        <div class="w-[62px] h-[62px] rounded-2xl overflow-hidden shadow-lg border border-amber-500/40 bg-slate-950 shrink-0 flex items-center justify-center p-0.5">
+        <div class="w-[58px] h-[58px] rounded-2xl overflow-hidden shadow-lg border border-amber-500/40 bg-slate-950 shrink-0 flex items-center justify-center p-0.5">
           <img id="header-brand-logo" src="Home Equity Studio LOGO.png" alt="Home Equity Studio" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='AI Smart Casual.png';" />
         </div>
         <div>
           <div class="flex flex-wrap items-center gap-1.5">
             <span class="font-black text-base tracking-tight text-amber-400">HOME EQUITY STUDIO</span>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">AgentZug V3.7</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">AgentZug V3.8</span>
             <span id="header-autopilot-pill" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">⚡ Autopilot: 2-Touch Mode</span>
             <button onclick="switchTab('settings')" id="header-api-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/30 cursor-pointer hover:opacity-80">🔴 Gemini API: Click to Verify</button>
-            <button onclick="runSelfDiagnosticAudit()" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30">🩺 Diagnostic</button>
           </div>
           <div class="text-[11px] font-medium text-slate-400">
-            14 Autonomous Agents • Public CEA Business Line: <span id="hdr-public-phone" class="font-mono font-bold text-emerald-400">+65 8980 9229</span> • Urgent Alert Line: <span id="hdr-owner-phone" class="font-mono font-bold text-rose-400">+65 9237 9472</span>
+            14 Autonomous Agents • Public CEA Line: <span id="hdr-public-phone" class="font-mono font-bold text-emerald-400">+65 8980 9229</span> • Urgent Alert Line: <span id="hdr-owner-phone" class="font-mono font-bold text-rose-400">+65 9237 9472</span>
           </div>
         </div>
       </div>
@@ -117,13 +106,16 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
-      <div class="flex items-center gap-1.5">
+      <!-- Navigation Tabs (Includes 1-Click Direct Media Studio Button) -->
+      <div class="flex flex-wrap items-center gap-1.5">
         <button onclick="switchTab('office')" id="nav-tab-office" class="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-sm">
           <span>🏢 3D Office</span>
         </button>
         <button onclick="switchTab('board')" id="nav-tab-board" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-700">
-          <span>📋 Content & Media Studio</span>
+          <span>📋 Content Board</span>
+        </button>
+        <button onclick="openStudioDirectly()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-black flex items-center gap-1.5 shadow-md">
+          <span>🎬 Media Studio (Test Image/Video)</span>
         </button>
         <button onclick="switchTab('buyer')" id="nav-tab-buyer" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-700">
           <span>🏠 Buyer Wing</span>
@@ -132,59 +124,72 @@
           <span>🗂️ Dual CRM</span>
         </button>
         <button onclick="switchTab('settings')" id="nav-tab-settings" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-700">
-          <span>⚙️ Settings & Profile Photo</span>
+          <span>⚙️ Settings</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- VIEW 1: APPROVED SAMPLE 1 — UNCROPPED 4:3 VISIONARY 3D OFFICE WITH CALIBRATED AGENT SEATS -->
+  <!-- VIEW 1: 3D ROBLOX-STYLE LIVING OFFICE (AUTONOMOUS WORKING MOVEMENT + BOARDROOM WALK-IN) -->
   <section id="view-office" class="tab-view flex-1 flex flex-col p-3 space-y-2.5">
     <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-2 shadow-sm text-xs">
       <div class="flex flex-wrap items-center gap-1.5">
-        <span class="font-black uppercase text-amber-400 mr-1">🏛️ Call Boardroom Meeting:</span>
+        <span class="font-black uppercase text-amber-400 mr-1">🏛️ Call Meeting (Agents Walk to Boardroom):</span>
         <button onclick="openMeetingModal(1)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-extrabold transition">1. Creative Studio</button>
         <button onclick="openMeetingModal(2)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-extrabold transition">2. CEO Town Hall (All 14)</button>
         <button onclick="openMeetingModal(3)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 font-extrabold transition">3. Vera CEA Gate</button>
         <button onclick="openMeetingModal(4)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-amber-600 text-amber-300 hover:text-white border border-amber-500/30 font-extrabold transition">4. Ava & Milo Hot CRM</button>
         <button onclick="openMeetingModal(5)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 font-extrabold transition">5. Nina Buyer Search</button>
-        <button onclick="returnAgentsToDesks()" id="btn-end-boardroom" class="hidden px-2.5 py-1 rounded-xl bg-rose-600 text-white font-black">⏹️ End Meeting (Return to Desks)</button>
+        <button onclick="returnAgentsToDesks()" id="btn-end-boardroom" class="hidden px-2.5 py-1 rounded-xl bg-rose-600 text-white font-black">⏹️ End Meeting (Walk Back to Desks)</button>
       </div>
       <div class="flex items-center gap-2">
-        <label class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold cursor-pointer">
-          🖼️ Load Office Photo
-          <input type="file" accept="image/*" onchange="uploadCustomOfficeBackdrop(event)" class="hidden" />
+        <label class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 cursor-pointer bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-800">
+          <input id="chk-office-roam" type="checkbox" checked onchange="toggleOfficeAutonomousRoaming(this.checked)" class="rounded text-emerald-500" />
+          <span>🚶 Live Working Office Movement</span>
         </label>
         <button onclick="callAdHocEmergencyEscalation()" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black shadow-sm">🚨 Escalate (+65 9237 9472)</button>
       </div>
     </div>
 
-    <!-- Uncropped 4:3 Visionary Office Stage (Zero Top/Side Cropping so Alex & Ryan Are Never Cut Off!) -->
-    <div class="relative flex-1 w-full rounded-3xl bg-[#070a12] border border-amber-500/30 shadow-2xl overflow-hidden flex items-center justify-center p-2">
-      <div id="visionary-office-stage" class="relative w-full max-w-[1280px] aspect-[4/3] max-h-[calc(100vh-150px)] mx-auto select-none overflow-hidden rounded-2xl shadow-2xl bg-[#0d111a]">
-        
-        <!-- Architectural Fallback Canvas + Actual 4:3 Uncropped PNG -->
-        <canvas id="architectural-diorama-fallback" width="1280" height="960" class="absolute inset-0 w-full h-full object-contain"></canvas>
-        <img id="visionary-office-img" src="Home Equity Studio_ A Visionary Office.png" alt="Home Equity Studio 3D Office" class="absolute inset-0 w-full h-full object-contain z-10" onload="this.style.opacity='1';" onerror="this.style.opacity='0';" />
+    <!-- 3D WebGL Roblox-Style Living Office Viewport -->
+    <div id="office-3d-viewport" class="relative flex-1 w-full min-h-[540px] rounded-3xl bg-[#070a12] border border-amber-500/30 shadow-2xl overflow-hidden">
+      <canvas id="office-3d-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+      
+      <!-- 3D-Projected Floating Agent Nameplates (Locked 100% to 3D Head Coordinates) -->
+      <div id="office-3d-labels" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
 
-        <!-- Clickable Marina Bay Skyline Boardroom Screen Overlay -->
-        <div id="boardroom-wall-hud" onclick="openMeetingModal(2)" class="absolute z-20 cursor-pointer rounded-lg bg-slate-950/80 backdrop-blur-sm border border-amber-400/60 px-2.5 py-1 text-center shadow-lg hover:scale-105 transition" style="left: 46%; top: 34.5%; transform: translate(-50%, -50%);">
-          <div class="text-[8px] font-black text-amber-300 tracking-wider uppercase">📺 LIVE BOARDROOM WALL • TAP FOR Q&A</div>
-          <div id="wall-kpi-ticker" class="text-[9px] font-mono font-bold text-emerald-300">GCI: S$142,800 • 30d Deals: 2 (S$72K)</div>
+      <!-- Top-Left Wing Legend -->
+      <div class="absolute top-3 left-3 z-20 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-2xl p-2.5 space-y-1 text-[10px] pointer-events-none shadow-xl">
+        <div class="font-black text-amber-400 uppercase">🏢 6 Furnished 3D Office Wings</div>
+        <div><span class="text-indigo-400 font-bold">NW Exec Suite:</span> Alex (CEO) & Ryan (Ops)</div>
+        <div><span class="text-cyan-400 font-bold">NE Creative Studio:</span> Sage, Mira, Leo, Nova, Kai</div>
+        <div><span class="text-emerald-400 font-bold">East Compliance/Pub:</span> Vera (CEA) & Finn (ROAS)</div>
+        <div><span class="text-amber-400 font-bold">SW Lead & CRM Pod:</span> Ava (WA AI) & Milo (CRM)</div>
+        <div><span class="text-purple-400 font-bold">SE Buyer Wing:</span> Nina, Owen & Iris</div>
+        <div class="text-slate-400 pt-1 border-t border-slate-800">💡 Drag to rotate • Scroll to zoom • Tap any agent</div>
+      </div>
+
+      <!-- Bottom-Left CEO Radar & Quick Studio Trigger -->
+      <div class="absolute bottom-3 left-3 z-20 max-w-xs bg-slate-950/90 backdrop-blur border border-amber-500/40 rounded-2xl p-2.5 text-[10px] space-y-1.5 shadow-2xl">
+        <div class="flex items-center justify-between font-black text-amber-400">
+          <span>👔 ALEX (CEO) — 30-DAY RADAR</span>
+          <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8px]">LIVE 3D</span>
         </div>
-
-        <!-- Calibrated 14 Agent Status Halos (Hover/Tap for Task Bubble — Built-In Desk Nameplates Stay Uncovered!) -->
-        <div id="office-agents-overlay" class="absolute inset-0 z-30 pointer-events-none"></div>
-
-        <!-- Bottom-Left Compact CEO Radar -->
-        <div class="absolute bottom-2.5 left-2.5 z-30 max-w-xs bg-slate-950/90 backdrop-blur-md border border-amber-500/40 rounded-xl p-2 text-[10px] space-y-0.5 shadow-2xl">
-          <div class="flex items-center justify-between font-black text-amber-400">
-            <span>👔 ALEX (CEO) — 30-DAY RADAR</span>
-            <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8px]">LIVE</span>
-          </div>
-          <div id="office-30d-summary" class="text-slate-200 font-medium">• <strong>Next 30d Deals:</strong> 2 Deals (Bernard & Marcus • S$72,000 GCI)</div>
-          <div class="text-amber-300 text-[9px]">• Hover/tap any agent's glowing halo or open <strong>📋 Content & Media Studio</strong>.</div>
+        <div id="office-30d-summary" class="text-slate-200 font-medium">• <strong>Next 30d Deals:</strong> 2 Deals (Bernard & Marcus • S$72,000 GCI)</div>
+        <div class="flex gap-1.5 pt-0.5">
+          <button onclick="openStudioDirectly()" class="flex-1 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black">🎬 Open Media Studio</button>
+          <button onclick="openMeetingModal(2)" class="flex-1 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">🏛️ Town Hall Q&A</button>
         </div>
+      </div>
+
+      <!-- Bottom-Right Camera Presets -->
+      <div class="absolute bottom-3 right-3 z-20 flex flex-wrap items-center gap-1 bg-slate-950/90 backdrop-blur p-1.5 rounded-2xl border border-slate-800 text-[10px] font-bold">
+        <button onclick="focus3DCamera('ALL')" class="px-2.5 py-1 rounded-xl bg-amber-500 text-slate-950 font-black">🔭 Fit Whole Office</button>
+        <button onclick="focus3DCamera('EXEC')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Exec</button>
+        <button onclick="focus3DCamera('CREATIVE')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Creative</button>
+        <button onclick="focus3DCamera('BOARDROOM')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300">Boardroom</button>
+        <button onclick="focus3DCamera('CRM')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">CRM</button>
+        <button onclick="focus3DCamera('BUYER')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Buyer Wing</button>
       </div>
     </div>
   </section>
@@ -216,9 +221,10 @@
       </div>
 
       <div class="flex items-center gap-2">
+        <button onclick="openStudioDirectly()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[11px] shadow">🎬 Open Media Studio</button>
         <button onclick="deduplicateExistingBoardCards(false)" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-[11px]">🧹 Clean Duplicates</button>
         <button onclick="triggerSageNewsMine()" id="btn-sage-mine" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black flex items-center gap-1.5 shadow-sm">
-          <span>✨ Sage: Mine SG News (Zero-Duplicate)</span>
+          <span>✨ Sage: Mine SG News</span>
         </button>
       </div>
     </div>
@@ -372,12 +378,8 @@
   <!-- VIEW 5: SETTINGS, PROFILE PHOTO UPLOADER, LIVE GEMINI API TESTER & OMNICHANNEL VAULT -->
   <section id="view-settings" class="tab-view hidden flex-1 flex flex-col p-4 space-y-4 text-xs">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      
-      <!-- Box 1: CEA Statutory Profile, Dual Numbers & Profile Photo / Logo Uploaders -->
       <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
         <h3 class="text-sm font-black text-amber-400">1. CEA Statutory Profile, Dual Numbers & Presenter Photo Uploader</h3>
-        
-        <!-- Profile Photo & Brand Logo Upload Row -->
         <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <img id="settings-avatar-preview" src="AI Smart Casual.png" alt="Profile Photo" class="w-14 h-14 rounded-full object-cover border-2 border-amber-400 bg-slate-800" />
@@ -428,7 +430,6 @@
         <div id="cea-save-status" class="text-[11px] font-bold text-emerald-400 hidden"></div>
       </div>
 
-      <!-- Box 2: Priority API Router & Live Google Endpoint Handshake -->
       <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-sm font-black text-amber-400">2. Priority API Router (Nano Banana, Neural TTS & Veo)</h3>
@@ -452,41 +453,10 @@
           <div>Status: Paste your Gemini API key above and click Save & Test to unlock Live Nano Banana Image Generation & Neural Male TTS Voiceover.</div>
         </div>
       </div>
-
-      <!-- Box 3: Omnichannel Social Media & WhatsApp Business API Vault -->
-      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 lg:col-span-2">
-        <h3 class="text-sm font-black text-amber-400">3. Omnichannel Social Media & WhatsApp Business Cloud API Vault</h3>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5">
-          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-            <span class="font-bold block text-indigo-400">Meta Graph API (FB/IG)</span>
-            <input id="cfg-meta-token" type="password" placeholder="EAA..." class="w-full mt-1 p-1.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-white" />
-            <button onclick="alert('1. Go to developers.facebook.com -> My Apps -> Create Business App.\n2. Add Pages API & Instagram Graph API.\n3. Generate Page Access Token (EAA...) with instagram_content_publish & pages_manage_posts.')" class="mt-1 text-[10px] text-indigo-400 font-bold underline">❓ 3-Step Guide</button>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-            <span class="font-bold block text-emerald-400">WhatsApp Cloud API</span>
-            <input id="cfg-wa-phone-id" type="text" placeholder="Phone ID (15 digits)" class="w-full mt-1 p-1.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-white" />
-            <button onclick="alert('1. In Meta Developer portal, add WhatsApp product.\n2. Under WhatsApp -> API Setup, copy the 15-digit Phone Number ID.\n3. Public line: +65 8980 9229 | Urgent escalation: +65 9237 9472.')" class="mt-1 text-[10px] text-emerald-400 font-bold underline">❓ 3-Step Guide</button>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-            <span class="font-bold block text-rose-400">YouTube Data v3 (Shorts)</span>
-            <input id="cfg-yt-channel-id" type="text" placeholder="Channel ID (UC...)" class="w-full mt-1 p-1.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-white" />
-            <button onclick="alert('1. Open YouTube Studio -> Settings -> Channel -> Advanced -> Copy Channel ID (UC...).\n2. Enable YouTube Data API v3 in Google Cloud Console.\n3. Paste OAuth token or API key.')" class="mt-1 text-[10px] text-rose-400 font-bold underline">❓ 3-Step Guide</button>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-            <span class="font-bold block text-violet-400">Make.com / n8n Webhook</span>
-            <input id="cfg-webhook-url" type="text" placeholder="https://hook.make.com/..." class="w-full mt-1 p-1.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-white" />
-            <button onclick="alert('1. Create free account on Make.com or n8n.\n2. Create Custom Webhook module and copy URL.\n3. Connect module to TikTok, IG, FB, YouTube & LinkedIn.')" class="mt-1 text-[10px] text-violet-400 font-bold underline">❓ 3-Step Guide</button>
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <button onclick="saveSocialAPISettings()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold">💾 Save Omnichannel Vault</button>
-          <span id="social-save-status" class="text-[11px] font-bold text-emerald-400 hidden"></span>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- MODAL 1: APPROVED SAMPLE 2 & 3 STUDIO — MAGAZINE POSTER + SYNCHRONIZED 60FPS VIDEO REEL ENGINE -->
+  <!-- MODAL 1: MEDIA STUDIO INSPECTOR (4:5 POSTER & 9:16 SYNCHRONIZED 60FPS VIDEO REEL ENGINE) -->
   <div id="card-inspect-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-2.5 overflow-y-auto">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-6xl w-full p-4 md:p-5 space-y-3.5 text-xs shadow-2xl my-auto max-h-[96vh] overflow-y-auto custom-scroll">
       
@@ -504,16 +474,16 @@
         <button onclick="closeCardInspectModal()" class="px-3 py-1.5 rounded-xl bg-slate-800 font-extrabold hover:bg-slate-700 text-white">✕ Close Studio</button>
       </div>
 
-      <!-- Regeneration & Mode Toolbar (Before Human Approval) -->
+      <!-- Regeneration & Mode Toolbar -->
       <div class="p-3 rounded-2xl bg-slate-950 border border-indigo-500/40 space-y-2.5">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <!-- Mode Switcher: Sample 2 (4:5 Poster) vs Sample 3 (9:16 Video Reel) -->
+          <!-- Mode Switcher: Sample 3 (9:16 Video) vs Sample 2 (4:5 Poster) -->
           <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
-            <button onclick="switchStudioPreviewMode('VIDEO')" id="btn-mode-video" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]">🎬 Sample 3: 9:16 Video Reel</button>
-            <button onclick="switchStudioPreviewMode('POSTER')" id="btn-mode-poster" class="px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]">🖼️ Sample 2: 4:5 Social Poster</button>
+            <button onclick="switchStudioPreviewMode('VIDEO')" id="btn-mode-video" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]">🎬 9:16 Video Reel</button>
+            <button onclick="switchStudioPreviewMode('POSTER')" id="btn-mode-poster" class="px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]">🖼️ 4:5 Social Poster</button>
           </div>
 
-          <!-- 4 Regeneration Buttons + Quick Profile Photo Upload -->
+          <!-- Regeneration Buttons + Quick Profile Photo Upload -->
           <div class="flex flex-wrap items-center gap-1.5">
             <button onclick="regenerateNewVideoDesign()" id="btn-regen-design" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-[11px] shadow">
               🔄 Regenerate New Video Design (New Photos + Theme + Motion)
@@ -535,17 +505,14 @@
 
       <!-- Studio Grid: Left = Live Canvas & Video Player | Right = Copy, Script & Prompts -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        
-        <!-- Left 5 Cols: Dual-Aspect High-DPI Canvas + Playback & Download Controls -->
         <div class="lg:col-span-5 space-y-2.5 flex flex-col items-center bg-slate-950 p-3 rounded-2xl border border-slate-800">
           <div class="w-full flex items-center justify-between text-[10px] font-bold text-slate-400 px-1">
-            <span id="studio-pack-label" class="text-amber-300">🎨 Pack 1: Marina Bay Skyline • Theme: Royal Gold</span>
+            <span id="studio-pack-label" class="text-amber-300">🎨 Pack 1: Marina Bay Skyline • Royal Gold</span>
             <span id="studio-cam-label" class="text-cyan-300">🎥 60fps Gimbal Rig</span>
           </div>
 
-          <canvas id="studio-preview-canvas" width="540" height="960" class="w-full max-w-[310px] rounded-2xl shadow-2xl border border-amber-500/40 bg-slate-900"></canvas>
+          <canvas id="studio-preview-canvas" width="540" height="960" class="w-full max-w-[300px] rounded-2xl shadow-2xl border border-amber-500/40 bg-slate-900"></canvas>
 
-          <!-- Playback, Voiceover, Music & Download Controls -->
           <div class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between text-[10px] font-bold">
               <span id="inspect-music-label" class="text-amber-300 truncate">🎵 Piano & Warm Rhodes Lounge (92 BPM)</span>
@@ -557,7 +524,7 @@
               </button>
               <button onclick="stopMediaPreviewPlayback()" class="px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 font-bold text-[11px]">⏹️ Stop</button>
               <button onclick="downloadPosterPNG()" class="px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px]" title="Download High-Res 4:5 Poster (.PNG)">📥 .PNG</button>
-              <button onclick="recordAndDownloadVideoReel()" id="btn-export-webm" class="px-2.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px]" title="Render & Download Actual Video File (.WEBM/.MP4)">🎬 Download Video</button>
+              <button onclick="recordAndDownloadVideoReel()" id="btn-export-webm" class="px-2.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px]" title="Render & Download Actual Video File (.WEBM)">🎬 Download Video</button>
             </div>
             <div class="flex items-center gap-2 text-[10px]">
               <span class="font-bold text-slate-400">Music Mix:</span>
@@ -571,7 +538,6 @@
           </div>
         </div>
 
-        <!-- Right 7 Cols: Box A, Box B (Auto-Timed Script) & Box C -->
         <div class="lg:col-span-7 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-1.5">
             <span class="font-black text-amber-400 uppercase">Box A: Omnichannel Viral Caption, 15 Hashtags & CEA Footer (Leo)</span>
@@ -596,7 +562,6 @@
             <textarea id="inspect-box-c" rows="3" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[10px] text-slate-300"></textarea>
           </div>
 
-          <!-- Vera Compliance Verification & Human Gate Action Buttons -->
           <div class="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-2">
             <label class="flex items-center gap-1.5 font-bold text-[11px] cursor-pointer text-emerald-300">
               <input id="inspect-consent-chk" type="checkbox" checked class="rounded text-emerald-600" />
@@ -699,7 +664,7 @@
     </div>
   </div>
 
-  <!-- MODAL 3: INTERACTIVE BOARDROOM MEETING MODAL (WITH LIVE OWNER Q&A) -->
+  <!-- MODAL 3: INTERACTIVE BOARDROOM MEETING MODAL -->
   <div id="boardroom-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-2xl w-full p-5 space-y-4 text-xs shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -741,7 +706,7 @@
       '4. Viewing Active', '5. Offer / OTP', '6. Commission Closed'
     ];
 
-    // 5 CURATED 4-SCENE SINGAPORE ARCHITECTURAL VIDEO PACKS (20 HIGH-RES SCENES FOR NEW VIDEO DESIGNS)
+    // 5 CURATED 4-SCENE SINGAPORE ARCHITECTURAL VIDEO PACKS
     const VIDEO_DESIGN_PACKS = [
       {
         name: 'Pack 1: Marina Bay Skyline & Infinity Pool',
@@ -815,7 +780,6 @@
       }
     ];
 
-    // Preload all 20 architectural images for instant 60fps cross-dissolve video rendering
     const loadedPackImages = {};
     VIDEO_DESIGN_PACKS.forEach((pack, pIdx) => {
       loadedPackImages[pIdx] = pack.images.map(url => {
@@ -829,27 +793,27 @@
     const presenterAvatarImg = new Image();
     presenterAvatarImg.crossOrigin = 'anonymous';
 
-    // APPROVED SAMPLE 1: EXACT 4:3 UNCROPPED SEAT COORDINATES MATCHING "Home Equity Studio_ A Visionary Office.png"
-    const VISIONARY_AGENTS = [
-      // Top-Left: Executive Suite (Uncropped 4:3 positions right above Alex & Ryan's heads)
-      { id: 'alex', name: 'Alex', role: 'CEO Agent', homeX: 16.5, homeY: 12.2, seatX: 36, seatY: 42, status: '🟢', task: '30d Forecast: S$72K' },
-      { id: 'ryan', name: 'Ryan', role: 'Ops Manager', homeX: 32.5, homeY: 11.8, seatX: 40, seatY: 39, status: '🟢', task: 'Orchestrating 14 Agents' },
-      // Top-Right: Creative & AI Media Studio (5 curved monitor bays in a row)
-      { id: 'sage', name: 'Sage', role: 'Strategist', homeX: 48.8, homeY: 11.2, seatX: 45, seatY: 38, status: '🟢', task: 'Mining URA & HDB News' },
-      { id: 'mira', name: 'Mira', role: 'Creative Dir', homeX: 55.8, homeY: 11.2, seatX: 50, seatY: 38, status: '🟠', task: '4:5 Editorial Visuals' },
-      { id: 'leo', name: 'Leo', role: 'Copywriter', homeX: 61.8, homeY: 9.2, seatX: 54, seatY: 40, status: '🟢', task: 'Viral Hooks & Scripts' },
-      { id: 'nova', name: 'Nova', role: 'AI Prod Dir', homeX: 68.8, homeY: 10.8, seatX: 57, seatY: 44, status: '🟢', task: 'Nano Banana & Veo 3.1' },
-      { id: 'kai', name: 'Kai', role: 'Video Editor', homeX: 75.8, homeY: 10.8, seatX: 57, seatY: 49, status: '🟠', task: '60fps Stitch + Audio Mix' },
-      // Middle-Right: Compliance & Publishing Wing
-      { id: 'vera', name: 'Vera', role: 'CEA Auditor', homeX: 73.5, homeY: 30.2, seatX: 55, seatY: 54, status: '🟢', task: 'Gate 2: PG 02/2011 Check' },
-      { id: 'finn', name: 'Finn', role: 'Analytics', homeX: 83.5, homeY: 30.2, seatX: 51, seatY: 57, status: '🟠', task: '76.4% Hold • 9.4x ROAS' },
-      // Bottom-Left: Lead & WhatsApp CRM Pod
-      { id: 'ava', name: 'Ava', role: 'WA/DM Lead AI', homeX: 9.2, homeY: 56.2, seatX: 35, seatY: 53, status: '🟢', task: 'Hot Lead -> +65 9237 9472' },
-      { id: 'milo', name: 'Milo', role: 'CRM Manager', homeX: 18.8, homeY: 56.2, seatX: 39, seatY: 56, status: '🟠', task: 'GCI S$142.8K • MOP Rule' },
-      // Bottom-Right: Buyer Advisory & Property Search Wing
-      { id: 'nina', name: 'Nina', role: 'Buyer Intake', homeX: 72.2, homeY: 56.2, seatX: 43, seatY: 57, status: '🟢', task: '5 Sector Playbooks' },
-      { id: 'owen', name: 'Owen', role: 'Portal Research', homeX: 79.8, homeY: 56.2, seatX: 47, seatY: 57, status: '🟢', task: 'PropertyGuru & CSV Sync' },
-      { id: 'iris', name: 'Iris', role: 'Match & Excel', homeX: 88.8, homeY: 56.2, seatX: 34, seatY: 48, status: '🟠', task: '1-2p Client Excel Ready' }
+    // 14 ROBLOX-STYLE 3D AGENTS IN THE LIVING OFFICE
+    const OFFICE_3D_AGENTS = [
+      // Zone 1: NW Executive Suite
+      { id: 'alex', name: 'Alex', role: 'CEO Agent', homeX: -11.0, homeZ: -8.2, seatX: -4.2, seatZ: -2.0, seatRot: 0, blazer: 0x312e81, hair: 0x1e293b, status: '🟢', task: '30d Forecast: S$72K' },
+      { id: 'ryan', name: 'Ryan', role: 'Ops Manager', homeX: -6.2, homeZ: -8.2, seatX: -2.8, seatZ: -2.0, seatRot: 0, blazer: 0x4338ca, hair: 0x451a03, status: '🟢', task: 'Routing 14 Agents' },
+      // Zone 2: NE Creative Studio
+      { id: 'sage', name: 'Sage', role: 'Strategist', homeX: 3.2, homeZ: -8.8, seatX: -1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0e7490, hair: 0x0f172a, status: '🟢', task: 'Mining URA News' },
+      { id: 'mira', name: 'Mira', role: 'Creative Dir', homeX: 7.4, homeZ: -8.8, seatX: 0.0, seatZ: -2.0, seatRot: 0, blazer: 0x0891b2, hair: 0x78350f, status: '🟢', task: '4:5 Magazine Layout' },
+      { id: 'leo', name: 'Leo', role: 'Copywriter', homeX: 11.6, homeZ: -8.8, seatX: 1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0284c7, hair: 0x1e293b, status: '🟢', task: 'Word-Synced Script' },
+      { id: 'nova', name: 'Nova', role: 'AI Prod Dir', homeX: 5.2, homeZ: -5.2, seatX: 2.8, seatZ: -2.0, seatRot: 0, blazer: 0x2563eb, hair: 0x31102f, status: '🟡', task: 'Nano Banana & Veo' },
+      { id: 'kai', name: 'Kai', role: 'Video Editor', homeX: 9.8, homeZ: -5.2, seatX: 4.2, seatZ: -2.0, seatRot: 0, blazer: 0x1d4ed8, hair: 0x0f172a, status: '🟢', task: '60fps + Audio Mix' },
+      // Zone 3: East Compliance & Publishing
+      { id: 'vera', name: 'Vera', role: 'CEA Auditor', homeX: 11.2, homeZ: 0.4, seatX: -4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x047857, hair: 0x1c1917, status: '🔴', task: 'PG 02/2011 Check' },
+      { id: 'finn', name: 'Finn', role: 'Analytics', homeX: 11.2, homeZ: 3.6, seatX: -2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x059669, hair: 0x713f12, status: '🟢', task: '76.4% Hold • 9.4x' },
+      // Zone 4: SW Lead & CRM Pod
+      { id: 'ava', name: 'Ava', role: 'WA/DM Lead AI', homeX: -11.0, homeZ: 7.6, seatX: -1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0xd97706, hair: 0x27272a, status: '🔴', task: 'Hot Lead -> +65 9237 9472' },
+      { id: 'milo', name: 'Milo', role: 'CRM Manager', homeX: -6.2, homeZ: 7.6, seatX: 0.0, seatZ: 2.0, seatRot: Math.PI, blazer: 0xb45309, hair: 0x0f172a, status: '🟢', task: 'GCI S$142.8K Sync' },
+      // Zone 5: SE Buyer Advisory Wing
+      { id: 'nina', name: 'Nina', role: 'Buyer Intake', homeX: 3.5, homeZ: 8.0, seatX: 1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0x6d28d9, hair: 0x451a03, status: '🟢', task: '5 Sector Playbooks' },
+      { id: 'owen', name: 'Owen', role: 'Portal Search', homeX: 7.8, homeZ: 8.0, seatX: 2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x7c3aed, hair: 0x1e293b, status: '🟢', task: 'PropertyGuru Links' },
+      { id: 'iris', name: 'Iris', role: 'Match & Excel', homeX: 12.0, homeZ: 8.0, seatX: 4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x8b5cf6, hair: 0x27272a, status: '🟢', task: '1-2p Client Excel' }
     ];
 
     const SG_NON_DUPLICATE_TOPIC_POOL = [
@@ -873,13 +837,6 @@
         packIndex: 2,
         copy: `Reaching your 5-Year HDB MOP in Punggol, Tampines, or Bidadari in 2026? 📈\n\nOfficial HDB Resale Portal & IRAS 2026 rules give married Singapore Citizen couples a strict 6-month window to claim full 20% ABSD remission when upgrading.\n\n💬 Comment "MOP" below for our HDB-to-Condo timeline calculator!\n\n#HDBMOP #SingaporeProperty #PunggolHDB #TampinesHDB #ABSDRefund #SGUpgrader #HuttonsAsia #LuizLee`,
         script: `[Clip 1]: "Just reached your five-year HDB MOP? Your strongest equity window is between year five and year seven."\n[Clip 2]: "Married Singapore Citizen couples have six months after key collection to claim full ABSD remission."\n[Clip 3]: "Always structure your CPF Ordinary Account refund and stress-test loan buffer six months early."\n[Clip 4]: "Comment MOP below to receive our interactive 2026 HDB upgrader timeline calculator."`
-      },
-      {
-        title: 'District 15 Freehold 3-Bedder Dumbbell Floorplans (S$2,320 PSF) vs 99-Year Lease Decay',
-        format: 'Flyer',
-        packIndex: 4,
-        copy: `How much does a 65 sqft long corridor actually cost your family in District 15? 🏙️\n\nAt S$2,320 PSF (Source: URA REALIS Q3 2026), a wasted hallway costs over S$150,000 in dead space. Modern dumbbell layouts place bedrooms on opposite wings of the living hall.\n\n💬 Comment "D15" below for our East Coast Freehold floorplan playbook!\n\n#District15 #EastCoastSG #FreeholdCondo #FloorplanAnalysis #SingaporeProperty #HuttonsAsia #LuizLee`,
-        script: `[Clip 1]: "In District 15, choosing a dumbbell layout over a traditional corridor saves over S$150,000 in dead space."\n[Clip 2]: "Modern split-bedroom wings maximize living hall width and boost future resale buyer appeal."\n[Clip 3]: "Freehold tenure in Meyer and Amber protects long-term generational equity against lease decay."\n[Clip 4]: "Comment D15 below and I will send you our verified East Coast freehold comparison list."`
       }
     ];
 
@@ -895,7 +852,9 @@
     const appState = {
       activeTab: 'office',
       activeCRMTrack: 'ALL',
-      studioPreviewMode: 'VIDEO', // 'VIDEO' (9:16 Sample 3) or 'POSTER' (4:5 Sample 2)
+      studioPreviewMode: 'VIDEO',
+      officeRoamActive: true,
+      officeInMeeting: false,
       autoGate1: JSON.parse(localStorage.getItem('squad_autogate1') || 'false'),
       autoGate2: JSON.parse(localStorage.getItem('squad_autogate2') || 'false'),
       videoDuration: localStorage.getItem('squad_video_duration') || '16s',
@@ -935,14 +894,14 @@
 
     function saveWorkspaceToStorage() {
       try {
-        localStorage.setItem('squad_cards_v37', JSON.stringify(appState.contentCards));
-        localStorage.setItem('squad_leads_v37', JSON.stringify(appState.crmLeads));
-        localStorage.setItem('squad_buyer_v37', JSON.stringify(appState.buyerListings));
+        localStorage.setItem('squad_cards_v38', JSON.stringify(appState.contentCards));
+        localStorage.setItem('squad_leads_v38', JSON.stringify(appState.crmLeads));
+        localStorage.setItem('squad_buyer_v38', JSON.stringify(appState.buyerListings));
         localStorage.setItem('squad_topic_history', JSON.stringify(appState.topicHistoryMemory));
       } catch (e) {}
     }
 
-    // 1. PROFILE PHOTO & BRAND LOGO UPLOADERS (AUTO-COMPRESSED TO LOCALSTORAGE)
+    // 1. PROFILE PHOTO & LOGO LOADER
     function loadSavedAvatarAndLogo() {
       presenterAvatarImg.src = appState.profileAvatarDataUrl;
       const setPreview = document.getElementById('settings-avatar-preview');
@@ -958,7 +917,6 @@
       reader.onload = e => {
         const tempImg = new Image();
         tempImg.onload = () => {
-          // Center-crop and compress to 300x300 JPEG so localStorage never overflows
           const c = document.createElement('canvas');
           c.width = 300; c.height = 300;
           const ctx = c.getContext('2d');
@@ -969,7 +927,7 @@
           const compressedUrl = c.toDataURL('image/jpeg', 0.88);
           appState.profileAvatarDataUrl = compressedUrl;
           try { localStorage.setItem('squad_profile_avatar', compressedUrl); } catch (err) {}
-          presenterAvatarImg.onload = () => renderStudioCanvasFrame(0, 0, 0);
+          presenterAvatarImg.onload = () => renderStudioCanvasFrame(0);
           presenterAvatarImg.src = compressedUrl;
           const setPreview = document.getElementById('settings-avatar-preview');
           if (setPreview) setPreview.src = compressedUrl;
@@ -997,113 +955,355 @@
       reader.readAsDataURL(file);
     }
 
-    // 2. APPROVED SAMPLE 1: UNCROPPED 4:3 VISIONARY 3D OFFICE WITH CALIBRATED AGENT HALOS
-    function initVisionaryOffice() {
-      const savedOfficeBg = localStorage.getItem('squad_custom_office_bg');
-      if (savedOfficeBg) {
-        const imgEl = document.getElementById('visionary-office-img');
-        if (imgEl) { imgEl.src = savedOfficeBg; imgEl.style.opacity = '1'; }
+    // ============================================================================
+    // 2. TRUE 3D ROBLOX-STYLE LIVING OFFICE ENGINE (AUTONOMOUS PATROL + MEETINGS)
+    // ============================================================================
+    let scene3D, camera3D, renderer3D;
+    const robloxAvatars = [];
+    let camZoom3D = 15.2;
+    let desiredCamZoom3D = 15.2;
+    let camAngleH = Math.PI / 4;
+    let camAngleV = Math.PI / 5.0;
+    let camTarget3D = new THREE.Vector3(0, 0, 0);
+    let desiredCamTarget3D = new THREE.Vector3(0, 0, 0);
+    let roamIntervalId = null;
+
+    function init3DRobloxOffice() {
+      const viewport = document.getElementById('office-3d-viewport');
+      const canvas = document.getElementById('office-3d-canvas');
+      const labelsContainer = document.getElementById('office-3d-labels');
+      if (!viewport || !canvas || !labelsContainer) return;
+
+      const w = viewport.clientWidth || 1100;
+      const h = viewport.clientHeight || 560;
+
+      if (renderer3D) {
+        const aspect = w / h;
+        camera3D.left = -camZoom3D * aspect;
+        camera3D.right = camZoom3D * aspect;
+        camera3D.top = camZoom3D;
+        camera3D.bottom = -camZoom3D;
+        camera3D.updateProjectionMatrix();
+        renderer3D.setSize(w, h);
+        return;
       }
-      drawLuxuryArchitecturalCutawayFallback();
-      renderOfficeAgentPins(null);
-    }
 
-    function uploadCustomOfficeBackdrop(event) {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        const dataUrl = e.target.result;
-        const imgEl = document.getElementById('visionary-office-img');
-        if (imgEl) { imgEl.src = dataUrl; imgEl.style.opacity = '1'; }
-        try { localStorage.setItem('squad_custom_office_bg', dataUrl); } catch (err) {}
-      };
-      reader.readAsDataURL(file);
-    }
+      scene3D = new THREE.Scene();
+      scene3D.background = new THREE.Color(0x070a12);
 
-    function drawLuxuryArchitecturalCutawayFallback() {
-      const c = document.getElementById('architectural-diorama-fallback');
-      if (!c) return;
-      const ctx = c.getContext('2d');
-      const sky = ctx.createLinearGradient(0, 0, 0, 960);
-      sky.addColorStop(0, '#1e1b2e'); sky.addColorStop(0.35, '#451a03'); sky.addColorStop(1, '#090d16');
-      ctx.fillStyle = sky;
-      ctx.fillRect(0, 0, 1280, 960);
+      const aspect = w / h;
+      camera3D = new THREE.OrthographicCamera(-camZoom3D * aspect, camZoom3D * aspect, camZoom3D, -camZoom3D, -100, 1000);
+      update3DCameraTransform();
 
-      ctx.fillStyle = '#1c1917';
-      ctx.strokeStyle = '#d97706';
-      ctx.lineWidth = 4;
-      ctx.fillRect(60, 45, 1160, 860);
-      ctx.strokeRect(60, 45, 1160, 860);
+      renderer3D = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer3D.setSize(w, h);
+      renderer3D.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer3D.shadowMap.enabled = true;
 
-      const rooms = [
-        { x: 75, y: 60, w: 460, h: 220, title: 'HOME EQUITY STUDIO — EXECUTIVE SUITE', bg: '#291d12' },
-        { x: 550, y: 60, w: 650, h: 220, title: 'CREATIVE & AI MEDIA STUDIO', bg: '#1e1b18' },
-        { x: 310, y: 300, w: 520, h: 360, title: 'HOME EQUITY STUDIO — CENTRAL 14-SEAT BOARDROOM', bg: '#171717' },
-        { x: 845, y: 300, w: 355, h: 220, title: 'COMPLIANCE & PUBLISHING WING', bg: '#271c15' },
-        { x: 75, y: 520, w: 220, h: 320, title: 'LEAD & WHATSAPP CRM POD', bg: '#1f1914' },
-        { x: 845, y: 540, w: 355, h: 300, title: 'BUYER ADVISORY & PROPERTY SEARCH WING', bg: '#261c14' }
-      ];
-      rooms.forEach(r => {
-        ctx.fillStyle = r.bg;
-        ctx.fillRect(r.x, r.y, r.w, r.h);
-        ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(r.x, r.y, r.w, r.h);
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 13px Inter, sans-serif';
-        ctx.fillText(r.title, r.x + 14, r.y + 26);
-      });
+      // Warm Golden-Hour Architectural Lighting
+      scene3D.add(new THREE.AmbientLight(0xfffbeb, 0.78));
+      const sun = new THREE.DirectionalLight(0xfde68a, 0.88);
+      sun.position.set(18, 28, 16);
+      sun.castShadow = true;
+      scene3D.add(sun);
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.ellipse(570, 500, 155, 80, 0, 0, Math.PI * 2);
-      ctx.fillStyle = '#e7e5e4';
-      ctx.fill();
-      ctx.lineWidth = 8;
-      ctx.strokeStyle = '#78350f';
-      ctx.stroke();
-      ctx.restore();
-    }
+      // Base Architectural Slab & 6 Luxury Flooring Wings
+      const slab = new THREE.Mesh(new THREE.BoxGeometry(33, 0.5, 24), new THREE.MeshLambertMaterial({ color: 0x1c1917 }));
+      slab.position.set(0, -0.26, 0);
+      scene3D.add(slab);
 
-    function renderOfficeAgentPins(inMeetingIds = null) {
-      const container = document.getElementById('office-agents-overlay');
-      if (!container) return;
-      container.innerHTML = '';
+      function addFloorWing(x, z, fw, fd, hex) {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(fw, 0.08, fd), new THREE.MeshLambertMaterial({ color: hex }));
+        m.position.set(x, 0.02, z);
+        scene3D.add(m);
+      }
+      addFloorWing(0, 0, 32.2, 23.2, 0x18181b);        // Main Dark Marble Hallway
+      addFloorWing(-8.8, -7.8, 11.5, 6.8, 0x451a03);   // NW Executive Suite (Warm Walnut)
+      addFloorWing(7.8, -7.2, 15.6, 8.0, 0x1e293b);    // NE Creative & AI Media Studio
+      addFloorWing(11.4, 1.8, 7.4, 6.0, 0x064e3b);     // East Compliance & Publishing
+      addFloorWing(-8.8, 7.4, 11.5, 7.0, 0x3b1806);    // SW Lead & WhatsApp CRM Pod
+      addFloorWing(7.8, 7.6, 15.6, 6.6, 0x572608);     // SE Buyer Advisory Wing
+      addFloorWing(-0.3, 0.0, 12.2, 6.4, 0x27272a);    // Center Boardroom Rug
 
-      VISIONARY_AGENTS.forEach(ag => {
-        const isSeated = inMeetingIds && (inMeetingIds === 'ALL' || inMeetingIds.includes(ag.id));
-        const x = isSeated ? ag.seatX : ag.homeX;
-        const y = isSeated ? ag.seatY : ag.homeY;
-        const haloClass = ag.status === '🔴'
-          ? 'halo-red border-rose-300 bg-rose-500'
-          : (ag.status === '🟠' ? 'halo-yellow border-amber-200 bg-amber-500' : 'halo-green border-emerald-200 bg-emerald-500');
+      // Frosted Gold-Trimmed Glass Partition Walls
+      const glassMat = new THREE.MeshPhongMaterial({ color: 0xfde68a, transparent: true, opacity: 0.18 });
+      const goldRailMat = new THREE.MeshLambertMaterial({ color: 0xd97706 });
 
-        const pin = document.createElement('div');
-        pin.className = `agent-pin pointer-events-auto cursor-pointer flex flex-col items-center ${isSeated ? 'seated' : ''}`;
-        pin.style.left = `${x}%`;
-        pin.style.top = `${y}%`;
-        pin.onclick = () => inspectAgentFromOffice(ag);
+      function addGlassPartition(x, z, len, horiz = true) {
+        const gw = horiz ? len : 0.14;
+        const gd = horiz ? 0.14 : len;
+        const wall = new THREE.Mesh(new THREE.BoxGeometry(gw, 2.2, gd), glassMat);
+        wall.position.set(x, 1.1, z);
+        const rail = new THREE.Mesh(new THREE.BoxGeometry(gw, 0.08, gd), goldRailMat);
+        rail.position.set(x, 2.22, z);
+        scene3D.add(wall, rail);
+      }
+      addGlassPartition(-8.8, -4.2, 9.2, true);
+      addGlassPartition(-3.0, -7.8, 6.6, false);
+      addGlassPartition(7.4, -3.0, 12.8, true);
+      addGlassPartition(-8.8, 3.8, 9.2, true);
+      addGlassPartition(7.4, 4.2, 12.8, true);
+      addGlassPartition(7.6, 1.5, 5.0, false);
 
-        // Sleek glowing status halo ring directly above the agent's head (keeps built-in desk nameplates 100% clear!)
-        pin.innerHTML = `
-          <div class="w-4 h-4 rounded-full border-2 ${haloClass} shadow-lg"></div>
-          <div class="pin-tooltip mt-1 px-2 py-0.5 rounded-lg bg-slate-950/95 border border-amber-400/60 shadow-2xl text-center">
-            <div class="font-black text-[10px] text-white whitespace-nowrap">${ag.name} (${ag.role})</div>
-            <div class="text-[8px] text-emerald-300 font-mono whitespace-nowrap">${ag.task}</div>
+      // Central 14-Seat Oval Marble & Walnut Conference Table + MBS Skyline Screen
+      const tableGroup = new THREE.Group();
+      const ovalTop = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.6, 0.16, 32), new THREE.MeshPhongMaterial({ color: 0xf5f5f4 }));
+      ovalTop.scale.set(1.85, 1, 0.85);
+      ovalTop.position.y = 0.82;
+      tableGroup.add(ovalTop);
+
+      const woodTrim = new THREE.Mesh(new THREE.CylinderGeometry(2.75, 2.75, 0.12, 32), new THREE.MeshLambertMaterial({ color: 0x78350f }));
+      woodTrim.scale.set(1.85, 1, 0.85);
+      woodTrim.position.y = 0.78;
+      tableGroup.add(woodTrim);
+
+      for (let i = 0; i < 7; i++) {
+        const cx = -4.2 + i * 1.4;
+        [-1.95, 1.95].forEach(cz => {
+          const seat = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.55, 0.65), new THREE.MeshLambertMaterial({ color: 0xd6d3d1 }));
+          seat.position.set(cx, 0.35, cz);
+          tableGroup.add(seat);
+        });
+      }
+
+      // Glowing Marina Bay Skyline Presentation Wall
+      const wallFrame = new THREE.Mesh(new THREE.BoxGeometry(7.2, 2.4, 0.2), new THREE.MeshLambertMaterial({ color: 0x090d16 }));
+      wallFrame.position.set(0, 1.5, -3.2);
+      const wallScreen = new THREE.Mesh(new THREE.BoxGeometry(6.8, 1.9, 0.22), new THREE.MeshBasicMaterial({ color: 0x0284c7 }));
+      wallScreen.position.set(0, 1.5, -3.18);
+      tableGroup.add(wallFrame, wallScreen);
+      scene3D.add(tableGroup);
+
+      // Build 14 Dual-Monitor Desks & 14 Articulated Roblox-Style Characters
+      OFFICE_3D_AGENTS.forEach((cfg, idx) => {
+        // Desk & Dual Glowing Monitors
+        const desk = new THREE.Group();
+        desk.position.set(cfg.homeX, 0, cfg.homeZ - 0.9);
+        const dTop = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.1, 1.1), new THREE.MeshLambertMaterial({ color: 0x78350f }));
+        dTop.position.y = 0.75;
+        desk.add(dTop);
+
+        [-0.4, 0.4].forEach(mx => {
+          const mon = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.44, 0.06), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+          mon.position.set(mx, 1.08, -0.22);
+          desk.add(mon);
+        });
+        scene3D.add(desk);
+
+        // Articulated Roblox-Style Character (Head, Hair, Blazer Torso, Swinging Arms, Walking Legs)
+        const charGroup = new THREE.Group();
+        const skinMat = new THREE.MeshLambertMaterial({ color: 0xfde68a });
+        const blazerMat = new THREE.MeshLambertMaterial({ color: cfg.blazer });
+        const pantsMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
+        const hairMat = new THREE.MeshLambertMaterial({ color: cfg.hair });
+
+        const torso = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.74, 0.36), blazerMat);
+        torso.position.y = 0.96;
+        const head = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.46, 0.46), skinMat);
+        head.position.y = 1.60;
+        const hair = new THREE.Mesh(new THREE.BoxGeometry(0.50, 0.18, 0.50), hairMat);
+        hair.position.set(0, 1.84, -0.02);
+
+        const leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.64, 0.20), blazerMat);
+        leftArm.position.set(-0.42, 0.94, 0);
+        const rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.64, 0.20), blazerMat);
+        rightArm.position.set(0.42, 0.94, 0);
+
+        const leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.60, 0.24), pantsMat);
+        leftLeg.position.set(-0.16, 0.30, 0);
+        const rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.60, 0.24), pantsMat);
+        rightLeg.position.set(0.16, 0.30, 0);
+
+        const haloColor = cfg.status === '🔴' ? 0xf43f5e : (cfg.status === '🟡' ? 0xfbbf24 : 0x10b981);
+        const halo = new THREE.Mesh(new THREE.RingGeometry(0.48, 0.62, 24), new THREE.MeshBasicMaterial({ color: haloColor, side: THREE.DoubleSide }));
+        halo.rotation.x = -Math.PI / 2;
+        halo.position.y = 0.06;
+
+        charGroup.add(torso, head, hair, leftArm, rightArm, leftLeg, rightLeg, halo);
+        charGroup.position.set(cfg.homeX, 0, cfg.homeZ);
+        charGroup.rotation.y = Math.PI;
+        scene3D.add(charGroup);
+
+        const label = document.createElement('div');
+        label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-slate-950/90 border border-slate-700 shadow-lg text-center';
+        label.innerHTML = `
+          <div class="flex items-center justify-center gap-1 whitespace-nowrap">
+            <span class="text-[9px]">${cfg.status}</span>
+            <span class="font-black text-[10px] text-white">${cfg.name}</span>
+            <span class="text-[8px] text-amber-300 font-semibold">(${cfg.role})</span>
           </div>
+          <div class="text-[8px] text-emerald-300 font-mono whitespace-nowrap hidden sm:block">${cfg.task}</div>
         `;
-        container.appendChild(pin);
+        label.onclick = () => inspectAgentFromOffice(cfg);
+        labelsContainer.appendChild(label);
+
+        robloxAvatars.push({
+          cfg,
+          group: charGroup,
+          leftArm,
+          rightArm,
+          leftLeg,
+          rightLeg,
+          label,
+          targetX: cfg.homeX,
+          targetZ: cfg.homeZ,
+          targetRot: Math.PI
+        });
       });
+
+      setup3DMouseControls(canvas);
+      startOfficeAutonomousRoaming();
+      animate3DOfficeLoop();
     }
 
-    function inspectAgentFromOffice(ag) {
-      if (['sage', 'mira', 'leo', 'nova', 'kai', 'vera'].includes(ag.id)) {
-        switchTab('board');
-        if (appState.contentCards[0]) openCardInspectModal(appState.contentCards[0].id);
-      } else if (['nina', 'owen', 'iris'].includes(ag.id)) {
+    function update3DCameraTransform() {
+      if (!camera3D) return;
+      const dist = 42;
+      camera3D.position.x = camTarget3D.x + dist * Math.sin(camAngleH) * Math.cos(camAngleV);
+      camera3D.position.y = camTarget3D.y + dist * Math.sin(camAngleV);
+      camera3D.position.z = camTarget3D.z + dist * Math.cos(camAngleH) * Math.cos(camAngleV);
+      camera3D.lookAt(camTarget3D);
+    }
+
+    function setup3DMouseControls(canvas) {
+      let dragging = false, rightDrag = false, px = 0, py = 0;
+      canvas.addEventListener('mousedown', e => { dragging = true; rightDrag = e.button === 2; px = e.clientX; py = e.clientY; });
+      window.addEventListener('mouseup', () => { dragging = false; });
+      window.addEventListener('contextmenu', e => e.preventDefault());
+      window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        const dx = e.clientX - px, dy = e.clientY - py;
+        px = e.clientX; py = e.clientY;
+        if (rightDrag) {
+          desiredCamTarget3D.x -= dx * 0.03;
+          desiredCamTarget3D.z -= dy * 0.03;
+        } else {
+          camAngleH -= dx * 0.006;
+          camAngleV = Math.max(0.25, Math.min(1.3, camAngleV + dy * 0.005));
+        }
+      });
+      canvas.addEventListener('wheel', e => {
+        e.preventDefault();
+        desiredCamZoom3D = Math.max(6.5, Math.min(22, desiredCamZoom3D + e.deltaY * 0.01));
+      }, { passive: false });
+    }
+
+    // REAL-LIFE WORKING OFFICE AUTONOMOUS PATROL (AGENTS VISIT COLLEAGUES & COLLABORATE)
+    function startOfficeAutonomousRoaming() {
+      if (roamIntervalId) clearInterval(roamIntervalId);
+      roamIntervalId = setInterval(() => {
+        if (!appState.officeRoamActive || appState.officeInMeeting || robloxAvatars.length === 0) return;
+
+        // Pick 2 random agents to walk to a colleague's desk or corridor hub, while returning previous roamers to their desks
+        robloxAvatars.forEach(av => {
+          av.targetX = av.cfg.homeX;
+          av.targetZ = av.cfg.homeZ;
+          av.targetRot = Math.PI;
+        });
+
+        const roamCount = 3;
+        for (let r = 0; r < roamCount; r++) {
+          const visitor = robloxAvatars[Math.floor(Math.random() * robloxAvatars.length)];
+          const host = robloxAvatars[Math.floor(Math.random() * robloxAvatars.length)];
+          if (visitor && host && visitor !== host) {
+            visitor.targetX = host.cfg.homeX + (Math.random() * 1.4 - 0.7);
+            visitor.targetZ = host.cfg.homeZ + 1.1;
+            visitor.targetRot = Math.PI;
+          }
+        }
+      }, 4500);
+    }
+
+    function toggleOfficeAutonomousRoaming(enabled) {
+      appState.officeRoamActive = enabled;
+      if (!enabled && !appState.officeInMeeting) {
+        robloxAvatars.forEach(av => {
+          av.targetX = av.cfg.homeX;
+          av.targetZ = av.cfg.homeZ;
+          av.targetRot = Math.PI;
+        });
+      }
+    }
+
+    function animate3DOfficeLoop() {
+      requestAnimationFrame(animate3DOfficeLoop);
+      if (appState.activeTab !== 'office' || !renderer3D) return;
+
+      const viewport = document.getElementById('office-3d-viewport');
+      const w = viewport.clientWidth;
+      const h = viewport.clientHeight;
+
+      camTarget3D.lerp(desiredCamTarget3D, 0.08);
+      camZoom3D += (desiredCamZoom3D - camZoom3D) * 0.08;
+      const aspect = w / h;
+      camera3D.left = -camZoom3D * aspect;
+      camera3D.right = camZoom3D * aspect;
+      camera3D.top = camZoom3D;
+      camera3D.bottom = -camZoom3D;
+      camera3D.updateProjectionMatrix();
+      update3DCameraTransform();
+
+      const time = Date.now() * 0.009;
+
+      robloxAvatars.forEach((av, i) => {
+        const dx = av.targetX - av.group.position.x;
+        const dz = av.targetZ - av.group.position.z;
+        const dist = Math.hypot(dx, dz);
+
+        if (dist > 0.09) {
+          // Roblox-style walking with swinging arms and legs
+          const speed = 0.055;
+          av.group.position.x += dx * speed;
+          av.group.position.z += dz * speed;
+          av.group.rotation.y = Math.atan2(dx, dz);
+          const swing = Math.sin(time * 2.0 + i) * 0.65;
+          av.leftArm.rotation.x = swing;
+          av.rightArm.rotation.x = -swing;
+          av.leftLeg.rotation.x = -swing;
+          av.rightLeg.rotation.x = swing;
+          av.group.position.y = Math.abs(Math.cos(time * 2.0 + i)) * 0.09;
+        } else {
+          // Working at desk or seated at boardroom
+          av.group.rotation.y = av.targetRot;
+          av.leftArm.rotation.x = Math.sin(time * 0.5 + i) * 0.12;
+          av.rightArm.rotation.x = -Math.sin(time * 0.5 + i) * 0.12;
+          av.leftLeg.rotation.x = 0;
+          av.rightLeg.rotation.x = 0;
+          av.group.position.y = 0;
+        }
+
+        // Project 3D Head Coordinate to 2D Screen Label (100% Aligned at Every Resolution)
+        const headWorld = new THREE.Vector3(av.group.position.x, 2.35, av.group.position.z);
+        headWorld.project(camera3D);
+        const sx = (headWorld.x * 0.5 + 0.5) * w;
+        const sy = (-headWorld.y * 0.5 + 0.5) * h;
+        av.label.style.left = `${Math.round(sx)}px`;
+        av.label.style.top = `${Math.round(sy)}px`;
+      });
+
+      renderer3D.render(scene3D, camera3D);
+    }
+
+    function focus3DCamera(zone) {
+      const map = {
+        ALL: { x: 0, z: 0, zoom: 15.2 },
+        EXEC: { x: -8.8, z: -7.8, zoom: 8.5 },
+        CREATIVE: { x: 7.8, z: -7.2, zoom: 9.2 },
+        BOARDROOM: { x: 0, z: 0, zoom: 8.5 },
+        CRM: { x: -8.8, z: 7.4, zoom: 8.5 },
+        BUYER: { x: 7.8, z: 7.6, zoom: 9.0 }
+      };
+      const t = map[zone] || map.ALL;
+      desiredCamTarget3D.set(t.x, 0, t.z);
+      desiredCamZoom3D = t.zoom;
+    }
+
+    function inspectAgentFromOffice(cfg) {
+      if (['sage', 'mira', 'leo', 'nova', 'kai', 'vera'].includes(cfg.id)) {
+        openStudioDirectly();
+      } else if (['nina', 'owen', 'iris'].includes(cfg.id)) {
         switchTab('buyer');
-      } else if (['ava', 'milo'].includes(ag.id)) {
+      } else if (['ava', 'milo'].includes(cfg.id)) {
         switchTab('crm');
       } else {
         openMeetingModal(2);
@@ -1111,15 +1311,22 @@
     }
 
     function returnAgentsToDesks() {
+      appState.officeInMeeting = false;
       document.getElementById('btn-end-boardroom').classList.add('hidden');
-      renderOfficeAgentPins(null);
+      robloxAvatars.forEach(av => {
+        av.targetX = av.cfg.homeX;
+        av.targetZ = av.cfg.homeZ;
+        av.targetRot = Math.PI;
+        av.label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-slate-950/90 border border-slate-700 shadow-lg text-center';
+      });
+      focus3DCamera('ALL');
     }
 
     // 3. INITIALIZE DATA
     function initDefaultData() {
       loadSavedAvatarAndLogo();
 
-      const savedCards = localStorage.getItem('squad_cards_v37');
+      const savedCards = localStorage.getItem('squad_cards_v38');
       if (savedCards) {
         try { appState.contentCards = JSON.parse(savedCards); } catch (e) { appState.contentCards = []; }
       }
@@ -1175,7 +1382,7 @@
 
       deduplicateExistingBoardCards(true);
 
-      const savedLeads = localStorage.getItem('squad_leads_v37');
+      const savedLeads = localStorage.getItem('squad_leads_v38');
       if (savedLeads) {
         try { appState.crmLeads = JSON.parse(savedLeads); } catch (e) { appState.crmLeads = []; }
       }
@@ -1188,7 +1395,7 @@
         ];
       }
 
-      const savedBuyer = localStorage.getItem('squad_buyer_v37');
+      const savedBuyer = localStorage.getItem('squad_buyer_v38');
       if (savedBuyer) {
         try { appState.buyerListings = JSON.parse(savedBuyer); } catch (e) { appState.buyerListings = getSectorDefaultListings('RESIDENTIAL_OWN_STAY'); }
       } else {
@@ -1270,10 +1477,18 @@
           : 'px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-700';
       });
 
-      if (tab === 'office') initVisionaryOffice();
+      if (tab === 'office') init3DRobloxOffice();
       if (tab === 'board') renderContentKanban();
       if (tab === 'buyer') renderBuyerWing();
       if (tab === 'crm') renderCRMKanban();
+    }
+
+    // 1-CLICK DIRECT MEDIA STUDIO LAUNCHER
+    function openStudioDirectly() {
+      const targetCard = appState.contentCards[0];
+      if (targetCard) {
+        openCardInspectModal(targetCard.id);
+      }
     }
 
     // 4. CONTENT KANBAN & ZERO-DUPLICATE TOPIC MINING
@@ -1365,7 +1580,7 @@
       appState.topicHistoryMemory.push(chosen.title);
       saveWorkspaceToStorage();
       renderContentKanban();
-      if (btn) btn.textContent = '✨ Sage: Mine SG News (Zero-Duplicate)';
+      if (btn) btn.textContent = '✨ Sage: Mine SG News';
 
       if (appState.autoGate1) runAutoSwarm(newCard.id);
     }
@@ -1394,23 +1609,23 @@
                 <span class="text-[9px] font-black text-amber-400 uppercase">${escapeHTML(c.format)} (${escapeHTML(c.duration || '16s')})</span>
                 <button onclick="deleteContentCard('${c.id}')" class="text-[10px] text-slate-500 hover:text-rose-400">✕</button>
               </div>
-              <div onclick="openCardInspectModal('${c.id}')" class="font-bold text-[11px] text-white leading-snug cursor-pointer hover:text-amber-400">${escapeHTML(c.title)}</div>
+              <div onclick="openCardInspectModal('${c.id}')" class="font-bold text-[11px] text-white leading-snug cursor-pointer hover:text-amber-400 underline-offset-2 hover:underline">${escapeHTML(c.title)}</div>
               <div class="text-[9px] text-slate-400 truncate">🎨 ${escapeHTML(pack.themeName)}</div>
               
               <div class="pt-1.5 border-t border-slate-800 flex flex-col gap-1">
-                <button onclick="openCardInspectModal('${c.id}')" class="w-full py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-black text-[10px]">
+                <button type="button" onclick="openCardInspectModal('${c.id}')" class="w-full py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] shadow">
                   👁️ Studio: Preview / Regenerate
                 </button>
                 ${isGate1 ? `
-                  <button onclick="runAutoSwarm('${c.id}')" class="w-full py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px]">
+                  <button type="button" onclick="runAutoSwarm('${c.id}')" class="w-full py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px]">
                     ⚡ Select & Auto-Run Swarm
                   </button>` : ''}
                 ${isGate2 ? `
-                  <button onclick="approvePublish('${c.id}')" class="w-full py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px]">
+                  <button type="button" onclick="approvePublish('${c.id}')" class="w-full py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px]">
                     ✅ Approve & Schedule
                   </button>` : ''}
                 ${(!isGate1 && !isGate2 && idx < 8) ? `
-                  <button onclick="advanceCardStage('${c.id}')" class="w-full py-1 rounded-lg bg-slate-800 text-indigo-300 font-bold text-[10px]">
+                  <button type="button" onclick="advanceCardStage('${c.id}')" class="w-full py-1 rounded-lg bg-slate-800 text-indigo-300 font-bold text-[10px]">
                     Advance Stage →
                   </button>` : ''}
               </div>
@@ -1471,15 +1686,16 @@
       }
     }
 
-    // 5. APPROVED SAMPLE 2 & 3 STUDIO ENGINE (WORD-SYNCED CAPTIONS, AUTO-TIMED SCRIPT, NEW DESIGN REGEN & LOCKED 38YO SG MALE VOICE)
+    // ============================================================================
+    // 5. UNBREAKABLE MEDIA STUDIO ENGINE (FIXED INITIALIZATION ORDER + NULL GUARDS)
+    // ============================================================================
     let previewAnimFrame = null;
     let audioCtx = null;
     let activeGainNode = null;
     let musicNoteTimer = null;
     let customAudioEl = null;
-    let liveWordBoundaryIndex = -1;
     let isPlayingReel = false;
-    let parsedScriptTimeline = { clips: [], totalDurationSec: 16 };
+    let parsedScriptTimeline = parseScriptAndCalculateTiming('Commercial and B1 industrial properties carry zero ABSD in Singapore.');
 
     function parseScriptAndCalculateTiming(rawScriptText) {
       const rawLines = String(rawScriptText || '')
@@ -1496,33 +1712,24 @@
 
       const clips = rawLines.map((lineText, clipIdx) => {
         const words = lineText.split(/\s+/).filter(Boolean);
-        // 140 WPM = 2.33 words/sec + 0.55s natural breathing pause
         const durationSec = Math.max(3.2, Number(((words.length / 2.33) + 0.55).toFixed(1)));
         const startSec = cumulativeSec;
         const endSec = Number((cumulativeSec + durationSec).toFixed(1));
         cumulativeSec = endSec;
 
-        // Group words into clean 6-word phrase chunks for 2-line broadcast subtitle cards
         const phraseChunks = [];
         const chunkSize = 6;
         for (let i = 0; i < words.length; i += chunkSize) {
           phraseChunks.push(words.slice(i, i + chunkSize));
         }
 
-        // Character-weighted timestamps per word inside the clip
         const totalChars = words.reduce((acc, w) => acc + w.length + 1, 0) || 1;
         let charCursor = 0;
         const wordTimings = words.map((w, wIdx) => {
           const wStart = startSec + (charCursor / totalChars) * (durationSec - 0.3);
           charCursor += w.length + 1;
           const wEnd = startSec + (charCursor / totalChars) * (durationSec - 0.3);
-          return {
-            word: w,
-            localIndex: wIdx,
-            globalIndex: globalWordCounter++,
-            startSec: wStart,
-            endSec: wEnd
-          };
+          return { word: w, localIndex: wIdx, globalIndex: globalWordCounter++, startSec: wStart, endSec: wEnd };
         });
 
         return { clipIdx, text: lineText, words, phraseChunks, wordTimings, startSec, endSec, durationSec };
@@ -1534,12 +1741,17 @@
     }
 
     function openCardInspectModal(cardId) {
-      const card = appState.contentCards.find(c => c.id === cardId);
+      const card = appState.contentCards.find(c => c.id === cardId) || appState.contentCards[0];
       if (!card) return;
-      appState.activeInspectCardId = cardId;
+      appState.activeInspectCardId = card.id;
 
-      document.getElementById('inspect-stage-badge').textContent = card.stage;
-      document.getElementById('inspect-card-title').textContent = card.title;
+      // 1. Unhide Modal Immediately so It Can Never Fail to Open
+      const modal = document.getElementById('card-inspect-modal');
+      if (modal) modal.classList.remove('hidden');
+
+      // 2. Populate Fields
+      document.getElementById('inspect-stage-badge').textContent = card.stage || '5. Human Review';
+      document.getElementById('inspect-card-title').textContent = card.title || 'Singapore Property Topic';
       document.getElementById('inspect-music-label').textContent = `🎵 ${card.musicGenre || LYRIA_GENRES[0]}`;
       document.getElementById('lbl-sync-dur').textContent = card.duration || appState.videoDuration;
       document.getElementById('inspect-box-a').value = card.copy || '';
@@ -1548,9 +1760,9 @@
       document.getElementById('inspect-consent-chk').checked = card.ownerConsent !== false;
       document.getElementById('regen-status-banner').classList.add('hidden');
 
-      switchStudioPreviewMode(card.format === 'Flyer' ? 'POSTER' : 'VIDEO');
-      document.getElementById('card-inspect-modal').classList.remove('hidden');
+      // 3. Initialize Script Timing BEFORE Drawing Canvas (Fixes V3.7 TypeError!)
       recalculateScriptTimingAndRedraw();
+      switchStudioPreviewMode(card.format === 'Flyer' ? 'POSTER' : 'VIDEO');
     }
 
     function closeCardInspectModal() {
@@ -1566,16 +1778,16 @@
 
       if (mode === 'POSTER') {
         canvas.width = 540;
-        canvas.height = 675; // 4:5 Portrait Poster
+        canvas.height = 675;
         btnPos.className = 'px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]';
         btnVid.className = 'px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]';
       } else {
         canvas.width = 540;
-        canvas.height = 960; // 9:16 Vertical Video Reel
+        canvas.height = 960;
         btnVid.className = 'px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]';
         btnPos.className = 'px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]';
       }
-      renderStudioCanvasFrame(0, 0, 0);
+      renderStudioCanvasFrame(0);
     }
 
     function recalculateScriptTimingAndRedraw() {
@@ -1592,18 +1804,16 @@
         const rigNames = ['Rig A: 85mm Gimbal Push + Pan', 'Rig B: Crane Tilt + Pull-Back', 'Rig C: Architectural Orbit', 'Rig D: Dynamic Split Glide'];
         document.getElementById('studio-cam-label').textContent = `🎥 ${rigNames[(card.cameraRigIndex || 0) % rigNames.length]}`;
       }
-      if (!isPlayingReel) renderStudioCanvasFrame(0, 0, 0);
+      if (!isPlayingReel) renderStudioCanvasFrame(0);
     }
 
-    // UPGRADE #3: REGENERATE NEW VIDEO DESIGN (NEW 4-IMAGE PACK + NEW THEME + NEW CAMERA RIG + NEW MUSIC)
     function regenerateNewVideoDesign() {
-      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId);
+      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId) || appState.contentCards[0];
       if (!card) return;
       stopMediaPreviewPlayback();
 
       card.packIndex = ((card.packIndex || 0) + 1) % VIDEO_DESIGN_PACKS.length;
       card.cameraRigIndex = ((card.cameraRigIndex || 0) + 1) % 4;
-      card.customImageUrl = null;
       const nextGenreIdx = (LYRIA_GENRES.indexOf(card.musicGenre) + 1) % LYRIA_GENRES.length;
       card.musicGenre = LYRIA_GENRES[nextGenreIdx];
 
@@ -1614,14 +1824,13 @@
       const pack = VIDEO_DESIGN_PACKS[card.packIndex];
       const banner = document.getElementById('regen-status-banner');
       banner.classList.remove('hidden');
-      banner.textContent = `✅ Generated New Video Design: Switched to "${pack.name}", "${pack.themeName}" graphic theme, Camera Rig #${card.cameraRigIndex + 1}, and "${card.musicGenre}"! Playing new design...`;
+      banner.textContent = `✅ Generated New Video Design: "${pack.name}" + "${pack.themeName}" theme + Camera Rig #${card.cameraRigIndex + 1}! Playing preview...`;
 
       playSynchronizedVideoReel();
     }
 
-    // LIVE GOOGLE NANO BANANA AI IMAGE GENERATION (`gemini-2.5-flash-image`)
     async function regenerateLiveNanoBananaImage() {
-      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId);
+      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId) || appState.contentCards[0];
       if (!card) return;
       const btn = document.getElementById('btn-regen-image');
       const banner = document.getElementById('regen-status-banner');
@@ -1658,7 +1867,7 @@
         const customImg = new Image();
         customImg.onload = () => {
           loadedPackImages[card.packIndex || 0][0] = customImg;
-          renderStudioCanvasFrame(0, 0, 0);
+          renderStudioCanvasFrame(0);
         };
         customImg.src = generatedBase64;
         banner.textContent = '✅ Live Google Nano Banana AI Scene generated and applied!';
@@ -1668,7 +1877,6 @@
       btn.textContent = '🍌 Live Nano Banana AI';
     }
 
-    // WORD-BOUNDARY TEXT WRAPPER (NEVER SPLITS WORDS LIKE "ZE-RO")
     function wrapTextByWords(ctx, text, maxWidth) {
       const words = String(text || '').split(/\s+/).filter(Boolean);
       const lines = [];
@@ -1689,26 +1897,16 @@
     function drawCameraMovedImage(ctx, img, W, H, progress01, motionType) {
       if (!img || !img.complete || img.naturalWidth === 0) return;
       const eased = easeInOutCubic(Math.min(1, Math.max(0, progress01)));
-      let scale = 1.08;
-      let tx = 0;
-      let ty = 0;
+      let scale = 1.08, tx = 0, ty = 0;
 
       if (motionType === 0) {
-        // 85mm Gimbal Dolly Push-In
-        scale = 1.03 + eased * 0.14;
-        ty = -eased * 14;
+        scale = 1.03 + eased * 0.14; ty = -eased * 14;
       } else if (motionType === 1) {
-        // 35mm Lateral Architectural Slider Pan
-        scale = 1.14;
-        tx = -22 + eased * 44;
+        scale = 1.14; tx = -22 + eased * 44;
       } else if (motionType === 2) {
-        // Vertical Crane Pedestal Tilt-Up
-        scale = 1.12;
-        ty = 24 - eased * 48;
+        scale = 1.12; ty = 24 - eased * 48;
       } else {
-        // Gentle Pull-Back Reveal
-        scale = 1.18 - eased * 0.12;
-        tx = 12 - eased * 24;
+        scale = 1.18 - eased * 0.12; tx = 12 - eased * 24;
       }
 
       ctx.save();
@@ -1717,19 +1915,13 @@
       const imgAspect = img.naturalWidth / img.naturalHeight;
       const canvasAspect = W / H;
       let drawW = W, drawH = H;
-      if (imgAspect > canvasAspect) {
-        drawH = H;
-        drawW = H * imgAspect;
-      } else {
-        drawW = W;
-        drawH = W / imgAspect;
-      }
+      if (imgAspect > canvasAspect) { drawH = H; drawW = H * imgAspect; }
+      else { drawW = W; drawH = W / imgAspect; }
       ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
       ctx.restore();
     }
 
-    // MASTER DUAL-MODE CANVAS RENDERER (SAMPLE 2 POSTER & SAMPLE 3 60FPS VIDEO REEL)
-    function renderStudioCanvasFrame(elapsedSec = 0, clipIdxOverride = null, wordIdxOverride = null) {
+    function renderStudioCanvasFrame(elapsedSec = 0) {
       const canvas = document.getElementById('studio-preview-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1741,11 +1933,13 @@
       const packImgs = loadedPackImages[pIdx] || [];
       const p = appState.ceaProfile;
 
+      if (!parsedScriptTimeline || !parsedScriptTimeline.clips || parsedScriptTimeline.clips.length === 0) {
+        parsedScriptTimeline = parseScriptAndCalculateTiming(card?.script || 'Commercial and B1 industrial properties carry zero ABSD in Singapore.');
+      }
+
       ctx.clearRect(0, 0, W, H);
 
-      // =========================================================================
-      // MODE A: SAMPLE 2 — 4:5 MAGAZINE SOCIAL POSTER (540 × 675, ZERO VIDEO BOX!)
-      // =========================================================================
+      // MODE A: 4:5 SOCIAL POSTER
       if (appState.studioPreviewMode === 'POSTER') {
         drawCameraMovedImage(ctx, packImgs[0], W, H, 0.35, 0);
 
@@ -1757,7 +1951,6 @@
         ctx.fillStyle = scrim;
         ctx.fillRect(0, 0, W, H);
 
-        // Top Navy & Gold Magazine Frame
         ctx.fillStyle = 'rgba(10, 18, 36, 0.92)';
         ctx.fillRect(0, 0, W, 165);
         ctx.strokeStyle = pack.primaryColor;
@@ -1777,7 +1970,6 @@
           ctx.fillText(line, W / 2, 68 + idx * 26);
         });
 
-        // 3 Frosted-Glass Data Pills
         pack.pills.forEach((pillText, idx) => {
           const py = 210 + idx * 78;
           ctx.fillStyle = 'rgba(15, 23, 42, 0.84)';
@@ -1793,19 +1985,16 @@
           ctx.fillText(`✦ ${pillText}`, W / 2, py + 36);
         });
 
-        // Mandatory CEA Artist's Impression Label
         ctx.textAlign = 'right';
         ctx.fillStyle = 'rgba(255,255,255,0.85)';
         ctx.font = '600 10px Inter, sans-serif';
         ctx.fillText("Artist's Impression — Source: URA REALIS & HDB 2026", W - 20, 552);
 
-        // Bottom CEA Footer Bar with Circular Gold-Trimmed Profile Photo
         ctx.fillStyle = '#070a12';
         ctx.fillRect(0, 565, W, 110);
         ctx.fillStyle = pack.primaryColor;
         ctx.fillRect(0, 565, W, 3);
 
-        // Circular Gold-Trimmed Presenter Avatar
         const avX = 76, avY = 612, avR = 44;
         ctx.save();
         ctx.beginPath();
@@ -1834,9 +2023,7 @@
         return;
       }
 
-      // =========================================================================
-      // MODE B: SAMPLE 3 — 9:16 PROFESSIONAL VIDEO REEL (540 × 960, 60FPS SYNCED)
-      // =========================================================================
+      // MODE B: 9:16 SYNCHRONIZED 60FPS VIDEO REEL
       const clips = parsedScriptTimeline.clips;
       const totalDur = parsedScriptTimeline.totalDurationSec || 16;
       const t = elapsedSec % totalDur;
@@ -1845,14 +2032,12 @@
       for (const c of clips) {
         if (t >= c.startSec && t <= c.endSec) { activeClip = c; break; }
       }
-      if (clipIdxOverride !== null && clips[clipIdxOverride]) activeClip = clips[clipIdxOverride];
 
       const clipProgress = Math.min(1, Math.max(0, (t - activeClip.startSec) / Math.max(0.1, activeClip.durationSec)));
       const rigBase = card?.cameraRigIndex || 0;
       const currentImg = packImgs[activeClip.clipIdx % packImgs.length];
       const prevImg = packImgs[(activeClip.clipIdx - 1 + packImgs.length) % packImgs.length];
 
-      // 60fps Camera Movement + 0.65s Cross-Dissolve Transition Between Scenes
       const dissolveWindow = 0.65;
       const timeIntoClip = t - activeClip.startSec;
       if (activeClip.clipIdx > 0 && timeIntoClip < dissolveWindow) {
@@ -1866,7 +2051,6 @@
         drawCameraMovedImage(ctx, currentImg, W, H, clipProgress, (rigBase + activeClip.clipIdx) % 4);
       }
 
-      // Luxury Broadcast Gradient Scrim
       const grad = ctx.createLinearGradient(0, 0, 0, H);
       grad.addColorStop(0, 'rgba(6, 10, 18, 0.85)');
       grad.addColorStop(0.22, 'rgba(6, 10, 18, 0.15)');
@@ -1875,7 +2059,6 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
-      // Top Broadcast Header Pill & Clip Progress Segments
       ctx.fillStyle = 'rgba(9, 14, 26, 0.82)';
       ctx.beginPath();
       ctx.roundRect(24, 24, W - 48, 72, 16);
@@ -1894,7 +2077,6 @@
       const shortTitle = wrapTextByWords(ctx, card?.title || '', W - 85)[0] || '';
       ctx.fillText(shortTitle, 40, 68);
 
-      // Segmented Timeline Progress Bar at Top of Header Card
       const segW = (W - 80 - (clips.length - 1) * 6) / clips.length;
       clips.forEach((c, idx) => {
         const sx = 40 + idx * (segW + 6);
@@ -1909,7 +2091,6 @@
         }
       });
 
-      // Active Scene Data Badge (Top-Left Floating Pill)
       const activePill = pack.pills[activeClip.clipIdx % pack.pills.length];
       ctx.fillStyle = pack.cardBg;
       ctx.beginPath();
@@ -1921,20 +2102,16 @@
       ctx.font = '800 13px Inter, sans-serif';
       ctx.fillText(`✦ ${activePill}`, 40, 136);
 
-      // Determine Active Word Spoken Right Now (Synced to Voiceover Boundary or Weighted Time)
       let activeLocalWordIdx = 0;
       for (const wt of activeClip.wordTimings) {
         if (t >= wt.startSec) activeLocalWordIdx = wt.localIndex;
       }
-      if (wordIdxOverride !== null) activeLocalWordIdx = wordIdxOverride;
 
-      // Select Active 6-Word Phrase Chunk so Captions Never Overflow
       const chunkSize = 6;
       const activeChunkIdx = Math.floor(activeLocalWordIdx / chunkSize);
       const phraseWords = activeClip.phraseChunks[activeChunkIdx] || activeClip.words.slice(0, 6);
       const wordOffsetInChunk = activeLocalWordIdx % chunkSize;
 
-      // Lower-Middle Broadcast Subtitle Card + 14-Bar Live Voice Waveform Visualizer
       const cardY = 635;
       const cardH = 148;
       ctx.fillStyle = pack.cardBg;
@@ -1945,7 +2122,6 @@
       ctx.strokeStyle = pack.primaryColor;
       ctx.stroke();
 
-      // 14-Bar Animated Audio Waveform Visualizer inside Caption Card Header
       ctx.fillStyle = pack.secondaryColor;
       ctx.font = '800 10px JetBrains Mono, monospace';
       ctx.fillText(`🗣️ 38YO SG MALE ADVISOR VOICEOVER`, 44, cardY + 26);
@@ -1957,7 +2133,6 @@
         ctx.fillRect(bx, cardY + 22 - bh / 2, 4, bh);
       }
 
-      // Draw 2-Line Phrase Words with Glowing Gold Active Word Pill
       const line1Words = phraseWords.slice(0, 3);
       const line2Words = phraseWords.slice(3, 6);
       ctx.font = '900 24px Inter, sans-serif';
@@ -1989,7 +2164,6 @@
         });
       });
 
-      // Bottom CEA Statutory Footer Bar with Circular Gold-Trimmed Profile Photo
       ctx.fillStyle = '#060911';
       ctx.fillRect(0, 825, W, 135);
       ctx.fillStyle = pack.primaryColor;
@@ -2025,18 +2199,15 @@
       ctx.fillText(`📲 WhatsApp: ${p.phone} • URA REALIS 2026`, 116, 920);
     }
 
-    // STRICT 38-YEAR-OLD SINGAPOREAN ENGLISH MALE VOICE SELECTOR (FEMALE/INDIAN OS VOICES BLACKLISTED)
     function selectStrictMaleAdvisorVoice() {
       if (!('speechSynthesis' in window)) return null;
       const voices = window.speechSynthesis.getVoices() || [];
       const femaleBlacklist = /Neerja|Heera|Veena|Zira|Hazel|Susan|Linda|Catherine|Samantha|Victoria|Karen|Tessa|Moira|Fiona|Female|Woman|Girl/i;
       const englishVoices = voices.filter(v => /^en/i.test(v.lang) && !femaleBlacklist.test(v.name));
-
       const preferredMale = englishVoices.find(v => /Wayne|Ryan|Guy|Christopher|Eric|Andrew|Brian|Roger|Steffan|Daniel|David|George|Mark|Google UK English Male|Male/i.test(v.name));
       return preferredMale || englishVoices[0] || null;
     }
 
-    // PLAY SYNCHRONIZED 60FPS VIDEO REEL + LOCKED 38YO SG MALE VOICEOVER + AUDIBLE PIANO/RHODES MUSIC
     function playSynchronizedVideoReel() {
       stopMediaPreviewPlayback();
       if (appState.studioPreviewMode === 'POSTER') {
@@ -2048,7 +2219,6 @@
       const clips = parsedScriptTimeline.clips;
       const fullSpokenText = clips.map(c => c.text).join(' ');
 
-      // 1. Trigger Locked 38yo SG Male Voiceover with Word-Boundary Tracking
       if ('speechSynthesis' in window && fullSpokenText) {
         window.speechSynthesis.cancel();
         const utter = new SpeechSynthesisUtterance(fullSpokenText);
@@ -2058,14 +2228,12 @@
           document.getElementById('inspect-voice-status').textContent = `🗣️ Locked Male: ${maleVoice.name.slice(0, 22)}`;
         }
         utter.rate = 1.0;
-        utter.pitch = 0.92; // Warm 38-year-old male baritone register
+        utter.pitch = 0.92;
         window.speechSynthesis.speak(utter);
       }
 
-      // 2. Start Audible Acoustic Piano & Rhodes Lounge Synthesizer (Or Custom MP3)
       startLoungeMusicEngine(null);
 
-      // 3. Run 60FPS Synchronized Canvas Loop Timed to Script Duration
       const startMs = performance.now();
       const totalDur = parsedScriptTimeline.totalDurationSec;
 
@@ -2074,7 +2242,7 @@
         const elapsedSec = (now - startMs) / 1000;
         if (elapsedSec >= totalDur) {
           stopMediaPreviewPlayback();
-          renderStudioCanvasFrame(0, 0, 0);
+          renderStudioCanvasFrame(0);
           return;
         }
         renderStudioCanvasFrame(elapsedSec);
@@ -2104,12 +2272,11 @@
         activeGainNode.connect(audioCtx.destination);
         if (destStreamNode) activeGainNode.connect(destStreamNode);
 
-        // Warm Acoustic Piano & Rhodes Chord Progression + Gentle Melodic Plucks
         const chords = [
-          { pad: [130.81, 196.00, 246.94, 329.63], melody: [523.25, 659.25, 587.33, 493.88] }, // Cmaj7
-          { pad: [110.00, 164.81, 220.00, 261.63], melody: [440.00, 523.25, 659.25, 587.33] }, // Am7
-          { pad: [174.61, 220.00, 261.63, 349.23], melody: [523.25, 698.46, 659.25, 523.25] }, // Fmaj7
-          { pad: [196.00, 246.94, 293.66, 392.00], melody: [587.33, 659.25, 783.99, 659.25] }  // G6
+          { pad: [130.81, 196.00, 246.94, 329.63], melody: [523.25, 659.25, 587.33, 493.88] },
+          { pad: [110.00, 164.81, 220.00, 261.63], melody: [440.00, 523.25, 659.25, 587.33] },
+          { pad: [174.61, 220.00, 261.63, 349.23], melody: [523.25, 698.46, 659.25, 523.25] },
+          { pad: [196.00, 246.94, 293.66, 392.00], melody: [587.33, 659.25, 783.99, 659.25] }
         ];
         let step = 0;
 
@@ -2118,7 +2285,6 @@
           const now = audioCtx.currentTime;
           const bar = chords[Math.floor(step / 4) % chords.length];
 
-          // Trigger warm Rhodes pad on beat 0 of each bar
           if (step % 4 === 0) {
             bar.pad.forEach(freq => {
               const osc = audioCtx.createOscillator();
@@ -2135,7 +2301,6 @@
             });
           }
 
-          // Trigger gentle acoustic piano melody note on every beat
           const melFreq = bar.melody[step % 4];
           const mOsc = audioCtx.createOscillator();
           const mGain = audioCtx.createGain();
@@ -2194,7 +2359,6 @@
       if (prevMode !== 'POSTER') switchStudioPreviewMode(prevMode);
     }
 
-    // MULTIPLEXED VIDEO + AUDIO RECORDER (TIMED TO SCRIPT LENGTH)
     function recordAndDownloadVideoReel() {
       const canvas = document.getElementById('studio-preview-canvas');
       const btn = document.getElementById('btn-export-webm');
@@ -2213,7 +2377,6 @@
       const canvasStream = canvas.captureStream(30);
       let combinedStream = canvasStream;
 
-      // Multiplex background music directly into the recorded video stream
       try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const destNode = audioCtx.createMediaStreamDestination();
@@ -2224,7 +2387,6 @@
         ]);
       } catch (e) {}
 
-      // Also speak voiceover during recording preview
       const fullSpokenText = parsedScriptTimeline.clips.map(c => c.text).join(' ');
       if ('speechSynthesis' in window && fullSpokenText) {
         const utter = new SpeechSynthesisUtterance(fullSpokenText);
@@ -2266,7 +2428,7 @@
     }
 
     function expandScriptToSelectedDuration() {
-      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId);
+      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId) || appState.contentCards[0];
       if (!card) return;
       card.duration = appState.videoDuration;
       document.getElementById('lbl-sync-dur').textContent = card.duration;
@@ -2305,7 +2467,7 @@
     }
 
     async function regenerateCardWithLiveGemini() {
-      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId);
+      const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId) || appState.contentCards[0];
       if (!card) return;
       const banner = document.getElementById('regen-status-banner');
       banner.classList.remove('hidden');
@@ -2871,7 +3033,7 @@
       renderCRMKanban();
     }
 
-    // 8. REAL GOOGLE GEMINI API HANDSHAKE (RETIRES 2.5-FLASH-LITE & 2.0-FLASH)
+    // 8. REAL GOOGLE GEMINI API HANDSHAKE
     async function saveAndTestAPIKeys() {
       const keyInput = document.getElementById('cfg-gemini-key');
       const projInput = document.getElementById('cfg-vertex-project');
@@ -2937,23 +3099,10 @@
       st.classList.remove('hidden');
     }
 
-    function saveSocialAPISettings() {
-      const socialVault = {
-        metaToken: document.getElementById('cfg-meta-token').value.trim(),
-        waPhoneId: document.getElementById('cfg-wa-phone-id').value.trim(),
-        ytChannel: document.getElementById('cfg-yt-channel-id').value.trim(),
-        webhook: document.getElementById('cfg-webhook-url').value.trim()
-      };
-      localStorage.setItem('squad_social_vault', JSON.stringify(socialVault));
-      const st = document.getElementById('social-save-status');
-      st.textContent = '✓ Saved in Browser Memory!';
-      st.classList.remove('hidden');
-    }
-
-    // 9. BOARDROOM MEETINGS & ESCALATIONS TO +65 9237 9472
+    // 9. BOARDROOM MEETINGS (WALKS 3D ROBLOX AVATARS TO SEATS) & ESCALATIONS
     function openMeetingModal(presetIdx) {
       const presets = [
-        { title: '1. Ryan / Creative Studio Huddle', attend: 'Ryan, Sage, Mira, Leo, Nova, Kai', ids: ['ryan','sage','mira','leo','nova','kai'], log: 'Ryan: Creative agents glided to the 14-seat marble boardroom table. Reviewing 60fps word-synced reels & 4:5 posters.' },
+        { title: '1. Ryan / Creative Studio Huddle', attend: 'Ryan, Sage, Mira, Leo, Nova, Kai', ids: ['ryan','sage','mira','leo','nova','kai'], log: 'Ryan: Creative Roblox avatars walked to the 14-seat marble boardroom table. Reviewing 60fps word-synced reels & 4:5 posters.' },
         { title: '2. Alex / 14-Agent CEO Town Hall', attend: 'All 14 Agents Seated at Central Marble Boardroom', ids: 'ALL', log: `Alex: Active GCI Pipeline is ${document.getElementById('kpi-gci').textContent}. ${document.getElementById('kpi-30d-deals').textContent} forecasted to close within 30 days.` },
         { title: '3. Vera / CEA Compliance Gate', attend: 'Vera, Ryan, Sage, Leo, Nova', ids: ['vera','ryan','sage','leo','nova'], log: 'Vera: Enforcing CEA PG 02/2011 Clause 2.3 source citations and mandatory safety circuit-breaker.' },
         { title: '4. Ava & Milo / Hot CRM Triage', attend: 'Ava, Milo, Ryan, Alex', ids: ['ava','milo','ryan','alex'], log: 'Ava: Conditional HDB MOP calculator active. Hot leads (>=80) escalate to +65 9237 9472.' },
@@ -2961,8 +3110,22 @@
       ];
 
       const p = presets[presetIdx - 1];
-      renderOfficeAgentPins(p.ids);
+      appState.officeInMeeting = true;
       document.getElementById('btn-end-boardroom').classList.remove('hidden');
+
+      robloxAvatars.forEach(av => {
+        if (p.ids === 'ALL' || p.ids.includes(av.cfg.id)) {
+          av.targetX = av.cfg.seatX;
+          av.targetZ = av.cfg.seatZ;
+          av.targetRot = av.cfg.seatRot;
+          av.label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-indigo-950/95 border-2 border-amber-400 shadow-xl text-center';
+        } else {
+          av.targetX = av.cfg.homeX;
+          av.targetZ = av.cfg.homeZ;
+          av.targetRot = Math.PI;
+        }
+      });
+      focus3DCamera('BOARDROOM');
 
       const modal = document.getElementById('boardroom-modal');
       modal.classList.remove('hidden');
@@ -3002,11 +3165,9 @@
       const lower = val.toLowerCase();
       let reply = "";
       if (lower.includes("quality") || lower.includes("image")) {
-        reply = "🍌 Nova & Mira: In V3.7, clicking '🔄 Regenerate New Video Design' loads a fresh 4-scene architectural photo pack, new broadcast graphic theme, and 60fps cubic-bezier camera motion with 0.65s cross-dissolves!";
+        reply = "🍌 Nova & Mira: Click '🎬 Media Studio (Test Image/Video)' in the top header or '👁️ Studio: Preview / Regenerate' on any card to test the 60fps video reel and 4:5 poster!";
       } else if (lower.includes("voiceover") || lower.includes("caption") || lower.includes("music")) {
-        reply = "🎬 Nova & Kai: Voiceover is now locked to a 38-year-old Singaporean English Male voice (female/Indian voices blacklisted), captions highlight word-by-word in gold, video duration auto-times to the script, and piano/Rhodes music records into the downloaded video!";
-      } else if (lower.includes("hot lead")) {
-        reply = "💬 Ava: 2 Hot Leads (Kelvin Tan Heat 84 & Marcus Lim Heat 88) are active and linked to your personal WhatsApp (+65 9237 9472).";
+        reply = "🎬 Nova & Kai: Voiceover is locked to a 38-year-old Singaporean English Male voice, captions highlight word-by-word in gold, and piano/Rhodes music records into the downloaded video!";
       } else {
         reply = "📋 Ryan: Instruction logged across all 14 agents and synced to workspace memory.";
       }
@@ -3026,23 +3187,13 @@
 
     function callAdHocEmergencyEscalation() {
       const ownerNum = appState.ceaProfile.ownerPersonalWhatsApp.replace(/\D/g, '') || '6592379472';
-      const msg = `🚨 AGENTZUG V3.7 URGENT ESCALATION:\nVera (CEA Compliance) & Ryan (Ops Manager) requesting Owner review on active pipeline.`;
+      const msg = `🚨 AGENTZUG V3.8 URGENT ESCALATION:\nVera (CEA Compliance) & Ryan (Ops Manager) requesting Owner review on active pipeline.`;
       window.open(`https://wa.me/${ownerNum}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    function runSelfDiagnosticAudit() {
-      alert(
-        `🩺 AGENTZUG V3.7 — 10-POINT SELF-DIAGNOSTIC AUDIT:\n\n` +
-        `1. Sample 1 (Uncropped 4:3 3D Office & 14 Calibrated Seats): PASS ✓\n` +
-        `2. Sample 2 (4:5 Magazine Social Poster + Profile Photo Uploader): PASS ✓\n` +
-        `3. Sample 3 (9:16 Video + Word-Synced Captions + Auto-Timed Script): PASS ✓\n` +
-        `4. Locked 38yo SG Male Voiceover (Female/Indian Blacklisted): PASS ✓\n` +
-        `5. Public CEA Line (${appState.ceaProfile.phone}) & Private Alert (${appState.ceaProfile.ownerPersonalWhatsApp}): PASS ✓\n` +
-        `6. Zero-Duplicate Topic Miner & 9-Stage Kanban: PASS ✓\n` +
-        `7. Buyer Advisory Wing (5 Playbooks + 1-2p Excel Export): PASS ✓\n` +
-        `8. Dual-Track CRM & Conditional HDB MOP Rule: PASS ✓`
-      );
-    }
+    window.addEventListener('resize', () => {
+      if (appState.activeTab === 'office') init3DRobloxOffice();
+    });
 
     window.addEventListener('DOMContentLoaded', () => {
       if ('speechSynthesis' in window) window.speechSynthesis.getVoices();

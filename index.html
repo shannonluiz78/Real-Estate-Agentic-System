@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentZug V3.8 — Home Equity Studio 3D Living Office & Media OS</title>
+  <title>AgentZug V3.9 — Home Equity Studio Autonomous Real Estate OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Three.js CDN for 3D Roblox-Style Living Office -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     tailwind.config = {
@@ -32,7 +31,7 @@
       pointer-events: auto;
       cursor: pointer;
       transform: translate(-50%, -100%);
-      transition: background-color 0.2s, border-color 0.2s;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
       z-index: 20;
     }
     .avatar-3d-label:hover {
@@ -60,7 +59,7 @@
         <div>
           <div class="flex flex-wrap items-center gap-1.5">
             <span class="font-black text-base tracking-tight text-amber-400">HOME EQUITY STUDIO</span>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">AgentZug V3.8</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">AgentZug V3.9</span>
             <span id="header-autopilot-pill" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">⚡ Autopilot: 2-Touch Mode</span>
             <button onclick="switchTab('settings')" id="header-api-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/30 cursor-pointer hover:opacity-80">🔴 Gemini API: Click to Verify</button>
           </div>
@@ -106,7 +105,7 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs (Includes 1-Click Direct Media Studio Button) -->
+      <!-- Navigation Tabs -->
       <div class="flex flex-wrap items-center gap-1.5">
         <button onclick="switchTab('office')" id="nav-tab-office" class="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-sm">
           <span>🏢 3D Office</span>
@@ -114,8 +113,8 @@
         <button onclick="switchTab('board')" id="nav-tab-board" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-700">
           <span>📋 Content Board</span>
         </button>
-        <button onclick="openStudioDirectly()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-black flex items-center gap-1.5 shadow-md">
-          <span>🎬 Media Studio (Test Image/Video)</span>
+        <button onclick="openStudioDirectly()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md">
+          <span>🎬 Media Studio (Sample 2 & 3)</span>
         </button>
         <button onclick="switchTab('buyer')" id="nav-tab-buyer" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-700">
           <span>🏠 Buyer Wing</span>
@@ -130,66 +129,66 @@
     </div>
   </header>
 
-  <!-- VIEW 1: 3D ROBLOX-STYLE LIVING OFFICE (AUTONOMOUS WORKING MOVEMENT + BOARDROOM WALK-IN) -->
+  <!-- VIEW 1: 3D ROBLOX-STYLE OFFICE (STATIONED AT DESKS BY DEFAULT — MOVES ONLY FOR WORK HANDOFFS OR MEETINGS!) -->
   <section id="view-office" class="tab-view flex-1 flex flex-col p-3 space-y-2.5">
     <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-2 shadow-sm text-xs">
       <div class="flex flex-wrap items-center gap-1.5">
-        <span class="font-black uppercase text-amber-400 mr-1">🏛️ Call Meeting (Agents Walk to Boardroom):</span>
-        <button onclick="openMeetingModal(1)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-extrabold transition">1. Creative Studio</button>
-        <button onclick="openMeetingModal(2)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-extrabold transition">2. CEO Town Hall (All 14)</button>
-        <button onclick="openMeetingModal(3)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 font-extrabold transition">3. Vera CEA Gate</button>
+        <span class="font-black uppercase text-amber-400 mr-1">🏛️ Call Meeting (Invited Agents Walk to Boardroom):</span>
+        <button onclick="openMeetingModal(1)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white border border-cyan-500/30 font-extrabold transition">1. Creative Studio</button>
+        <button onclick="openMeetingModal(2)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-extrabold transition">2. CEO Town Hall (All 14)</button>
+        <button onclick="openMeetingModal(3)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-extrabold transition">3. Vera CEA Gate</button>
         <button onclick="openMeetingModal(4)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-amber-600 text-amber-300 hover:text-white border border-amber-500/30 font-extrabold transition">4. Ava & Milo Hot CRM</button>
         <button onclick="openMeetingModal(5)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 font-extrabold transition">5. Nina Buyer Search</button>
-        <button onclick="returnAgentsToDesks()" id="btn-end-boardroom" class="hidden px-2.5 py-1 rounded-xl bg-rose-600 text-white font-black">⏹️ End Meeting (Walk Back to Desks)</button>
+        <button onclick="returnAgentsToDesks()" id="btn-end-boardroom" class="hidden px-2.5 py-1 rounded-xl bg-rose-600 text-white font-black">⏹️ End Meeting (Return to Desks)</button>
       </div>
       <div class="flex items-center gap-2">
-        <label class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 cursor-pointer bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-800">
-          <input id="chk-office-roam" type="checkbox" checked onchange="toggleOfficeAutonomousRoaming(this.checked)" class="rounded text-emerald-500" />
-          <span>🚶 Live Working Office Movement</span>
-        </label>
+        <button onclick="triggerSingleWorkHandoffWalk()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-[11px]" title="Walks only the active task agent to hand off work">🚶 Simulate Work Handoff</button>
         <button onclick="callAdHocEmergencyEscalation()" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black shadow-sm">🚨 Escalate (+65 9237 9472)</button>
       </div>
     </div>
 
-    <!-- 3D WebGL Roblox-Style Living Office Viewport -->
+    <!-- 3D WebGL Roblox-Style Office Viewport -->
     <div id="office-3d-viewport" class="relative flex-1 w-full min-h-[540px] rounded-3xl bg-[#070a12] border border-amber-500/30 shadow-2xl overflow-hidden">
       <canvas id="office-3d-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
       
-      <!-- 3D-Projected Floating Agent Nameplates (Locked 100% to 3D Head Coordinates) -->
+      <!-- 3D-Projected Floating Agent Nameplates (Color-Coded by Department & Status!) -->
       <div id="office-3d-labels" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
 
-      <!-- Top-Left Wing Legend -->
-      <div class="absolute top-3 left-3 z-20 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-2xl p-2.5 space-y-1 text-[10px] pointer-events-none shadow-xl">
-        <div class="font-black text-amber-400 uppercase">🏢 6 Furnished 3D Office Wings</div>
-        <div><span class="text-indigo-400 font-bold">NW Exec Suite:</span> Alex (CEO) & Ryan (Ops)</div>
-        <div><span class="text-cyan-400 font-bold">NE Creative Studio:</span> Sage, Mira, Leo, Nova, Kai</div>
-        <div><span class="text-emerald-400 font-bold">East Compliance/Pub:</span> Vera (CEA) & Finn (ROAS)</div>
-        <div><span class="text-amber-400 font-bold">SW Lead & CRM Pod:</span> Ava (WA AI) & Milo (CRM)</div>
-        <div><span class="text-purple-400 font-bold">SE Buyer Wing:</span> Nina, Owen & Iris</div>
-        <div class="text-slate-400 pt-1 border-t border-slate-800">💡 Drag to rotate • Scroll to zoom • Tap any agent</div>
+      <!-- Top-Left Color-Coding & Status Legend -->
+      <div class="absolute top-3 left-3 z-20 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-2xl p-3 space-y-1.5 text-[10px] pointer-events-none shadow-xl">
+        <div class="font-black text-amber-400 uppercase tracking-wider">🎨 Department & Status Color Legend</div>
+        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-indigo-600 inline-block border border-indigo-300"></span><span><strong>Indigo Blazer:</strong> Executive & Ops (Alex, Ryan)</span></div>
+        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-cyan-600 inline-block border border-cyan-300"></span><span><strong>Cyan Blazer:</strong> Creative Studio (Sage, Mira, Leo, Nova, Kai)</span></div>
+        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-emerald-600 inline-block border border-emerald-300"></span><span><strong>Emerald Blazer:</strong> Compliance & Pub (Vera, Finn)</span></div>
+        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-amber-600 inline-block border border-amber-300"></span><span><strong>Amber Blazer:</strong> Lead & CRM Pod (Ava, Milo)</span></div>
+        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-purple-600 inline-block border border-purple-300"></span><span><strong>Purple Blazer:</strong> Buyer Wing (Nina, Owen, Iris)</span></div>
+        <div class="pt-1 border-t border-slate-800 text-[9px] text-slate-300">
+          <strong>Floor Ring:</strong> 🟢 Ready/Passed • 🟡 Processing Task • 🔴 Gate/Alert<br/>
+          <em>Agents stay stationed at desks and walk only for work handoffs or meetings.</em>
+        </div>
       </div>
 
       <!-- Bottom-Left CEO Radar & Quick Studio Trigger -->
       <div class="absolute bottom-3 left-3 z-20 max-w-xs bg-slate-950/90 backdrop-blur border border-amber-500/40 rounded-2xl p-2.5 text-[10px] space-y-1.5 shadow-2xl">
         <div class="flex items-center justify-between font-black text-amber-400">
           <span>👔 ALEX (CEO) — 30-DAY RADAR</span>
-          <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8px]">LIVE 3D</span>
+          <span id="office-handoff-status" class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8px]">STATIONED AT DESKS</span>
         </div>
         <div id="office-30d-summary" class="text-slate-200 font-medium">• <strong>Next 30d Deals:</strong> 2 Deals (Bernard & Marcus • S$72,000 GCI)</div>
         <div class="flex gap-1.5 pt-0.5">
-          <button onclick="openStudioDirectly()" class="flex-1 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black">🎬 Open Media Studio</button>
-          <button onclick="openMeetingModal(2)" class="flex-1 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">🏛️ Town Hall Q&A</button>
+          <button onclick="openStudioDirectly()" class="flex-1 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black">🎬 Open Media Studio</button>
+          <button onclick="openMeetingModal(2)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">🏛️ Town Hall Q&A</button>
         </div>
       </div>
 
       <!-- Bottom-Right Camera Presets -->
       <div class="absolute bottom-3 right-3 z-20 flex flex-wrap items-center gap-1 bg-slate-950/90 backdrop-blur p-1.5 rounded-2xl border border-slate-800 text-[10px] font-bold">
         <button onclick="focus3DCamera('ALL')" class="px-2.5 py-1 rounded-xl bg-amber-500 text-slate-950 font-black">🔭 Fit Whole Office</button>
-        <button onclick="focus3DCamera('EXEC')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Exec</button>
-        <button onclick="focus3DCamera('CREATIVE')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Creative</button>
+        <button onclick="focus3DCamera('EXEC')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300">Exec</button>
+        <button onclick="focus3DCamera('CREATIVE')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300">Creative</button>
         <button onclick="focus3DCamera('BOARDROOM')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300">Boardroom</button>
-        <button onclick="focus3DCamera('CRM')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">CRM</button>
-        <button onclick="focus3DCamera('BUYER')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200">Buyer Wing</button>
+        <button onclick="focus3DCamera('CRM')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300">CRM</button>
+        <button onclick="focus3DCamera('BUYER')" class="px-2 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-300">Buyer Wing</button>
       </div>
     </div>
   </section>
@@ -211,7 +210,7 @@
         <span class="font-black text-slate-400 uppercase">Target Video Length:</span>
         <select id="video-duration-select" onchange="updateVideoDurationSetting(this.value)" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 font-bold text-xs text-white">
           <option value="8s">8s Micro-Hook (1 clip)</option>
-          <option value="16s" selected>16s Fast Preview (2–4 clips — Auto-Timed)</option>
+          <option value="16s" selected>16s Fast Preview (4 clips — Auto-Timed)</option>
           <option value="32s">32s Standard Educational (4 clips)</option>
           <option value="60s">60s Full 1-Min Masterclass (8 clips)</option>
           <option value="80s">80s Extended Breakdown (10 clips)</option>
@@ -229,10 +228,8 @@
       </div>
     </div>
 
-    <!-- 9 Horizontal Kanban Columns -->
     <div id="content-kanban-row" class="flex-1 flex gap-2.5 overflow-x-auto pb-2 custom-scroll"></div>
 
-    <!-- Exception Zones (Blocked & Rework) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
       <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30">
         <div class="flex items-center justify-between font-black text-rose-400 mb-1.5">
@@ -251,7 +248,7 @@
     </div>
   </section>
 
-  <!-- VIEW 3: NEW BUYER ADVISORY WING (NINA, OWEN, IRIS & PORTAL SEARCH / EXCEL EXPORT) -->
+  <!-- VIEW 3: NEW BUYER ADVISORY WING -->
   <section id="view-buyer" class="tab-view hidden flex-1 flex flex-col p-3 space-y-3 text-xs">
     <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-3 shadow-sm">
       <div class="flex flex-wrap items-center gap-2">
@@ -375,7 +372,7 @@
     <div id="crm-kanban-row" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2.5 flex-1"></div>
   </section>
 
-  <!-- VIEW 5: SETTINGS, PROFILE PHOTO UPLOADER, LIVE GEMINI API TESTER & OMNICHANNEL VAULT -->
+  <!-- VIEW 5: SETTINGS, PROFILE PHOTO UPLOADER & LIVE GEMINI API TESTER -->
   <section id="view-settings" class="tab-view hidden flex-1 flex flex-col p-4 space-y-4 text-xs">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
@@ -432,12 +429,12 @@
 
       <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-black text-amber-400">2. Priority API Router (Nano Banana, Neural TTS & Veo)</h3>
+          <h3 class="text-sm font-black text-amber-400">2. Priority API Router (Nano Banana, Neural Male TTS & Veo)</h3>
           <span id="settings-api-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500/20 text-rose-300">Not Verified Yet</span>
         </div>
         <div class="space-y-2">
           <div>
-            <label class="font-bold text-[10px] text-slate-400 block mb-1">Google Gemini / AI Studio Key (Starts with AIzaSy...):</label>
+            <label class="font-bold text-[10px] text-slate-400 block mb-1">Google Gemini / AI Studio Key (Unlocks Neural Male TTS 'Charon' & Nano Banana):</label>
             <div class="flex gap-1.5">
               <input id="cfg-gemini-key" type="password" placeholder="Paste your AIzaSy... key here" class="flex-1 px-2.5 py-1.5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-white" />
               <button onclick="const el=document.getElementById('cfg-gemini-key'); el.type=el.type==='password'?'text':'password';" class="px-2.5 py-1.5 rounded-xl bg-slate-800 font-bold text-[10px]">👁️ Show</button>
@@ -450,13 +447,13 @@
         </div>
         <button onclick="saveAndTestAPIKeys(false)" class="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold shadow-sm">🔌 Save Key & Run Live Google API Diagnostic Ping</button>
         <div id="api-diagnostic-box" class="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[11px] space-y-1 text-slate-300">
-          <div>Status: Paste your Gemini API key above and click Save & Test to unlock Live Nano Banana Image Generation & Neural Male TTS Voiceover.</div>
+          <div>Status: Paste your Gemini API key above and click Save & Test to unlock Live Nano Banana Image Generation & Neural Male TTS Voiceover (`Charon`).</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MODAL 1: MEDIA STUDIO INSPECTOR (4:5 POSTER & 9:16 SYNCHRONIZED 60FPS VIDEO REEL ENGINE) -->
+  <!-- MODAL 1: EXACT APPROVED SAMPLE 2 & SAMPLE 3 MEDIA STUDIO -->
   <div id="card-inspect-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-2.5 overflow-y-auto">
     <div class="bg-slate-900 border border-amber-500/40 rounded-3xl max-w-6xl w-full p-4 md:p-5 space-y-3.5 text-xs shadow-2xl my-auto max-h-[96vh] overflow-y-auto custom-scroll">
       
@@ -467,7 +464,7 @@
             <span id="inspect-stage-badge" class="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-black text-[10px]">5. Human Review</span>
             <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-black text-[10px]">🛡️ Vera CEA Gate: PASS ✓</span>
             <span id="inspect-timing-badge" class="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-black text-[10px]">⏱️ Auto-Timed to Script: 16.0s</span>
-            <span id="inspect-voice-lock-badge" class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-black text-[10px]">🗣️ Voice Lock: 38yo SG Male Advisor</span>
+            <span id="inspect-voice-lock-badge" class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-black text-[10px]">🗣️ Voice Lock: 38yo SG Male (Gemini Neural Charon)</span>
           </div>
           <h2 id="inspect-card-title" class="text-sm font-black text-white mt-1">Topic Title</h2>
         </div>
@@ -479,8 +476,8 @@
         <div class="flex flex-wrap items-center justify-between gap-2">
           <!-- Mode Switcher: Sample 3 (9:16 Video) vs Sample 2 (4:5 Poster) -->
           <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
-            <button onclick="switchStudioPreviewMode('VIDEO')" id="btn-mode-video" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]">🎬 9:16 Video Reel</button>
-            <button onclick="switchStudioPreviewMode('POSTER')" id="btn-mode-poster" class="px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]">🖼️ 4:5 Social Poster</button>
+            <button onclick="switchStudioPreviewMode('VIDEO')" id="btn-mode-video" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-[11px]">🎬 Sample 3: 9:16 Video Reel</button>
+            <button onclick="switchStudioPreviewMode('POSTER')" id="btn-mode-poster" class="px-3 py-1 rounded-lg text-slate-300 hover:text-white font-bold text-[11px]">🖼️ Sample 2: 4:5 Social Poster</button>
           </div>
 
           <!-- Regeneration Buttons + Quick Profile Photo Upload -->
@@ -490,6 +487,9 @@
             </button>
             <button onclick="regenerateLiveNanoBananaImage()" id="btn-regen-image" class="px-2.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-[11px]">
               🍌 Live Nano Banana AI
+            </button>
+            <button onclick="synthesizeGeminiNeuralVoiceover(true)" id="btn-synth-voice" class="px-2.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-[11px]">
+              🎙️ Synthesize Gemini Neural Male Voice
             </button>
             <button onclick="regenerateCardWithLiveGemini()" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-[11px]">
               ✍️ Regenerate Copy/Script
@@ -503,7 +503,7 @@
         <div id="regen-status-banner" class="text-[11px] font-mono text-emerald-400 hidden"></div>
       </div>
 
-      <!-- Studio Grid: Left = Live Canvas & Video Player | Right = Copy, Script & Prompts -->
+      <!-- Studio Grid: Left = High-DPI Canvas + Deliverable Video Player | Right = Copy, Script & Prompts -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <div class="lg:col-span-5 space-y-2.5 flex flex-col items-center bg-slate-950 p-3 rounded-2xl border border-slate-800">
           <div class="w-full flex items-center justify-between text-[10px] font-bold text-slate-400 px-1">
@@ -511,12 +511,12 @@
             <span id="studio-cam-label" class="text-cyan-300">🎥 60fps Gimbal Rig</span>
           </div>
 
-          <canvas id="studio-preview-canvas" width="540" height="960" class="w-full max-w-[300px] rounded-2xl shadow-2xl border border-amber-500/40 bg-slate-900"></canvas>
+          <canvas id="studio-preview-canvas" width="540" height="960" class="w-full max-w-[295px] rounded-2xl shadow-2xl border border-amber-500/40 bg-slate-900"></canvas>
 
           <div class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between text-[10px] font-bold">
               <span id="inspect-music-label" class="text-amber-300 truncate">🎵 Piano & Warm Rhodes Lounge (92 BPM)</span>
-              <span id="inspect-voice-status" class="text-emerald-400 shrink-0">🗣️ 38yo SG Male Ready</span>
+              <span id="inspect-voice-status" class="text-emerald-400 shrink-0">🗣️ Neural Male Ready</span>
             </div>
             <div class="flex flex-wrap items-center gap-1.5">
               <button onclick="playSynchronizedVideoReel()" id="btn-play-preview" class="flex-1 py-2 px-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] shadow">
@@ -524,20 +524,30 @@
               </button>
               <button onclick="stopMediaPreviewPlayback()" class="px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 font-bold text-[11px]">⏹️ Stop</button>
               <button onclick="downloadPosterPNG()" class="px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px]" title="Download High-Res 4:5 Poster (.PNG)">📥 .PNG</button>
-              <button onclick="recordAndDownloadVideoReel()" id="btn-export-webm" class="px-2.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px]" title="Render & Download Actual Video File (.WEBM)">🎬 Download Video</button>
+              <button onclick="recordAndDownloadVideoReel()" id="btn-export-webm" class="px-2.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px]" title="Render & Download Actual Video File (.WEBM/.MP4)">🎬 Render Video</button>
             </div>
             <div class="flex items-center gap-2 text-[10px]">
               <span class="font-bold text-slate-400">Music Mix:</span>
-              <input id="music-volume-slider" type="range" min="5" max="45" value="25" oninput="updateLiveMusicVolume(this.value)" class="flex-1" />
-              <span id="music-volume-label" class="font-mono font-bold text-amber-400">25% (-12dB)</span>
+              <input id="music-volume-slider" type="range" min="5" max="45" value="28" oninput="updateLiveMusicVolume(this.value)" class="flex-1" />
+              <span id="music-volume-label" class="font-mono font-bold text-amber-400">28% (-10dB)</span>
               <label class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer border border-slate-700">
                 🎵 .MP3
                 <input type="file" accept="audio/*" onchange="uploadCustomAudioTrack(event)" class="hidden" />
               </label>
             </div>
           </div>
+
+          <!-- Embedded Deliverable Video Player (Appears Automatically After Clicking Render Video) -->
+          <div id="rendered-video-box" class="hidden w-full p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/40 space-y-1.5">
+            <div class="flex items-center justify-between text-[10px] font-black text-emerald-300">
+              <span>✅ RENDERED VIDEO READY (WITH VOICE & MUSIC)</span>
+              <a id="rendered-video-dl-link" href="#" download="HomeEquityStudio_Reel.webm" class="px-2 py-0.5 rounded bg-emerald-600 text-white">📥 Save File</a>
+            </div>
+            <video id="rendered-video-player" controls playsinline class="w-full max-h-[220px] rounded-lg bg-black"></video>
+          </div>
         </div>
 
+        <!-- Right 7 Cols: Box A, Box B & Box C -->
         <div class="lg:col-span-7 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-1.5">
             <span class="font-black text-amber-400 uppercase">Box A: Omnichannel Viral Caption, 15 Hashtags & CEA Footer (Leo)</span>
@@ -706,14 +716,14 @@
       '4. Viewing Active', '5. Offer / OTP', '6. Commission Closed'
     ];
 
-    // 5 CURATED 4-SCENE SINGAPORE ARCHITECTURAL VIDEO PACKS
+    // 5 CURATED 4-SCENE SINGAPORE ARCHITECTURAL VIDEO PACKS (EXACT SAMPLE 2 & 3 PACKS)
     const VIDEO_DESIGN_PACKS = [
       {
         name: 'Pack 1: Marina Bay Skyline & Infinity Pool',
         themeName: 'Royal Gold & Obsidian',
         primaryColor: '#f59e0b',
         secondaryColor: '#10b981',
-        cardBg: 'rgba(8, 12, 22, 0.88)',
+        cardBg: 'rgba(8, 12, 22, 0.90)',
         pills: ['0% ABSD Bracket', 'Verify 9% GST Rule', 'Min 35-Yr Tenure'],
         images: [
           'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1080&q=85',
@@ -727,7 +737,7 @@
         themeName: 'Emerald FinTech Glass',
         primaryColor: '#10b981',
         secondaryColor: '#fbbf24',
-        cardBg: 'rgba(6, 24, 20, 0.88)',
+        cardBg: 'rgba(6, 24, 20, 0.90)',
         pills: ['Zero Corridor Waste', '$2,320 PSF Freehold', 'Dumbbell 3-Bedder'],
         images: [
           'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1080&q=85',
@@ -741,7 +751,7 @@
         themeName: 'Monocle Editorial Navy',
         primaryColor: '#38bdf8',
         secondaryColor: '#f59e0b',
-        cardBg: 'rgba(12, 19, 38, 0.88)',
+        cardBg: 'rgba(12, 19, 38, 0.90)',
         pills: ['Peak Year-5 Equity', '6-Month ABSD Refund', '55% MAS TDSR Cap'],
         images: [
           'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?auto=format&fit=crop&w=1080&q=85',
@@ -769,7 +779,7 @@
         themeName: 'Luxury Champagne Gold',
         primaryColor: '#fbbf24',
         secondaryColor: '#34d399',
-        cardBg: 'rgba(17, 14, 10, 0.88)',
+        cardBg: 'rgba(17, 14, 10, 0.90)',
         pills: ['S$180K Buffer Saved', '4.0% Stress-Test OK', 'Full CPF OA Pool'],
         images: [
           'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1080&q=85',
@@ -793,27 +803,27 @@
     const presenterAvatarImg = new Image();
     presenterAvatarImg.crossOrigin = 'anonymous';
 
-    // 14 ROBLOX-STYLE 3D AGENTS IN THE LIVING OFFICE
+    // 14 ROBLOX-STYLE 3D AGENTS WITH DISTINCT DEPARTMENT COLOR CODING (STATIONED CALMLY BY DEFAULT)
     const OFFICE_3D_AGENTS = [
-      // Zone 1: NW Executive Suite
-      { id: 'alex', name: 'Alex', role: 'CEO Agent', homeX: -11.0, homeZ: -8.2, seatX: -4.2, seatZ: -2.0, seatRot: 0, blazer: 0x312e81, hair: 0x1e293b, status: '🟢', task: '30d Forecast: S$72K' },
-      { id: 'ryan', name: 'Ryan', role: 'Ops Manager', homeX: -6.2, homeZ: -8.2, seatX: -2.8, seatZ: -2.0, seatRot: 0, blazer: 0x4338ca, hair: 0x451a03, status: '🟢', task: 'Routing 14 Agents' },
-      // Zone 2: NE Creative Studio
-      { id: 'sage', name: 'Sage', role: 'Strategist', homeX: 3.2, homeZ: -8.8, seatX: -1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0e7490, hair: 0x0f172a, status: '🟢', task: 'Mining URA News' },
-      { id: 'mira', name: 'Mira', role: 'Creative Dir', homeX: 7.4, homeZ: -8.8, seatX: 0.0, seatZ: -2.0, seatRot: 0, blazer: 0x0891b2, hair: 0x78350f, status: '🟢', task: '4:5 Magazine Layout' },
-      { id: 'leo', name: 'Leo', role: 'Copywriter', homeX: 11.6, homeZ: -8.8, seatX: 1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0284c7, hair: 0x1e293b, status: '🟢', task: 'Word-Synced Script' },
-      { id: 'nova', name: 'Nova', role: 'AI Prod Dir', homeX: 5.2, homeZ: -5.2, seatX: 2.8, seatZ: -2.0, seatRot: 0, blazer: 0x2563eb, hair: 0x31102f, status: '🟡', task: 'Nano Banana & Veo' },
-      { id: 'kai', name: 'Kai', role: 'Video Editor', homeX: 9.8, homeZ: -5.2, seatX: 4.2, seatZ: -2.0, seatRot: 0, blazer: 0x1d4ed8, hair: 0x0f172a, status: '🟢', task: '60fps + Audio Mix' },
-      // Zone 3: East Compliance & Publishing
-      { id: 'vera', name: 'Vera', role: 'CEA Auditor', homeX: 11.2, homeZ: 0.4, seatX: -4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x047857, hair: 0x1c1917, status: '🔴', task: 'PG 02/2011 Check' },
-      { id: 'finn', name: 'Finn', role: 'Analytics', homeX: 11.2, homeZ: 3.6, seatX: -2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x059669, hair: 0x713f12, status: '🟢', task: '76.4% Hold • 9.4x' },
-      // Zone 4: SW Lead & CRM Pod
-      { id: 'ava', name: 'Ava', role: 'WA/DM Lead AI', homeX: -11.0, homeZ: 7.6, seatX: -1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0xd97706, hair: 0x27272a, status: '🔴', task: 'Hot Lead -> +65 9237 9472' },
-      { id: 'milo', name: 'Milo', role: 'CRM Manager', homeX: -6.2, homeZ: 7.6, seatX: 0.0, seatZ: 2.0, seatRot: Math.PI, blazer: 0xb45309, hair: 0x0f172a, status: '🟢', task: 'GCI S$142.8K Sync' },
-      // Zone 5: SE Buyer Advisory Wing
-      { id: 'nina', name: 'Nina', role: 'Buyer Intake', homeX: 3.5, homeZ: 8.0, seatX: 1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0x6d28d9, hair: 0x451a03, status: '🟢', task: '5 Sector Playbooks' },
-      { id: 'owen', name: 'Owen', role: 'Portal Search', homeX: 7.8, homeZ: 8.0, seatX: 2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x7c3aed, hair: 0x1e293b, status: '🟢', task: 'PropertyGuru Links' },
-      { id: 'iris', name: 'Iris', role: 'Match & Excel', homeX: 12.0, homeZ: 8.0, seatX: 4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x8b5cf6, hair: 0x27272a, status: '🟢', task: '1-2p Client Excel' }
+      // Zone 1: NW Executive Suite (Indigo Blazers)
+      { id: 'alex', name: 'Alex', role: 'CEO Agent', deptColor: 'border-indigo-400 bg-indigo-950/90', homeX: -11.0, homeZ: -8.2, seatX: -4.2, seatZ: -2.0, seatRot: 0, blazer: 0x4f46e5, hair: 0x1e293b, status: '🟢', task: '30d Forecast: S$72K' },
+      { id: 'ryan', name: 'Ryan', role: 'Ops Manager', deptColor: 'border-indigo-400 bg-indigo-950/90', homeX: -6.2, homeZ: -8.2, seatX: -2.8, seatZ: -2.0, seatRot: 0, blazer: 0x6366f1, hair: 0x451a03, status: '🟢', task: 'Routing 14 Agents' },
+      // Zone 2: NE Creative Studio (Cyan Blazers)
+      { id: 'sage', name: 'Sage', role: 'Strategist', deptColor: 'border-cyan-400 bg-cyan-950/90', homeX: 3.2, homeZ: -8.8, seatX: -1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0891b2, hair: 0x0f172a, status: '🟢', task: 'Mining URA News' },
+      { id: 'mira', name: 'Mira', role: 'Creative Dir', deptColor: 'border-cyan-400 bg-cyan-950/90', homeX: 7.4, homeZ: -8.8, seatX: 0.0, seatZ: -2.0, seatRot: 0, blazer: 0x06b6d4, hair: 0x78350f, status: '🟢', task: '4:5 Magazine Layout' },
+      { id: 'leo', name: 'Leo', role: 'Copywriter', deptColor: 'border-cyan-400 bg-cyan-950/90', homeX: 11.6, homeZ: -8.8, seatX: 1.4, seatZ: -2.0, seatRot: 0, blazer: 0x0284c7, hair: 0x1e293b, status: '🟢', task: 'Word-Synced Script' },
+      { id: 'nova', name: 'Nova', role: 'AI Prod Dir', deptColor: 'border-cyan-400 bg-cyan-950/90', homeX: 5.2, homeZ: -5.2, seatX: 2.8, seatZ: -2.0, seatRot: 0, blazer: 0x0ea5e9, hair: 0x31102f, status: '🟡', task: 'Nano Banana & TTS' },
+      { id: 'kai', name: 'Kai', role: 'Video Editor', deptColor: 'border-cyan-400 bg-cyan-950/90', homeX: 9.8, homeZ: -5.2, seatX: 4.2, seatZ: -2.0, seatRot: 0, blazer: 0x38bdf8, hair: 0x0f172a, status: '🟢', task: '60fps + Audio Mix' },
+      // Zone 3: East Compliance & Publishing (Emerald Blazers)
+      { id: 'vera', name: 'Vera', role: 'CEA Auditor', deptColor: 'border-emerald-400 bg-emerald-950/90', homeX: 11.2, homeZ: 0.4, seatX: -4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x059669, hair: 0x1c1917, status: '🔴', task: 'Gate 2: PG 02/2011' },
+      { id: 'finn', name: 'Finn', role: 'Analytics', deptColor: 'border-emerald-400 bg-emerald-950/90', homeX: 11.2, homeZ: 3.6, seatX: -2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x10b981, hair: 0x713f12, status: '🟢', task: '76.4% Hold • 9.4x' },
+      // Zone 4: SW Lead & CRM Pod (Amber Blazers)
+      { id: 'ava', name: 'Ava', role: 'WA/DM Lead AI', deptColor: 'border-amber-400 bg-amber-950/90', homeX: -11.0, homeZ: 7.6, seatX: -1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0xd97706, hair: 0x27272a, status: '🔴', task: 'Hot Lead -> +65 9237 9472' },
+      { id: 'milo', name: 'Milo', role: 'CRM Manager', deptColor: 'border-amber-400 bg-amber-950/90', homeX: -6.2, homeZ: 7.6, seatX: 0.0, seatZ: 2.0, seatRot: Math.PI, blazer: 0xf59e0b, hair: 0x0f172a, status: '🟢', task: 'GCI S$142.8K Sync' },
+      // Zone 5: SE Buyer Advisory Wing (Purple Blazers)
+      { id: 'nina', name: 'Nina', role: 'Buyer Intake', deptColor: 'border-purple-400 bg-purple-950/90', homeX: 3.5, homeZ: 8.0, seatX: 1.4, seatZ: 2.0, seatRot: Math.PI, blazer: 0x7c3aed, hair: 0x451a03, status: '🟢', task: '5 Sector Playbooks' },
+      { id: 'owen', name: 'Owen', role: 'Portal Search', deptColor: 'border-purple-400 bg-purple-950/90', homeX: 7.8, homeZ: 8.0, seatX: 2.8, seatZ: 2.0, seatRot: Math.PI, blazer: 0x8b5cf6, hair: 0x1e293b, status: '🟢', task: 'PropertyGuru Links' },
+      { id: 'iris', name: 'Iris', role: 'Match & Excel', deptColor: 'border-purple-400 bg-purple-950/90', homeX: 12.0, homeZ: 8.0, seatX: 4.2, seatZ: 2.0, seatRot: Math.PI, blazer: 0x9333ea, hair: 0x27272a, status: '🟢', task: '1-2p Client Excel' }
     ];
 
     const SG_NON_DUPLICATE_TOPIC_POOL = [
@@ -853,7 +863,6 @@
       activeTab: 'office',
       activeCRMTrack: 'ALL',
       studioPreviewMode: 'VIDEO',
-      officeRoamActive: true,
       officeInMeeting: false,
       autoGate1: JSON.parse(localStorage.getItem('squad_autogate1') || 'false'),
       autoGate2: JSON.parse(localStorage.getItem('squad_autogate2') || 'false'),
@@ -894,9 +903,9 @@
 
     function saveWorkspaceToStorage() {
       try {
-        localStorage.setItem('squad_cards_v38', JSON.stringify(appState.contentCards));
-        localStorage.setItem('squad_leads_v38', JSON.stringify(appState.crmLeads));
-        localStorage.setItem('squad_buyer_v38', JSON.stringify(appState.buyerListings));
+        localStorage.setItem('squad_cards_v39', JSON.stringify(appState.contentCards));
+        localStorage.setItem('squad_leads_v39', JSON.stringify(appState.crmLeads));
+        localStorage.setItem('squad_buyer_v39', JSON.stringify(appState.buyerListings));
         localStorage.setItem('squad_topic_history', JSON.stringify(appState.topicHistoryMemory));
       } catch (e) {}
     }
@@ -956,7 +965,7 @@
     }
 
     // ============================================================================
-    // 2. TRUE 3D ROBLOX-STYLE LIVING OFFICE ENGINE (AUTONOMOUS PATROL + MEETINGS)
+    // 2. 3D ROBLOX-STYLE OFFICE (STATIONED CALMLY — WALKS ONLY FOR WORK OR MEETINGS!)
     // ============================================================================
     let scene3D, camera3D, renderer3D;
     const robloxAvatars = [];
@@ -966,7 +975,7 @@
     let camAngleV = Math.PI / 5.0;
     let camTarget3D = new THREE.Vector3(0, 0, 0);
     let desiredCamTarget3D = new THREE.Vector3(0, 0, 0);
-    let roamIntervalId = null;
+    let handoffStepCounter = 0;
 
     function init3DRobloxOffice() {
       const viewport = document.getElementById('office-3d-viewport');
@@ -1000,14 +1009,12 @@
       renderer3D.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer3D.shadowMap.enabled = true;
 
-      // Warm Golden-Hour Architectural Lighting
-      scene3D.add(new THREE.AmbientLight(0xfffbeb, 0.78));
+      scene3D.add(new THREE.AmbientLight(0xfffbeb, 0.80));
       const sun = new THREE.DirectionalLight(0xfde68a, 0.88);
       sun.position.set(18, 28, 16);
       sun.castShadow = true;
       scene3D.add(sun);
 
-      // Base Architectural Slab & 6 Luxury Flooring Wings
       const slab = new THREE.Mesh(new THREE.BoxGeometry(33, 0.5, 24), new THREE.MeshLambertMaterial({ color: 0x1c1917 }));
       slab.position.set(0, -0.26, 0);
       scene3D.add(slab);
@@ -1017,15 +1024,14 @@
         m.position.set(x, 0.02, z);
         scene3D.add(m);
       }
-      addFloorWing(0, 0, 32.2, 23.2, 0x18181b);        // Main Dark Marble Hallway
-      addFloorWing(-8.8, -7.8, 11.5, 6.8, 0x451a03);   // NW Executive Suite (Warm Walnut)
-      addFloorWing(7.8, -7.2, 15.6, 8.0, 0x1e293b);    // NE Creative & AI Media Studio
-      addFloorWing(11.4, 1.8, 7.4, 6.0, 0x064e3b);     // East Compliance & Publishing
-      addFloorWing(-8.8, 7.4, 11.5, 7.0, 0x3b1806);    // SW Lead & WhatsApp CRM Pod
-      addFloorWing(7.8, 7.6, 15.6, 6.6, 0x572608);     // SE Buyer Advisory Wing
-      addFloorWing(-0.3, 0.0, 12.2, 6.4, 0x27272a);    // Center Boardroom Rug
+      addFloorWing(0, 0, 32.2, 23.2, 0x18181b);
+      addFloorWing(-8.8, -7.8, 11.5, 6.8, 0x451a03);
+      addFloorWing(7.8, -7.2, 15.6, 8.0, 0x1e293b);
+      addFloorWing(11.4, 1.8, 7.4, 6.0, 0x064e3b);
+      addFloorWing(-8.8, 7.4, 11.5, 7.0, 0x3b1806);
+      addFloorWing(7.8, 7.6, 15.6, 6.6, 0x572608);
+      addFloorWing(-0.3, 0.0, 12.2, 6.4, 0x27272a);
 
-      // Frosted Gold-Trimmed Glass Partition Walls
       const glassMat = new THREE.MeshPhongMaterial({ color: 0xfde68a, transparent: true, opacity: 0.18 });
       const goldRailMat = new THREE.MeshLambertMaterial({ color: 0xd97706 });
 
@@ -1045,7 +1051,7 @@
       addGlassPartition(7.4, 4.2, 12.8, true);
       addGlassPartition(7.6, 1.5, 5.0, false);
 
-      // Central 14-Seat Oval Marble & Walnut Conference Table + MBS Skyline Screen
+      // Central 14-Seat Oval Marble Conference Table
       const tableGroup = new THREE.Group();
       const ovalTop = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.6, 0.16, 32), new THREE.MeshPhongMaterial({ color: 0xf5f5f4 }));
       ovalTop.scale.set(1.85, 1, 0.85);
@@ -1066,7 +1072,6 @@
         });
       }
 
-      // Glowing Marina Bay Skyline Presentation Wall
       const wallFrame = new THREE.Mesh(new THREE.BoxGeometry(7.2, 2.4, 0.2), new THREE.MeshLambertMaterial({ color: 0x090d16 }));
       wallFrame.position.set(0, 1.5, -3.2);
       const wallScreen = new THREE.Mesh(new THREE.BoxGeometry(6.8, 1.9, 0.22), new THREE.MeshBasicMaterial({ color: 0x0284c7 }));
@@ -1074,9 +1079,8 @@
       tableGroup.add(wallFrame, wallScreen);
       scene3D.add(tableGroup);
 
-      // Build 14 Dual-Monitor Desks & 14 Articulated Roblox-Style Characters
-      OFFICE_3D_AGENTS.forEach((cfg, idx) => {
-        // Desk & Dual Glowing Monitors
+      // Build 14 Desks & 14 Stationed Roblox-Style Characters
+      OFFICE_3D_AGENTS.forEach(cfg => {
         const desk = new THREE.Group();
         desk.position.set(cfg.homeX, 0, cfg.homeZ - 0.9);
         const dTop = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.1, 1.1), new THREE.MeshLambertMaterial({ color: 0x78350f }));
@@ -1090,14 +1094,13 @@
         });
         scene3D.add(desk);
 
-        // Articulated Roblox-Style Character (Head, Hair, Blazer Torso, Swinging Arms, Walking Legs)
         const charGroup = new THREE.Group();
         const skinMat = new THREE.MeshLambertMaterial({ color: 0xfde68a });
         const blazerMat = new THREE.MeshLambertMaterial({ color: cfg.blazer });
         const pantsMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
         const hairMat = new THREE.MeshLambertMaterial({ color: cfg.hair });
 
-        const torso = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.74, 0.36), blazerMat);
+        const torso = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.76, 0.38), blazerMat);
         torso.position.y = 0.96;
         const head = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.46, 0.46), skinMat);
         head.position.y = 1.60;
@@ -1105,9 +1108,9 @@
         hair.position.set(0, 1.84, -0.02);
 
         const leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.64, 0.20), blazerMat);
-        leftArm.position.set(-0.42, 0.94, 0);
+        leftArm.position.set(-0.43, 0.94, 0);
         const rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.64, 0.20), blazerMat);
-        rightArm.position.set(0.42, 0.94, 0);
+        rightArm.position.set(0.43, 0.94, 0);
 
         const leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.60, 0.24), pantsMat);
         leftLeg.position.set(-0.16, 0.30, 0);
@@ -1115,7 +1118,7 @@
         rightLeg.position.set(0.16, 0.30, 0);
 
         const haloColor = cfg.status === '🔴' ? 0xf43f5e : (cfg.status === '🟡' ? 0xfbbf24 : 0x10b981);
-        const halo = new THREE.Mesh(new THREE.RingGeometry(0.48, 0.62, 24), new THREE.MeshBasicMaterial({ color: haloColor, side: THREE.DoubleSide }));
+        const halo = new THREE.Mesh(new THREE.RingGeometry(0.52, 0.70, 28), new THREE.MeshBasicMaterial({ color: haloColor, side: THREE.DoubleSide }));
         halo.rotation.x = -Math.PI / 2;
         halo.position.y = 0.06;
 
@@ -1125,7 +1128,7 @@
         scene3D.add(charGroup);
 
         const label = document.createElement('div');
-        label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-slate-950/90 border border-slate-700 shadow-lg text-center';
+        label.className = `avatar-3d-label px-2 py-0.5 rounded-lg border ${cfg.deptColor} shadow-lg text-center`;
         label.innerHTML = `
           <div class="flex items-center justify-center gap-1 whitespace-nowrap">
             <span class="text-[9px]">${cfg.status}</span>
@@ -1152,7 +1155,6 @@
       });
 
       setup3DMouseControls(canvas);
-      startOfficeAutonomousRoaming();
       animate3DOfficeLoop();
     }
 
@@ -1188,41 +1190,47 @@
       }, { passive: false });
     }
 
-    // REAL-LIFE WORKING OFFICE AUTONOMOUS PATROL (AGENTS VISIT COLLEAGUES & COLLABORATE)
-    function startOfficeAutonomousRoaming() {
-      if (roamIntervalId) clearInterval(roamIntervalId);
-      roamIntervalId = setInterval(() => {
-        if (!appState.officeRoamActive || appState.officeInMeeting || robloxAvatars.length === 0) return;
+    // TASK-DRIVEN WORK HANDOFF WALK (ONLY 1 AGENT WALKS TO DELIVER A TASK, THEN RETURNS TO DESK!)
+    function walkSingleAgentForTaskHandoff(fromId, toId, taskDescription) {
+      if (appState.officeInMeeting) return;
+      const sender = robloxAvatars.find(a => a.cfg.id === fromId);
+      const receiver = robloxAvatars.find(a => a.cfg.id === toId);
+      if (!sender || !receiver) return;
 
-        // Pick 2 random agents to walk to a colleague's desk or corridor hub, while returning previous roamers to their desks
-        robloxAvatars.forEach(av => {
-          av.targetX = av.cfg.homeX;
-          av.targetZ = av.cfg.homeZ;
-          av.targetRot = Math.PI;
-        });
+      const statusEl = document.getElementById('office-handoff-status');
+      if (statusEl) {
+        statusEl.textContent = `🚶 ${sender.cfg.name} → ${receiver.cfg.name}`;
+        statusEl.className = 'px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[8px] font-bold';
+      }
 
-        const roamCount = 3;
-        for (let r = 0; r < roamCount; r++) {
-          const visitor = robloxAvatars[Math.floor(Math.random() * robloxAvatars.length)];
-          const host = robloxAvatars[Math.floor(Math.random() * robloxAvatars.length)];
-          if (visitor && host && visitor !== host) {
-            visitor.targetX = host.cfg.homeX + (Math.random() * 1.4 - 0.7);
-            visitor.targetZ = host.cfg.homeZ + 1.1;
-            visitor.targetRot = Math.PI;
+      sender.targetX = receiver.cfg.homeX;
+      sender.targetZ = receiver.cfg.homeZ + 1.25;
+      sender.targetRot = Math.PI;
+
+      setTimeout(() => {
+        if (!appState.officeInMeeting) {
+          sender.targetX = sender.cfg.homeX;
+          sender.targetZ = sender.cfg.homeZ;
+          sender.targetRot = Math.PI;
+          if (statusEl) {
+            statusEl.textContent = 'STATIONED AT DESKS';
+            statusEl.className = 'px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8px]';
           }
         }
-      }, 4500);
+      }, 3600);
     }
 
-    function toggleOfficeAutonomousRoaming(enabled) {
-      appState.officeRoamActive = enabled;
-      if (!enabled && !appState.officeInMeeting) {
-        robloxAvatars.forEach(av => {
-          av.targetX = av.cfg.homeX;
-          av.targetZ = av.cfg.homeZ;
-          av.targetRot = Math.PI;
-        });
-      }
+    function triggerSingleWorkHandoffWalk() {
+      const handoffPairs = [
+        ['sage', 'leo', 'Sage handing URA REALIS brief to Leo'],
+        ['leo', 'nova', 'Leo handing time-coded script to Nova'],
+        ['nova', 'vera', 'Nova handing rendered reel to Vera for CEA check'],
+        ['nina', 'iris', 'Nina handing buyer brief to Iris for Excel shortlist'],
+        ['ava', 'milo', 'Ava handing qualified HDB upgrader lead to Milo']
+      ];
+      const pair = handoffPairs[handoffStepCounter % handoffPairs.length];
+      handoffStepCounter++;
+      walkSingleAgentForTaskHandoff(pair[0], pair[1], pair[2]);
     }
 
     function animate3DOfficeLoop() {
@@ -1251,8 +1259,8 @@
         const dist = Math.hypot(dx, dz);
 
         if (dist > 0.09) {
-          // Roblox-style walking with swinging arms and legs
-          const speed = 0.055;
+          // Walking to a meeting or work handoff
+          const speed = 0.065;
           av.group.position.x += dx * speed;
           av.group.position.z += dz * speed;
           av.group.rotation.y = Math.atan2(dx, dz);
@@ -1261,18 +1269,17 @@
           av.rightArm.rotation.x = -swing;
           av.leftLeg.rotation.x = -swing;
           av.rightLeg.rotation.x = swing;
-          av.group.position.y = Math.abs(Math.cos(time * 2.0 + i)) * 0.09;
+          av.group.position.y = Math.abs(Math.cos(time * 2.0 + i)) * 0.08;
         } else {
-          // Working at desk or seated at boardroom
+          // Calmly stationed at desk (or seated in boardroom) so color coding is crystal clear
           av.group.rotation.y = av.targetRot;
-          av.leftArm.rotation.x = Math.sin(time * 0.5 + i) * 0.12;
-          av.rightArm.rotation.x = -Math.sin(time * 0.5 + i) * 0.12;
+          av.leftArm.rotation.x = 0;
+          av.rightArm.rotation.x = 0;
           av.leftLeg.rotation.x = 0;
           av.rightLeg.rotation.x = 0;
           av.group.position.y = 0;
         }
 
-        // Project 3D Head Coordinate to 2D Screen Label (100% Aligned at Every Resolution)
         const headWorld = new THREE.Vector3(av.group.position.x, 2.35, av.group.position.z);
         headWorld.project(camera3D);
         const sx = (headWorld.x * 0.5 + 0.5) * w;
@@ -1317,7 +1324,7 @@
         av.targetX = av.cfg.homeX;
         av.targetZ = av.cfg.homeZ;
         av.targetRot = Math.PI;
-        av.label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-slate-950/90 border border-slate-700 shadow-lg text-center';
+        av.label.className = `avatar-3d-label px-2 py-0.5 rounded-lg border ${av.cfg.deptColor} shadow-lg text-center`;
       });
       focus3DCamera('ALL');
     }
@@ -1326,7 +1333,7 @@
     function initDefaultData() {
       loadSavedAvatarAndLogo();
 
-      const savedCards = localStorage.getItem('squad_cards_v38');
+      const savedCards = localStorage.getItem('squad_cards_v39');
       if (savedCards) {
         try { appState.contentCards = JSON.parse(savedCards); } catch (e) { appState.contentCards = []; }
       }
@@ -1382,7 +1389,7 @@
 
       deduplicateExistingBoardCards(true);
 
-      const savedLeads = localStorage.getItem('squad_leads_v38');
+      const savedLeads = localStorage.getItem('squad_leads_v39');
       if (savedLeads) {
         try { appState.crmLeads = JSON.parse(savedLeads); } catch (e) { appState.crmLeads = []; }
       }
@@ -1395,7 +1402,7 @@
         ];
       }
 
-      const savedBuyer = localStorage.getItem('squad_buyer_v38');
+      const savedBuyer = localStorage.getItem('squad_buyer_v39');
       if (savedBuyer) {
         try { appState.buyerListings = JSON.parse(savedBuyer); } catch (e) { appState.buyerListings = getSectorDefaultListings('RESIDENTIAL_OWN_STAY'); }
       } else {
@@ -1434,7 +1441,7 @@
         `• Scene Consistency: Photorealistic Singapore architectural skyline & luxury interiors, positive structural stillness lock active.\n` +
         `• Presenter Badge: Composite uploaded Profile Photo (AI Smart Casual.png) inside gold-trimmed circular footer frame.\n` +
         `• Master Voiceprint Lock: 38-year-old Singaporean English professional male advisor voice, warm medium-low baritone, 140 WPM cadence synced word-for-word to Box B.\n` +
-        `• Studio Audio Mix: "${musicGenre}, acoustic piano & warm Rhodes lounge, auto-ducked to -12dB under voiceover."`;
+        `• Studio Audio Mix: "${musicGenre}, acoustic piano & warm Rhodes lounge, auto-ducked to -10dB under voiceover."`;
     }
 
     function recalculateExecutiveMetrics() {
@@ -1483,12 +1490,9 @@
       if (tab === 'crm') renderCRMKanban();
     }
 
-    // 1-CLICK DIRECT MEDIA STUDIO LAUNCHER
     function openStudioDirectly() {
       const targetCard = appState.contentCards[0];
-      if (targetCard) {
-        openCardInspectModal(targetCard.id);
-      }
+      if (targetCard) openCardInspectModal(targetCard.id);
     }
 
     // 4. CONTENT KANBAN & ZERO-DUPLICATE TOPIC MINING
@@ -1512,6 +1516,8 @@
     async function triggerSageNewsMine() {
       const btn = document.getElementById('btn-sage-mine');
       if (btn) btn.textContent = '⏳ Sage Mining URA/HDB News...';
+
+      walkSingleAgentForTaskHandoff('sage', 'leo', 'Sage handing new topic to Leo');
 
       const existingTitles = new Set([
         ...appState.contentCards.map(c => (c.title || '').trim().toLowerCase()),
@@ -1681,23 +1687,27 @@
       const idx = CONTENT_STAGES.indexOf(card.stage);
       if (idx >= 0 && idx < CONTENT_STAGES.length - 1) {
         card.stage = CONTENT_STAGES[idx + 1];
+        walkSingleAgentForTaskHandoff('nova', 'vera', 'Handing off card across Kanban stages');
         saveWorkspaceToStorage();
         renderContentKanban();
       }
     }
 
     // ============================================================================
-    // 5. UNBREAKABLE MEDIA STUDIO ENGINE (FIXED INITIALIZATION ORDER + NULL GUARDS)
+    // 5. EXACT APPROVED SAMPLE 2 & SAMPLE 3 STUDIO ENGINE (NEURAL MALE TTS + 60FPS)
     // ============================================================================
     let previewAnimFrame = null;
     let audioCtx = null;
     let activeGainNode = null;
     let musicNoteTimer = null;
     let customAudioEl = null;
+    let cachedNeuralAudioBuffer = null;
+    let cachedNeuralScriptHash = '';
+    let activeNeuralSourceNode = null;
     let isPlayingReel = false;
     let parsedScriptTimeline = parseScriptAndCalculateTiming('Commercial and B1 industrial properties carry zero ABSD in Singapore.');
 
-    function parseScriptAndCalculateTiming(rawScriptText) {
+    function parseScriptAndCalculateTiming(rawScriptText, overrideTotalSec = null) {
       const rawLines = String(rawScriptText || '')
         .split('\n')
         .map(l => l.replace(/\[Clip.*?\]\s*:\s*/i, '').replace(/"/g, '').trim())
@@ -1707,14 +1717,18 @@
         rawLines.push('Commercial and B1 industrial properties carry zero ABSD in Singapore.');
       }
 
+      const allWordsCount = rawLines.reduce((acc, l) => acc + l.split(/\s+/).filter(Boolean).length, 0) || 1;
+      const targetTotal = overrideTotalSec || Math.max(4, Number(((allWordsCount / 2.33) + rawLines.length * 0.45).toFixed(1)));
+
       let cumulativeSec = 0;
       let globalWordCounter = 0;
 
       const clips = rawLines.map((lineText, clipIdx) => {
         const words = lineText.split(/\s+/).filter(Boolean);
-        const durationSec = Math.max(3.2, Number(((words.length / 2.33) + 0.55).toFixed(1)));
+        const clipShare = words.length / allWordsCount;
+        const durationSec = Math.max(2.6, Number((targetTotal * clipShare).toFixed(2)));
         const startSec = cumulativeSec;
-        const endSec = Number((cumulativeSec + durationSec).toFixed(1));
+        const endSec = Number((cumulativeSec + durationSec).toFixed(2));
         cumulativeSec = endSec;
 
         const phraseChunks = [];
@@ -1726,9 +1740,9 @@
         const totalChars = words.reduce((acc, w) => acc + w.length + 1, 0) || 1;
         let charCursor = 0;
         const wordTimings = words.map((w, wIdx) => {
-          const wStart = startSec + (charCursor / totalChars) * (durationSec - 0.3);
+          const wStart = startSec + (charCursor / totalChars) * (durationSec - 0.15);
           charCursor += w.length + 1;
-          const wEnd = startSec + (charCursor / totalChars) * (durationSec - 0.3);
+          const wEnd = startSec + (charCursor / totalChars) * (durationSec - 0.15);
           return { word: w, localIndex: wIdx, globalIndex: globalWordCounter++, startSec: wStart, endSec: wEnd };
         });
 
@@ -1745,11 +1759,9 @@
       if (!card) return;
       appState.activeInspectCardId = card.id;
 
-      // 1. Unhide Modal Immediately so It Can Never Fail to Open
       const modal = document.getElementById('card-inspect-modal');
       if (modal) modal.classList.remove('hidden');
 
-      // 2. Populate Fields
       document.getElementById('inspect-stage-badge').textContent = card.stage || '5. Human Review';
       document.getElementById('inspect-card-title').textContent = card.title || 'Singapore Property Topic';
       document.getElementById('inspect-music-label').textContent = `🎵 ${card.musicGenre || LYRIA_GENRES[0]}`;
@@ -1760,7 +1772,6 @@
       document.getElementById('inspect-consent-chk').checked = card.ownerConsent !== false;
       document.getElementById('regen-status-banner').classList.add('hidden');
 
-      // 3. Initialize Script Timing BEFORE Drawing Canvas (Fixes V3.7 TypeError!)
       recalculateScriptTimingAndRedraw();
       switchStudioPreviewMode(card.format === 'Flyer' ? 'POSTER' : 'VIDEO');
     }
@@ -1790,9 +1801,9 @@
       renderStudioCanvasFrame(0);
     }
 
-    function recalculateScriptTimingAndRedraw() {
+    function recalculateScriptTimingAndRedraw(overrideAudioSec = null) {
       const rawScript = document.getElementById('inspect-box-b')?.value || '';
-      parsedScriptTimeline = parseScriptAndCalculateTiming(rawScript);
+      parsedScriptTimeline = parseScriptAndCalculateTiming(rawScript, overrideAudioSec);
       const badge = document.getElementById('inspect-timing-badge');
       if (badge) {
         badge.textContent = `⏱️ Auto-Timed to Script: ${parsedScriptTimeline.totalWords} words → ${parsedScriptTimeline.totalDurationSec}s (${parsedScriptTimeline.clips.length} Clips)`;
@@ -1807,6 +1818,84 @@
       if (!isPlayingReel) renderStudioCanvasFrame(0);
     }
 
+    // LIVE GOOGLE GEMINI NEURAL MALE TTS ('Charon' — 38YO SINGAPOREAN ADVISOR BARITONE, ZERO ROBOTIC VOICE!)
+    async function synthesizeGeminiNeuralVoiceover(playAfter = false) {
+      const rawScript = document.getElementById('inspect-box-b')?.value || '';
+      const cleanSpeech = rawScript.replace(/\[Clip.*?\]\s*:\s*/gi, '').replace(/"/g, ' ').trim();
+      if (!cleanSpeech) return null;
+
+      if (cachedNeuralAudioBuffer && cachedNeuralScriptHash === cleanSpeech) {
+        if (playAfter) playSynchronizedVideoReel();
+        return cachedNeuralAudioBuffer;
+      }
+
+      const key = appState.apiKey || localStorage.getItem('squad_gemini_key') || '';
+      if (!key || key.length < 15) {
+        if (playAfter) {
+          alert('To replace the browser OS fallback voice with Google Gemini Neural Male TTS (Charon), please ensure your Gemini API key is saved in ⚙️ Settings!');
+        }
+        return null;
+      }
+
+      const btn = document.getElementById('btn-synth-voice');
+      const vBadge = document.getElementById('inspect-voice-status');
+      const banner = document.getElementById('regen-status-banner');
+      if (btn) btn.textContent = '⏳ Synthesizing Neural Male Voice...';
+      if (vBadge) vBadge.textContent = '⏳ Calling Gemini Neural TTS (Charon)...';
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.textContent = '🎙️ Calling Google Gemini Neural TTS (gemini-2.5-flash-preview-tts • Voice: Charon Male Baritone)...';
+      }
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${encodeURIComponent(key)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `Speak in a warm, confident, natural 38-year-old Singaporean English male real estate advisor voice at a steady 140 words per minute pace: ${cleanSpeech}`
+              }]
+            }],
+            generationConfig: {
+              responseModalities: ['AUDIO'],
+              speechConfig: {
+                voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Charon' } }
+              }
+            }
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const audioPart = (data?.candidates?.[0]?.content?.parts || []).find(p => p.inlineData && p.inlineData.data);
+          if (audioPart) {
+            const binary = atob(audioPart.inlineData.data);
+            const sampleCount = Math.floor(binary.length / 2);
+            const tempCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const audioBuf = tempCtx.createBuffer(1, sampleCount, 24000);
+            const channelData = audioBuf.getChannelData(0);
+            for (let i = 0; i < sampleCount; i++) {
+              let int16 = (binary.charCodeAt(i * 2 + 1) << 8) | binary.charCodeAt(i * 2);
+              if (int16 >= 0x8000) int16 -= 0x10000;
+              channelData[i] = int16 / 32768.0;
+            }
+            cachedNeuralAudioBuffer = audioBuf;
+            cachedNeuralScriptHash = cleanSpeech;
+            recalculateScriptTimingAndRedraw(Number(audioBuf.duration.toFixed(1)));
+            if (vBadge) vBadge.textContent = `🟢 Gemini Neural Male (Charon • ${audioBuf.duration.toFixed(1)}s) ✓`;
+            if (banner) banner.textContent = `✅ Synthesized Natural Gemini Neural Male Voiceover (Charon • ${audioBuf.duration.toFixed(1)}s studio audio)!`;
+            if (btn) btn.textContent = '🎙️ Neural Male Voice Ready ✓';
+            if (playAfter) playSynchronizedVideoReel();
+            return audioBuf;
+          }
+        }
+      } catch (e) {}
+
+      if (btn) btn.textContent = '🎙️ Synthesize Gemini Neural Male Voice';
+      return null;
+    }
+
     function regenerateNewVideoDesign() {
       const card = appState.contentCards.find(c => c.id === appState.activeInspectCardId) || appState.contentCards[0];
       if (!card) return;
@@ -1819,12 +1908,12 @@
 
       document.getElementById('inspect-music-label').textContent = `🎵 ${card.musicGenre}`;
       saveWorkspaceToStorage();
-      recalculateScriptTimingAndRedraw();
+      recalculateScriptTimingAndRedraw(cachedNeuralAudioBuffer ? Number(cachedNeuralAudioBuffer.duration.toFixed(1)) : null);
 
       const pack = VIDEO_DESIGN_PACKS[card.packIndex];
       const banner = document.getElementById('regen-status-banner');
       banner.classList.remove('hidden');
-      banner.textContent = `✅ Generated New Video Design: "${pack.name}" + "${pack.themeName}" theme + Camera Rig #${card.cameraRigIndex + 1}! Playing preview...`;
+      banner.textContent = `✅ Generated New Video Design: "${pack.name}" + "${pack.themeName}" theme + Camera Rig #${card.cameraRigIndex + 1}!`;
 
       playSynchronizedVideoReel();
     }
@@ -1902,11 +1991,11 @@
       if (motionType === 0) {
         scale = 1.03 + eased * 0.14; ty = -eased * 14;
       } else if (motionType === 1) {
-        scale = 1.14; tx = -22 + eased * 44;
+        scale = 1.14; tx = -24 + eased * 48;
       } else if (motionType === 2) {
-        scale = 1.12; ty = 24 - eased * 48;
+        scale = 1.12; ty = 26 - eased * 52;
       } else {
-        scale = 1.18 - eased * 0.12; tx = 12 - eased * 24;
+        scale = 1.18 - eased * 0.12; tx = 14 - eased * 28;
       }
 
       ctx.save();
@@ -1939,7 +2028,7 @@
 
       ctx.clearRect(0, 0, W, H);
 
-      // MODE A: 4:5 SOCIAL POSTER
+      // MODE A: APPROVED SAMPLE 2 — 4:5 MAGAZINE SOCIAL POSTER
       if (appState.studioPreviewMode === 'POSTER') {
         drawCameraMovedImage(ctx, packImgs[0], W, H, 0.35, 0);
 
@@ -2023,7 +2112,7 @@
         return;
       }
 
-      // MODE B: 9:16 SYNCHRONIZED 60FPS VIDEO REEL
+      // MODE B: APPROVED SAMPLE 3 — 9:16 SYNCHRONIZED 60FPS VIDEO REEL
       const clips = parsedScriptTimeline.clips;
       const totalDur = parsedScriptTimeline.totalDurationSec || 16;
       const t = elapsedSec % totalDur;
@@ -2208,31 +2297,45 @@
       return preferredMale || englishVoices[0] || null;
     }
 
-    function playSynchronizedVideoReel() {
+    // PLAY SYNCHRONIZED 60FPS VIDEO REEL (AUTO-FETCHES GEMINI NEURAL MALE TTS 'CHARON' FIRST!)
+    async function playSynchronizedVideoReel() {
       stopMediaPreviewPlayback();
       if (appState.studioPreviewMode === 'POSTER') {
         switchStudioPreviewMode('VIDEO');
       }
-      recalculateScriptTimingAndRedraw();
+
+      const rawScript = document.getElementById('inspect-box-b')?.value || '';
+      const cleanSpeech = rawScript.replace(/\[Clip.*?\]\s*:\s*/gi, '').replace(/"/g, ' ').trim();
+
+      // 1. Auto-Synthesize Natural Google Gemini Neural Male TTS ('Charon') if API Key is Present!
+      if ((appState.apiKey || localStorage.getItem('squad_gemini_key')) && (!cachedNeuralAudioBuffer || cachedNeuralScriptHash !== cleanSpeech)) {
+        await synthesizeGeminiNeuralVoiceover(false);
+      }
+
+      recalculateScriptTimingAndRedraw(cachedNeuralAudioBuffer ? Number(cachedNeuralAudioBuffer.duration.toFixed(1)) : null);
       isPlayingReel = true;
 
-      const clips = parsedScriptTimeline.clips;
-      const fullSpokenText = clips.map(c => c.text).join(' ');
+      startLoungeMusicEngine(null);
 
-      if ('speechSynthesis' in window && fullSpokenText) {
+      // 2. Play Decoded 24kHz Gemini Neural Male AudioBuffer (or Fallback Male Voice if No API Key)
+      if (cachedNeuralAudioBuffer && audioCtx) {
+        activeNeuralSourceNode = audioCtx.createBufferSource();
+        activeNeuralSourceNode.buffer = cachedNeuralAudioBuffer;
+        activeNeuralSourceNode.connect(audioCtx.destination);
+        activeNeuralSourceNode.start(0);
+        document.getElementById('inspect-voice-status').textContent = '🟢 Playing Gemini Neural Male (Charon)';
+      } else if ('speechSynthesis' in window && cleanSpeech) {
         window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(fullSpokenText);
+        const utter = new SpeechSynthesisUtterance(cleanSpeech);
         const maleVoice = selectStrictMaleAdvisorVoice();
         if (maleVoice) {
           utter.voice = maleVoice;
-          document.getElementById('inspect-voice-status').textContent = `🗣️ Locked Male: ${maleVoice.name.slice(0, 22)}`;
+          document.getElementById('inspect-voice-status').textContent = `🗣️ Male Voice: ${maleVoice.name.slice(0, 20)}`;
         }
         utter.rate = 1.0;
         utter.pitch = 0.92;
         window.speechSynthesis.speak(utter);
       }
-
-      startLoungeMusicEngine(null);
 
       const startMs = performance.now();
       const totalDur = parsedScriptTimeline.totalDurationSec;
@@ -2252,7 +2355,7 @@
     }
 
     function startLoungeMusicEngine(destStreamNode = null) {
-      const sliderPct = parseNum(document.getElementById('music-volume-slider')?.value, 25) / 100;
+      const sliderPct = parseNum(document.getElementById('music-volume-slider')?.value, 28) / 100;
       if (customAudioEl) {
         customAudioEl.volume = sliderPct;
         customAudioEl.currentTime = 0;
@@ -2261,13 +2364,13 @@
       }
 
       try {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         activeGainNode = audioCtx.createGain();
-        activeGainNode.gain.value = sliderPct * 0.24;
+        activeGainNode.gain.value = sliderPct * 0.28;
 
         const filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.value = 920;
+        filter.frequency.value = 980;
         filter.connect(activeGainNode);
         activeGainNode.connect(audioCtx.destination);
         if (destStreamNode) activeGainNode.connect(destStreamNode);
@@ -2292,7 +2395,7 @@
               osc.type = 'sine';
               osc.frequency.value = freq;
               g.gain.setValueAtTime(0.001, now);
-              g.gain.linearRampToValueAtTime(0.18, now + 0.35);
+              g.gain.linearRampToValueAtTime(0.20, now + 0.35);
               g.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
               osc.connect(g);
               g.connect(filter);
@@ -2307,7 +2410,7 @@
           mOsc.type = 'triangle';
           mOsc.frequency.value = melFreq;
           mGain.gain.setValueAtTime(0.001, now);
-          mGain.gain.linearRampToValueAtTime(0.14, now + 0.04);
+          mGain.gain.linearRampToValueAtTime(0.16, now + 0.04);
           mGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
           mOsc.connect(mGain);
           mGain.connect(filter);
@@ -2325,18 +2428,19 @@
       isPlayingReel = false;
       if (previewAnimFrame) { cancelAnimationFrame(previewAnimFrame); previewAnimFrame = null; }
       if (musicNoteTimer) { clearInterval(musicNoteTimer); musicNoteTimer = null; }
+      if (activeNeuralSourceNode) { try { activeNeuralSourceNode.stop(); } catch (e) {} activeNeuralSourceNode = null; }
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       if (customAudioEl) { try { customAudioEl.pause(); } catch (e) {} }
       if (audioCtx) { try { audioCtx.close(); } catch (e) {} audioCtx = null; activeGainNode = null; }
     }
 
     function updateLiveMusicVolume(val) {
-      const pct = parseNum(val, 25);
+      const pct = parseNum(val, 28);
       const db = Math.round(-28 + (pct * 0.55));
       const lbl = document.getElementById('music-volume-label');
       if (lbl) lbl.textContent = `${pct}% (${db}dB)`;
       if (activeGainNode && audioCtx) {
-        activeGainNode.gain.setValueAtTime((pct / 100) * 0.24, audioCtx.currentTime);
+        activeGainNode.gain.setValueAtTime((pct / 100) * 0.28, audioCtx.currentTime);
       }
       if (customAudioEl) customAudioEl.volume = pct / 100;
     }
@@ -2359,7 +2463,8 @@
       if (prevMode !== 'POSTER') switchStudioPreviewMode(prevMode);
     }
 
-    function recordAndDownloadVideoReel() {
+    // MULTIPLEXED VIDEO + GEMINI NEURAL VOICE + PIANO MUSIC RECORDER (WITH IN-MODAL VIDEO PLAYER!)
+    async function recordAndDownloadVideoReel() {
       const canvas = document.getElementById('studio-preview-canvas');
       const btn = document.getElementById('btn-export-webm');
       if (!canvas || !canvas.captureStream || typeof MediaRecorder === 'undefined') {
@@ -2369,8 +2474,17 @@
 
       stopMediaPreviewPlayback();
       switchStudioPreviewMode('VIDEO');
-      recalculateScriptTimingAndRedraw();
 
+      const rawScript = document.getElementById('inspect-box-b')?.value || '';
+      const cleanSpeech = rawScript.replace(/\[Clip.*?\]\s*:\s*/gi, '').replace(/"/g, ' ').trim();
+
+      // Synthesize Gemini Neural Male Voice first so it records directly into the video file!
+      if ((appState.apiKey || localStorage.getItem('squad_gemini_key')) && (!cachedNeuralAudioBuffer || cachedNeuralScriptHash !== cleanSpeech)) {
+        btn.textContent = '⏳ Synthesizing Voice...';
+        await synthesizeGeminiNeuralVoiceover(false);
+      }
+
+      recalculateScriptTimingAndRedraw(cachedNeuralAudioBuffer ? Number(cachedNeuralAudioBuffer.duration.toFixed(1)) : null);
       const totalSec = parsedScriptTimeline.totalDurationSec;
       btn.textContent = `⏺️ Rendering (${totalSec}s)...`;
 
@@ -2381,21 +2495,28 @@
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const destNode = audioCtx.createMediaStreamDestination();
         startLoungeMusicEngine(destNode);
+
+        // Route Gemini Neural Male AudioBuffer directly into BOTH speakers AND recorded video stream!
+        if (cachedNeuralAudioBuffer) {
+          activeNeuralSourceNode = audioCtx.createBufferSource();
+          activeNeuralSourceNode.buffer = cachedNeuralAudioBuffer;
+          activeNeuralSourceNode.connect(audioCtx.destination);
+          activeNeuralSourceNode.connect(destNode);
+          activeNeuralSourceNode.start(0);
+        } else if ('speechSynthesis' in window && cleanSpeech) {
+          const utter = new SpeechSynthesisUtterance(cleanSpeech);
+          const maleVoice = selectStrictMaleAdvisorVoice();
+          if (maleVoice) utter.voice = maleVoice;
+          utter.rate = 1.0;
+          utter.pitch = 0.92;
+          window.speechSynthesis.speak(utter);
+        }
+
         combinedStream = new MediaStream([
           ...canvasStream.getVideoTracks(),
           ...destNode.stream.getAudioTracks()
         ]);
       } catch (e) {}
-
-      const fullSpokenText = parsedScriptTimeline.clips.map(c => c.text).join(' ');
-      if ('speechSynthesis' in window && fullSpokenText) {
-        const utter = new SpeechSynthesisUtterance(fullSpokenText);
-        const maleVoice = selectStrictMaleAdvisorVoice();
-        if (maleVoice) utter.voice = maleVoice;
-        utter.rate = 1.0;
-        utter.pitch = 0.92;
-        window.speechSynthesis.speak(utter);
-      }
 
       isPlayingReel = true;
       const startMs = performance.now();
@@ -2413,10 +2534,23 @@
       recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
       recorder.onstop = () => {
         stopMediaPreviewPlayback();
-        btn.textContent = '🎬 Download Video';
+        btn.textContent = '🎬 Render Video';
         const blob = new Blob(chunks, { type: 'video/webm' });
+        const videoUrl = URL.createObjectURL(blob);
+
+        // Show Embedded Video Player + Download Link inside Modal
+        const vidBox = document.getElementById('rendered-video-box');
+        const vidPlayer = document.getElementById('rendered-video-player');
+        const dlLink = document.getElementById('rendered-video-dl-link');
+        if (vidBox && vidPlayer && dlLink) {
+          vidBox.classList.remove('hidden');
+          vidPlayer.src = videoUrl;
+          dlLink.href = videoUrl;
+          dlLink.download = `HomeEquityStudio_Reel_${totalSec}s_${Date.now()}.webm`;
+        }
+
         const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
+        a.href = videoUrl;
         a.download = `HomeEquityStudio_Reel_${totalSec}s_${Date.now()}.webm`;
         a.click();
       };
@@ -2451,6 +2585,7 @@
       const newScript = lines.join('\n');
       document.getElementById('inspect-box-b').value = newScript;
       card.script = newScript;
+      cachedNeuralAudioBuffer = null;
       saveWorkspaceToStorage();
       recalculateScriptTimingAndRedraw();
     }
@@ -2499,6 +2634,7 @@
               if (parsed.script) {
                 card.script = parsed.script;
                 document.getElementById('inspect-box-b').value = card.script;
+                cachedNeuralAudioBuffer = null;
               }
             }
           }
@@ -2534,6 +2670,7 @@
       } else {
         card.stage = '7. Scheduled';
         card.exception = null;
+        walkSingleAgentForTaskHandoff('vera', 'finn', 'Vera approved card to Finn for Scheduled Publish');
         saveWorkspaceToStorage();
         closeCardInspectModal();
         renderContentKanban();
@@ -2591,6 +2728,7 @@
     function runAutoSwarm(cardId) {
       const card = appState.contentCards.find(c => c.id === cardId);
       if (!card) return;
+      walkSingleAgentForTaskHandoff('ryan', 'nova', 'Ryan dispatching card to Creative Swarm');
       card.stage = '3. Ready'; renderContentKanban();
       setTimeout(() => {
         card.stage = '4. In Progress'; renderContentKanban();
@@ -2611,6 +2749,7 @@
       const card = appState.contentCards.find(c => c.id === cardId);
       if (!card) return;
       card.stage = '7. Scheduled';
+      walkSingleAgentForTaskHandoff('vera', 'finn', 'Vera approved card to Finn');
       saveWorkspaceToStorage();
       renderContentKanban();
     }
@@ -2724,6 +2863,8 @@
       const client = document.getElementById('brief-client-name')?.value || 'Client';
       const loc = document.getElementById('brief-location')?.value || 'District 15';
       const maxBudget = parseNum(document.getElementById('brief-budget')?.value, 2850000);
+
+      walkSingleAgentForTaskHandoff('nina', 'iris', 'Nina handing confirmed buyer brief to Iris');
 
       const baseList = getSectorDefaultListings(appState.activeBuyerSector);
       baseList.forEach(item => {
@@ -2931,6 +3072,7 @@
       const l = appState.crmLeads.find(x => x.id === leadId);
       if (!l) return;
       l.stage = newStage;
+      walkSingleAgentForTaskHandoff('ava', 'milo', 'Ava syncing CRM stage update with Milo');
       saveWorkspaceToStorage();
       renderCRMKanban();
     }
@@ -3075,7 +3217,7 @@
         hdrBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 cursor-pointer';
         setPill.textContent = `✓ HTTP 200 OK (${elapsed}ms)`;
         setPill.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300';
-        diagBox.innerHTML = `<div class="text-emerald-400 font-bold">✅ LIVE CONNECTION VERIFIED (${models.length} Models in ${elapsed}ms) — Active Brain: ${appState.apiActiveModel}</div>`;
+        diagBox.innerHTML = `<div class="text-emerald-400 font-bold">✅ LIVE CONNECTION VERIFIED (${models.length} Models in ${elapsed}ms) — Neural Male TTS ('Charon') & Nano Banana Ready!</div>`;
       } catch (err) {
         hdrBadge.textContent = '🔴 Gemini API: Error';
         diagBox.innerHTML = `<div class="text-rose-400 font-bold">❌ Handshake Failed: ${escapeHTML(err.message)}</div>`;
@@ -3099,7 +3241,7 @@
       st.classList.remove('hidden');
     }
 
-    // 9. BOARDROOM MEETINGS (WALKS 3D ROBLOX AVATARS TO SEATS) & ESCALATIONS
+    // 9. BOARDROOM MEETINGS (WALKS ONLY INVITED ROBLOX AVATARS TO SEATS) & ESCALATIONS
     function openMeetingModal(presetIdx) {
       const presets = [
         { title: '1. Ryan / Creative Studio Huddle', attend: 'Ryan, Sage, Mira, Leo, Nova, Kai', ids: ['ryan','sage','mira','leo','nova','kai'], log: 'Ryan: Creative Roblox avatars walked to the 14-seat marble boardroom table. Reviewing 60fps word-synced reels & 4:5 posters.' },
@@ -3118,11 +3260,12 @@
           av.targetX = av.cfg.seatX;
           av.targetZ = av.cfg.seatZ;
           av.targetRot = av.cfg.seatRot;
-          av.label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-indigo-950/95 border-2 border-amber-400 shadow-xl text-center';
+          av.label.className = 'avatar-3d-label px-2 py-0.5 rounded-lg bg-amber-950/95 border-2 border-amber-400 shadow-xl text-center';
         } else {
           av.targetX = av.cfg.homeX;
           av.targetZ = av.cfg.homeZ;
           av.targetRot = Math.PI;
+          av.label.className = `avatar-3d-label px-2 py-0.5 rounded-lg border ${av.cfg.deptColor} shadow-lg text-center`;
         }
       });
       focus3DCamera('BOARDROOM');
@@ -3165,9 +3308,9 @@
       const lower = val.toLowerCase();
       let reply = "";
       if (lower.includes("quality") || lower.includes("image")) {
-        reply = "🍌 Nova & Mira: Click '🎬 Media Studio (Test Image/Video)' in the top header or '👁️ Studio: Preview / Regenerate' on any card to test the 60fps video reel and 4:5 poster!";
+        reply = "🍌 Nova & Mira: In V3.9, Sample 2 (4:5 Magazine Social Poster) and Sample 3 (9:16 60fps Video Reel) are restored in full! Click '🎬 Media Studio (Sample 2 & 3)' in the top bar.";
       } else if (lower.includes("voiceover") || lower.includes("caption") || lower.includes("music")) {
-        reply = "🎬 Nova & Kai: Voiceover is locked to a 38-year-old Singaporean English Male voice, captions highlight word-by-word in gold, and piano/Rhodes music records into the downloaded video!";
+        reply = "🎙️ Nova & Kai: Fixed! V3.9 automatically calls Google Gemini Neural Male TTS ('Charon' 24kHz studio audio) and multiplexes both the neural male voiceover AND piano/Rhodes lounge music directly into the downloadable video!";
       } else {
         reply = "📋 Ryan: Instruction logged across all 14 agents and synced to workspace memory.";
       }
@@ -3187,7 +3330,7 @@
 
     function callAdHocEmergencyEscalation() {
       const ownerNum = appState.ceaProfile.ownerPersonalWhatsApp.replace(/\D/g, '') || '6592379472';
-      const msg = `🚨 AGENTZUG V3.8 URGENT ESCALATION:\nVera (CEA Compliance) & Ryan (Ops Manager) requesting Owner review on active pipeline.`;
+      const msg = `🚨 AGENTZUG V3.9 URGENT ESCALATION:\nVera (CEA Compliance) & Ryan (Ops Manager) requesting Owner review on active pipeline.`;
       window.open(`https://wa.me/${ownerNum}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 

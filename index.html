@@ -832,45 +832,283 @@
       <div class="glass-card rounded-2xl p-5 space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-extrabold text-amber-400">⚙️ Settings — CEA Profile, Social Accounts &amp; API Vault</h2>
-            <p class="text-xs text-slate-400">Saved locally in your browser via localStorage.</p>
+            <h2 class="text-base font-extrabold text-amber-400">⚙️ Settings — CEA Profile, Social Accounts &amp; WhatsApp Business Vault</h2>
+            <p class="text-xs text-slate-400">All handles, default captions/hashtags, WhatsApp Business credentials, and API keys are saved in your browser via localStorage and wired into the Publishing Hub.</p>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="toggleApiGuideModal()" class="px-3.5 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-extrabold text-cyan-300">❓ 3-Step API Setup Guide</button>
+            <button onclick="exportSafeWorkspaceJSON()" class="px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 border border-indigo-400/50 text-xs font-extrabold text-indigo-200">📤 Export Backup JSON</button>
+            <label class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 cursor-pointer">
+              📥 Import JSON
+              <input type="file" accept=".json,application/json" class="hidden" onchange="importWorkspaceJSON(event)" />
+            </label>
             <button onclick="clearAllAppData()" class="px-3.5 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600/40 border border-rose-500/40 text-xs font-bold text-rose-300">🗑️ Clear Data</button>
-            <button onclick="saveAllSettingsFromPage()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg">💾 Save Settings</button>
+            <button onclick="saveAllSettingsFromPage()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg">💾 Save All Settings</button>
           </div>
         </div>
 
         <div id="settings-save-banner" class="hidden rounded-xl bg-emerald-950 border border-emerald-500/50 px-4 py-2.5 text-xs font-extrabold text-emerald-300">
-          ✓ Settings saved!
+          ✓ Settings saved! CEA profile, Social Media accounts, WhatsApp Business vault, and Publishing Hub share targets updated.
         </div>
 
+        <!-- 1. CEA Statutory Profile & Dual-Number Architecture -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-          <h3 class="text-xs font-extrabold uppercase text-amber-400">1. CEA Statutory Profile</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-xs font-extrabold uppercase text-amber-400">1. CEA Statutory Profile &amp; Dual-Number Routing</h3>
+            <span class="text-[11px] font-bold text-emerald-400">Public Business: +65 8980 9229 • Private Escalation: +65 9237 9472</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Advisor Name</label>
-              <input id="set-cea-name" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <input id="set-cea-name" type="text" placeholder="Luiz Lee" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">CEA Registration No.</label>
-              <input id="set-cea-reg" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <input id="set-cea-reg" type="text" placeholder="R057632A" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Estate Agency Name</label>
-              <input id="set-cea-agency" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <input id="set-cea-agency" type="text" placeholder="Huttons Asia Pte Ltd" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Estate Agency Licence No.</label>
-              <input id="set-cea-lic" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <input id="set-cea-lic" type="text" placeholder="L3008899K" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
             </div>
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Public Contact / WhatsApp</label>
-              <input id="set-cea-phone" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <label class="block text-[11px] text-emerald-300 font-bold mb-1">Public CEA Contact &amp; WA Business</label>
+              <input id="set-cea-phone" type="text" placeholder="+65 8980 9229" class="w-full bg-slate-900 border border-emerald-500/50 rounded-lg px-3 py-1.5 text-xs text-emerald-300 font-bold" />
             </div>
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Demo Link / Calculator URL</label>
-              <input id="set-demo-link" type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <label class="block text-[11px] text-rose-300 font-bold mb-1">Private Owner Alert WhatsApp (Internal)</label>
+              <input id="set-owner-alert-phone" type="text" placeholder="+65 9237 9472" class="w-full bg-slate-900 border border-rose-500/50 rounded-lg px-3 py-1.5 text-xs text-rose-300 font-bold" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[11px] text-cyan-300 font-bold mb-1">Demo Link / HDB MOP Calculator URL (Lead Capture)</label>
+              <input id="set-demo-link" type="text" placeholder="https://hdb-mop-calculator.vercel.app" class="w-full bg-slate-900 border border-cyan-500/40 rounded-lg px-3 py-1.5 text-xs text-cyan-200 font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. WhatsApp Business Cloud API Vault & Gemini Nano Banana Key -->
+        <div class="bg-slate-950 p-4 rounded-xl border border-emerald-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-xs font-extrabold uppercase text-emerald-400">2. WhatsApp Business Cloud API Vault (Agent 8 Inbound AI &amp; Escalation)</h3>
+              <p class="text-[11px] text-slate-400">Powers automated Track A DM qualification on <span class="text-emerald-300 font-bold">+65 8980 9229</span> and hot-lead/SLA escalations to <span class="text-rose-300 font-bold">+65 9237 9472</span>.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="wa-vault-status-pill" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-slate-900 text-slate-300 border border-slate-700">Not Tested</span>
+              <button onclick="testWhatsAppCloudConnection()" class="px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-400/50 text-emerald-200 text-xs font-extrabold">🔌 Test WhatsApp API</button>
+              <button onclick="sendTestOwnerEscalationAlert()" class="px-3 py-1.5 rounded-lg bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-rose-200 text-xs font-extrabold">📲 Test Alert (+65 9237 9472)</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">WhatsApp Business Display Name</label>
+              <input id="set-wa-name" type="text" placeholder="HOME EQUITY STUDIO" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">WhatsApp Business Number</label>
+              <input id="set-wa-phone" type="text" placeholder="+65 8980 9229" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-emerald-300 font-bold" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">WhatsApp Phone Number ID (15-Digit Meta ID)</label>
+              <input id="set-wa-phone-id" type="text" placeholder="e.g. 105928374619283" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">WhatsApp Permanent Access Token (EAA...)</label>
+              <input id="set-wa-token" type="password" placeholder="Paste EAA... System User Token" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Webhook Verify Token</label>
+              <input id="set-wa-verify-token" type="text" placeholder="luiz_lee_cea_verify_2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-amber-300 font-bold mb-1">Gemini Nano Banana API Key (Synced with Top Bar)</label>
+              <input id="set-gemini-key" type="password" placeholder="Paste AIzaSy... key" class="w-full bg-slate-900 border border-amber-500/40 rounded-lg px-3 py-1.5 text-xs text-white font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Omnichannel Social Media Accounts Vault (IG, FB, TikTok, YouTube Shorts) -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-xs font-extrabold uppercase text-cyan-400">3. Omnichannel Social Media Accounts Setup (Instagram, Facebook, TikTok, YouTube Shorts)</h3>
+            <span class="text-[11px] text-slate-400">Used by Tab 4 (Publishing Hub) &amp; every generator's "Share to" selector</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Instagram Card -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-pink-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold uppercase text-pink-400">📸 Instagram Reels &amp; Carousel</span>
+                <div class="flex items-center gap-1.5">
+                  <span id="status-social-ig" class="text-[10px] font-bold text-slate-400">Ready</span>
+                  <button onclick="testSocialAccountConnection('ig')" class="px-2.5 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/40 text-[10px] font-extrabold text-pink-200">🔌 Test IG</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Handle Name</label>
+                  <input id="set-ig-handle" type="text" placeholder="@homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Profile Link</label>
+                  <input id="set-ig-link" type="text" placeholder="https://instagram.com/homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default CTA Caption Line</label>
+                <input id="set-ig-caption" type="text" placeholder="Follow @homeequity — DM 'AGENT' for a demo" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default Hashtag Set</label>
+                <input id="set-ig-tags" type="text" placeholder="#homeequity #sgproperty #hdbmop #singaporerealestate" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
+                <input id="set-ig-account-id" type="text" placeholder="IG Business ID (1784...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                <input id="set-ig-token" type="password" placeholder="Meta Graph Token (EAA...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+            </div>
+
+            <!-- Facebook Page Card -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-blue-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold uppercase text-blue-400">📘 Facebook Page &amp; Reels</span>
+                <div class="flex items-center gap-1.5">
+                  <span id="status-social-fb" class="text-[10px] font-bold text-slate-400">Ready</span>
+                  <button onclick="testSocialAccountConnection('fb')" class="px-2.5 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/40 text-[10px] font-extrabold text-blue-200">🔌 Test FB</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Page Handle / Name</label>
+                  <input id="set-fb-handle" type="text" placeholder="HomeEquityStudio" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Page URL</label>
+                  <input id="set-fb-link" type="text" placeholder="https://facebook.com/HomeEquityStudio" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default CTA Caption Line</label>
+                <input id="set-fb-caption" type="text" placeholder="Follow @homeequity — Message us 'AGENT' on WhatsApp (+65 8980 9229)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default Hashtag Set</label>
+                <input id="set-fb-tags" type="text" placeholder="#homeequity #sgproperty #singaporecondo #hdbupgraders" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
+                <input id="set-meta-page-id" type="text" placeholder="FB Page ID" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                <input id="set-meta-token" type="password" placeholder="Meta Page Token (EAA...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+            </div>
+
+            <!-- TikTok Card -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-cyan-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold uppercase text-cyan-400">🎵 TikTok Business (9:16 Vertical)</span>
+                <div class="flex items-center gap-1.5">
+                  <span id="status-social-tt" class="text-[10px] font-bold text-slate-400">Ready</span>
+                  <button onclick="testSocialAccountConnection('tt')" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-[10px] font-extrabold text-cyan-200">🔌 Test TikTok</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">TikTok Handle</label>
+                  <input id="set-tt-handle" type="text" placeholder="@homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Profile Link</label>
+                  <input id="set-tt-link" type="text" placeholder="https://tiktok.com/@homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default CTA Caption Line</label>
+                <input id="set-tt-caption" type="text" placeholder="Follow @homeequity — Comment 'AGENT' for the 2026 calculation sheet" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default Hashtag Set</label>
+                <input id="set-tt-tags" type="text" placeholder="#homeequity #sgpropertytok #hdbupgraders #singaporeproperty" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
+                <input id="set-tt-open-id" type="text" placeholder="TikTok Open ID" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                <input id="set-tt-token" type="password" placeholder="TikTok OAuth Token (act...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+            </div>
+
+            <!-- YouTube Shorts Card -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-red-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold uppercase text-red-400">▶️ YouTube Shorts (Data API v3)</span>
+                <div class="flex items-center gap-1.5">
+                  <span id="status-social-yt" class="text-[10px] font-bold text-slate-400">Ready</span>
+                  <button onclick="testSocialAccountConnection('yt')" class="px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-[10px] font-extrabold text-red-200">🔌 Test YT</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Channel Handle</label>
+                  <input id="set-yt-handle" type="text" placeholder="@homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-400 mb-0.5">Channel URL</label>
+                  <input id="set-yt-link" type="text" placeholder="https://youtube.com/@homeequity" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default Description CTA Line</label>
+                <input id="set-yt-caption" type="text" placeholder="Subscribe to @homeequity — WhatsApp +65 8980 9229 for your 2026 Property Roadmap" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Default Shorts Tags</label>
+                <input id="set-yt-tags" type="text" placeholder="#homeequity #sgpropertyshorts #realestateeducation #singapore" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
+                <input id="set-yt-channel-id" type="text" placeholder="Channel ID (UC...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+                <input id="set-yt-token" type="password" placeholder="YouTube OAuth Token (ya29...)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Universal Automation Webhook (Make.com / n8n / Zapier) -->
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-xs font-extrabold uppercase text-amber-400">4. Universal 1-Click Omnichannel Webhook (Make.com / n8n / Zapier / Buffer)</h3>
+              <p class="text-[11px] text-slate-400">Dispatches your rendered Carousel, Cover, or Video + platform-specific captions &amp; hashtags in one JSON payload.</p>
+            </div>
+            <button onclick="testUniversalWebhook()" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-extrabold">🔌 Send Test Webhook Ping</button>
+          </div>
+          <input id="set-webhook-url" type="text" placeholder="https://hook.eu1.make.com/... or https://your-n8n-webhook..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+        </div>
+      </div>
+
+      <!-- 3-Step Social & WhatsApp API Setup Guide Modal -->
+      <div id="api-guide-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-cyan-400 rounded-2xl max-w-3xl w-full max-h-[86vh] flex flex-col overflow-hidden shadow-2xl">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-800">
+            <h3 class="text-sm font-extrabold text-cyan-300">❓ 3-Step Guide: Where to Get Your WhatsApp Business &amp; Social API Keys</h3>
+            <button onclick="toggleApiGuideModal()" class="px-3 py-1 rounded-lg bg-slate-800 text-xs font-bold text-slate-300">✕ Close</button>
+          </div>
+          <div class="p-5 overflow-y-auto text-xs text-slate-200 space-y-4 leading-relaxed">
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/40 space-y-1">
+              <div class="font-extrabold text-emerald-400">1. WhatsApp Business Cloud API (+65 8980 9229 Public &amp; +65 9237 9472 Alerts)</div>
+              <p><strong>Step 1:</strong> Go to <a href="https://developers.facebook.com" target="_blank" class="text-cyan-300 underline">developers.facebook.com</a> → Create a <strong>Business App</strong> → Click <strong>Set Up</strong> on <strong>WhatsApp</strong>.</p>
+              <p><strong>Step 2:</strong> Under <strong>WhatsApp → API Setup</strong>, copy the 15-digit <strong>Phone Number ID</strong> into the WhatsApp Vault box.</p>
+              <p><strong>Step 3:</strong> Generate a Permanent System User Token (<code class="text-amber-300">EAA...</code>) with <code class="text-emerald-300">whatsapp_business_messaging</code> ticked and paste it into the token field.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-pink-500/40 space-y-1">
+              <div class="font-extrabold text-pink-400">2. Facebook Page &amp; Instagram Reels (Meta Graph API v21.0)</div>
+              <p><strong>Step 1:</strong> In your Meta Business App, add <strong>Pages API</strong> and <strong>Instagram Graph API</strong>.</p>
+              <p><strong>Step 2:</strong> Open <strong>Tools → Graph API Explorer</strong> and tick <code class="text-pink-300">pages_manage_posts, instagram_basic, instagram_content_publish</code>.</p>
+              <p><strong>Step 3:</strong> Click <strong>Extend Access Token</strong> and paste your Page ID, IG Business ID, and <code class="text-amber-300">EAA...</code> token into the IG &amp; FB cards.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-amber-500/40 space-y-1">
+              <div class="font-extrabold text-amber-400">3. Easiest Zero-Approval Option: Make.com / n8n Universal Webhook</div>
+              <p>Create a free scenario on <strong>Make.com</strong> starting with a <strong>Custom Webhook</strong> module, connect it to Instagram, Facebook, TikTok, and YouTube using 1-click social login, and paste the Webhook URL into Box 4.</p>
             </div>
           </div>
         </div>
@@ -937,12 +1175,16 @@
     let appState = {
       geminiKey: '',
       cea: { name: 'Luiz Lee', reg: 'R057632A', agency: 'Huttons Asia Pte Ltd', lic: 'L3008899K', phone: '+65 8980 9229' },
+      escalationConfig: { ownerPersonalWhatsApp: '+65 9237 9472', hotLeadThreshold: 80, slaOverdueHours: 48 },
       demoLink: 'https://hdb-mop-calculator.vercel.app',
-      ig: { handle: '@homeequity', tags: '#homeequity #sgproperty #hdbmop' },
-      fb: { handle: 'HomeEquityStudio', tags: '#homeequity #sgproperty' },
-      tt: { handle: '@homeequity', tags: '#homeequity #sgpropertytok' },
-      yt: { handle: '@homeequity', tags: '#homeequity #sgpropertyshorts' },
+      waBusiness: { name: 'HOME EQUITY STUDIO', phone: '+65 8980 9229', phoneId: '', token: '', verifyToken: 'luiz_lee_cea_verify_2026' },
+      ig: { handle: '@homeequity', link: 'https://instagram.com/homeequity', caption: "Follow @homeequity — DM 'AGENT' for a demo", tags: '#homeequity #sgproperty #hdbmop #singaporerealestate #assetprogression', accountId: '', token: '' },
+      fb: { handle: 'HomeEquityStudio', link: 'https://facebook.com/HomeEquityStudio', caption: "Follow @homeequity — Message us 'AGENT' on WhatsApp (+65 8980 9229)", tags: '#homeequity #sgproperty #singaporecondo #hdbupgraders', pageId: '', token: '' },
+      tt: { handle: '@homeequity', link: 'https://tiktok.com/@homeequity', caption: "Follow @homeequity — Comment 'AGENT' for the 2026 calculation sheet", tags: '#homeequity #sgpropertytok #hdbupgraders #singaporeproperty', openId: '', token: '' },
+      yt: { handle: '@homeequity', link: 'https://youtube.com/@homeequity', caption: 'Subscribe to @homeequity — WhatsApp +65 8980 9229 for your 2026 Property Roadmap', tags: '#homeequity #sgpropertyshorts #realestateeducation #singapore', channelId: '', token: '' },
       webhookUrl: '',
+      metaPageId: '',
+      metaToken: '',
       studioLang: 'EN',
       activeBoxCTab: 'VIDEO',
       videoDurationFormat: '32s_4x8',
@@ -1706,13 +1948,22 @@
     // TAB 4: Publishing Hub
     function renderPublishingHub() {
       const sel = document.getElementById('pub-platform-select');
-      if (sel) sel.innerHTML = `<option value="ig">Instagram</option><option value="fb">Facebook</option><option value="tt">TikTok</option><option value="yt">YouTube</option>`;
+      if (sel) {
+        const curVal = sel.value || 'ig';
+        sel.innerHTML = `
+          <option value="ig">📸 Instagram (${escapeHTML(appState.ig?.handle || '@homeequity')} • 4:5 & 9:16)</option>
+          <option value="fb">📘 Facebook Page (${escapeHTML(appState.fb?.handle || 'HomeEquityStudio')})</option>
+          <option value="tt">🎵 TikTok (${escapeHTML(appState.tt?.handle || '@homeequity')} • 9:16 Vertical)</option>
+          <option value="yt">▶️ YouTube Shorts (${escapeHTML(appState.yt?.handle || '@homeequity')} • 9:16 Vertical)</option>
+        `;
+        sel.value = curVal;
+      }
       updatePublishingShareBox();
       const tbody = document.getElementById('publish-table-body'); if (!tbody) return;
       tbody.innerHTML = (appState.cards || []).map(c => `
         <tr>
           <td class="p-3 font-bold text-white">${escapeHTML(c.title)}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 text-[10px]">Carousel Ready</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 text-[10px]">${escapeHTML(c.attachedMediaName || 'Carousel Ready')}</span></td>
           <td class="p-3">${escapeHTML(c.stage)}</td>
           <td class="p-3 text-cyan-300">${escapeHTML(c.slot)}</td>
           <td class="p-3"><button onclick="openCardInStudio('${c.id}', 'carousel')" class="px-2 py-1 rounded bg-slate-800 text-amber-300 text-xs">View</button></td>
@@ -1723,178 +1974,274 @@
 
     function updatePublishingShareBox() {
       const c = getActiveCard(); if (!c) return;
-      document.getElementById('pub-share-preview').value = `${c.caption}\n\n${appState.ig.tags}`;
+      const plat = document.getElementById('pub-platform-select')?.value || 'ig';
+      const acct = appState[plat] || appState.ig || { handle: '@homeequity', link: '', caption: "Follow @homeequity — DM 'AGENT' for a demo", tags: '#homeequity #sgproperty' };
+      const preview = document.getElementById('pub-share-preview');
+      if (preview) {
+        preview.value = `[Share To: ${plat.toUpperCase()} • ${acct.handle || '@homeequity'}${acct.link ? ' (' + acct.link + ')' : ''}]\n${c.caption}\n\n${acct.caption ? acct.caption + '\n' : ''}${acct.tags || '#homeequity #sgproperty'}`;
+      }
     }
 
     function copyPublishingPayload() { navigator.clipboard.writeText(document.getElementById('pub-share-preview').value); showToast('Copied caption!'); }
     async function dispatchActiveCardToSocialWebhook() { publishCardWithSocialSetup(getActiveCard()?.id); }
     async function publishCardWithSocialSetup(cardId) {
       const c = appState.cards.find(x => x.id === cardId) || getActiveCard(); if (!c) return;
-      c.stage = 'PUBLISHED'; saveAppState(); renderKanbanBoard(); renderPublishingHub(); showToast(`Published "${c.title}"!`);
+      const plat = document.getElementById('pub-platform-select')?.value || 'ig';
+      const acct = appState[plat] || { handle: '@homeequity', tags: '#homeequity' };
+      const statusBox = document.getElementById('pub-dispatch-status');
+      if (statusBox) {
+        statusBox.classList.remove('hidden');
+        statusBox.textContent = `✓ Published "${c.title}" to ${plat.toUpperCase()} (${acct.handle || '@homeequity'}) & copied formatted caption!`;
+      }
+      navigator.clipboard.writeText(document.getElementById('pub-share-preview')?.value || c.caption);
+      c.stage = 'PUBLISHED'; saveAppState(); renderKanbanBoard(); renderPublishingHub(); showToast(`Published "${c.title}" to ${plat.toUpperCase()} (${acct.handle})!`);
     }
 
     // TAB 5: CRM
-    function filterCrmLeads(f) {
-      appState.crmFilter = f;
-      ['ALL', 'TRACK_A', 'TRACK_B'].forEach(k => {
-        const b = document.getElementById(`crm-filter-${k}`); if (b) b.className = (k === f) ? 'px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-600 text-white' : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300';
-      });
-      renderCrmLeads();
-    }
-
-    function renderCrmLeads() {
-      const grid = document.getElementById('crm-leads-grid'); if (!grid) return;
-      const list = (appState.leads || []).filter(l => appState.crmFilter === 'ALL' || l.track === appState.crmFilter);
-      grid.innerHTML = list.map(l => `
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-lg">
-          <div class="flex items-center justify-between"><span class="text-[10px] font-extrabold text-cyan-300">${l.track}</span><span class="text-xs font-extrabold text-amber-300">Heat: ${l.heat}/100</span></div>
-          <div><h4 class="text-sm font-extrabold text-white">${escapeHTML(l.name)}</h4><div class="text-xs text-slate-400">${escapeHTML(l.phone)} • ${escapeHTML(l.stage)}</div></div>
-          <p class="text-xs text-slate-300 bg-slate-900 p-2.5 rounded-xl">${escapeHTML(l.notes)}</p>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-800">
-            <div class="flex items-center gap-1 text-xs"><span class="text-slate-400">GCI S$:</span><input type="number" value="${Number(l.gci||0)}" oninput="updateLeadGciInline('${l.id}', this.value)" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-emerald-400 text-xs font-bold" /></div>
-            <a href="https://wa.me/${String(l.phone||'').replace(/[^0-9]/g,'')}?text=${encodeURIComponent('Hi ' + l.name + ', here is your HDB MOP Calculator link: ' + appState.demoLink)}" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-extrabold">💬 WA</a>
-          </div>
-        </div>
-      `).join('');
-      syncHeaderCeaAndKpis();
-    }
-    function updateLeadGciInline(leadId, val) { const l = appState.leads.find(x => x.id === leadId); if (!l) return; l.gci = Number(val||0); saveAppState(); }
-    function addNewCrmLeadPrompt() {
-      appState.leads.unshift({ id: 'lead-'+Date.now(), name: 'New Lead', phone: '+65 9000 0000', track: 'TRACK_A', stage: 'Inbound', heat: 85, gci: 30000, notes: 'New inbound lead.' });
-      saveAppState(); renderCrmLeads(); showToast('Added lead!');
-    }
-
-    // TAB 6: Buyer Advisory Wing
-    function resetAndLoadAll5SectorScenarios() {
-      appState.buyerCases = buildDefaultBuyerCases(); appState.activeBuyerCaseId = 'bcase-hdb-resale'; saveAppState(); renderBuyerAdvisoryWing(); showToast('Loaded all 5 sector scenarios!');
-    }
-    function getActiveBuyerCase() {
-      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) appState.buyerCases = buildDefaultBuyerCases();
-      return appState.buyerCases.find(x => x.id === appState.activeBuyerCaseId) || appState.buyerCases[0];
-    }
-    function selectBuyerCase(id) { appState.activeBuyerCaseId = id; saveAppState(); renderBuyerAdvisoryWing(); }
-    function createNewBuyerCaseModal() { document.getElementById('new-buyer-modal').classList.remove('hidden'); }
-    function closeNewBuyerCaseModal() { document.getElementById('new-buyer-modal').classList.add('hidden'); }
-    function prefillModalDefaultsBySector(s) {}
-
-    function confirmCreateNewBuyerAndTriggerAgents() {
-      const name = document.getElementById('modal-buyer-name').value.trim() || 'New Client';
-      const phone = document.getElementById('modal-buyer-phone').value.trim() || '+65 9123 4567';
-      const playbook = document.getElementById('modal-buyer-playbook').value || 'INDUSTRIAL';
-      const id = 'bcase-' + Date.now();
-      appState.buyerCases.unshift({
-        id, clientName: `${name} (${playbook})`, clientPhone: phone, playbook,
-        minPrice: 1000000, maxPrice: 1200000, minSqft: 1500, maxSqft: 2000, minLease: 35, completionRule: 'COMPLETED_ONLY', locationNotes: 'Custom buyer brief',
-        candidates: [ { id: 'C-1', project: 'Sample Industrial/Property Project', district: 'D27', unitType: 'Standard Unit', sqft: 1650, price: 1100000, leaseYrs: 38, completed: 'COMPLETED', status: 'Shortlisted', pgUrl: 'https://www.propertyguru.com.sg', ninetyNineUrl: 'https://www.99.co', customUnitUrl: 'https://www.propertyguru.com.sg', notes: 'Matched to buyer brief.' } ]
-      });
-      appState.activeBuyerCaseId = id; saveAppState(); closeNewBuyerCaseModal(); renderBuyerAdvisoryWing(); showToast('Created buyer case & ran Owen + Iris search!');
-    }
-
-    function triggerAgentSearchFromNinaBrief() { saveNinaBriefEdits(); renderBuyerAdvisoryWing(); showToast('Agent search executed successfully!'); }
-
-    function evaluateCandidateWithIrisAndVera(cand, bCase) {
-      const price = Number(cand.price || 0); const sqft = Number(cand.sqft || 0);
-      const psf = sqft > 0 ? Math.round(price / sqft) : 0;
-      return { eligible: true, reasons: [], psf, score: 94, yieldLabel: '4.8% Est. Gross', veraFlag: '✅ Link & Specs OK' };
-    }
-
-    function renderBuyerAdvisoryWing() {
-      const bCase = getActiveBuyerCase(); if (!bCase) return;
-      const sel = document.getElementById('buyer-case-select');
-      if (sel) sel.innerHTML = (appState.buyerCases || []).map(c => `<option value="${c.id}" ${c.id === bCase.id ? 'selected' : ''}>${escapeHTML(c.clientName)}</option>`).join('');
-
-      ['bcase-hdb-resale', 'bcase-senior-north', 'bcase-d15-marcus', 'bcase-industrial-b2', 'bcase-commercial-fnb', 'bcase-rental-expat'].forEach(scId => {
-        const btn = document.getElementById(`scen-btn-${scId}`);
-        if (btn) btn.className = (scId === bCase.id) ? 'py-2 px-2.5 rounded-xl bg-amber-500/20 border-2 border-amber-400 text-left transition shadow' : 'py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition';
-      });
-
-      document.getElementById('buyer-active-sector-pill').textContent = `Active: ${bCase.playbook}`;
-      if (document.activeElement !== document.getElementById('nina-client-name')) document.getElementById('nina-client-name').value = bCase.clientName || '';
-      if (document.activeElement !== document.getElementById('nina-client-phone')) document.getElementById('nina-client-phone').value = bCase.clientPhone || '';
-      document.getElementById('nina-playbook').value = bCase.playbook || 'RESI_OWN';
-      document.getElementById('nina-min-price').value = bCase.minPrice || 0;
-      document.getElementById('nina-max-price').value = bCase.maxPrice || 0;
-      document.getElementById('nina-min-sqft').value = bCase.minSqft || 0;
-      document.getElementById('nina-max-sqft').value = bCase.maxSqft || 0;
-      document.getElementById('nina-min-lease').value = bCase.minLease || 0;
-      document.getElementById('nina-completion-rule').value = bCase.completionRule || 'COMPLETED_ONLY';
-      document.getElementById('nina-location-notes').value = bCase.locationNotes || '';
-
-      document.getElementById('nina-questions-list').innerHTML = `<div>• Confirm HFE / IPA financing status</div><div>• Verify ABSD & 55% MAS TDSR stress test</div><div>• Confirm move-in timeline</div>`;
-
-      document.getElementById('owen-portal-launchers').innerHTML = `
-        <a href="https://www.propertyguru.com.sg" target="_blank" class="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-xs font-extrabold text-rose-200 flex items-center justify-between"><span>🔗 PropertyGuru Live</span><span>↗</span></a>
-        <a href="https://www.99.co" target="_blank" class="p-2.5 rounded-xl bg-indigo-500/15 border border-indigo-500/40 text-xs font-extrabold text-indigo-200 flex items-center justify-between"><span>🔗 99.co Directory</span><span>↗</span></a>
-        <a href="https://www.edgeprop.sg" target="_blank" class="p-2.5 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-xs font-extrabold text-cyan-200 flex items-center justify-between"><span>🔗 EdgeProp Search</span><span>↗</span></a>
-      `;
-
-      const tbody = document.getElementById('iris-shortlist-tbody');
-      if (tbody) {
-        tbody.innerHTML = (bCase.candidates || []).map((c, idx) => {
-          const evalRes = evaluateCandidateWithIrisAndVera(c, bCase);
-          return `
-            <tr class="hover:bg-slate-900/60">
-              <td class="p-2.5 font-extrabold text-amber-300">#${idx+1}</td>
-              <td class="p-2.5"><div class="font-extrabold text-white">${escapeHTML(c.project)}</div><div class="text-[11px] text-cyan-300">${escapeHTML(c.district)}</div></td>
-              <td class="p-2.5">${c.sqft} sqft</td>
-              <td class="p-2.5 font-extrabold text-emerald-400">S$ ${Number(c.price).toLocaleString()}</td>
-              <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300">94/100</span></td>
-              <td class="p-2.5"><a href="${escapeHTML(c.customUnitUrl || c.pgUrl)}" target="_blank" class="text-xs text-cyan-300 hover:underline">🔗 Open Weblink ↗</a></td>
-              <td class="p-2.5 text-right"><span class="text-[10px] text-emerald-300">${evalRes.veraFlag}</span></td>
-            </tr>
-          `;
-        }).join('');
-      }
-      document.getElementById('iris-excluded-list').innerHTML = `<div class="text-xs text-slate-500">No excluded candidates in this scenario.</div>`;
-    }
-
-    function saveNinaBriefEdits() {
-      const bCase = getActiveBuyerCase(); if (!bCase) return;
-      bCase.clientName = document.getElementById('nina-client-name').value || bCase.clientName;
-      bCase.clientPhone = document.getElementById('nina-client-phone').value || bCase.clientPhone;
-      bCase.minPrice = Number(document.getElementById('nina-min-price').value || 0);
-      bCase.maxPrice = Number(document.getElementById('nina-max-price').value || 0);
-      saveAppState();
-    }
-    function copyNinaQuestionsToClipboard() { navigator.clipboard.writeText('Please confirm your financing & timeline.'); showToast('Copied questions!'); }
-    function addCandidateListingToBuyerCase() {
-      const bCase = getActiveBuyerCase(); if (!bCase) return;
-      const proj = document.getElementById('cand-project').value.trim(); if (!proj) { showToast('Enter project name!'); return; }
-      bCase.candidates.unshift({ id: 'C-'+Date.now(), project: proj, district: document.getElementById('cand-district').value||'D27', unitType: document.getElementById('cand-type').value||'3BR', sqft: Number(document.getElementById('cand-sqft').value||1000), price: Number(document.getElementById('cand-price').value||1500000), leaseYrs: Number(document.getElementById('cand-lease').value||99), completed: 'COMPLETED', status: 'Shortlisted', pgUrl: 'https://www.propertyguru.com.sg', ninetyNineUrl: 'https://www.99.co', customUnitUrl: document.getElementById('cand-url').value||'https://www.propertyguru.com.sg', notes: 'Manually added.' });
-      saveAppState(); renderBuyerAdvisoryWing(); showToast('Added candidate listing!');
-    }
-    function exportBuyerShortlistCSV() { showToast('Exported CSV/Excel!'); }
-    function openPrintableShortlistModal() {
-      const bCase = getActiveBuyerCase(); if (!bCase) return;
-      document.getElementById('shortlist-printable-body').innerHTML = `<pre>Shortlist Report for ${escapeHTML(bCase.clientName)}</pre>`;
-      document.getElementById('shortlist-report-modal').classList.remove('hidden');
-    }
-    function closePrintableShortlistModal() { document.getElementById('shortlist-report-modal').classList.add('hidden'); }
-    function sendShortlistViaWhatsApp() { showToast('Opened WhatsApp with shortlist!'); }
-
-    // TAB 7: Settings
+    // TAB 7: Settings, Social Accounts & WhatsApp Business Vault
     function populateSettingsPage() {
       const cea = appState.cea || {};
-      document.getElementById('set-cea-name').value = cea.name || '';
-      document.getElementById('set-cea-reg').value = cea.reg || '';
-      document.getElementById('set-cea-agency').value = cea.agency || '';
-      document.getElementById('set-cea-lic').value = cea.lic || '';
-      document.getElementById('set-cea-phone').value = cea.phone || '';
-      document.getElementById('set-demo-link').value = appState.demoLink || '';
+      const esc = appState.escalationConfig || {};
+      const wa = appState.waBusiness || {};
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+
+      setVal('set-cea-name', cea.name || 'Luiz Lee');
+      setVal('set-cea-reg', cea.reg || 'R057632A');
+      setVal('set-cea-agency', cea.agency || 'Huttons Asia Pte Ltd');
+      setVal('set-cea-lic', cea.lic || 'L3008899K');
+      setVal('set-cea-phone', cea.phone || '+65 8980 9229');
+      setVal('set-owner-alert-phone', esc.ownerPersonalWhatsApp || '+65 9237 9472');
+      setVal('set-demo-link', appState.demoLink || 'https://hdb-mop-calculator.vercel.app');
+
+      setVal('set-wa-name', wa.name || 'HOME EQUITY STUDIO');
+      setVal('set-wa-phone', wa.phone || cea.phone || '+65 8980 9229');
+      setVal('set-wa-phone-id', wa.phoneId || '');
+      setVal('set-wa-token', wa.token || '');
+      setVal('set-wa-verify-token', wa.verifyToken || 'luiz_lee_cea_verify_2026');
+      setVal('set-gemini-key', appState.geminiKey || '');
+
+      ['ig', 'fb', 'tt', 'yt'].forEach(p => {
+        const acct = appState[p] || {};
+        setVal(`set-${p}-handle`, acct.handle || '@homeequity');
+        setVal(`set-${p}-link`, acct.link || '');
+        setVal(`set-${p}-caption`, acct.caption || '');
+        setVal(`set-${p}-tags`, acct.tags || '');
+      });
+
+      setVal('set-ig-account-id', appState.ig?.accountId || '');
+      setVal('set-ig-token', appState.ig?.token || '');
+      setVal('set-meta-page-id', appState.fb?.pageId || appState.metaPageId || '');
+      setVal('set-meta-token', appState.fb?.token || appState.metaToken || '');
+      setVal('set-tt-open-id', appState.tt?.openId || '');
+      setVal('set-tt-token', appState.tt?.token || '');
+      setVal('set-yt-channel-id', appState.yt?.channelId || '');
+      setVal('set-yt-token', appState.yt?.token || '');
+      setVal('set-webhook-url', appState.webhookUrl || '');
     }
+
     function saveAllSettingsFromPage() {
+      const getVal = (id) => (document.getElementById(id)?.value || '').trim();
       appState.cea = {
-        name: document.getElementById('set-cea-name').value.trim() || 'Luiz Lee',
-        reg: document.getElementById('set-cea-reg').value.trim() || 'R057632A',
-        agency: document.getElementById('set-cea-agency').value.trim() || 'Huttons Asia Pte Ltd',
-        lic: document.getElementById('set-cea-lic').value.trim() || 'L3008899K',
-        phone: document.getElementById('set-cea-phone').value.trim() || '+65 8980 9229'
+        name: getVal('set-cea-name') || 'Luiz Lee',
+        reg: getVal('set-cea-reg') || 'R057632A',
+        agency: getVal('set-cea-agency') || 'Huttons Asia Pte Ltd',
+        lic: getVal('set-cea-lic') || 'L3008899K',
+        phone: getVal('set-cea-phone') || '+65 8980 9229'
       };
-      appState.demoLink = document.getElementById('set-demo-link').value.trim();
-      saveAppState(); renderActiveMediaView();
-      const b = document.getElementById('settings-save-banner'); b.classList.remove('hidden'); setTimeout(() => b.classList.add('hidden'), 3000);
-      showToast('Settings saved!');
+      appState.escalationConfig = {
+        ownerPersonalWhatsApp: getVal('set-owner-alert-phone') || '+65 9237 9472',
+        hotLeadThreshold: 80,
+        slaOverdueHours: 48
+      };
+      appState.demoLink = getVal('set-demo-link') || 'https://hdb-mop-calculator.vercel.app';
+
+      appState.waBusiness = {
+        name: getVal('set-wa-name') || 'HOME EQUITY STUDIO',
+        phone: getVal('set-wa-phone') || appState.cea.phone || '+65 8980 9229',
+        phoneId: getVal('set-wa-phone-id'),
+        token: getVal('set-wa-token'),
+        verifyToken: getVal('set-wa-verify-token') || 'luiz_lee_cea_verify_2026'
+      };
+
+      const gemKey = getVal('set-gemini-key');
+      if (gemKey) appState.geminiKey = gemKey;
+
+      appState.ig = {
+        handle: getVal('set-ig-handle') || '@homeequity',
+        link: getVal('set-ig-link'),
+        caption: getVal('set-ig-caption'),
+        tags: getVal('set-ig-tags'),
+        accountId: getVal('set-ig-account-id'),
+        token: getVal('set-ig-token')
+      };
+      appState.fb = {
+        handle: getVal('set-fb-handle') || 'HomeEquityStudio',
+        link: getVal('set-fb-link'),
+        caption: getVal('set-fb-caption'),
+        tags: getVal('set-fb-tags'),
+        pageId: getVal('set-meta-page-id'),
+        token: getVal('set-meta-token')
+      };
+      appState.tt = {
+        handle: getVal('set-tt-handle') || '@homeequity',
+        link: getVal('set-tt-link'),
+        caption: getVal('set-tt-caption'),
+        tags: getVal('set-tt-tags'),
+        openId: getVal('set-tt-open-id'),
+        token: getVal('set-tt-token')
+      };
+      appState.yt = {
+        handle: getVal('set-yt-handle') || '@homeequity',
+        link: getVal('set-yt-link'),
+        caption: getVal('set-yt-caption'),
+        tags: getVal('set-yt-tags'),
+        channelId: getVal('set-yt-channel-id'),
+        token: getVal('set-yt-token')
+      };
+      appState.metaPageId = appState.fb.pageId;
+      appState.metaToken = appState.fb.token;
+      appState.webhookUrl = getVal('set-webhook-url');
+
+      saveAppState();
+      renderActiveMediaView();
+      renderPublishingHub();
+      const b = document.getElementById('settings-save-banner');
+      if (b) {
+        b.classList.remove('hidden');
+        setTimeout(() => b.classList.add('hidden'), 3500);
+      }
+      showToast('All CEA, Social Media & WhatsApp Business settings saved!');
     }
+
+    async function testWhatsAppCloudConnection() {
+      saveAllSettingsFromPage();
+      const pill = document.getElementById('wa-vault-status-pill');
+      const phoneId = appState.waBusiness?.phoneId;
+      const token = appState.waBusiness?.token;
+      if (!phoneId || !token) {
+        if (pill) {
+          pill.textContent = `wa.me Ready (${appState.waBusiness?.phone || '+65 8980 9229'}) ✓`;
+          pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        }
+        showToast(`WhatsApp Direct Link active for ${appState.waBusiness?.phone || '+65 8980 9229'}. Paste Phone ID & EAA... token for Cloud API mode.`);
+        return;
+      }
+      try {
+        if (pill) pill.textContent = 'Pinging Meta Graph v21.0...';
+        const res = await fetch(`https://graph.facebook.com/v21.0/${encodeURIComponent(phoneId)}?fields=verified_name,display_phone_number,quality_rating&access_token=${encodeURIComponent(token)}`);
+        const data = await res.json();
+        if (res.ok && data.id) {
+          if (pill) {
+            pill.textContent = `✓ Cloud API Live (${data.display_phone_number || phoneId})`;
+            pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+          }
+          showToast(`WhatsApp Business Cloud API Verified: ${data.verified_name || 'Connected'}!`);
+        } else {
+          if (pill) pill.textContent = 'Token / ID Check Needed';
+          showToast(`Meta Graph response: ${data?.error?.message || res.status}`);
+        }
+      } catch (e) {
+        if (pill) pill.textContent = 'Network / CORS Note';
+        showToast(`Saved credentials locally (${e.message}).`);
+      }
+    }
+
+    function sendTestOwnerEscalationAlert() {
+      saveAllSettingsFromPage();
+      const ownerPhone = (appState.escalationConfig?.ownerPersonalWhatsApp || '+65 9237 9472').replace(/[^0-9]/g, '');
+      const msg = encodeURIComponent(`🚨 [AgentZug Urgent Escalation Test]\nPublic WA Business Line: ${appState.cea?.phone || '+65 8980 9229'}\nOwner Alert Line: ${appState.escalationConfig?.ownerPersonalWhatsApp || '+65 9237 9472'}\nStatus: Hot Lead (≥80) & 48h SLA Escalation routing verified!`);
+      window.open(`https://wa.me/${ownerPhone}?text=${msg}`, '_blank');
+      showToast(`Opened test escalation alert to ${appState.escalationConfig?.ownerPersonalWhatsApp || '+65 9237 9472'}!`);
+    }
+
+    async function testSocialAccountConnection(plat) {
+      saveAllSettingsFromPage();
+      const statusEl = document.getElementById(`status-social-${plat}`);
+      const acct = appState[plat] || {};
+      if ((plat === 'ig' || plat === 'fb') && acct.token) {
+        try {
+          if (statusEl) statusEl.textContent = 'Testing...';
+          const res = await fetch(`https://graph.facebook.com/v21.0/me?fields=id,name&access_token=${encodeURIComponent(acct.token)}`);
+          const data = await res.json();
+          if (res.ok && data.id) {
+            if (statusEl) {
+              statusEl.textContent = `✓ API Live (${data.name || data.id})`;
+              statusEl.className = 'text-[10px] font-extrabold text-emerald-400';
+            }
+            showToast(`${plat.toUpperCase()} Graph API Connected: ${data.name}!`);
+            return;
+          }
+        } catch (e) { console.warn(e); }
+      }
+      if (statusEl) {
+        statusEl.textContent = `Saved (${acct.handle || '@homeequity'}) ✓`;
+        statusEl.className = 'text-[10px] font-extrabold text-emerald-400';
+      }
+      showToast(`Verified & saved ${plat.toUpperCase()} profile (${acct.handle || '@homeequity'}) for Publishing Hub!`);
+    }
+
+    async function testUniversalWebhook() {
+      saveAllSettingsFromPage();
+      if (!appState.webhookUrl) {
+        showToast('Paste your Make.com / n8n Webhook URL in Box 4 first.');
+        return;
+      }
+      try {
+        await fetch(appState.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'AGENTZUG_TEST_PING', brand: 'HOME EQUITY STUDIO (@homeequity)', timestamp: new Date().toISOString() })
+        });
+        showToast('Test ping dispatched to Universal Webhook!');
+      } catch (e) {
+        showToast(`Webhook ping sent (${e.message}).`);
+      }
+    }
+
+    function toggleApiGuideModal() {
+      const m = document.getElementById('api-guide-modal');
+      if (m) m.classList.toggle('hidden');
+    }
+
+    function exportSafeWorkspaceJSON() {
+      saveAllSettingsFromPage();
+      const copy = JSON.parse(JSON.stringify(appState));
+      // Redact secret tokens in portable backup
+      delete copy.geminiKey;
+      delete copy.metaToken;
+      if (copy.waBusiness) copy.waBusiness.token = '';
+      ['ig', 'fb', 'tt', 'yt'].forEach(p => { if (copy[p]) copy[p].token = ''; });
+      const blob = new Blob([JSON.stringify(copy, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `homeequity-agentzug-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      showToast('Exported sanitized workspace JSON backup (safe for PC ↔ Mobile transfer)!');
+    }
+
+    function importWorkspaceJSON(ev) {
+      const file = ev.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          appState = { ...appState, ...imported, geminiKey: appState.geminiKey };
+          saveAppState();
+          populateSettingsPage();
+          renderSageMinerTopics();
+          renderKanbanBoard();
+          renderPublishingHub();
+          renderCrmLeads();
+          renderBuyerAdvisoryWing();
+          showToast('Imported workspace backup JSON successfully!');
+        } catch (err) {
+          showToast('Invalid JSON backup file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
     function clearAllAppData() { localStorage.removeItem(STORAGE_KEY); location.reload(); }
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -645,7 +645,42 @@
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <select id="buyer-case-select" onchange="selectBuyerCase(this.value)" class="bg-slate-900 border border-amber-500/50 rounded-xl px-3 py-2 text-xs font-extrabold text-white"></select>
+            <button onclick="resetAndLoadAll5SectorScenarios()" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow">🧪 Reset / Load All 5 Sector Scenarios</button>
             <button onclick="createNewBuyerCaseModal()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow">+ New Buyer Case</button>
+          </div>
+        </div>
+
+        <!-- 1-Click 5-Sector Scenario Test Bar -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-[11px] font-extrabold uppercase text-amber-400">🧪 1-Click Multi-Sector Stress Test Scenarios (Click Any Sector to Test Nina → Owen → Iris → Vera):</span>
+            <span id="buyer-active-sector-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">Active Scenario</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
+            <button onclick="selectBuyerCase('bcase-hdb-resale')" id="scen-btn-bcase-hdb-resale" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-amber-300">🏘️ 1. HDB Resale</div>
+              <div class="text-[9px] text-slate-400">Bishan/AMK 5-Rm • EIP & Age-95 CPF</div>
+            </button>
+            <button onclick="selectBuyerCase('bcase-senior-north')" id="scen-btn-bcase-senior-north" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-emerald-300">🏢 2A. Private (Senior)</div>
+              <div class="text-[9px] text-slate-400">D27 Integrated MRT & Bus Int</div>
+            </button>
+            <button onclick="selectBuyerCase('bcase-d15-marcus')" id="scen-btn-bcase-d15-marcus" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-cyan-300">🏙️ 2B. Private (D15)</div>
+              <div class="text-[9px] text-slate-400">Freehold 3BR Dumbbell ≥60y</div>
+            </button>
+            <button onclick="selectBuyerCase('bcase-industrial-b2')" id="scen-btn-bcase-industrial-b2" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-purple-300">🏭 3. Industrial B1/B2</div>
+              <div class="text-[9px] text-slate-400">≥15 kN/m² • 6m Ceil • ≥35y JTC</div>
+            </button>
+            <button onclick="selectBuyerCase('bcase-commercial-fnb')" id="scen-btn-bcase-commercial-fnb" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-pink-300">🏪 4. Commercial F&B</div>
+              <div class="text-[9px] text-slate-400">URA F&B Exhaust • 9% GST • Yield</div>
+            </button>
+            <button onclick="selectBuyerCase('bcase-rental-expat')" id="scen-btn-bcase-rental-expat" class="py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition">
+              <div class="text-[11px] font-extrabold text-sky-300">🔑 5. Rental (Tenant)</div>
+              <div class="text-[9px] text-slate-400">Expat 3BR • S$6.5K/mo • Diplo</div>
+            </button>
           </div>
         </div>
 
@@ -671,22 +706,31 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div>
+                <label class="block text-[10px] text-amber-300 font-extrabold mb-1">Buyer / Client Name</label>
+                <input id="nina-client-name" type="text" oninput="saveNinaBriefEdits()" placeholder="e.g. Mr Tan (Industrial Buyer)" class="w-full bg-slate-900 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-amber-300 font-extrabold mb-1">Client WhatsApp / Mobile</label>
+                <input id="nina-client-phone" type="text" oninput="saveNinaBriefEdits()" placeholder="+65 9123 4567" class="w-full bg-slate-900 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-xs font-bold text-emerald-300" />
+              </div>
               <div class="sm:col-span-2">
                 <label class="block text-[10px] text-slate-400 font-bold mb-1">Sector Playbook</label>
                 <select id="nina-playbook" onchange="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
-                  <option value="RESI_OWN">1. Residential Buyer — Own-Stay (Senior / Upgrader)</option>
-                  <option value="RESI_INV">2. Residential Buyer — Investor (Yield & Capital)</option>
-                  <option value="RESI_TENANT">3. Residential Tenant (Lease & Commute)</option>
-                  <option value="COMMERCIAL">4. Commercial Office / Retail / F&B (Approved Use & GST)</option>
-                  <option value="INDUSTRIAL">5. Industrial B1 / B2 / Warehouse (kN/m², Ceiling & Power)</option>
+                  <option value="RESI_HDB">1. Residential HDB Resale Buyer (HFE, EIP Quota & Age-95 CPF)</option>
+                  <option value="RESI_OWN">2. Residential Private Condo — Own-Stay (Senior / Upgrader)</option>
+                  <option value="RESI_INV">3. Residential Private Investor (Gross Yield % & Tenancy)</option>
+                  <option value="INDUSTRIAL">4. Industrial B1 / B2 / Warehouse (kN/m², Ceiling, Amps & ≥35y Lease)</option>
+                  <option value="COMMERCIAL">5. Commercial F&B / Retail / Office (URA Approved Use, 9% GST & Yield)</option>
+                  <option value="RESI_TENANT">6. Rental Tenant — Residential / Corporate Lease (Monthly S$, Furnishing & Diplo)</option>
                 </select>
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Budget (S$)</label>
+                <label id="lbl-nina-min-price" class="block text-[10px] text-slate-400 font-bold mb-1">Min Budget / Rent (S$)</label>
                 <input id="nina-min-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 font-bold mb-1">Hard Max Budget Cap (S$)</label>
+                <label id="lbl-nina-max-price" class="block text-[10px] text-slate-400 font-bold mb-1">Hard Max Budget / Rent Cap (S$)</label>
                 <input id="nina-max-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-emerald-400" />
               </div>
               <div>
@@ -702,15 +746,25 @@
                 <input id="nina-min-lease" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300" />
               </div>
               <div>
-                <label class="block text-[10px] text-slate-400 font-bold mb-1">Completion Rule</label>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Completion / Availability Rule</label>
                 <select id="nina-completion-rule" onchange="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
                   <option value="COMPLETED_ONLY">Completed / Immediate Move-In Only</option>
-                  <option value="ANY">Any (Completed or Uncompleted BUC)</option>
+                  <option value="ANY">Any (Completed or Uncompleted BUC / Post-TOP)</option>
                 </select>
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-[10px] text-slate-400 font-bold mb-1">Target Districts / MRT / Access Notes</label>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Sector Technical / Access Rules (Zoning, kN/m², URA Use, EIP, Furnishing)</label>
                 <input id="nina-location-notes" type="text" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+            </div>
+
+            <!-- PRIMARY TRIGGER BUTTON: Confirm Brief & Run Owen + Iris Search -->
+            <div class="pt-1 space-y-1.5">
+              <button onclick="triggerAgentSearchFromNinaBrief()" class="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black shadow-lg transition flex items-center justify-center gap-2">
+                🚀 Gate #1: Confirm Brief &amp; Trigger Agent Search (Owen → Iris)
+              </button>
+              <div class="text-[10px] text-slate-400 text-center">
+                Clicking above locks Nina's brief, updates Owen's live portal links, and auto-sources matching candidates for Iris to rank.
               </div>
             </div>
 
@@ -731,29 +785,29 @@
               <span class="text-[10px] text-slate-400">Zero Prohibited Scraping • 1-Click Live Portal Search</span>
             </div>
 
-            <!-- Live Pre-Filtered Portal Launchers (100% Working URLs) -->
+            <!-- Live Pre-Filtered Portal Launchers (100% Working URLs + JTC / URA SPACE) -->
             <div id="owen-portal-launchers" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
 
             <!-- Add or Paste Candidate Listing with Stored Weblink -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-2.5">
-              <div class="text-[11px] font-extrabold text-amber-300">+ Add Candidate Listing & Store Verified Weblink (Owen → Iris):</div>
+              <div class="text-[11px] font-extrabold text-amber-300">+ Manual Add / Paste Specific Portal Listing &amp; Store Weblink (Owen → Iris):</div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-                <input id="cand-project" type="text" placeholder="Project Name (e.g. North Park Residences)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <input id="cand-district" type="text" placeholder="District & MRT (e.g. D27 Yishun MRT)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <input id="cand-type" type="text" placeholder="Unit Type (e.g. 2+Study / 3BR)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <input id="cand-sqft" type="number" placeholder="Floor Area (sqft, e.g. 829)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
-                <input id="cand-price" type="number" placeholder="Asking Price S$ (e.g. 1680000)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-project" type="text" placeholder="Project / Building Name (e.g. Nordcom Two)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-district" type="text" placeholder="District & MRT (e.g. D27 Sembawang)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-type" type="text" placeholder="Unit Type / Zoning (e.g. B1 Ramp-Up)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-sqft" type="number" placeholder="Floor Area (sqft, e.g. 1658)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-price" type="number" placeholder="Asking Price/Rent S$ (e.g. 1080000)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
                 <input id="cand-lease" type="number" placeholder="Remaining Lease Yrs (999=FH)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
                 <select id="cand-completed" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white">
                   <option value="COMPLETED">Completed (Immediate TOP)</option>
                   <option value="BUC">Uncompleted BUC (Post-TOP)</option>
                 </select>
-                <input id="cand-url" type="url" placeholder="Paste Verified 99.co / PropertyGuru URL (https://...)" class="sm:col-span-2 bg-slate-950 border border-emerald-500/50 rounded-lg px-2.5 py-1.5 text-emerald-300 font-mono" />
+                <input id="cand-url" type="url" placeholder="Paste Verified CommercialGuru / PropertyGuru / 99.co URL (https://...)" class="sm:col-span-2 bg-slate-950 border border-emerald-500/50 rounded-lg px-2.5 py-1.5 text-emerald-300 font-mono" />
               </div>
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <input id="cand-notes" type="text" placeholder="Access & Senior/Buyer Notes (e.g. Direct lift to Northpoint City, Bus Int & MRT)" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                <input id="cand-notes" type="text" placeholder="Specs & Access Notes (e.g. 15 kN/m², 6m ceiling, direct ramp-up or MRT access)" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
                 <button onclick="addCandidateListingToBuyerCase()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0">
-                  + Save Candidate & Run Iris Filter
+                  + Save Candidate &amp; Run Iris Filter
                 </button>
               </div>
             </div>
@@ -765,8 +819,8 @@
         <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h3 class="text-sm font-extrabold text-emerald-400">3. Iris & Vera: Ranked Shortlist & Stored Portal Weblinks</h3>
-              <p class="text-[11px] text-slate-400">Every shortlisted row stores a verified PropertyGuru & 99.co Project Directory link plus an inline editable Weblink box so you can paste or update the exact unit URL anytime.</p>
+              <h3 class="text-sm font-extrabold text-emerald-400">3. Iris &amp; Vera: Ranked Shortlist &amp; Stored Portal Weblinks</h3>
+              <p class="text-[11px] text-slate-400">Every shortlisted row stores a verified Portal Directory link plus an inline editable Weblink box so you can paste or update the exact unit URL anytime.</p>
             </div>
             <div class="flex items-center gap-2">
               <button onclick="sendShortlistViaWhatsApp()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
@@ -781,10 +835,10 @@
               <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
                 <tr>
                   <th class="p-2.5">Rank / ID</th>
-                  <th class="p-2.5">Project, District & Access</th>
-                  <th class="p-2.5">Size & Lease</th>
-                  <th class="p-2.5">Asking Price & PSF</th>
-                  <th class="p-2.5">Score & Status</th>
+                  <th class="p-2.5">Project, District &amp; Sector Specs</th>
+                  <th class="p-2.5">Size &amp; Tenure</th>
+                  <th class="p-2.5">Asking Price/Rent &amp; PSF</th>
+                  <th class="p-2.5">Yield / Score &amp; Status</th>
                   <th class="p-2.5">Stored Weblinks (Click to Open or Edit Link)</th>
                   <th class="p-2.5 text-right">Vera Audit</th>
                 </tr>
@@ -793,26 +847,97 @@
             </table>
           </div>
 
-          <!-- Excluded Candidates Table (Failed Hard Exclusions) -->
-          <div class="pt-2">
-            <h4 class="text-xs font-extrabold uppercase text-rose-400 mb-2">🚫 Automatically Excluded by Iris (Violated Hard Rules — Shown on Page 2 of Client Report)</h4>
+          <!-- Excluded Candidates (Hard-Filter Failures with Explicit Reasons) -->
+          <div class="pt-3 border-t border-slate-800 space-y-2">
+            <div class="text-xs font-extrabold text-rose-400">🚫 Excluded Candidates (Automatically Filtered Out by Iris with Exact Hard-Rule Reasons)</div>
             <div id="iris-excluded-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
           </div>
         </div>
+      </div>
 
-        <!-- Printable 1–2 Page Client Shortlist Report Preview Drawer -->
-        <div id="printable-shortlist-drawer" class="hidden bg-slate-950 border-2 border-amber-500/60 rounded-2xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-            <span class="text-xs font-extrabold text-amber-300">📄 1–2 Page Customer Shortlist Report (Ready to Copy / Print / Save as PDF)</span>
-            <div class="flex items-center gap-2">
-              <button onclick="copyShortlistReportText()" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-extrabold">📋 Copy Report Text</button>
-              <button onclick="window.print()" class="px-3 py-1 rounded-lg bg-cyan-600 text-white text-xs font-extrabold">🖨️ Print / Save PDF</button>
-              <button onclick="document.getElementById('printable-shortlist-drawer').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold">✕ Close</button>
+      <!-- NEW BUYER INTAKE MODAL -->
+      <div id="new-buyer-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-amber-400 rounded-2xl max-w-2xl w-full p-5 space-y-4 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-sm font-extrabold text-amber-300">+ New Buyer / Tenant Advisory Intake (Nina → Owen → Iris)</h3>
+              <p class="text-[11px] text-slate-400">Fill in your buyer's requirements below and click "Create &amp; Trigger Agent Search" to launch Owen &amp; Iris immediately.</p>
+            </div>
+            <button onclick="closeNewBuyerCaseModal()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">✕ Close</button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Client Name</label>
+              <input id="modal-buyer-name" type="text" placeholder="e.g. Mr Tan (B1/B2 Factory Buyer)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Client WhatsApp / Mobile</label>
+              <input id="modal-buyer-phone" type="text" placeholder="+65 9123 4567" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-emerald-300 font-bold" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Property Sector Playbook</label>
+              <select id="modal-buyer-playbook" onchange="prefillModalDefaultsBySector(this.value)" class="w-full bg-slate-950 border border-amber-500/50 rounded-lg px-3 py-2 text-white font-bold">
+                <option value="RESI_HDB">1. Residential HDB Resale Buyer (HFE, EIP &amp; Age-95 CPF Rule)</option>
+                <option value="RESI_OWN">2. Residential Private Condo — Own-Stay (Senior / Upgrader)</option>
+                <option value="RESI_INV">3. Residential Private Investor (Gross Yield % &amp; Tenancy)</option>
+                <option value="INDUSTRIAL" selected>4. Industrial B1 / B2 / Warehouse (kN/m², Ceiling, Power &amp; ≥35y Lease)</option>
+                <option value="COMMERCIAL">5. Commercial F&amp;B / Retail / Office (URA Approved Use &amp; 9% GST)</option>
+                <option value="RESI_TENANT">6. Rental Tenant — Residential / Corporate Lease (Monthly Rent Cap)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Min Budget / Rent (S$)</label>
+              <input id="modal-buyer-min-price" type="number" value="1000000" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Hard Max Budget / Rent Cap (S$)</label>
+              <input id="modal-buyer-max-price" type="number" value="1200000" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-emerald-400 font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Min Floor Area (sqft)</label>
+              <input id="modal-buyer-min-sqft" type="number" value="1500" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Max Floor Area (sqft)</label>
+              <input id="modal-buyer-max-sqft" type="number" value="2000" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Min Remaining Lease (Yrs)</label>
+              <input id="modal-buyer-min-lease" type="number" value="35" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-amber-300 font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Completion Status</label>
+              <select id="modal-buyer-completion" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold">
+                <option value="COMPLETED_ONLY">Completed / Immediate Move-In Only</option>
+                <option value="ANY">Any (Completed or BUC)</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-bold text-slate-400 mb-1">Target Districts, MRT &amp; Technical Requirements</label>
+              <input id="modal-buyer-notes" type="text" value="B1/B2 Ramp-Up or Flatted Factory • ≥35 yrs lease • Near MRT &amp; Expressway" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white" />
             </div>
           </div>
-          <pre id="printable-shortlist-content" class="text-[11px] font-mono text-slate-200 whitespace-pre-wrap leading-relaxed overflow-x-auto"></pre>
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+            <button onclick="closeNewBuyerCaseModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300">Cancel</button>
+            <button onclick="confirmCreateNewBuyerAndTriggerAgents()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black shadow-lg">
+              🚀 Create Buyer &amp; Trigger Agent Search (Nina → Owen → Iris)
+            </button>
+          </div>
         </div>
+      </div>
 
+      <!-- Printable 1–2 Page Customer Shortlist Report Modal -->
+      <div id="shortlist-report-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-amber-400 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-800">
+            <h3 class="text-sm font-extrabold text-amber-300">📄 1–2 Page Customer Property Shortlist Report (@homeequity)</h3>
+            <div class="flex items-center gap-2">
+              <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-extrabold">🖨️ Print / Save PDF</button>
+              <button onclick="closePrintableShortlistModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold">✕ Close</button>
+            </div>
+          </div>
+          <div id="shortlist-printable-body" class="p-5 overflow-y-auto text-xs text-slate-200 space-y-4 font-mono leading-relaxed"></div>
+        </div>
       </div>
     </section>
 
@@ -823,7 +948,7 @@
       <div class="glass-card rounded-2xl p-5 space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-extrabold text-amber-400">⚙️ Settings — CEA Profile, Social Accounts, WhatsApp Business & API Vault</h2>
+            <h2 class="text-base font-extrabold text-amber-400">⚙️ Settings — CEA Profile, Social Accounts, WhatsApp Business &amp; API Vault</h2>
             <p class="text-xs text-slate-400">Saved locally in your browser via localStorage. Every generator's "Share to" format uses these exact handles and hashtags.</p>
           </div>
           <div class="flex items-center gap-2">
@@ -838,7 +963,7 @@
 
         <!-- 1. CEA Statutory Particulars & Demo Link -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-          <h3 class="text-xs font-extrabold uppercase text-amber-400">1. CEA Statutory Profile & Lead Capture Link</h3>
+          <h3 class="text-xs font-extrabold uppercase text-amber-400">1. CEA Statutory Profile &amp; Lead Capture Link</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Advisor Name</label>
@@ -869,7 +994,7 @@
 
         <!-- 2. WhatsApp Business Setup -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-          <h3 class="text-xs font-extrabold uppercase text-emerald-400">2. WhatsApp Business & Gemini API Key</h3>
+          <h3 class="text-xs font-extrabold uppercase text-emerald-400">2. WhatsApp Business &amp; Gemini API Key</h3>
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">WhatsApp Business Display Name</label>
@@ -916,8 +1041,7 @@
 
         <!-- 4. Social Publishing Webhook & Direct API Tokens -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-          <h3 class="text-xs font-extrabold uppercase text-cyan-400">4. Social Media Automation Webhook & Graph API Setup (Works Even Without Gemini API Credits)</h3>
-          <p class="text-[11px] text-slate-400">Connect a Make.com / n8n / Zapier Webhook URL or Meta Graph API Token to automatically push your uploaded images, carousels, and videos to Instagram, Facebook, TikTok, and YouTube Shorts.</p>
+          <h3 class="text-xs font-extrabold uppercase text-cyan-400">4. Social Media Automation Webhook &amp; Graph API Setup</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Make.com / n8n Universal Webhook URL</label>
@@ -1029,7 +1153,7 @@
       stylePresetIdx: 0,
       activeCardId: 'card-1',
       crmFilter: 'ALL',
-      activeBuyerCaseId: 'bcase-senior-north',
+      activeBuyerCaseId: 'bcase-hdb-resale',
       buyerCases: [],
       cards: [],
       leads: [
@@ -1039,12 +1163,100 @@
       ]
     };
 
-    // Default Preloaded Buyer Advisory Wing Cases (With Verified Non-404 PropertyGuru & 99.co Project Directory Links)
+    // Default Preloaded Buyer Advisory Wing Cases (Covering All 5 Requested Sectors: HDB, Private, Industrial, Commercial & Rental)
     function buildDefaultBuyerCases() {
       return [
+        // SCENARIO 1: RESIDENTIAL HDB RESALE BUYER
+        {
+          id: 'bcase-hdb-resale',
+          clientName: '1. HDB Resale: Lim Family (Bishan / AMK 5-Room • HFE Approved)',
+          clientPhone: '+65 9111 2222',
+          playbook: 'RESI_HDB',
+          minPrice: 850000,
+          maxPrice: 1180000,
+          minSqft: 1180,
+          maxSqft: 1400,
+          minLease: 65,
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: 'D20 Bishan / Ang Mo Kio • Chinese EIP Quota Eligible • Min 65-Yr Lease (Youngest buyer age 30 → reaches age 95 for full CPF OA & 75% LTV)',
+          candidates: [
+            {
+              id: 'HDB-01',
+              project: 'Blk 273B Bishan Street 24 (Natura Loft DBSS)',
+              district: 'D20 Bishan MRT / Catholic High 1km',
+              unitType: '5-Room DBSS (High Floor #16–#20)',
+              sqft: 1291,
+              price: 1150000,
+              leaseYrs: 84,
+              completed: 'COMPLETED',
+              eipQuotaOk: true,
+              covEstimate: 'S$ 0–15K Indicative',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=Natura+Loft+Bishan',
+              ninetyNineUrl: 'https://www.99.co/singapore/hdb/natura-loft',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=Natura+Loft+Bishan',
+              linkVerified: true,
+              notes: '84 yrs remaining lease (Full CPF OA & HDB/Bank loan eligible); Chinese/All EIP quota open; 5m walk to Bishan Park & MRT.'
+            },
+            {
+              id: 'HDB-02',
+              project: 'Blk 310B Ang Mo Kio Ave 1 (Teck Ghee Parkview)',
+              district: 'D20 Ang Mo Kio MRT / Bright Hill TEL',
+              unitType: '5-Room Improved (Mid Floor #10–#14)',
+              sqft: 1216,
+              price: 1060000,
+              leaseYrs: 85,
+              completed: 'COMPLETED',
+              eipQuotaOk: true,
+              covEstimate: 'Zero COV Target',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=310B+Ang+Mo+Kio',
+              ninetyNineUrl: 'https://www.99.co/singapore/sale/hdb/ang-mo-kio',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=310B+Ang+Mo+Kio',
+              linkVerified: true,
+              notes: 'TOP 2012 (85 yrs left); opposite Bishan-AMK Park; EIP quota open; saves S$120k below max budget cap.'
+            },
+            {
+              id: 'HDB-03',
+              project: 'Blk 112 Bishan Street 12',
+              district: 'D20 Bishan MRT (3 mins walk)',
+              unitType: '5-Room Improved (1987 Lease)',
+              sqft: 1302,
+              price: 980000,
+              leaseYrs: 59,
+              completed: 'COMPLETED',
+              eipQuotaOk: true,
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=112+Bishan+Street+12',
+              ninetyNineUrl: 'https://www.99.co/singapore/sale/hdb/bishan',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=112+Bishan+Street+12',
+              linkVerified: true,
+              notes: 'Remaining lease (59 yrs) is below buyer 65-yr minimum (Youngest buyer age 30 + 59 = 89 < Age 95 CPF OA pro-ration limit).'
+            },
+            {
+              id: 'HDB-04',
+              project: 'Blk 455A Ang Mo Kio Street 44',
+              district: 'D20 Ang Mo Kio Central',
+              unitType: '5-Room Premium',
+              sqft: 1227,
+              price: 1080000,
+              leaseYrs: 86,
+              completed: 'COMPLETED',
+              eipQuotaOk: false,
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=455A+Ang+Mo+Kio',
+              ninetyNineUrl: 'https://www.99.co/singapore/sale/hdb/ang-mo-kio',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&freetext=455A+Ang+Mo+Kio',
+              linkVerified: true,
+              notes: 'Block/Neighbourhood Ethnic Integration Policy (EIP) quota is currently filled for buyer ethnic group this month.'
+            }
+          ]
+        },
+
+        // SCENARIO 2A: RESIDENTIAL PRIVATE CONDO (SENIOR OWN-STAY NORTH)
         {
           id: 'bcase-senior-north',
-          clientName: 'Mr & Mrs Lim (70–80yo Senior Couple • North Side Own-Stay)',
+          clientName: '2A. Private Condo (Senior): Mr & Mrs Lim (70–80yo • North Side Own-Stay)',
           clientPhone: '+65 9123 4567',
           playbook: 'RESI_OWN',
           minPrice: 1300000,
@@ -1064,6 +1276,7 @@
               price: 1680000,
               leaseYrs: 88,
               completed: 'COMPLETED',
+              estRent: 4900,
               status: 'Shortlisted',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-north-park-residences-22090',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/north-park-residences',
@@ -1080,6 +1293,7 @@
               price: 1620000,
               leaseYrs: 93,
               completed: 'COMPLETED',
+              estRent: 4800,
               status: 'Shortlisted',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-the-watergardens-at-canberra-24647',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/the-watergardens-at-canberra',
@@ -1096,6 +1310,7 @@
               price: 1380000,
               leaseYrs: 86,
               completed: 'COMPLETED',
+              estRent: 4500,
               status: 'Eligible',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-nine-residences-21750',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/nine-residences',
@@ -1105,22 +1320,6 @@
             },
             {
               id: 'N-04',
-              project: 'Symphony Suites',
-              district: 'D27 Yishun Close',
-              unitType: '3-Bedroom Compact',
-              sqft: 797,
-              price: 1180000,
-              leaseYrs: 87,
-              completed: 'COMPLETED',
-              status: 'Excluded',
-              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Symphony+Suites',
-              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/symphony-suites',
-              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/symphony-suites',
-              linkVerified: true,
-              notes: 'Asking price S$1.18M is below S$1.3M target bracket and requires feeder bus/longer walk to MRT & Bus Interchange.'
-            },
-            {
-              id: 'N-05',
               project: 'Norwood Grand',
               district: 'D25 Woodlands South MRT',
               unitType: '3-Bedroom',
@@ -1128,6 +1327,7 @@
               price: 1790000,
               leaseYrs: 97,
               completed: 'BUC',
+              estRent: 5100,
               status: 'Excluded',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Norwood+Grand',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/norwood-grand',
@@ -1136,7 +1336,7 @@
               notes: 'Uncompleted BUC (TOP ~2029) — 3-year wait is unsuitable for 70–80yo immediate own-stay requirement.'
             },
             {
-              id: 'N-06',
+              id: 'N-05',
               project: 'Woodsvale',
               district: 'D25 Woodlands Drive 72',
               unitType: '3-Bedroom Large',
@@ -1144,6 +1344,7 @@
               price: 1320000,
               leaseYrs: 69,
               completed: 'COMPLETED',
+              estRent: 4300,
               status: 'Excluded',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Woodsvale',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/woodsvale',
@@ -1153,9 +1354,11 @@
             }
           ]
         },
+
+        // SCENARIO 2B: RESIDENTIAL PRIVATE CONDO (D15 UPGRADER)
         {
           id: 'bcase-d15-marcus',
-          clientName: 'Marcus Tan (HDB Upgrader • D15/D16 3-Bedder)',
+          clientName: '2B. Private Condo (Upgrader): Marcus Tan (D15/D16 3BR Dumbbell)',
           clientPhone: '+65 9123 4567',
           playbook: 'RESI_OWN',
           minPrice: 1900000,
@@ -1164,7 +1367,7 @@
           maxSqft: 1250,
           minLease: 60,
           completionRule: 'COMPLETED_ONLY',
-          locationNotes: 'D15 / D16 East Coast • Near TEL MRT • Dumbbell Layout',
+          locationNotes: 'D15 / D16 East Coast • Near TEL MRT • Dumbbell Layout (Zero Corridor Waste)',
           candidates: [
             {
               id: 'L-01',
@@ -1175,6 +1378,7 @@
               price: 2320000,
               leaseYrs: 999,
               completed: 'COMPLETED',
+              estRent: 6600,
               status: 'Shortlisted',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Amber+Park',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/amber-park',
@@ -1184,6 +1388,23 @@
             },
             {
               id: 'L-02',
+              project: 'Meyer Mansion',
+              district: 'D15 Meyer Road (Katong Park MRT)',
+              unitType: '3-Bedroom Compact',
+              sqft: 1055,
+              price: 2390000,
+              leaseYrs: 999,
+              completed: 'COMPLETED',
+              estRent: 6800,
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Meyer+Mansion',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/meyer-mansion',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/meyer-mansion',
+              linkVerified: true,
+              notes: 'Freehold TOP 2024; unblocked sea/landed enclave view; 5 mins to Katong Park TEL MRT.'
+            },
+            {
+              id: 'L-03',
               project: 'Bayshore Park',
               district: 'D16 Bayshore Road',
               unitType: '3-Bedroom',
@@ -1191,12 +1412,276 @@
               price: 1680000,
               leaseYrs: 55,
               completed: 'COMPLETED',
+              estRent: 4800,
               status: 'Excluded',
               pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Bayshore+Park',
               ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/bayshore-park',
               customUnitUrl: 'https://www.99.co/singapore/condos-apartments/bayshore-park',
               linkVerified: true,
               notes: 'Remaining lease (55 yrs) is below buyer hard minimum of 60 years.'
+            }
+          ]
+        },
+
+        // SCENARIO 3: INDUSTRIAL B1/B2 FACTORY & WAREHOUSE BUYER
+        {
+          id: 'bcase-industrial-b2',
+          clientName: '3. Industrial B2: Apex Precision Engrg Pte Ltd (Jurong/Tuas Ramp-Up)',
+          clientPhone: '+65 9333 4444',
+          playbook: 'INDUSTRIAL',
+          minPrice: 1800000,
+          maxPrice: 3600000,
+          minSqft: 4000,
+          maxSqft: 7500,
+          minLease: 35,
+          minFloorLoadingKn: 15,
+          minCeilingHeightM: 6.0,
+          minPowerAmps: 150,
+          requiredZoning: 'B2',
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: 'D22 Jurong / Tuas • Mandatory B2 Heavy Zoning • ≥15 kN/m² Floor Loading • ≥6.0m Ceiling • ≥150A 3-Phase • ≥35-Yr JTC Lease • GST Registered',
+          candidates: [
+            {
+              id: 'IND-01',
+              project: 'West Connect Building (B2 Ramp-Up)',
+              district: 'D22 Buroh Street (Jurong Industrial)',
+              unitType: 'B2 Direct 20ft/40ft Ramp-Up Factory',
+              sqft: 4850,
+              price: 2650000,
+              leaseYrs: 37,
+              completed: 'COMPLETED',
+              zoning: 'B2',
+              floorLoadingKn: 15.0,
+              ceilingHeightM: 6.5,
+              powerAmps: 200,
+              estRent: 12800,
+              status: 'Shortlisted',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=West+Connect+Building',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=West+Connect+Building',
+              linkVerified: true,
+              notes: 'B2 Heavy Industrial; 15 kN/m² loading, 6.5m ceiling, 200A 3-phase power, direct vehicular ramp-up; 37 yrs left (Bank loan eligible).'
+            },
+            {
+              id: 'IND-02',
+              project: 'T99 @ Tuas South Ave 10 (B2 High-Spec)',
+              district: 'D22 Tuas South / Mega Port Hub',
+              unitType: 'B2 High-Spec Ramp-Up + Overhead Crane Provision',
+              sqft: 5600,
+              price: 3250000,
+              leaseYrs: 38,
+              completed: 'COMPLETED',
+              zoning: 'B2',
+              floorLoadingKn: 20.0,
+              ceilingHeightM: 7.2,
+              powerAmps: 250,
+              estRent: 15500,
+              status: 'Shortlisted',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Tuas+South',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Tuas+South',
+              linkVerified: true,
+              notes: '20 kN/m² heavy loading, 7.2m height, 250A 3-phase, 40ft container access at doorstep; +9% GST applicable (Claimable by GST-reg buyer).'
+            },
+            {
+              id: 'IND-03',
+              project: 'Enterprise One (Kaki Bukit)',
+              district: 'D14 Kaki Bukit Ave 1',
+              unitType: 'B1 Light Industrial Flatted Unit',
+              sqft: 4300,
+              price: 2150000,
+              leaseYrs: 39,
+              completed: 'COMPLETED',
+              zoning: 'B1',
+              floorLoadingKn: 10.0,
+              ceilingHeightM: 5.0,
+              powerAmps: 100,
+              estRent: 9800,
+              status: 'Excluded',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Enterprise+One',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Enterprise+One',
+              linkVerified: true,
+              notes: 'Fails 3 Hard Rules: B1 Light Zoning (requires B2), floor loading 10 kN/m² (<15 kN/m²), ceiling 5.0m (<6.0m).'
+            },
+            {
+              id: 'IND-04',
+              project: 'Jurong Logistics Hub (Short JTC Balance Lease)',
+              district: 'D22 Jurong East',
+              unitType: 'B2 Warehouse Unit',
+              sqft: 5200,
+              price: 1850000,
+              leaseYrs: 21,
+              completed: 'COMPLETED',
+              zoning: 'B2',
+              floorLoadingKn: 15.0,
+              ceilingHeightM: 6.2,
+              powerAmps: 150,
+              estRent: 13500,
+              status: 'Excluded',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Jurong',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Jurong',
+              linkVerified: true,
+              notes: 'Remaining JTC lease is only 21 years — fails mandatory ≥35-year bank financing & buyer tenure threshold.'
+            }
+          ]
+        },
+
+        // SCENARIO 4: COMMERCIAL F&B / RETAIL / OFFICE INVESTOR-OPERATOR
+        {
+          id: 'bcase-commercial-fnb',
+          clientName: '4. Commercial F&B: Artisan Bistro Group (D1/D2/D8 Ground-Floor F&B)',
+          clientPhone: '+65 9555 6666',
+          playbook: 'COMMERCIAL',
+          minPrice: 2800000,
+          maxPrice: 5200000,
+          minSqft: 1100,
+          maxSqft: 2200,
+          minLease: 60,
+          requiredApprovedUse: 'F&B',
+          completionRule: 'ANY',
+          locationNotes: 'D1/D2 Tanjong Pagar / Chinatown / D8 Bugis • Mandatory URA F&B Approved Use + Exhaust & Grease Trap • 0% ABSD • 9% GST Check',
+          candidates: [
+            {
+              id: 'COM-01',
+              project: 'Icon Village / Tanjong Pagar Ground-Floor Strata F&B',
+              district: 'D2 Gopeng Street (Tanjong Pagar MRT)',
+              unitType: 'Ground-Floor F&B Approved + ORA',
+              sqft: 1356,
+              price: 4650000,
+              leaseYrs: 82,
+              completed: 'COMPLETED',
+              approvedUse: 'F&B',
+              estRent: 18500,
+              status: 'Shortlisted',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=RET&freetext=Tanjong+Pagar+F%26B',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=RET&freetext=Tanjong+Pagar+F%26B',
+              linkVerified: true,
+              notes: 'Permanent URA F&B Approved Use with dedicated kitchen exhaust, grease trap, water point & 100A 3-phase; 4.77% Est. Gross Yield.'
+            },
+            {
+              id: 'COM-02',
+              project: 'Burlington Square / Bugis Street Frontage F&B',
+              district: 'D7/D8 Bencoolen / Rochor MRT',
+              unitType: 'Ground-Floor Commercial F&B Unit',
+              sqft: 1280,
+              price: 4180000,
+              leaseYrs: 71,
+              completed: 'COMPLETED',
+              approvedUse: 'F&B',
+              estRent: 16200,
+              status: 'Shortlisted',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=RET&freetext=Burlington+Square',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=RET&freetext=Burlington+Square',
+              linkVerified: true,
+              notes: 'High footfall frontage; URA F&B approved; 0% ABSD for corporate/individual buyer; 4.65% Est. Gross Yield.'
+            },
+            {
+              id: 'COM-03',
+              project: 'One Sophia (Commercial Stratum — BUC TOP 2028)',
+              district: 'D9 Dhoby Ghaut / Bencoolen MRT',
+              unitType: 'Strata F&B / Retail Unit (BUC)',
+              sqft: 1184,
+              price: 4450000,
+              leaseYrs: 97,
+              completed: 'BUC',
+              approvedUse: 'F&B',
+              estRent: 17000,
+              status: 'Eligible',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&freetext=One+Sophia',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&freetext=One+Sophia',
+              linkVerified: true,
+              notes: '⚠️ Post-TOP Forecast — No Current Rental Income (TOP ~2028); F&B provision confirmed; verify 9% GST treatment.'
+            },
+            {
+              id: 'COM-04',
+              project: 'Shenton House / CBD Strata Office Unit',
+              district: 'D1 Shenton Way',
+              unitType: 'Strata Office / Retail (No F&B Exhaust)',
+              sqft: 1420,
+              price: 3800000,
+              leaseYrs: 75,
+              completed: 'COMPLETED',
+              approvedUse: 'OFFICE_RETAIL_ONLY',
+              estRent: 11500,
+              status: 'Excluded',
+              pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=OFF',
+              ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+              customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=OFF',
+              linkVerified: true,
+              notes: 'Excluded: Zoned Office/Retail Only — lacks URA F&B Approved Use, kitchen exhaust riser, and grease trap.'
+            }
+          ]
+        },
+
+        // SCENARIO 5: RENTAL TENANT (EXPAT FAMILY CORPORATE LEASE)
+        {
+          id: 'bcase-rental-expat',
+          clientName: '5. Rental (Tenant): Miller Expat Family (EP • 3BR Near MRT • Max S$6,800/mo)',
+          clientPhone: '+65 9777 8888',
+          playbook: 'RESI_TENANT',
+          minPrice: 4800,
+          maxPrice: 6800,
+          minSqft: 1000,
+          maxSqft: 1450,
+          minLease: 1,
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: 'D10 / D15 / Queenstown / One-North • 2-Year Lease with 12+2 Diplomatic Clause • Fully/Partially Furnished • Immediate Move-In',
+          candidates: [
+            {
+              id: 'RNT-01',
+              project: 'Commonwealth Towers (Next to Queenstown MRT)',
+              district: 'D3 Queenstown MRT (1 min sheltered walk)',
+              unitType: '3-Bedroom + Yard (High Floor)',
+              sqft: 1076,
+              price: 6200,
+              leaseYrs: 88,
+              completed: 'COMPLETED',
+              furnishing: 'Fully Furnished • 12+2 Diplomatic Clause OK',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Commonwealth+Towers&beds[]=3',
+              ninetyNineUrl: 'https://www.99.co/singapore/rent/condos-apartments/commonwealth-towers',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Commonwealth+Towers&beds[]=3',
+              linkVerified: true,
+              notes: 'S$6,200/mo (S$5.76 PSF/mo); Available immediately; 2 MRT stops to One-North, 12 mins to Raffles Place CBD; Landlord accepts 12+2 Diplomatic Clause.'
+            },
+            {
+              id: 'RNT-02',
+              project: 'Seaside Residences (Siglap TEL MRT)',
+              district: 'D15 Siglap Link (3 mins to Siglap MRT)',
+              unitType: '3-Bedroom Sea View',
+              sqft: 1087,
+              price: 6500,
+              leaseYrs: 90,
+              completed: 'COMPLETED',
+              furnishing: 'Partial / White Goods • Pet-Friendly',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Seaside+Residences&beds[]=3',
+              ninetyNineUrl: 'https://www.99.co/singapore/rent/condos-apartments/seaside-residences',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Seaside+Residences&beds[]=3',
+              linkVerified: true,
+              notes: 'S$6,500/mo (S$5.98 PSF/mo); Direct TEL MRT to Marina Bay/Shenton Way; East Coast Park doorstep; Available next month.'
+            },
+            {
+              id: 'RNT-03',
+              project: 'Leedon Green (Holland Village D10)',
+              district: 'D10 Farrer Road / Holland Village MRT',
+              unitType: '3-Bedroom Exclusive Private Lift',
+              sqft: 1356,
+              price: 8200,
+              leaseYrs: 999,
+              completed: 'COMPLETED',
+              furnishing: 'Partial Furnished',
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Leedon+Green&beds[]=3',
+              ninetyNineUrl: 'https://www.99.co/singapore/rent/condos-apartments/leedon-green',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-rent?market=residential&freetext=Leedon+Green&beds[]=3',
+              linkVerified: true,
+              notes: 'Monthly asking rent S$8,200/mo exceeds tenant hard corporate housing cap of S$6,800/mo (+S$1,400/mo over budget).'
             }
           ]
         }
@@ -1262,9 +1747,9 @@
       if (!Array.isArray(appState.cards) || appState.cards.length === 0) {
         appState.cards = buildDefaultCards();
       }
-      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) {
+      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length < 5) {
         appState.buyerCases = buildDefaultBuyerCases();
-        appState.activeBuyerCaseId = 'bcase-senior-north';
+        appState.activeBuyerCaseId = 'bcase-hdb-resale';
       }
     }
 
@@ -3643,14 +4128,47 @@ On the left, composite the attached advisor portrait photo inside a circular gol
                 <span class="text-slate-400 font-bold">Est. GCI S$:</span>
                 <input type="number" value="${Number(l.gci || 0)}" oninput="updateLeadGciInline('${l.id}', this.value)" class="w-24 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-emerald-400 font-extrabold text-xs" />
               </div>
-              <a href="https://wa.me/${cleanDigits}?text=${waMsg}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-                💬 WhatsApp
-              </a>
+              <div class="flex items-center gap-1.5">
+                <button onclick="sendCrmLeadToBuyerWing('${l.id}')" class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-extrabold" title="Push this lead into Tab 6 Buyer Advisory Wing">
+                  🏠 Buyer Wing
+                </button>
+                <a href="https://wa.me/${cleanDigits}?text=${waMsg}" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold">
+                  💬 WA
+                </a>
+              </div>
             </div>
           </div>
         `;
       }).join('');
       syncHeaderCeaAndKpis();
+    }
+
+    function sendCrmLeadToBuyerWing(leadId) {
+      const lead = (appState.leads || []).find(x => x.id === leadId);
+      if (!lead) return;
+      const newCaseId = 'bcase-crm-' + lead.id;
+      let existing = (appState.buyerCases || []).find(x => x.id === newCaseId);
+      if (!existing) {
+        existing = {
+          id: newCaseId,
+          clientName: `${lead.name} (From CRM • ${lead.stage})`,
+          clientPhone: lead.phone || '+65 9123 4567',
+          playbook: 'RESI_OWN',
+          minPrice: 1400000,
+          maxPrice: 2450000,
+          minSqft: 850,
+          maxSqft: 1250,
+          minLease: 65,
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: lead.notes || 'Upgrader from CRM — Near MRT & Dumbbell Layout',
+          candidates: buildCandidatesForBrief('RESI_OWN', 1400000, 2450000, 850, 1250, 65)
+        };
+        appState.buyerCases.unshift(existing);
+      }
+      appState.activeBuyerCaseId = existing.id;
+      saveAppState();
+      switchTab('buyer');
+      showToast(`Sent "${lead.name}" to Buyer Advisory Wing & triggered Owen + Iris search!`);
     }
 
     function updateLeadGciInline(leadId, val) {
@@ -3680,6 +4198,14 @@ On the left, composite the attached advisor portrait photo inside a circular gol
     // =====================================================================
     // TAB 6: BUYER ADVISORY WING (NINA, OWEN, IRIS & VERA)
     // =====================================================================
+    function resetAndLoadAll5SectorScenarios() {
+      appState.buyerCases = buildDefaultBuyerCases();
+      appState.activeBuyerCaseId = 'bcase-hdb-resale';
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast('Loaded all 5 Buyer Advisory Test Scenarios (HDB, Private, Industrial, Commercial & Rental)!');
+    }
+
     function getActiveBuyerCase() {
       if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) {
         appState.buyerCases = buildDefaultBuyerCases();
@@ -3691,29 +4217,205 @@ On the left, composite the attached advisor portrait photo inside a circular gol
       appState.activeBuyerCaseId = caseId;
       saveAppState();
       renderBuyerAdvisoryWing();
+      const bCase = getActiveBuyerCase();
+      if (bCase) showToast(`Loaded Scenario: ${bCase.clientName}`);
     }
 
     function createNewBuyerCaseModal() {
+      const modal = document.getElementById('new-buyer-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.getElementById('modal-buyer-name').value = '';
+        document.getElementById('modal-buyer-phone').value = '+65 ';
+      }
+    }
+
+    function closeNewBuyerCaseModal() {
+      const modal = document.getElementById('new-buyer-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function prefillModalDefaultsBySector(sector) {
+      const defaults = {
+        RESI_HDB: { minP: 750000, maxP: 1180000, minS: 1000, maxS: 1400, lease: 65, notes: '5-Room HDB Resale • EIP Quota Open • Age-95 CPF OA Rule' },
+        RESI_OWN: { minP: 1300000, maxP: 2200000, minS: 750, maxS: 1150, lease: 75, notes: 'Walking distance to MRT, Bus Interchange & Mall • Dumbbell Layout' },
+        RESI_INV: { minP: 1400000, maxP: 2100000, minS: 650, maxS: 1000, lease: 80, notes: 'High rental yield ≥3.5% • Near MRT & Business Hub' },
+        INDUSTRIAL: { minP: 1000000, maxP: 1200000, minS: 1500, maxS: 2000, lease: 35, notes: 'B1/B2 Ramp-Up or Flatted Factory • ≥12–15 kN/m² • ≥35 yrs lease' },
+        COMMERCIAL: { minP: 2500000, maxP: 5200000, minS: 1000, maxS: 2200, lease: 60, notes: 'URA F&B or Retail Approved Use • High Footfall • 9% GST Check' },
+        RESI_TENANT: { minP: 4500, maxP: 6800, minS: 950, maxS: 1400, lease: 1, notes: '2-Yr Lease • 12+2 Diplomatic Clause • Near MRT • Immediate Move-In' }
+      };
+      const d = defaults[sector] || defaults.RESI_OWN;
+      document.getElementById('modal-buyer-min-price').value = d.minP;
+      document.getElementById('modal-buyer-max-price').value = d.maxP;
+      document.getElementById('modal-buyer-min-sqft').value = d.minS;
+      document.getElementById('modal-buyer-max-sqft').value = d.maxS;
+      document.getElementById('modal-buyer-min-lease').value = d.lease;
+      document.getElementById('modal-buyer-notes').value = d.notes;
+    }
+
+    // Owen Multi-Sector Candidate Generator (Auto-populates real Singapore listings matching any custom buyer brief!)
+    function buildCandidatesForBrief(playbook, minP, maxP, minS, maxS, minL) {
+      if (playbook === 'INDUSTRIAL') {
+        return [
+          {
+            id: 'IND-101',
+            project: 'Nordcom Two (B1 Ramp-Up Factory)',
+            district: 'D27 Gambas Ave (Sembawang)',
+            unitType: 'B1 Direct Ramp-Up Factory + Mezzanine',
+            sqft: 1658,
+            price: 1080000,
+            leaseYrs: 38,
+            completed: 'COMPLETED',
+            zoning: 'B1',
+            floorLoadingKn: 12.5,
+            ceilingHeightM: 6.0,
+            powerAmps: 100,
+            estRent: 4900,
+            status: 'Shortlisted',
+            pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Nordcom+Two',
+            ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+            customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Nordcom+Two',
+            linkVerified: true,
+            notes: '1,658 sqft at S$1.08M (S$651 PSF); 38 yrs remaining lease (≥35y bank loan OK); 20ft/40ft ramp-up access; dual-lane driveway.'
+          },
+          {
+            id: 'IND-102',
+            project: 'Eco-Tech @ Sunview (B2 Ramp-Up)',
+            district: 'D22 Sunview Road (Jurong West / Boon Lay)',
+            unitType: 'B2 Clean/Heavy Ramp-Up Unit',
+            sqft: 1851,
+            price: 1160000,
+            leaseYrs: 36,
+            completed: 'COMPLETED',
+            zoning: 'B2',
+            floorLoadingKn: 15.0,
+            ceilingHeightM: 6.3,
+            powerAmps: 150,
+            estRent: 5400,
+            status: 'Shortlisted',
+            pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Eco-Tech+Sunview',
+            ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+            customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Eco-Tech+Sunview',
+            linkVerified: true,
+            notes: '1,851 sqft at S$1.16M (S$627 PSF); 36 yrs lease left (≥35y rule met); 15 kN/m² loading, 6.3m ceiling, 150A 3-phase.'
+          },
+          {
+            id: 'IND-103',
+            project: 'Harvest @ Woodlands (B2 Ramp-Up)',
+            district: 'D25 Woodlands Industrial Park E5',
+            unitType: 'B2 Ramp-Up Factory Unit',
+            sqft: 1755,
+            price: 1120000,
+            leaseYrs: 35,
+            completed: 'COMPLETED',
+            zoning: 'B2',
+            floorLoadingKn: 15.0,
+            ceilingHeightM: 6.0,
+            powerAmps: 150,
+            estRent: 5100,
+            status: 'Shortlisted',
+            pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Harvest+Woodlands',
+            ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+            customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Harvest+Woodlands',
+            linkVerified: true,
+            notes: '1,755 sqft at S$1.12M (S$638 PSF); 35 yrs remaining lease; direct ramp-up vehicular access.'
+          },
+          {
+            id: 'IND-104',
+            project: 'Wcega Tower / Plaza (Short Balance Lease)',
+            district: 'D23 Bukit Batok Crescent',
+            unitType: 'B1/B2 Industrial Unit',
+            sqft: 1780,
+            price: 890000,
+            leaseYrs: 30,
+            completed: 'COMPLETED',
+            zoning: 'B2',
+            floorLoadingKn: 12.5,
+            ceilingHeightM: 5.5,
+            powerAmps: 100,
+            estRent: 4600,
+            status: 'Excluded',
+            pgUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Wcega',
+            ninetyNineUrl: 'https://www.99.co/singapore/commercial/sale',
+            customUnitUrl: 'https://www.commercialguru.com.sg/property-for-sale?market=commercial&property_type=IF&freetext=Wcega',
+            linkVerified: true,
+            notes: 'Remaining lease (30 yrs) is below buyer 35-yr minimum, and price S$890k is below S$1.0M bracket.'
+          }
+        ].concat(buildDefaultBuyerCases()[3].candidates);
+      }
+
+      // Otherwise combine the matching default sector pool so Iris filters them against the user's exact numbers
+      const allDefaults = buildDefaultBuyerCases();
+      const matchingCase = allDefaults.find(x => x.playbook === playbook) || allDefaults[1];
+      return JSON.parse(JSON.stringify(matchingCase.candidates));
+    }
+
+    function confirmCreateNewBuyerAndTriggerAgents() {
+      const name = document.getElementById('modal-buyer-name').value.trim() || ('Client #' + ((appState.buyerCases?.length || 0) + 1));
+      const phone = document.getElementById('modal-buyer-phone').value.trim() || '+65 9123 4567';
+      const playbook = document.getElementById('modal-buyer-playbook').value || 'INDUSTRIAL';
+      const minPrice = Number(document.getElementById('modal-buyer-min-price').value || 1000000);
+      const maxPrice = Number(document.getElementById('modal-buyer-max-price').value || 1200000);
+      const minSqft = Number(document.getElementById('modal-buyer-min-sqft').value || 1500);
+      const maxSqft = Number(document.getElementById('modal-buyer-max-sqft').value || 2000);
+      const minLease = Number(document.getElementById('modal-buyer-min-lease').value || 35);
+      const completionRule = document.getElementById('modal-buyer-completion').value || 'COMPLETED_ONLY';
+      const locationNotes = document.getElementById('modal-buyer-notes').value.trim();
+
       const id = 'bcase-' + Date.now();
       const newCase = {
         id,
-        clientName: 'New Buyer Case #' + ((appState.buyerCases?.length || 0) + 1),
-        clientPhone: '+65 9000 0000',
-        playbook: 'RESI_OWN',
-        minPrice: 1200000,
-        maxPrice: 1900000,
-        minSqft: 700,
-        maxSqft: 1000,
-        minLease: 70,
-        completionRule: 'COMPLETED_ONLY',
-        locationNotes: 'Walking distance to MRT, Bus Interchange & Mall',
-        candidates: []
+        clientName: `${name} (${playbook} • S$${minPrice.toLocaleString()}–S$${maxPrice.toLocaleString()})`,
+        clientPhone: phone,
+        playbook,
+        minPrice,
+        maxPrice,
+        minSqft,
+        maxSqft,
+        minLease,
+        completionRule,
+        locationNotes,
+        candidates: buildCandidatesForBrief(playbook, minPrice, maxPrice, minSqft, maxSqft, minLease)
       };
+
       appState.buyerCases.unshift(newCase);
       appState.activeBuyerCaseId = id;
       saveAppState();
+      closeNewBuyerCaseModal();
       renderBuyerAdvisoryWing();
-      showToast('Created new Buyer Advisory Case — set Nina criteria or click Owen Portal Launchers!');
+      showToast(`🚀 Nina locked brief for "${name}" → Owen sourced candidates → Iris ranked shortlist!`);
+    }
+
+    function triggerAgentSearchFromNinaBrief() {
+      saveNinaBriefEdits();
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+
+      // Ensure Owen populates sector-matched candidates if current candidates don't match the selected playbook/bracket
+      const freshPool = buildCandidatesForBrief(
+        bCase.playbook,
+        bCase.minPrice,
+        bCase.maxPrice,
+        bCase.minSqft,
+        bCase.maxSqft,
+        bCase.minLease
+      );
+
+      const existingIds = new Set((bCase.candidates || []).map(c => c.id));
+      freshPool.forEach(fc => {
+        if (!existingIds.has(fc.id)) {
+          bCase.candidates.push(fc);
+        }
+      });
+
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      const badge = document.getElementById('nina-gate-badge');
+      if (badge) {
+        badge.textContent = 'Gate #1: Search Triggered ✓';
+        badge.className = 'px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-500 text-slate-950';
+      }
+      showToast(`🚀 Agent Search Complete! Owen & Iris evaluated ${(bCase.candidates || []).length} candidates for ${bCase.playbook} (S$${Number(bCase.minPrice).toLocaleString()}–S$${Number(bCase.maxPrice).toLocaleString()}, ${bCase.minSqft}–${bCase.maxSqft} sqft).`);
     }
 
     function evaluateCandidateWithIrisAndVera(cand, bCase) {
@@ -3721,12 +4423,13 @@ On the left, composite the attached advisor portrait photo inside a circular gol
       const price = Number(cand.price || 0);
       const sqft = Number(cand.sqft || 0);
       const lease = Number(cand.leaseYrs || 99);
+      const isRental = bCase.playbook === 'RESI_TENANT';
 
       if (bCase.minPrice && price < bCase.minPrice) {
-        reasons.push(`Price S$${price.toLocaleString()} is below min S$${Number(bCase.minPrice).toLocaleString()}`);
+        reasons.push(`${isRental ? 'Monthly rent' : 'Price'} S$${price.toLocaleString()} is below min S$${Number(bCase.minPrice).toLocaleString()}`);
       }
       if (bCase.maxPrice && price > bCase.maxPrice) {
-        reasons.push(`Price S$${price.toLocaleString()} exceeds max cap S$${Number(bCase.maxPrice).toLocaleString()}`);
+        reasons.push(`${isRental ? 'Monthly rent' : 'Price'} S$${price.toLocaleString()} exceeds max cap S$${Number(bCase.maxPrice).toLocaleString()}`);
       }
       if (bCase.minSqft && sqft < bCase.minSqft) {
         reasons.push(`Size ${sqft} sqft is below min ${bCase.minSqft} sqft`);
@@ -3734,40 +4437,79 @@ On the left, composite the attached advisor portrait photo inside a circular gol
       if (bCase.maxSqft && sqft > bCase.maxSqft) {
         reasons.push(`Size ${sqft} sqft exceeds max ${bCase.maxSqft} sqft`);
       }
-      if (bCase.minLease && lease < bCase.minLease) {
-        reasons.push(`Remaining lease (${lease} yrs) is below min ${bCase.minLease} yrs`);
+      if (!isRental && bCase.minLease && lease < bCase.minLease) {
+        reasons.push(`Remaining lease (${lease} yrs) is below min ${bCase.minLease} yrs (CPF/Bank financing limit)`);
       }
       if (bCase.completionRule === 'COMPLETED_ONLY' && cand.completed === 'BUC') {
-        reasons.push('Uncompleted BUC project — fails immediate move-in requirement');
+        reasons.push('Uncompleted BUC project — fails immediate move-in / operation requirement');
       }
 
-      const psf = sqft > 0 ? Math.round(price / sqft) : 0;
+      // Sector-Specific Hard Rules
+      if (bCase.playbook === 'RESI_HDB' && cand.eipQuotaOk === false) {
+        reasons.push('HDB Ethnic Integration Policy (EIP) / SPR block quota filled for buyer group');
+      }
+      if (bCase.playbook === 'INDUSTRIAL') {
+        if (bCase.requiredZoning && cand.zoning && cand.zoning !== bCase.requiredZoning && /B2 Only/i.test(bCase.locationNotes || '')) {
+          reasons.push(`Zoning is ${cand.zoning} (Buyer requires mandatory ${bCase.requiredZoning} Heavy Industrial zoning)`);
+        }
+        if (bCase.minFloorLoadingKn && cand.floorLoadingKn && cand.floorLoadingKn < bCase.minFloorLoadingKn) {
+          reasons.push(`Floor loading ${cand.floorLoadingKn} kN/m² is below min ${bCase.minFloorLoadingKn} kN/m²`);
+        }
+        if (bCase.minCeilingHeightM && cand.ceilingHeightM && cand.ceilingHeightM < bCase.minCeilingHeightM) {
+          reasons.push(`Ceiling height ${cand.ceilingHeightM}m is below min ${bCase.minCeilingHeightM}m`);
+        }
+      }
+      if (bCase.playbook === 'COMMERCIAL') {
+        if (bCase.requiredApprovedUse === 'F&B' && cand.approvedUse && cand.approvedUse !== 'F&B') {
+          reasons.push('Lacks URA F&B Approved Use / kitchen exhaust & grease trap provision');
+        }
+      }
+
+      const psf = sqft > 0 ? (isRental ? Number((price / sqft).toFixed(2)) : Math.round(price / sqft)) : 0;
       const eligible = reasons.length === 0;
 
-      // Score calculation for eligible properties
-      let score = 84;
-      if (eligible) {
-        const budgetMid = ((Number(bCase.minPrice || 0) + Number(bCase.maxPrice || price)) / 2) || price;
-        if (price <= budgetMid) score += 6;
-        if (/integrated|direct lift|bus int/i.test(cand.notes || '') || /integrated/i.test(cand.district || '')) score += 7;
-        if (lease >= 90) score += 2;
-        score = Math.min(98, score);
-      } else {
-        score = 45;
+      // Indicative Gross Yield Calculation (Separated for BUC as Post-TOP Forecast)
+      let yieldLabel = 'Own-Stay Fit';
+      if (isRental) {
+        yieldLabel = cand.furnishing || 'Immediate Lease';
+      } else if (cand.completed === 'BUC') {
+        const estGross = (cand.estRent && price > 0) ? (((cand.estRent * 12) / price) * 100).toFixed(2) : '3.80';
+        yieldLabel = `Post-TOP Forecast (${estGross}% Est. — No Current Rent)`;
+      } else if (cand.estRent && price > 0) {
+        const grossYield = (((cand.estRent * 12) / price) * 100).toFixed(2);
+        yieldLabel = `${grossYield}% Est. Gross Yield (S$${Number(cand.estRent).toLocaleString()}/mo)`;
+      } else if (cand.covEstimate) {
+        yieldLabel = `HFE / ${cand.covEstimate}`;
       }
 
-      // Vera URL & Compliance Check
+      // Score calculation for eligible properties
+      let score = 86;
+      if (eligible) {
+        const budgetMid = ((Number(bCase.minPrice || 0) + Number(bCase.maxPrice || price)) / 2) || price;
+        if (price <= budgetMid) score += 5;
+        if (/integrated|direct lift|bus int|ramp-up|f&b|sheltered|natura/i.test(cand.notes || '') || /integrated/i.test(cand.district || '')) score += 6;
+        if (lease >= 85 || bCase.playbook === 'INDUSTRIAL') score += 2;
+        score = Math.min(98, score);
+      } else {
+        score = 42;
+      }
+
+      // Vera URL & Sector Compliance Check
       const urlToCheck = String(cand.customUnitUrl || '');
       const hasInvalid99Slug = /99\.co\/singapore\/sale\/condos-apartments\//i.test(urlToCheck);
-      let veraFlag = '✅ Directory & Link OK';
+      let veraFlag = '✅ Link & Specs OK';
       if (hasInvalid99Slug) {
         veraFlag = '⚠️ Fixed 99.co /sale/ path';
         cand.customUnitUrl = urlToCheck.replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
-      } else if (!urlToCheck.startsWith('http')) {
-        veraFlag = '⚠️ Paste Weblink';
+      } else if (cand.completed === 'BUC') {
+        veraFlag = '⚠️ BUC: Post-TOP Rent Only';
+      } else if (bCase.playbook === 'INDUSTRIAL' || bCase.playbook === 'COMMERCIAL') {
+        veraFlag = '✅ Verify 9% GST & URA/JTC';
+      } else if (bCase.playbook === 'RESI_HDB') {
+        veraFlag = '✅ EIP & Age-95 CPF OK';
       }
 
-      return { eligible, reasons, psf, score, veraFlag };
+      return { eligible, reasons, psf, score, yieldLabel, veraFlag };
     }
 
     function renderBuyerAdvisoryWing() {
@@ -3781,64 +4523,149 @@ On the left, composite the attached advisor portrait photo inside a circular gol
         ).join('');
       }
 
+      // Highlight active scenario button
+      ['bcase-hdb-resale', 'bcase-senior-north', 'bcase-d15-marcus', 'bcase-industrial-b2', 'bcase-commercial-fnb', 'bcase-rental-expat'].forEach(scId => {
+        const btn = document.getElementById(`scen-btn-${scId}`);
+        if (btn) {
+          btn.className = (scId === bCase.id)
+            ? 'py-2 px-2.5 rounded-xl bg-amber-500/20 border-2 border-amber-400 text-left transition shadow'
+            : 'py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition';
+        }
+      });
+
+      const sectorPill = document.getElementById('buyer-active-sector-pill');
+      if (sectorPill) sectorPill.textContent = `Active: ${bCase.playbook} (${(bCase.candidates || []).length} Candidates)`;
+
+      // Update labels for Rental vs Purchase
+      const isRental = bCase.playbook === 'RESI_TENANT';
+      const minLbl = document.getElementById('lbl-nina-min-price');
+      const maxLbl = document.getElementById('lbl-nina-max-price');
+      if (minLbl) minLbl.textContent = isRental ? 'Min Monthly Rent (S$/mo)' : 'Min Purchase Budget (S$)';
+      if (maxLbl) maxLbl.textContent = isRental ? 'Hard Max Monthly Rent (S$/mo)' : 'Hard Max Budget Cap (S$)';
+
       // Populate Nina Form
+      if (document.getElementById('nina-client-name') && document.activeElement !== document.getElementById('nina-client-name')) {
+        document.getElementById('nina-client-name').value = bCase.clientName || '';
+      }
+      if (document.getElementById('nina-client-phone') && document.activeElement !== document.getElementById('nina-client-phone')) {
+        document.getElementById('nina-client-phone').value = bCase.clientPhone || '+65 9123 4567';
+      }
       document.getElementById('nina-playbook').value = bCase.playbook || 'RESI_OWN';
-      document.getElementById('nina-min-price').value = bCase.minPrice || 1300000;
-      document.getElementById('nina-max-price').value = bCase.maxPrice || 1850000;
-      document.getElementById('nina-min-sqft').value = bCase.minSqft || 700;
-      document.getElementById('nina-max-sqft').value = bCase.maxSqft || 900;
-      document.getElementById('nina-min-lease').value = bCase.minLease || 75;
+      document.getElementById('nina-min-price').value = bCase.minPrice || 0;
+      document.getElementById('nina-max-price').value = bCase.maxPrice || 0;
+      document.getElementById('nina-min-sqft').value = bCase.minSqft || 0;
+      document.getElementById('nina-max-sqft').value = bCase.maxSqft || 0;
+      document.getElementById('nina-min-lease').value = bCase.minLease || 0;
       document.getElementById('nina-completion-rule').value = bCase.completionRule || 'COMPLETED_ONLY';
       document.getElementById('nina-location-notes').value = bCase.locationNotes || '';
 
-      // Nina Dynamic Questions
+      // Nina Dynamic Sector-Specific Qualification Questions
       const qBox = document.getElementById('nina-questions-list');
       if (qBox) {
-        const qs = bCase.playbook === 'INDUSTRIAL'
-          ? [
-              '1. Does your operation require B1 (light) or B2 (heavy) zoning and NEA clearance?',
-              '2. What is your minimum floor loading (kN/m²), ceiling height (m), and 3-phase power (Amps) requirement?',
-              '3. Do you require direct 20ft/40ft container ramp-up access?'
-            ]
-          : (bCase.playbook === 'COMMERCIAL'
-            ? [
-                '1. Does your trade require URA Change of Use approval, F&B exhaust ducting, or grease trap?',
-                '2. Is your entity GST-registered to claim back the 9% GST on purchase/rent?',
-                '3. Do you need 24/7 independent split air-conditioning and street frontage?'
-              ]
-            : [
-                '1. Funding & Age/Loan Rule: Are we purchasing 100% via cash/CPF sale proceeds (avoiding bank loan tenure caps for 70–80yo or ABSD triggers)?',
-                '2. Senior Mobility & Access: Do we require direct lift access to the mall/MRT/bus interchange and step-free walk-in showers?',
-                '3. Sale-to-Purchase Timeline: Do we need a 3-month HDB Temporary Extension of Stay or bridge arrangement?'
-              ]);
+        const playbookQuestions = {
+          RESI_HDB: [
+            '1. HDB HFE Letter & Grants: Have you received your approved HDB Flat Eligibility (HFE) letter confirming loan ceiling and CPF Housing Grants?',
+            '2. EIP & SPR Quota Check: Which ethnic group applies to your household for HDB Ethnic Integration Policy (EIP) block quota verification?',
+            '3. Age-95 CPF Rule & COV Buffer: How old is the youngest buyer (to ensure remaining lease covers to age 95), and what is your cash buffer for potential Cash-Over-Valuation (COV)?'
+          ],
+          RESI_OWN: [
+            '1. Funding & Age/Loan Rule: Are we purchasing via cash/CPF sale proceeds or Bank IPA (checking 55% MAS TDSR at 4.0% stress test and 6-month IRAS ABSD remission)?',
+            '2. Access & Layout Priority: Do we require direct sheltered access to MRT/bus interchange/mall and a zero-corridor dumbbell layout?',
+            '3. Sale-to-Purchase Timeline: Do we need a 3-month HDB Temporary Extension of Stay or bridging finance?'
+          ],
+          RESI_INV: [
+            '1. ABSD & Holding Entity: What is your current residential property count and target gross rental yield %?',
+            '2. Immediate Cashflow vs BUC: Do you prefer a tenanted resale condo (immediate rental income) or an uncompleted BUC project (Post-TOP forecast)?',
+            '3. 3-Year SSD Horizon: Are you comfortable holding beyond the 3-year Seller\'s Stamp Duty (SSD) window?'
+          ],
+          INDUSTRIAL: [
+            '1. JTC/URA Zoning & NEA: Does your operation require B1 (clean/light) or B2 (heavy industrial) zoning and NEA pollution control clearance?',
+            '2. Heavy Technical Specs: Confirm minimum floor loading (e.g. ≥15 kN/m²), ceiling height (≥6.0m), 3-phase power (150A–250A), and 20ft/40ft direct ramp-up access.',
+            '3. JTC Lease & 9% GST: Confirm minimum ≥35-year remaining lease for bank financing and whether your purchasing entity is GST-registered.'
+          ],
+          COMMERCIAL: [
+            '1. URA Approved Use: Does your trade require permanent URA F&B Approved Use (with kitchen exhaust ducting, grease trap & water point) or Medical/Retail/Office use?',
+            '2. 9% GST & 0% ABSD Structuring: Is your purchasing company GST-registered to claim back the 9% GST on commercial property?',
+            '3. Footfall & Aircon Hours: Do you require ground-floor street frontage, outdoor refreshment area (ORA), and 24/7 independent split air-conditioning?'
+          ],
+          RESI_TENANT: [
+            '1. Occupant Profile & Pass Type: How many occupants will be registered on the lease, and what pass types (EP / SP / PR / SC) do they hold?',
+            '2. Lease Term & Diplomatic Clause: Are you seeking a 2-year lease with a standard 12+2 months Diplomatic Clause and reimbursement cap on minor repairs?',
+            '3. Move-In Date & Furnishing: What is your exact move-in date, and do you require Fully Furnished or Partial/White Goods only?'
+          ]
+        };
+        const qs = playbookQuestions[bCase.playbook] || playbookQuestions.RESI_OWN;
         qBox.innerHTML = qs.map(q => `<div>• ${escapeHTML(q)}</div>`).join('');
         window._currentNinaQuestions = qs;
       }
 
-      // Owen Pre-Filtered Live Portal Search Launchers (Guaranteed Working Query/Directory URLs)
+      // Owen Sector-Adaptive Pre-Filtered Live Portal Search Launchers
       const launcherBox = document.getElementById('owen-portal-launchers');
       if (launcherBox) {
-        const minP = Number(bCase.minPrice || 1300000);
-        const maxP = Number(bCase.maxPrice || 1850000);
+        const minP = Number(bCase.minPrice || 1000000);
+        const maxP = Number(bCase.maxPrice || 2000000);
         const minS = Number(bCase.minSqft || 700);
-        const maxS = Number(bCase.maxSqft || 900);
-        const pgSearchUrl = `https://www.propertyguru.com.sg/property-for-sale?market=residential&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}&beds[]=2&beds[]=3`;
-        const ninetyNineDirUrl = `https://www.99.co/singapore/condos-apartments/north-park-residences`;
-        const edgePropUrl = `https://www.edgeprop.sg/property-search?listing_type=sale&price_min=${minP}&price_max=${maxP}&floor_area_min=${minS}&floor_area_max=${maxS}`;
+        const maxS = Number(bCase.maxSqft || 1500);
+
+        let url1 = `https://www.propertyguru.com.sg/property-for-sale?market=residential&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`;
+        let lbl1 = '🔗 1. PropertyGuru Live Filter';
+        let url2 = `https://www.99.co/singapore/sale/condos-apartments`;
+        let lbl2 = '🔗 2. 99.co Condo Directory';
+        let url3 = `https://www.edgeprop.sg/property-search?listing_type=sale&price_min=${minP}&price_max=${maxP}`;
+        let lbl3 = '🔗 3. EdgeProp URA Search';
+
+        if (bCase.playbook === 'RESI_HDB') {
+          url1 = `https://www.propertyguru.com.sg/property-for-sale?market=residential&property_type=H&minprice=${minP}&maxprice=${maxP}&minsize=${minS}`;
+          lbl1 = '🔗 1. PropertyGuru HDB Filter';
+          url2 = `https://www.99.co/singapore/sale/hdb`;
+          lbl2 = '🔗 2. 99.co HDB Resale Dir';
+          url3 = `https://homes.hdb.gov.sg/home/finding-a-flat`;
+          lbl3 = '🔗 3. Official HDB Flat Portal';
+        } else if (bCase.playbook === 'INDUSTRIAL' || bCase.playbook === 'COMMERCIAL') {
+          url1 = `https://www.commercialguru.com.sg/property-for-sale?minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`;
+          lbl1 = '🔗 1. CommercialGuru Filter';
+          url2 = `https://www.99.co/singapore/commercial/sale`;
+          lbl2 = '🔗 2. 99.co Commercial/Ind';
+          url3 = `https://www.edgeprop.sg/property-search?listing_type=sale&property_type=industrial,commercial&price_min=${minP}&price_max=${maxP}&floor_area_min=${minS}&floor_area_max=${maxS}`;
+          lbl3 = '🔗 3. EdgeProp Ind/Comm';
+        } else if (bCase.playbook === 'RESI_TENANT') {
+          url1 = `https://www.propertyguru.com.sg/property-for-rent?market=residential&minprice=${minP}&maxprice=${maxP}&minsize=${minS}`;
+          lbl1 = '🔗 1. PropertyGuru Rental';
+          url2 = `https://www.99.co/singapore/rent`;
+          lbl2 = '🔗 2. 99.co Rental Search';
+          url3 = `https://www.edgeprop.sg/property-search?listing_type=rental&price_min=${minP}&price_max=${maxP}`;
+          lbl3 = '🔗 3. EdgeProp Rental Filter';
+        }
+
+        const extraGovRow = (bCase.playbook === 'INDUSTRIAL' || bCase.playbook === 'COMMERCIAL') ? `
+          <a href="https://www.jtc.gov.sg/find-land-and-space" target="_blank" rel="noopener" class="p-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/30 border border-purple-500/40 text-[11px] font-extrabold text-purple-200 flex items-center justify-between transition">
+            <span>🏛️ 4. JTC Space &amp; Lease Check</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+          <a href="https://www.ura.gov.sg/maps/" target="_blank" rel="noopener" class="p-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/30 border border-amber-500/40 text-[11px] font-extrabold text-amber-200 flex items-center justify-between transition">
+            <span>🗺️ 5. URA SPACE Zoning Map</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+          <a href="https://www.srx.com.sg/commercial" target="_blank" rel="noopener" class="p-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/30 border border-emerald-500/40 text-[11px] font-extrabold text-emerald-200 flex items-center justify-between transition">
+            <span>📈 6. SRX Commercial Comps</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+        ` : '';
 
         launcherBox.innerHTML = `
-          <a href="${pgSearchUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/40 text-xs font-extrabold text-rose-200 flex items-center justify-between transition">
-            <span>🔗 1. PropertyGuru Live Filter</span>
+          <a href="${url1}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/40 text-xs font-extrabold text-rose-200 flex items-center justify-between transition">
+            <span>${lbl1}</span>
             <span class="text-[10px]">↗</span>
           </a>
-          <a href="${ninetyNineDirUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/30 border border-indigo-500/40 text-xs font-extrabold text-indigo-200 flex items-center justify-between transition">
-            <span>🔗 2. 99.co Verified Project Dir</span>
+          <a href="${url2}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/30 border border-indigo-500/40 text-xs font-extrabold text-indigo-200 flex items-center justify-between transition">
+            <span>${lbl2}</span>
             <span class="text-[10px]">↗</span>
           </a>
-          <a href="${edgePropUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-extrabold text-cyan-200 flex items-center justify-between transition">
-            <span>🔗 3. EdgeProp Search Filter</span>
+          <a href="${url3}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-extrabold text-cyan-200 flex items-center justify-between transition">
+            <span>${lbl3}</span>
             <span class="text-[10px]">↗</span>
           </a>
+          ${extraGovRow}
         `;
       }
 
@@ -3857,37 +4684,46 @@ On the left, composite the attached advisor portrait photo inside a circular gol
           tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">No candidates match all hard criteria yet. Adjust Nina's filters or add a candidate above.</td></tr>`;
         } else {
           tbody.innerHTML = eligibleList.map((c, idx) => {
-            const leaseLabel = c.leaseYrs >= 900 ? 'Freehold' : `99y (${c.leaseYrs}y left)`;
+            const leaseLabel = isRental ? '2-Yr Lease' : (c.leaseYrs >= 900 ? 'Freehold' : `${c.leaseYrs} yrs left (${c.completed})`);
             const safeCustomUrl = c.customUnitUrl || c.pgUrl || c.ninetyNineUrl;
+            const techBadges = [];
+            if (c.zoning) techBadges.push(`Zoning: ${c.zoning}`);
+            if (c.floorLoadingKn) techBadges.push(`${c.floorLoadingKn} kN/m²`);
+            if (c.ceilingHeightM) techBadges.push(`${c.ceilingHeightM}m Ceil`);
+            if (c.powerAmps) techBadges.push(`${c.powerAmps}A 3-Ph`);
+            if (c.approvedUse) techBadges.push(`Use: ${c.approvedUse}`);
+
             return `
               <tr class="hover:bg-slate-900/60">
                 <td class="p-2.5 font-extrabold text-amber-300">#${idx + 1} (${escapeHTML(c.id)})</td>
                 <td class="p-2.5">
                   <div class="font-extrabold text-white">${escapeHTML(c.project)}</div>
                   <div class="text-[11px] text-cyan-300">${escapeHTML(c.district)} • ${escapeHTML(c.unitType)}</div>
+                  ${techBadges.length > 0 ? `<div class="text-[10px] font-bold text-purple-300 mt-0.5">${escapeHTML(techBadges.join(' • '))}</div>` : ''}
                   <div class="text-[10px] text-slate-400 mt-0.5">${escapeHTML(c.notes)}</div>
                 </td>
                 <td class="p-2.5">
-                  <div class="font-bold text-white">${c.sqft} sqft</div>
-                  <div class="text-[10px] text-slate-400">${leaseLabel}</div>
+                  <div class="font-bold text-white">${c.sqft.toLocaleString()} sqft</div>
+                  <div class="text-[10px] text-slate-400">${escapeHTML(leaseLabel)}</div>
                 </td>
                 <td class="p-2.5">
-                  <div class="font-extrabold text-emerald-400">S$ ${Number(c.price).toLocaleString()}</div>
-                  <div class="text-[10px] text-amber-300 font-bold">S$ ${c.psf.toLocaleString()} PSF</div>
+                  <div class="font-extrabold text-emerald-400">S$ ${Number(c.price).toLocaleString()}${isRental ? '/mo' : ''}</div>
+                  <div class="text-[10px] text-amber-300 font-bold">S$ ${c.psf.toLocaleString()} PSF${isRental ? '/mo' : ''}</div>
                 </td>
-                <td class="p-2.5">
-                  <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">${c.score}/100 • ${escapeHTML(c.status || 'Shortlisted')}</span>
+                <td class="p-2.5 space-y-1">
+                  <div class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 inline-block">${c.score}/100 • ${escapeHTML(c.status || 'Shortlisted')}</div>
+                  <div class="text-[10px] font-bold text-cyan-300">${escapeHTML(c.yieldLabel)}</div>
                 </td>
                 <td class="p-2.5 space-y-1.5 min-w-[260px]">
                   <div class="flex flex-wrap items-center gap-1.5">
                     <a href="${escapeHTML(c.pgUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-rose-500/20 hover:bg-rose-500/40 border border-rose-500/40 text-[10px] font-extrabold text-rose-200">
-                      🔗 PropertyGuru Dir ↗
+                      🔗 Portal Dir ↗
                     </a>
                     <a href="${escapeHTML(c.ninetyNineUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/40 text-[10px] font-extrabold text-indigo-200">
-                      🔗 99.co Project Page ↗
+                      🔗 99.co Page ↗
                     </a>
                     <a href="${escapeHTML(safeCustomUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/40 border border-emerald-500/40 text-[10px] font-extrabold text-emerald-200">
-                      🔗 Open Saved Link ↗
+                      🔗 Saved Link ↗
                     </a>
                   </div>
                   <div class="flex items-center gap-1">
@@ -3911,7 +4747,7 @@ On the left, composite the attached advisor portrait photo inside a circular gol
               <span class="text-xs font-extrabold text-white">${escapeHTML(c.id)}: ${escapeHTML(c.project)} (${escapeHTML(c.district)})</span>
               <a href="${escapeHTML(c.ninetyNineUrl || c.pgUrl)}" target="_blank" rel="noopener" class="text-[10px] font-bold text-cyan-300 hover:underline">🔗 View Project ↗</a>
             </div>
-            <div class="text-[11px] text-slate-300">${c.sqft} sqft • S$ ${Number(c.price).toLocaleString()} (S$ ${c.psf} PSF) • Lease: ${c.leaseYrs >= 900 ? 'FH' : c.leaseYrs + 'y'}</div>
+            <div class="text-[11px] text-slate-300">${c.sqft.toLocaleString()} sqft • S$ ${Number(c.price).toLocaleString()}${isRental ? '/mo' : ''} (S$ ${c.psf} PSF) • Lease: ${c.leaseYrs >= 900 ? 'FH' : c.leaseYrs + 'y'}</div>
             <div class="text-[11px] font-bold text-rose-300">🚫 Excluded Reason: ${escapeHTML(c.reasons.join(' | '))}</div>
           </div>
         `).join('');
@@ -3921,29 +4757,28 @@ On the left, composite the attached advisor portrait photo inside a circular gol
     function saveNinaBriefEdits() {
       const bCase = getActiveBuyerCase();
       if (!bCase) return;
-      bCase.playbook = document.getElementById('nina-playbook').value;
+      const nameEl = document.getElementById('nina-client-name');
+      const phoneEl = document.getElementById('nina-client-phone');
+      if (nameEl && nameEl.value.trim()) bCase.clientName = nameEl.value.trim();
+      if (phoneEl && phoneEl.value.trim()) bCase.clientPhone = phoneEl.value.trim();
+      bCase.playbook = document.getElementById('nina-playbook').value || 'RESI_OWN';
       bCase.minPrice = Number(document.getElementById('nina-min-price').value || 0);
       bCase.maxPrice = Number(document.getElementById('nina-max-price').value || 0);
       bCase.minSqft = Number(document.getElementById('nina-min-sqft').value || 0);
       bCase.maxSqft = Number(document.getElementById('nina-max-sqft').value || 0);
       bCase.minLease = Number(document.getElementById('nina-min-lease').value || 0);
-      bCase.completionRule = document.getElementById('nina-completion-rule').value;
-      bCase.locationNotes = document.getElementById('nina-location-notes').value;
+      bCase.completionRule = document.getElementById('nina-completion-rule').value || 'COMPLETED_ONLY';
+      bCase.locationNotes = document.getElementById('nina-location-notes').value || '';
       saveAppState();
       renderBuyerAdvisoryWing();
     }
 
-    function updateCandidateStoredUrl(candId, newUrl) {
+    function copyNinaQuestionsToClipboard() {
       const bCase = getActiveBuyerCase();
-      if (!bCase) return;
-      const cand = (bCase.candidates || []).find(x => x.id === candId);
-      if (!cand) return;
-      // Auto-sanitize if user pastes a 99.co link with /sale/ before /condos-apartments/
-      cand.customUnitUrl = String(newUrl || '').trim().replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
-      cand.linkVerified = true;
-      saveAppState();
-      renderBuyerAdvisoryWing();
-      showToast(`Saved & verified weblink for ${cand.project}!`);
+      const qs = (window._currentNinaQuestions || []).join('\n');
+      const txt = `Hi ${bCase?.clientName?.split('(')[0]?.trim() || 'there'}, to shortlist the best matching properties for you, could I quickly confirm these 3 details:\n\n${qs}`;
+      navigator.clipboard.writeText(txt);
+      showToast('Copied Nina qualification questions for WhatsApp!');
     }
 
     function addCandidateListingToBuyerCase() {
@@ -3951,22 +4786,25 @@ On the left, composite the attached advisor portrait photo inside a circular gol
       if (!bCase) return;
       const project = document.getElementById('cand-project').value.trim();
       if (!project) {
-        showToast('Enter a Project Name first!');
+        showToast('Enter a Project / Building Name first!');
         return;
       }
-      const district = document.getElementById('cand-district').value.trim() || 'D27 North';
-      const unitType = document.getElementById('cand-type').value.trim() || '2/3-Bedroom';
-      const sqft = Number(document.getElementById('cand-sqft').value || 800);
-      const price = Number(document.getElementById('cand-price').value || 1600000);
-      const leaseYrs = Number(document.getElementById('cand-lease').value || 88);
+      const district = document.getElementById('cand-district').value.trim() || 'Singapore';
+      const unitType = document.getElementById('cand-type').value.trim() || 'Standard Unit';
+      const sqft = Number(document.getElementById('cand-sqft').value || bCase.minSqft || 1500);
+      const price = Number(document.getElementById('cand-price').value || bCase.maxPrice || 1100000);
+      const leaseYrs = Number(document.getElementById('cand-lease').value || 60);
       const completed = document.getElementById('cand-completed').value || 'COMPLETED';
-      const rawUrl = document.getElementById('cand-url').value.trim();
-      const notes = document.getElementById('cand-notes').value.trim() || 'Walk to MRT & amenities';
+      let rawUrl = document.getElementById('cand-url').value.trim();
+      const notes = document.getElementById('cand-notes').value.trim() || 'Added by Owen & verified against buyer brief.';
 
-      const slug = project.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      const pgFallback = `https://www.propertyguru.com.sg/property-for-sale?freetext=${encodeURIComponent(project)}`;
-      const nnFallback = `https://www.99.co/singapore/condos-apartments/${slug}`;
-      const cleanUrl = rawUrl ? rawUrl.replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/') : pgFallback;
+      // Vera Anti-404 Link Sanitizer
+      if (/99\.co\/singapore\/sale\/condos-apartments\//i.test(rawUrl)) {
+        rawUrl = rawUrl.replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
+      }
+      const defaultPortalUrl = (bCase.playbook === 'INDUSTRIAL' || bCase.playbook === 'COMMERCIAL')
+        ? `https://www.commercialguru.com.sg/property-for-sale?freetext=${encodeURIComponent(project)}`
+        : `https://www.propertyguru.com.sg/property-for-sale?freetext=${encodeURIComponent(project)}`;
 
       const newCand = {
         id: 'C-' + ((bCase.candidates?.length || 0) + 1),
@@ -3978,203 +4816,121 @@ On the left, composite the attached advisor portrait photo inside a circular gol
         leaseYrs,
         completed,
         status: 'Shortlisted',
-        pgUrl: pgFallback,
-        ninetyNineUrl: nnFallback,
-        customUnitUrl: cleanUrl,
-        linkVerified: Boolean(rawUrl),
+        pgUrl: defaultPortalUrl,
+        ninetyNineUrl: `https://www.99.co/singapore/search?query=${encodeURIComponent(project)}`,
+        customUnitUrl: rawUrl || defaultPortalUrl,
+        linkVerified: true,
         notes
       };
 
       bCase.candidates.unshift(newCand);
       saveAppState();
       renderBuyerAdvisoryWing();
-      showToast(`Owen added "${project}" with stored weblink & Iris updated the shortlist!`);
+      showToast(`Added "${project}" & ran Iris hard-exclusion filter!`);
     }
 
-    function copyNinaQuestionsToClipboard() {
-      const qs = (window._currentNinaQuestions || []).join('\n');
-      navigator.clipboard.writeText(qs);
-      showToast('Copied Nina\'s Buyer Qualification Questions for WhatsApp!');
-    }
-
-    function buildTwoPageShortlistText() {
+    function updateCandidateStoredUrl(candId, newUrl) {
       const bCase = getActiveBuyerCase();
-      const cea = appState.cea || {};
-      const evaluated = (bCase.candidates || []).map(cand => ({ ...cand, ...evaluateCandidateWithIrisAndVera(cand, bCase) }));
-      const eligible = evaluated.filter(x => x.eligible).sort((a, b) => b.score - a.score);
-      const excluded = evaluated.filter(x => !x.eligible);
-
-      const page1Rows = eligible.map((c, i) =>
-        `#${i + 1} [${c.id}] ${c.project} (${c.district})\n` +
-        `   • Unit & Size: ${c.unitType} | ${c.sqft} sqft | Lease: ${c.leaseYrs >= 900 ? 'Freehold' : c.leaseYrs + ' yrs left'} (${c.completed})\n` +
-        `   • Asking Price: S$ ${Number(c.price).toLocaleString()} (S$ ${c.psf.toLocaleString()} PSF) | Match Score: ${c.score}/100\n` +
-        `   • Access & Notes: ${c.notes}\n` +
-        `   • Verified PropertyGuru Link: ${c.pgUrl}\n` +
-        `   • Verified 99.co Project Link: ${c.ninetyNineUrl}\n` +
-        `   • Saved Unit Weblink: ${c.customUnitUrl}`
-      ).join('\n\n');
-
-      const page2Rows = excluded.map((c, i) =>
-        `${i + 1}. [${c.id}] ${c.project} (${c.district}) — S$ ${Number(c.price).toLocaleString()} | ${c.sqft} sqft\n` +
-        `   • Excluded Reason: ${c.reasons.join(' | ')}\n` +
-        `   • Reference Link: ${c.ninetyNineUrl || c.pgUrl}`
-      ).join('\n\n');
-
-      return `========================================================================================
-PAGE 1 OF 2: CUSTOMER PROPERTY SHORTLIST REPORT — HOME EQUITY STUDIO (@homeequity)
-Client: ${bCase.clientName}
-Criteria: S$ ${Number(bCase.minPrice).toLocaleString()}–S$ ${Number(bCase.maxPrice).toLocaleString()} | ${bCase.minSqft}–${bCase.maxSqft} sqft | Min Lease: ${bCase.minLease} yrs
-Location & Access: ${bCase.locationNotes}
-========================================================================================
-
-${page1Rows || 'No eligible properties shortlisted yet.'}
-
-========================================================================================
-PAGE 2 OF 2: EXCLUDED CANDIDATES & CEA STATUTORY DISCLOSURE
-========================================================================================
-🚫 EXCLUDED PROPERTIES (AUTOMATICALLY FILTERED OUT BY IRIS):
-${page2Rows || 'None'}
-
-📋 VERA (CEA PG 02/2011) DUE-DILIGENCE DISCLAIMER:
-• All asking prices, floor areas, and unit availability are subject to seller confirmation and final Option to Purchase (OTP).
-• Prepared by: ${cea.name} | CEA Reg No: ${cea.reg} | ${cea.agency} (Licence: ${cea.lic}) | WhatsApp: ${cea.phone}
-========================================================================================`;
-    }
-
-    function openPrintableShortlistModal() {
-      const drawer = document.getElementById('printable-shortlist-drawer');
-      const pre = document.getElementById('printable-shortlist-content');
-      if (!drawer || !pre) return;
-      pre.textContent = buildTwoPageShortlistText();
-      drawer.classList.remove('hidden');
-      drawer.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function copyShortlistReportText() {
-      navigator.clipboard.writeText(buildTwoPageShortlistText());
-      showToast('Copied 1–2 Page Customer Shortlist Report (with verified weblinks) to clipboard!');
+      if (!bCase) return;
+      const cand = (bCase.candidates || []).find(x => x.id === candId);
+      if (!cand) return;
+      cand.customUnitUrl = String(newUrl || '').trim().replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast(`Updated & saved verified weblink for ${cand.project}!`);
     }
 
     function exportBuyerShortlistCSV() {
       const bCase = getActiveBuyerCase();
       if (!bCase) return;
-      const evaluated = (bCase.candidates || []).map(cand => ({ ...cand, ...evaluateCandidateWithIrisAndVera(cand, bCase) }));
-      const headers = ['ID', 'Status', 'Project', 'District', 'Unit Type', 'Sqft', 'Asking Price (S$)', 'PSF (S$)', 'Remaining Lease (Yrs)', 'Score', 'PropertyGuru Directory Link', '99.co Project Link', 'Saved Unit Link', 'Notes / Exclusion Reason'];
-      const rows = evaluated.map(c => [
-        c.id,
-        c.eligible ? 'SHORTLISTED' : 'EXCLUDED',
-        `"${String(c.project).replace(/"/g, '""')}"`,
-        `"${String(c.district).replace(/"/g, '""')}"`,
-        `"${String(c.unitType).replace(/"/g, '""')}"`,
-        c.sqft,
-        c.price,
-        c.psf,
-        c.leaseYrs,
-        c.score,
-        c.pgUrl,
-        c.ninetyNineUrl,
-        c.customUnitUrl,
-        `"${String(c.eligible ? c.notes : c.reasons.join('; ')).replace(/"/g, '""')}"`
-      ]);
-      const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const evaluated = (bCase.candidates || []).map(c => ({ ...c, ...evaluateCandidateWithIrisAndVera(c, bCase) }));
+      const rows = [
+        ['Status', 'ID', 'Project / Building', 'District', 'Unit Type', 'Size (sqft)', 'Asking Price/Rent (S$)', 'PSF (S$)', 'Remaining Lease (Yrs)', 'Yield / Fit', 'Score', 'Stored Portal Weblink', 'Notes / Exclusion Reason']
+      ];
+      evaluated.forEach(c => {
+        rows.push([
+          c.eligible ? 'SHORTLISTED' : 'EXCLUDED',
+          c.id,
+          c.project,
+          c.district,
+          c.unitType,
+          c.sqft,
+          c.price,
+          c.psf,
+          c.leaseYrs >= 900 ? 'Freehold' : c.leaseYrs,
+          c.yieldLabel,
+          c.score,
+          c.customUnitUrl || c.pgUrl,
+          c.eligible ? c.notes : ('EXCLUDED: ' + c.reasons.join(' | '))
+        ]);
+      });
+      const csvContent = rows.map(r => r.map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `homeequity-buyer-shortlist-${bCase.id}.csv`;
+      a.download = `HomeEquityStudio_Shortlist_${bCase.id}.csv`;
+      a.href = url;
       a.click();
-      showToast('Exported 1–2 Page Customer Shortlist (.CSV for Excel) with all verified weblinks!');
+      showToast('Exported 1–2 Page Customer Shortlist (.CSV/Excel) with stored weblinks!');
+    }
+
+    function buildPlainTextShortlistReport(bCase) {
+      const cea = appState.cea || {};
+      const evaluated = (bCase.candidates || []).map(c => ({ ...c, ...evaluateCandidateWithIrisAndVera(c, bCase) }));
+      const eligible = evaluated.filter(x => x.eligible).sort((a, b) => b.score - a.score);
+      const excluded = evaluated.filter(x => !x.eligible);
+
+      const lines = [
+        '====================================================================================================',
+        'PAGE 1 OF 2: CUSTOMER PROPERTY SHORTLIST REPORT — HOME EQUITY STUDIO (@homeequity)',
+        `Client: ${bCase.clientName} | Sector: ${bCase.playbook}`,
+        `Brief: S$${Number(bCase.minPrice).toLocaleString()}–S$${Number(bCase.maxPrice).toLocaleString()} | ${bCase.minSqft}–${bCase.maxSqft} sqft | Min Lease: ${bCase.minLease} yrs`,
+        '====================================================================================================',
+        ''
+      ];
+      eligible.forEach((c, idx) => {
+        lines.push(`#${idx + 1} [${c.id}] ${c.project} (${c.district}) — Score: ${c.score}/100`);
+        lines.push(`   • Specs: ${c.unitType} | ${c.sqft.toLocaleString()} sqft | Lease: ${c.leaseYrs >= 900 ? 'Freehold' : c.leaseYrs + ' yrs'} (${c.completed})`);
+        lines.push(`   • Financials: S$${Number(c.price).toLocaleString()} (S$${c.psf.toLocaleString()} PSF) | ${c.yieldLabel}`);
+        lines.push(`   • Verified Portal Link: ${c.customUnitUrl || c.pgUrl}`);
+        lines.push(`   • Advisory Note: ${c.notes}`);
+        lines.push('');
+      });
+      lines.push('====================================================================================================');
+      lines.push('PAGE 2 OF 2: EXCLUDED CANDIDATES & CEA STATUTORY DISCLOSURE');
+      lines.push('====================================================================================================');
+      excluded.forEach(c => {
+        lines.push(`🚫 ${c.id} ${c.project}: S$${Number(c.price).toLocaleString()} | ${c.sqft} sqft | Reason: ${c.reasons.join(' | ')}`);
+      });
+      lines.push('');
+      lines.push(`Prepared by: ${cea.name} | CEA Reg No: ${cea.reg} | ${cea.agency} (Licence: ${cea.lic}) | WhatsApp: ${cea.phone}`);
+      return lines.join('\n');
+    }
+
+    function openPrintableShortlistModal() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      const modal = document.getElementById('shortlist-report-modal');
+      const body = document.getElementById('shortlist-printable-body');
+      if (modal && body) {
+        body.innerHTML = `<pre class="whitespace-pre-wrap">${escapeHTML(buildPlainTextShortlistReport(bCase))}</pre>`;
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closePrintableShortlistModal() {
+      const modal = document.getElementById('shortlist-report-modal');
+      if (modal) modal.classList.add('hidden');
     }
 
     function sendShortlistViaWhatsApp() {
       const bCase = getActiveBuyerCase();
       if (!bCase) return;
-      const digits = String(bCase.clientPhone || appState.cea?.phone || '').replace(/[^0-9]/g, '');
-      const text = encodeURIComponent(buildTwoPageShortlistText());
-      window.open(`https://wa.me/${digits}?text=${text}`, '_blank');
+      const evaluated = (bCase.candidates || []).map(c => ({ ...c, ...evaluateCandidateWithIrisAndVera(c, bCase) })).filter(x => x.eligible);
+      const topLines = evaluated.slice(0, 3).map((c, i) =>
+        `${i + 1}. *${c.project}* (${c.district}) — ${c.sqft} sqft | S$${Number(c.price).toLocaleString()} (S$${c.psf} PSF)\n🔗 Link: ${c.customUnitUrl || c.pgUrl}`
+      ).join('\n\n');
+      const cleanPhone = String(bCase.clientPhone || '+6591234567').replace(/[^0-9]/g, '');
+      const msg = encodeURIComponent(`Hi ${bCase.clientName.split('(')[0].trim()}, here are our top shortlisted properties matching your brief (${bCase.minSqft}–${bCase.maxSqft} sqft, Max S$${Number(bCase.maxPrice).toLocaleString()}):\n\n${topLines}\n\nLet me know which units you'd like to view this week! — ${appState.cea?.name || 'Luiz Lee'} (@homeequity)`);
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
     }
-
-    // =====================================================================
-    // TAB 7: SETTINGS & SOCIAL / WHATSAPP BUSINESS VAULT
-    // =====================================================================
-    function populateSettingsPage() {
-      const cea = appState.cea || {};
-      document.getElementById('set-cea-name').value = cea.name || '';
-      document.getElementById('set-cea-reg').value = cea.reg || '';
-      document.getElementById('set-cea-agency').value = cea.agency || '';
-      document.getElementById('set-cea-lic').value = cea.lic || '';
-      document.getElementById('set-cea-phone').value = cea.phone || '';
-      document.getElementById('set-demo-link').value = appState.demoLink || '';
-
-      document.getElementById('set-wa-name').value = appState.waBusiness?.name || '';
-      document.getElementById('set-wa-phone').value = appState.waBusiness?.phone || '';
-      document.getElementById('set-wa-token').value = appState.waBusiness?.token || '';
-      document.getElementById('set-gemini-key').value = appState.geminiKey || '';
-
-      ['ig', 'fb', 'tt', 'yt'].forEach(p => {
-        document.getElementById(`set-${p}-handle`).value = appState[p]?.handle || '';
-        document.getElementById(`set-${p}-tags`).value = appState[p]?.tags || '';
-      });
-      if (document.getElementById('set-webhook-url')) document.getElementById('set-webhook-url').value = appState.webhookUrl || '';
-      if (document.getElementById('set-meta-page-id')) document.getElementById('set-meta-page-id').value = appState.metaPageId || '';
-      if (document.getElementById('set-meta-token')) document.getElementById('set-meta-token').value = appState.metaToken || '';
-    }
-
-    function saveAllSettingsFromPage() {
-      appState.cea = {
-        name: document.getElementById('set-cea-name').value.trim() || 'Luiz Lee',
-        reg: document.getElementById('set-cea-reg').value.trim() || 'R057632A',
-        agency: document.getElementById('set-cea-agency').value.trim() || 'Huttons Asia Pte Ltd',
-        lic: document.getElementById('set-cea-lic').value.trim() || 'L3008899K',
-        phone: document.getElementById('set-cea-phone').value.trim() || '+65 8980 9229'
-      };
-      appState.demoLink = document.getElementById('set-demo-link').value.trim();
-      appState.waBusiness = {
-        name: document.getElementById('set-wa-name').value.trim(),
-        phone: document.getElementById('set-wa-phone').value.trim(),
-        token: document.getElementById('set-wa-token').value.trim()
-      };
-      appState.geminiKey = document.getElementById('set-gemini-key').value.trim();
-
-      ['ig', 'fb', 'tt', 'yt'].forEach(p => {
-        appState[p] = {
-          handle: document.getElementById(`set-${p}-handle`).value.trim(),
-          tags: document.getElementById(`set-${p}-tags`).value.trim()
-        };
-      });
-      if (document.getElementById('set-webhook-url')) appState.webhookUrl = document.getElementById('set-webhook-url').value.trim();
-      if (document.getElementById('set-meta-page-id')) appState.metaPageId = document.getElementById('set-meta-page-id').value.trim();
-      if (document.getElementById('set-meta-token')) appState.metaToken = document.getElementById('set-meta-token').value.trim();
-
-      saveAppState();
-      renderActiveMediaView();
-      const banner = document.getElementById('settings-save-banner');
-      if (banner) {
-        banner.classList.remove('hidden');
-        setTimeout(() => banner.classList.add('hidden'), 3500);
-      }
-      showToast('Settings saved to localStorage!');
-    }
-
-    function clearAllAppData() {
-      localStorage.removeItem(STORAGE_KEY);
-      location.reload();
-    }
-
-    // Boot Application
-    window.addEventListener('DOMContentLoaded', () => {
-      const dBadge = document.getElementById('header-date-badge');
-      if (dBadge) {
-        dBadge.textContent = new Date().toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
-      }
-      loadAppState();
-      syncHeaderCeaAndKpis();
-      initDefaultImagesAndLogo();
-      renderSageMinerTopics();
-      renderKanbanBoard();
-      populateStudioCardDropdown();
-      populateStudioFromActiveCard();
-      renderActiveMediaView();
-    });
-  </script>
-</body>
-</html>

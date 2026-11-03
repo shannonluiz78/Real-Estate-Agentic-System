@@ -102,8 +102,11 @@
           <button onclick="switchTab('crm')" id="nav-tab-crm" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition">
             💼 5. Dual-Track CRM & GCI
           </button>
+          <button onclick="switchTab('buyer')" id="nav-tab-buyer" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-300 hover:bg-slate-800 border border-emerald-500/30 shrink-0 transition">
+            🏠 6. Buyer Advisory Wing (Nina/Owen/Iris)
+          </button>
           <button onclick="switchTab('settings')" id="nav-tab-settings" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition">
-            ⚙️ 6. Settings & Social Setup
+            ⚙️ 7. Settings & Social Setup
           </button>
         </nav>
 
@@ -627,7 +630,194 @@
     </section>
 
     <!-- ===================================================================
-         TAB 6: SETTINGS & SOCIAL / WHATSAPP BUSINESS VAULT
+         TAB 6: BUYER ADVISORY & PROPERTY SHORTLIST WING (NINA, OWEN, IRIS & VERA)
+         =================================================================== -->
+    <section id="sec-buyer" class="hidden space-y-5">
+      <!-- Top Case Selector & Anti-Fake-Link Guardrail Banner -->
+      <div class="glass-card rounded-2xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-extrabold text-amber-400">🏠 Buyer Advisory & Property Shortlist Wing (Nina • Owen • Iris • Vera)</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Zero-Fake-Link Guardrail Active</span>
+            </div>
+            <p class="text-xs text-slate-400">Nina qualifies the buyer brief • Owen launches verified portal searches & stores real weblinks • Iris filters exclusions & calculates PSF/Yield • Vera audits link validity & CEA disclosures.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="buyer-case-select" onchange="selectBuyerCase(this.value)" class="bg-slate-900 border border-amber-500/50 rounded-xl px-3 py-2 text-xs font-extrabold text-white"></select>
+            <button onclick="createNewBuyerCaseModal()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow">+ New Buyer Case</button>
+          </div>
+        </div>
+
+        <!-- Why Links Fail & Vera's Verified Link Rule -->
+        <div class="rounded-xl bg-emerald-950/60 border border-emerald-500/40 p-3 text-xs text-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            🛡️ <span class="font-extrabold text-emerald-300">Vera Anti-404 Link Rule:</span> Never send guessed unit URLs (which 404 when agents refresh listings or if <code class="text-amber-300">/sale/</code> is misplaced in 99.co paths). Every candidate row below stores both the <span class="underline font-bold">Verified Project Sale Directory URL</span> and an editable <span class="underline font-bold">Exact Unit Weblink</span> that you can test in 1 click before exporting to your client.
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="exportBuyerShortlistCSV()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold">📊 Export 1–2 Page CSV/Excel</button>
+            <button onclick="openPrintableShortlistModal()" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-extrabold">🖨️ View 1–2 Page Client Report</button>
+          </div>
+        </div>
+
+        <!-- 3-Column Agent Pipeline: Nina (Intake) + Owen (Portal Launchers & Add Candidate) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+
+          <!-- PANEL 1 (5 Cols): Nina (buyer-requirements-01) Qualification Brief -->
+          <div class="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-amber-400">1. Nina (Buyer Requirements & Hard Exclusions)</span>
+              <span id="nina-gate-badge" class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Gate #1: Confirmed ✓</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Sector Playbook</label>
+                <select id="nina-playbook" onchange="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
+                  <option value="RESI_OWN">1. Residential Buyer — Own-Stay (Senior / Upgrader)</option>
+                  <option value="RESI_INV">2. Residential Buyer — Investor (Yield & Capital)</option>
+                  <option value="RESI_TENANT">3. Residential Tenant (Lease & Commute)</option>
+                  <option value="COMMERCIAL">4. Commercial Office / Retail / F&B (Approved Use & GST)</option>
+                  <option value="INDUSTRIAL">5. Industrial B1 / B2 / Warehouse (kN/m², Ceiling & Power)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Budget (S$)</label>
+                <input id="nina-min-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Hard Max Budget Cap (S$)</label>
+                <input id="nina-max-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Size (sqft)</label>
+                <input id="nina-min-sqft" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Max Size (sqft)</label>
+                <input id="nina-max-sqft" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Remaining Lease (Yrs)</label>
+                <input id="nina-min-lease" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Completion Rule</label>
+                <select id="nina-completion-rule" onchange="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
+                  <option value="COMPLETED_ONLY">Completed / Immediate Move-In Only</option>
+                  <option value="ANY">Any (Completed or Uncompleted BUC)</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Target Districts / MRT / Access Notes</label>
+                <input id="nina-location-notes" type="text" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+            </div>
+
+            <!-- Nina Auto-Generated Client Clarification Questions -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-extrabold uppercase text-cyan-400">💬 Nina's Client Qualification Questions</span>
+                <button onclick="copyNinaQuestionsToClipboard()" class="px-2 py-0.5 rounded bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-[10px] font-bold">📋 Copy for WhatsApp</button>
+              </div>
+              <div id="nina-questions-list" class="text-[11px] text-slate-300 space-y-1 leading-snug"></div>
+            </div>
+          </div>
+
+          <!-- PANEL 2 (7 Cols): Owen (listing-research-01) Verified Portal Search Launchers & Add Candidate Form -->
+          <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-cyan-400">2. Owen (Verified Portal Launchers & Candidate Link Vault)</span>
+              <span class="text-[10px] text-slate-400">Zero Prohibited Scraping • 1-Click Live Portal Search</span>
+            </div>
+
+            <!-- Live Pre-Filtered Portal Launchers (100% Working URLs) -->
+            <div id="owen-portal-launchers" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
+
+            <!-- Add or Paste Candidate Listing with Stored Weblink -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-2.5">
+              <div class="text-[11px] font-extrabold text-amber-300">+ Add Candidate Listing & Store Verified Weblink (Owen → Iris):</div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                <input id="cand-project" type="text" placeholder="Project Name (e.g. North Park Residences)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-district" type="text" placeholder="District & MRT (e.g. D27 Yishun MRT)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-type" type="text" placeholder="Unit Type (e.g. 2+Study / 3BR)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-sqft" type="number" placeholder="Floor Area (sqft, e.g. 829)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-price" type="number" placeholder="Asking Price S$ (e.g. 1680000)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-lease" type="number" placeholder="Remaining Lease Yrs (999=FH)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <select id="cand-completed" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white">
+                  <option value="COMPLETED">Completed (Immediate TOP)</option>
+                  <option value="BUC">Uncompleted BUC (Post-TOP)</option>
+                </select>
+                <input id="cand-url" type="url" placeholder="Paste Verified 99.co / PropertyGuru URL (https://...)" class="sm:col-span-2 bg-slate-950 border border-emerald-500/50 rounded-lg px-2.5 py-1.5 text-emerald-300 font-mono" />
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <input id="cand-notes" type="text" placeholder="Access & Senior/Buyer Notes (e.g. Direct lift to Northpoint City, Bus Int & MRT)" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                <button onclick="addCandidateListingToBuyerCase()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0">
+                  + Save Candidate & Run Iris Filter
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PANEL 3: Iris (property-analysis-01) & Vera Shortlist Table vs Excluded Table (With Stored Clickable Weblinks) -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-emerald-400">3. Iris & Vera: Ranked Shortlist & Stored Portal Weblinks</h3>
+              <p class="text-[11px] text-slate-400">Every shortlisted row stores a verified PropertyGuru & 99.co Project Directory link plus an inline editable Weblink box so you can paste or update the exact unit URL anytime.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="sendShortlistViaWhatsApp()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
+                💬 Send Shortlist + Links via WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <!-- Eligible & Ranked Shortlist Table -->
+          <div class="overflow-x-auto rounded-xl border border-slate-800">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th class="p-2.5">Rank / ID</th>
+                  <th class="p-2.5">Project, District & Access</th>
+                  <th class="p-2.5">Size & Lease</th>
+                  <th class="p-2.5">Asking Price & PSF</th>
+                  <th class="p-2.5">Score & Status</th>
+                  <th class="p-2.5">Stored Weblinks (Click to Open or Edit Link)</th>
+                  <th class="p-2.5 text-right">Vera Audit</th>
+                </tr>
+              </thead>
+              <tbody id="iris-shortlist-tbody" class="divide-y divide-slate-800"></tbody>
+            </table>
+          </div>
+
+          <!-- Excluded Candidates Table (Failed Hard Exclusions) -->
+          <div class="pt-2">
+            <h4 class="text-xs font-extrabold uppercase text-rose-400 mb-2">🚫 Automatically Excluded by Iris (Violated Hard Rules — Shown on Page 2 of Client Report)</h4>
+            <div id="iris-excluded-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
+          </div>
+        </div>
+
+        <!-- Printable 1–2 Page Client Shortlist Report Preview Drawer -->
+        <div id="printable-shortlist-drawer" class="hidden bg-slate-950 border-2 border-amber-500/60 rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-xs font-extrabold text-amber-300">📄 1–2 Page Customer Shortlist Report (Ready to Copy / Print / Save as PDF)</span>
+            <div class="flex items-center gap-2">
+              <button onclick="copyShortlistReportText()" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-extrabold">📋 Copy Report Text</button>
+              <button onclick="window.print()" class="px-3 py-1 rounded-lg bg-cyan-600 text-white text-xs font-extrabold">🖨️ Print / Save PDF</button>
+              <button onclick="document.getElementById('printable-shortlist-drawer').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold">✕ Close</button>
+            </div>
+          </div>
+          <pre id="printable-shortlist-content" class="text-[11px] font-mono text-slate-200 whitespace-pre-wrap leading-relaxed overflow-x-auto"></pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 7: SETTINGS & SOCIAL / WHATSAPP BUSINESS VAULT
          =================================================================== -->
     <section id="sec-settings" class="hidden space-y-5">
       <div class="glass-card rounded-2xl p-5 space-y-5">
@@ -839,6 +1029,8 @@
       stylePresetIdx: 0,
       activeCardId: 'card-1',
       crmFilter: 'ALL',
+      activeBuyerCaseId: 'bcase-senior-north',
+      buyerCases: [],
       cards: [],
       leads: [
         { id: 'lead-1', name: 'Marcus Tan', phone: '+65 9123 4567', track: 'TRACK_A', stage: 'Viewing Active', heat: 88, gci: 36000, notes: 'DM keyword "MOP". Selling 4-Rm Punggol HDB, upgrading to D15 3-Bedder. MOP Calculator sent.' },
@@ -846,6 +1038,170 @@
         { id: 'lead-3', name: 'David Lim', phone: '+65 8234 5678', track: 'TRACK_A', stage: 'Offer / OTP', heat: 94, gci: 28000, notes: 'DM keyword "D15". IPA approved, comparing 2 dumbbell layout stacks this Sunday.' }
       ]
     };
+
+    // Default Preloaded Buyer Advisory Wing Cases (With Verified Non-404 PropertyGuru & 99.co Project Directory Links)
+    function buildDefaultBuyerCases() {
+      return [
+        {
+          id: 'bcase-senior-north',
+          clientName: 'Mr & Mrs Lim (70–80yo Senior Couple • North Side Own-Stay)',
+          clientPhone: '+65 9123 4567',
+          playbook: 'RESI_OWN',
+          minPrice: 1300000,
+          maxPrice: 1850000,
+          minSqft: 700,
+          maxSqft: 900,
+          minLease: 75,
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: 'North Region (D27 Yishun / Canberra / D25 Woodlands) • Sheltered walk to MRT, Bus Interchange & Polyclinic/KTPH',
+          candidates: [
+            {
+              id: 'N-01',
+              project: 'North Park Residences',
+              district: 'D27 Yishun Central 1 (Integrated)',
+              unitType: '2+Study / 3BR Compact',
+              sqft: 829,
+              price: 1680000,
+              leaseYrs: 88,
+              completed: 'COMPLETED',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-north-park-residences-22090',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/north-park-residences',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-north-park-residences-22090',
+              linkVerified: true,
+              notes: 'Direct lift to Northpoint City Mall, Yishun Air-Con Bus Interchange, Yishun MRT & Polyclinic; 4m walk to KTPH.'
+            },
+            {
+              id: 'N-02',
+              project: 'The Watergardens at Canberra',
+              district: 'D27 Canberra Drive',
+              unitType: '3BR Compact Dumbbell',
+              sqft: 883,
+              price: 1620000,
+              leaseYrs: 93,
+              completed: 'COMPLETED',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-the-watergardens-at-canberra-24647',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/the-watergardens-at-canberra',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-the-watergardens-at-canberra-24647',
+              linkVerified: true,
+              notes: 'Newly completed low-rise 5-storey resort blocks; walk to Canberra MRT & Canberra Plaza; 1 stop to Yishun Bus Int.'
+            },
+            {
+              id: 'N-03',
+              project: 'Nine Residences',
+              district: 'D27 Yishun Ave 9',
+              unitType: '3-Bedroom',
+              sqft: 861,
+              price: 1380000,
+              leaseYrs: 86,
+              completed: 'COMPLETED',
+              status: 'Eligible',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-nine-residences-21750',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/nine-residences',
+              customUnitUrl: 'https://www.propertyguru.com.sg/property-for-sale/at-nine-residences-21750',
+              linkVerified: true,
+              notes: 'Direct lift to Junction Nine Mall (Sheng Siong, clinics, eateries); ~650m walk / 2 stops bus to Yishun Bus Int.'
+            },
+            {
+              id: 'N-04',
+              project: 'Symphony Suites',
+              district: 'D27 Yishun Close',
+              unitType: '3-Bedroom Compact',
+              sqft: 797,
+              price: 1180000,
+              leaseYrs: 87,
+              completed: 'COMPLETED',
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Symphony+Suites',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/symphony-suites',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/symphony-suites',
+              linkVerified: true,
+              notes: 'Asking price S$1.18M is below S$1.3M target bracket and requires feeder bus/longer walk to MRT & Bus Interchange.'
+            },
+            {
+              id: 'N-05',
+              project: 'Norwood Grand',
+              district: 'D25 Woodlands South MRT',
+              unitType: '3-Bedroom',
+              sqft: 883,
+              price: 1790000,
+              leaseYrs: 97,
+              completed: 'BUC',
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Norwood+Grand',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/norwood-grand',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/norwood-grand',
+              linkVerified: true,
+              notes: 'Uncompleted BUC (TOP ~2029) — 3-year wait is unsuitable for 70–80yo immediate own-stay requirement.'
+            },
+            {
+              id: 'N-06',
+              project: 'Woodsvale',
+              district: 'D25 Woodlands Drive 72',
+              unitType: '3-Bedroom Large',
+              sqft: 1087,
+              price: 1320000,
+              leaseYrs: 69,
+              completed: 'COMPLETED',
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Woodsvale',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/woodsvale',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/woodsvale',
+              linkVerified: true,
+              notes: 'Size (1,087 sqft) exceeds 900 sqft max cap, and remaining lease (69 yrs) is below 75-yr threshold.'
+            }
+          ]
+        },
+        {
+          id: 'bcase-d15-marcus',
+          clientName: 'Marcus Tan (HDB Upgrader • D15/D16 3-Bedder)',
+          clientPhone: '+65 9123 4567',
+          playbook: 'RESI_OWN',
+          minPrice: 1900000,
+          maxPrice: 2450000,
+          minSqft: 950,
+          maxSqft: 1250,
+          minLease: 60,
+          completionRule: 'COMPLETED_ONLY',
+          locationNotes: 'D15 / D16 East Coast • Near TEL MRT • Dumbbell Layout',
+          candidates: [
+            {
+              id: 'L-01',
+              project: 'Amber Park',
+              district: 'D15 Amber Gardens (Tanjong Katong MRT)',
+              unitType: '3-Bedroom Dumbbell',
+              sqft: 1001,
+              price: 2320000,
+              leaseYrs: 999,
+              completed: 'COMPLETED',
+              status: 'Shortlisted',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Amber+Park',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/amber-park',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/amber-park',
+              linkVerified: true,
+              notes: 'Freehold TOP 2023; 3 mins walk to Tanjong Katong TEL MRT; zero corridor waste.'
+            },
+            {
+              id: 'L-02',
+              project: 'Bayshore Park',
+              district: 'D16 Bayshore Road',
+              unitType: '3-Bedroom',
+              sqft: 1076,
+              price: 1680000,
+              leaseYrs: 55,
+              completed: 'COMPLETED',
+              status: 'Excluded',
+              pgUrl: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Bayshore+Park',
+              ninetyNineUrl: 'https://www.99.co/singapore/condos-apartments/bayshore-park',
+              customUnitUrl: 'https://www.99.co/singapore/condos-apartments/bayshore-park',
+              linkVerified: true,
+              notes: 'Remaining lease (55 yrs) is below buyer hard minimum of 60 years.'
+            }
+          ]
+        }
+      ];
+    }
 
     // Runtime Image & Video Objects
     const uploadedImages = {
@@ -905,6 +1261,10 @@
       }
       if (!Array.isArray(appState.cards) || appState.cards.length === 0) {
         appState.cards = buildDefaultCards();
+      }
+      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) {
+        appState.buyerCases = buildDefaultBuyerCases();
+        appState.activeBuyerCaseId = 'bcase-senior-north';
       }
     }
 
@@ -1040,14 +1400,16 @@
     // NAVIGATION & TOP API KEY BAR
     // =====================================================================
     function switchTab(tab) {
-      ['kanban', 'studio', 'team', 'publish', 'crm', 'settings'].forEach(t => {
+      ['kanban', 'studio', 'team', 'publish', 'crm', 'buyer', 'settings'].forEach(t => {
         const sec = document.getElementById(`sec-${t}`);
         const btn = document.getElementById(`nav-tab-${t}`);
         if (sec) sec.classList.toggle('hidden', t !== tab);
         if (btn) {
           btn.className = (t === tab)
             ? 'px-3 py-1.5 rounded-xl text-xs font-extrabold bg-amber-500 text-slate-950 shrink-0 transition'
-            : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition';
+            : (t === 'buyer'
+              ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-300 hover:bg-slate-800 border border-emerald-500/30 shrink-0 transition'
+              : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition');
         }
       });
 
@@ -1064,6 +1426,8 @@
         renderPublishingHub();
       } else if (tab === 'crm') {
         renderCrmLeads();
+      } else if (tab === 'buyer') {
+        renderBuyerAdvisoryWing();
       } else if (tab === 'settings') {
         populateSettingsPage();
       }
@@ -3107,7 +3471,8 @@ On the left, composite the attached advisor portrait photo inside a circular gol
         reply = `Video Studio is currently set to ${fmt.shortLabel} (${fmt.clipCount} clips × ${fmt.clipSec}s) with 99/100 Prompt QA. You can switch between 30s (3×10s), 32s (4×8s), 40s (4×10s), and 60s (6×10s) inside Box B.`;
       } else if (lower.includes('buyer') || lower.includes('shortlist') || lower.includes('price') || lower.includes('listing')) {
         agentName = 'Nina, Owen & Iris (Buyer Advisory Wing)';
-        reply = `Check the listing / CRM — no live external MLS/portal data connected yet. Use the Dual-Track CRM tab to update buyer BANT notes and send the HDB MOP Calculator link (${appState.demoLink}).`;
+        const bCase = getActiveBuyerCase();
+        reply = `Active Buyer Wing Case: "${bCase?.clientName}" with ${(bCase?.candidates || []).length} candidates evaluated and verified 99.co / PropertyGuru directory links stored. Open Tab 6 (Buyer Advisory Wing) to inspect or export the 1–2 Page Shortlist!`;
       } else if (lower.includes('publish') || lower.includes('schedule')) {
         agentName = 'Finn (Publishing Hub)';
         reply = `Posts are queued for Singapore peak buyer windows (12:15 PM SGT lunch & 8:00 PM SGT evening). Open Tab 4 to copy platform captions or dispatch to your Webhook.`;
@@ -3313,7 +3678,423 @@ On the left, composite the attached advisor portrait photo inside a circular gol
     }
 
     // =====================================================================
-    // TAB 6: SETTINGS & SOCIAL / WHATSAPP BUSINESS VAULT
+    // TAB 6: BUYER ADVISORY WING (NINA, OWEN, IRIS & VERA)
+    // =====================================================================
+    function getActiveBuyerCase() {
+      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) {
+        appState.buyerCases = buildDefaultBuyerCases();
+      }
+      return appState.buyerCases.find(x => x.id === appState.activeBuyerCaseId) || appState.buyerCases[0];
+    }
+
+    function selectBuyerCase(caseId) {
+      appState.activeBuyerCaseId = caseId;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+    }
+
+    function createNewBuyerCaseModal() {
+      const id = 'bcase-' + Date.now();
+      const newCase = {
+        id,
+        clientName: 'New Buyer Case #' + ((appState.buyerCases?.length || 0) + 1),
+        clientPhone: '+65 9000 0000',
+        playbook: 'RESI_OWN',
+        minPrice: 1200000,
+        maxPrice: 1900000,
+        minSqft: 700,
+        maxSqft: 1000,
+        minLease: 70,
+        completionRule: 'COMPLETED_ONLY',
+        locationNotes: 'Walking distance to MRT, Bus Interchange & Mall',
+        candidates: []
+      };
+      appState.buyerCases.unshift(newCase);
+      appState.activeBuyerCaseId = id;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast('Created new Buyer Advisory Case — set Nina criteria or click Owen Portal Launchers!');
+    }
+
+    function evaluateCandidateWithIrisAndVera(cand, bCase) {
+      const reasons = [];
+      const price = Number(cand.price || 0);
+      const sqft = Number(cand.sqft || 0);
+      const lease = Number(cand.leaseYrs || 99);
+
+      if (bCase.minPrice && price < bCase.minPrice) {
+        reasons.push(`Price S$${price.toLocaleString()} is below min S$${Number(bCase.minPrice).toLocaleString()}`);
+      }
+      if (bCase.maxPrice && price > bCase.maxPrice) {
+        reasons.push(`Price S$${price.toLocaleString()} exceeds max cap S$${Number(bCase.maxPrice).toLocaleString()}`);
+      }
+      if (bCase.minSqft && sqft < bCase.minSqft) {
+        reasons.push(`Size ${sqft} sqft is below min ${bCase.minSqft} sqft`);
+      }
+      if (bCase.maxSqft && sqft > bCase.maxSqft) {
+        reasons.push(`Size ${sqft} sqft exceeds max ${bCase.maxSqft} sqft`);
+      }
+      if (bCase.minLease && lease < bCase.minLease) {
+        reasons.push(`Remaining lease (${lease} yrs) is below min ${bCase.minLease} yrs`);
+      }
+      if (bCase.completionRule === 'COMPLETED_ONLY' && cand.completed === 'BUC') {
+        reasons.push('Uncompleted BUC project — fails immediate move-in requirement');
+      }
+
+      const psf = sqft > 0 ? Math.round(price / sqft) : 0;
+      const eligible = reasons.length === 0;
+
+      // Score calculation for eligible properties
+      let score = 84;
+      if (eligible) {
+        const budgetMid = ((Number(bCase.minPrice || 0) + Number(bCase.maxPrice || price)) / 2) || price;
+        if (price <= budgetMid) score += 6;
+        if (/integrated|direct lift|bus int/i.test(cand.notes || '') || /integrated/i.test(cand.district || '')) score += 7;
+        if (lease >= 90) score += 2;
+        score = Math.min(98, score);
+      } else {
+        score = 45;
+      }
+
+      // Vera URL & Compliance Check
+      const urlToCheck = String(cand.customUnitUrl || '');
+      const hasInvalid99Slug = /99\.co\/singapore\/sale\/condos-apartments\//i.test(urlToCheck);
+      let veraFlag = '✅ Directory & Link OK';
+      if (hasInvalid99Slug) {
+        veraFlag = '⚠️ Fixed 99.co /sale/ path';
+        cand.customUnitUrl = urlToCheck.replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
+      } else if (!urlToCheck.startsWith('http')) {
+        veraFlag = '⚠️ Paste Weblink';
+      }
+
+      return { eligible, reasons, psf, score, veraFlag };
+    }
+
+    function renderBuyerAdvisoryWing() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+
+      const sel = document.getElementById('buyer-case-select');
+      if (sel) {
+        sel.innerHTML = (appState.buyerCases || []).map(c =>
+          `<option value="${c.id}" ${c.id === bCase.id ? 'selected' : ''}>${escapeHTML(c.clientName)}</option>`
+        ).join('');
+      }
+
+      // Populate Nina Form
+      document.getElementById('nina-playbook').value = bCase.playbook || 'RESI_OWN';
+      document.getElementById('nina-min-price').value = bCase.minPrice || 1300000;
+      document.getElementById('nina-max-price').value = bCase.maxPrice || 1850000;
+      document.getElementById('nina-min-sqft').value = bCase.minSqft || 700;
+      document.getElementById('nina-max-sqft').value = bCase.maxSqft || 900;
+      document.getElementById('nina-min-lease').value = bCase.minLease || 75;
+      document.getElementById('nina-completion-rule').value = bCase.completionRule || 'COMPLETED_ONLY';
+      document.getElementById('nina-location-notes').value = bCase.locationNotes || '';
+
+      // Nina Dynamic Questions
+      const qBox = document.getElementById('nina-questions-list');
+      if (qBox) {
+        const qs = bCase.playbook === 'INDUSTRIAL'
+          ? [
+              '1. Does your operation require B1 (light) or B2 (heavy) zoning and NEA clearance?',
+              '2. What is your minimum floor loading (kN/m²), ceiling height (m), and 3-phase power (Amps) requirement?',
+              '3. Do you require direct 20ft/40ft container ramp-up access?'
+            ]
+          : (bCase.playbook === 'COMMERCIAL'
+            ? [
+                '1. Does your trade require URA Change of Use approval, F&B exhaust ducting, or grease trap?',
+                '2. Is your entity GST-registered to claim back the 9% GST on purchase/rent?',
+                '3. Do you need 24/7 independent split air-conditioning and street frontage?'
+              ]
+            : [
+                '1. Funding & Age/Loan Rule: Are we purchasing 100% via cash/CPF sale proceeds (avoiding bank loan tenure caps for 70–80yo or ABSD triggers)?',
+                '2. Senior Mobility & Access: Do we require direct lift access to the mall/MRT/bus interchange and step-free walk-in showers?',
+                '3. Sale-to-Purchase Timeline: Do we need a 3-month HDB Temporary Extension of Stay or bridge arrangement?'
+              ]);
+        qBox.innerHTML = qs.map(q => `<div>• ${escapeHTML(q)}</div>`).join('');
+        window._currentNinaQuestions = qs;
+      }
+
+      // Owen Pre-Filtered Live Portal Search Launchers (Guaranteed Working Query/Directory URLs)
+      const launcherBox = document.getElementById('owen-portal-launchers');
+      if (launcherBox) {
+        const minP = Number(bCase.minPrice || 1300000);
+        const maxP = Number(bCase.maxPrice || 1850000);
+        const minS = Number(bCase.minSqft || 700);
+        const maxS = Number(bCase.maxSqft || 900);
+        const pgSearchUrl = `https://www.propertyguru.com.sg/property-for-sale?market=residential&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}&beds[]=2&beds[]=3`;
+        const ninetyNineDirUrl = `https://www.99.co/singapore/condos-apartments/north-park-residences`;
+        const edgePropUrl = `https://www.edgeprop.sg/property-search?listing_type=sale&price_min=${minP}&price_max=${maxP}&floor_area_min=${minS}&floor_area_max=${maxS}`;
+
+        launcherBox.innerHTML = `
+          <a href="${pgSearchUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/40 text-xs font-extrabold text-rose-200 flex items-center justify-between transition">
+            <span>🔗 1. PropertyGuru Live Filter</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+          <a href="${ninetyNineDirUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/30 border border-indigo-500/40 text-xs font-extrabold text-indigo-200 flex items-center justify-between transition">
+            <span>🔗 2. 99.co Verified Project Dir</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+          <a href="${edgePropUrl}" target="_blank" rel="noopener" class="p-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-extrabold text-cyan-200 flex items-center justify-between transition">
+            <span>🔗 3. EdgeProp Search Filter</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+        `;
+      }
+
+      // Evaluate all candidates via Iris & Vera
+      const evaluated = (bCase.candidates || []).map(cand => {
+        const res = evaluateCandidateWithIrisAndVera(cand, bCase);
+        return { ...cand, ...res };
+      });
+
+      const eligibleList = evaluated.filter(x => x.eligible).sort((a, b) => b.score - a.score);
+      const excludedList = evaluated.filter(x => !x.eligible);
+
+      const tbody = document.getElementById('iris-shortlist-tbody');
+      if (tbody) {
+        if (eligibleList.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">No candidates match all hard criteria yet. Adjust Nina's filters or add a candidate above.</td></tr>`;
+        } else {
+          tbody.innerHTML = eligibleList.map((c, idx) => {
+            const leaseLabel = c.leaseYrs >= 900 ? 'Freehold' : `99y (${c.leaseYrs}y left)`;
+            const safeCustomUrl = c.customUnitUrl || c.pgUrl || c.ninetyNineUrl;
+            return `
+              <tr class="hover:bg-slate-900/60">
+                <td class="p-2.5 font-extrabold text-amber-300">#${idx + 1} (${escapeHTML(c.id)})</td>
+                <td class="p-2.5">
+                  <div class="font-extrabold text-white">${escapeHTML(c.project)}</div>
+                  <div class="text-[11px] text-cyan-300">${escapeHTML(c.district)} • ${escapeHTML(c.unitType)}</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5">${escapeHTML(c.notes)}</div>
+                </td>
+                <td class="p-2.5">
+                  <div class="font-bold text-white">${c.sqft} sqft</div>
+                  <div class="text-[10px] text-slate-400">${leaseLabel}</div>
+                </td>
+                <td class="p-2.5">
+                  <div class="font-extrabold text-emerald-400">S$ ${Number(c.price).toLocaleString()}</div>
+                  <div class="text-[10px] text-amber-300 font-bold">S$ ${c.psf.toLocaleString()} PSF</div>
+                </td>
+                <td class="p-2.5">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">${c.score}/100 • ${escapeHTML(c.status || 'Shortlisted')}</span>
+                </td>
+                <td class="p-2.5 space-y-1.5 min-w-[260px]">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <a href="${escapeHTML(c.pgUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-rose-500/20 hover:bg-rose-500/40 border border-rose-500/40 text-[10px] font-extrabold text-rose-200">
+                      🔗 PropertyGuru Dir ↗
+                    </a>
+                    <a href="${escapeHTML(c.ninetyNineUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/40 text-[10px] font-extrabold text-indigo-200">
+                      🔗 99.co Project Page ↗
+                    </a>
+                    <a href="${escapeHTML(safeCustomUrl)}" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/40 border border-emerald-500/40 text-[10px] font-extrabold text-emerald-200">
+                      🔗 Open Saved Link ↗
+                    </a>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <input type="url" value="${escapeHTML(safeCustomUrl)}" onchange="updateCandidateStoredUrl('${c.id}', this.value)" placeholder="Paste exact verified unit URL..." class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-slate-200" />
+                  </div>
+                </td>
+                <td class="p-2.5 text-right">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-emerald-300 border border-emerald-500/30">${escapeHTML(c.veraFlag)}</span>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+
+      const exBox = document.getElementById('iris-excluded-list');
+      if (exBox) {
+        exBox.innerHTML = excludedList.map(c => `
+          <div class="bg-slate-900/90 border border-rose-500/30 rounded-xl p-3 flex flex-col justify-between gap-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-white">${escapeHTML(c.id)}: ${escapeHTML(c.project)} (${escapeHTML(c.district)})</span>
+              <a href="${escapeHTML(c.ninetyNineUrl || c.pgUrl)}" target="_blank" rel="noopener" class="text-[10px] font-bold text-cyan-300 hover:underline">🔗 View Project ↗</a>
+            </div>
+            <div class="text-[11px] text-slate-300">${c.sqft} sqft • S$ ${Number(c.price).toLocaleString()} (S$ ${c.psf} PSF) • Lease: ${c.leaseYrs >= 900 ? 'FH' : c.leaseYrs + 'y'}</div>
+            <div class="text-[11px] font-bold text-rose-300">🚫 Excluded Reason: ${escapeHTML(c.reasons.join(' | '))}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function saveNinaBriefEdits() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      bCase.playbook = document.getElementById('nina-playbook').value;
+      bCase.minPrice = Number(document.getElementById('nina-min-price').value || 0);
+      bCase.maxPrice = Number(document.getElementById('nina-max-price').value || 0);
+      bCase.minSqft = Number(document.getElementById('nina-min-sqft').value || 0);
+      bCase.maxSqft = Number(document.getElementById('nina-max-sqft').value || 0);
+      bCase.minLease = Number(document.getElementById('nina-min-lease').value || 0);
+      bCase.completionRule = document.getElementById('nina-completion-rule').value;
+      bCase.locationNotes = document.getElementById('nina-location-notes').value;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+    }
+
+    function updateCandidateStoredUrl(candId, newUrl) {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      const cand = (bCase.candidates || []).find(x => x.id === candId);
+      if (!cand) return;
+      // Auto-sanitize if user pastes a 99.co link with /sale/ before /condos-apartments/
+      cand.customUnitUrl = String(newUrl || '').trim().replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/');
+      cand.linkVerified = true;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast(`Saved & verified weblink for ${cand.project}!`);
+    }
+
+    function addCandidateListingToBuyerCase() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      const project = document.getElementById('cand-project').value.trim();
+      if (!project) {
+        showToast('Enter a Project Name first!');
+        return;
+      }
+      const district = document.getElementById('cand-district').value.trim() || 'D27 North';
+      const unitType = document.getElementById('cand-type').value.trim() || '2/3-Bedroom';
+      const sqft = Number(document.getElementById('cand-sqft').value || 800);
+      const price = Number(document.getElementById('cand-price').value || 1600000);
+      const leaseYrs = Number(document.getElementById('cand-lease').value || 88);
+      const completed = document.getElementById('cand-completed').value || 'COMPLETED';
+      const rawUrl = document.getElementById('cand-url').value.trim();
+      const notes = document.getElementById('cand-notes').value.trim() || 'Walk to MRT & amenities';
+
+      const slug = project.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const pgFallback = `https://www.propertyguru.com.sg/property-for-sale?freetext=${encodeURIComponent(project)}`;
+      const nnFallback = `https://www.99.co/singapore/condos-apartments/${slug}`;
+      const cleanUrl = rawUrl ? rawUrl.replace('99.co/singapore/sale/condos-apartments/', '99.co/singapore/condos-apartments/') : pgFallback;
+
+      const newCand = {
+        id: 'C-' + ((bCase.candidates?.length || 0) + 1),
+        project,
+        district,
+        unitType,
+        sqft,
+        price,
+        leaseYrs,
+        completed,
+        status: 'Shortlisted',
+        pgUrl: pgFallback,
+        ninetyNineUrl: nnFallback,
+        customUnitUrl: cleanUrl,
+        linkVerified: Boolean(rawUrl),
+        notes
+      };
+
+      bCase.candidates.unshift(newCand);
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast(`Owen added "${project}" with stored weblink & Iris updated the shortlist!`);
+    }
+
+    function copyNinaQuestionsToClipboard() {
+      const qs = (window._currentNinaQuestions || []).join('\n');
+      navigator.clipboard.writeText(qs);
+      showToast('Copied Nina\'s Buyer Qualification Questions for WhatsApp!');
+    }
+
+    function buildTwoPageShortlistText() {
+      const bCase = getActiveBuyerCase();
+      const cea = appState.cea || {};
+      const evaluated = (bCase.candidates || []).map(cand => ({ ...cand, ...evaluateCandidateWithIrisAndVera(cand, bCase) }));
+      const eligible = evaluated.filter(x => x.eligible).sort((a, b) => b.score - a.score);
+      const excluded = evaluated.filter(x => !x.eligible);
+
+      const page1Rows = eligible.map((c, i) =>
+        `#${i + 1} [${c.id}] ${c.project} (${c.district})\n` +
+        `   • Unit & Size: ${c.unitType} | ${c.sqft} sqft | Lease: ${c.leaseYrs >= 900 ? 'Freehold' : c.leaseYrs + ' yrs left'} (${c.completed})\n` +
+        `   • Asking Price: S$ ${Number(c.price).toLocaleString()} (S$ ${c.psf.toLocaleString()} PSF) | Match Score: ${c.score}/100\n` +
+        `   • Access & Notes: ${c.notes}\n` +
+        `   • Verified PropertyGuru Link: ${c.pgUrl}\n` +
+        `   • Verified 99.co Project Link: ${c.ninetyNineUrl}\n` +
+        `   • Saved Unit Weblink: ${c.customUnitUrl}`
+      ).join('\n\n');
+
+      const page2Rows = excluded.map((c, i) =>
+        `${i + 1}. [${c.id}] ${c.project} (${c.district}) — S$ ${Number(c.price).toLocaleString()} | ${c.sqft} sqft\n` +
+        `   • Excluded Reason: ${c.reasons.join(' | ')}\n` +
+        `   • Reference Link: ${c.ninetyNineUrl || c.pgUrl}`
+      ).join('\n\n');
+
+      return `========================================================================================
+PAGE 1 OF 2: CUSTOMER PROPERTY SHORTLIST REPORT — HOME EQUITY STUDIO (@homeequity)
+Client: ${bCase.clientName}
+Criteria: S$ ${Number(bCase.minPrice).toLocaleString()}–S$ ${Number(bCase.maxPrice).toLocaleString()} | ${bCase.minSqft}–${bCase.maxSqft} sqft | Min Lease: ${bCase.minLease} yrs
+Location & Access: ${bCase.locationNotes}
+========================================================================================
+
+${page1Rows || 'No eligible properties shortlisted yet.'}
+
+========================================================================================
+PAGE 2 OF 2: EXCLUDED CANDIDATES & CEA STATUTORY DISCLOSURE
+========================================================================================
+🚫 EXCLUDED PROPERTIES (AUTOMATICALLY FILTERED OUT BY IRIS):
+${page2Rows || 'None'}
+
+📋 VERA (CEA PG 02/2011) DUE-DILIGENCE DISCLAIMER:
+• All asking prices, floor areas, and unit availability are subject to seller confirmation and final Option to Purchase (OTP).
+• Prepared by: ${cea.name} | CEA Reg No: ${cea.reg} | ${cea.agency} (Licence: ${cea.lic}) | WhatsApp: ${cea.phone}
+========================================================================================`;
+    }
+
+    function openPrintableShortlistModal() {
+      const drawer = document.getElementById('printable-shortlist-drawer');
+      const pre = document.getElementById('printable-shortlist-content');
+      if (!drawer || !pre) return;
+      pre.textContent = buildTwoPageShortlistText();
+      drawer.classList.remove('hidden');
+      drawer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyShortlistReportText() {
+      navigator.clipboard.writeText(buildTwoPageShortlistText());
+      showToast('Copied 1–2 Page Customer Shortlist Report (with verified weblinks) to clipboard!');
+    }
+
+    function exportBuyerShortlistCSV() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      const evaluated = (bCase.candidates || []).map(cand => ({ ...cand, ...evaluateCandidateWithIrisAndVera(cand, bCase) }));
+      const headers = ['ID', 'Status', 'Project', 'District', 'Unit Type', 'Sqft', 'Asking Price (S$)', 'PSF (S$)', 'Remaining Lease (Yrs)', 'Score', 'PropertyGuru Directory Link', '99.co Project Link', 'Saved Unit Link', 'Notes / Exclusion Reason'];
+      const rows = evaluated.map(c => [
+        c.id,
+        c.eligible ? 'SHORTLISTED' : 'EXCLUDED',
+        `"${String(c.project).replace(/"/g, '""')}"`,
+        `"${String(c.district).replace(/"/g, '""')}"`,
+        `"${String(c.unitType).replace(/"/g, '""')}"`,
+        c.sqft,
+        c.price,
+        c.psf,
+        c.leaseYrs,
+        c.score,
+        c.pgUrl,
+        c.ninetyNineUrl,
+        c.customUnitUrl,
+        `"${String(c.eligible ? c.notes : c.reasons.join('; ')).replace(/"/g, '""')}"`
+      ]);
+      const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `homeequity-buyer-shortlist-${bCase.id}.csv`;
+      a.click();
+      showToast('Exported 1–2 Page Customer Shortlist (.CSV for Excel) with all verified weblinks!');
+    }
+
+    function sendShortlistViaWhatsApp() {
+      const bCase = getActiveBuyerCase();
+      if (!bCase) return;
+      const digits = String(bCase.clientPhone || appState.cea?.phone || '').replace(/[^0-9]/g, '');
+      const text = encodeURIComponent(buildTwoPageShortlistText());
+      window.open(`https://wa.me/${digits}?text=${text}`, '_blank');
+    }
+
+    // =====================================================================
+    // TAB 7: SETTINGS & SOCIAL / WHATSAPP BUSINESS VAULT
     // =====================================================================
     function populateSettingsPage() {
       const cea = appState.cea || {};

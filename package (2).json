@@ -1,0 +1,10 @@
+{
+  "name": "agentzug-v4-7-home-equity-studio",
+  "version": "4.7.0",
+  "description": "AgentZug V4.7 (Home Equity Studio Edition) \u2014 14-Agent Google Ecosystem Command Chain, Veo 3.1-Lite & Omni 1.2 Flash Pipeline, CEA 02/2011 Compliance",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "npx serve ."
+  }
+}

@@ -1,10 +1,13 @@
 /**
  * AgentZug V4.7 — /api/video/start
- * Async Video Clip Generation Starter for Vercel & Google Cloud Run
+ * Live Gemini Omni 1.2 Flash (gemini-omni-1.2-flash) Async Video Starter
  *
- * Uses GEMINI_API_KEY and gemini-omni-1.2-flash (:predictLongRunning / generateContent)
- * so each 8s-15s storyboard scene can be generated asynchronously without hitting
- * Vercel serverless function timeouts.
+ * - Calls https://generativelanguage.googleapis.com/v1beta/models/gemini-omni-1.2-flash:predictLongRunning
+ *   using GEMINI_API_KEY.
+ * - When mode === "AVATAR_REF", attaches the uploaded advisor headshot as an inlineData reference image
+ *   alongside the scene's spoken script and prompt.
+ * - Surfaces exact HTTP status codes and Google API error messages if the call fails or is unavailable
+ *   on the current key (never silently masking errors as "Ready").
  */
 
 const CREDIT_LIMIT_SGD = parseFloat(process.env.MONTHLY_CLOUD_CREDIT_LIMIT_SGD || "12.83");
@@ -28,10 +31,10 @@ export default async function handler(req, res) {
     sceneIndex = 0,
     sceneTitle = "Scene 1: Hook",
     prompt = "",
+    spokenScript = "",
     durationSec = 10,
     mode = "AVATAR_REF", // "AVATAR_REF" | "BROLL"
     advisorAvatarDataUri = null,
-    topic = "",
     currentSpendSgd = 3.42
   } = req.body || {};
 
@@ -41,13 +44,11 @@ export default async function handler(req, res) {
   // SP-12 Credit Cap Guardrail
   if (spend >= CREDIT_LIMIT_SGD || (spend + estCost) > CREDIT_LIMIT_SGD) {
     return res.status(200).json({
-      ok: true,
-      status: "FALLBACK_READY",
-      source: "curated-fallback",
-      operationId: `fallback-${Date.now()}-${sceneIndex}`,
+      ok: false,
+      status: "FAILED",
+      httpStatus: 402,
+      error: `SP-12 Credit Cap (S$${CREDIT_LIMIT_SGD.toFixed(2)}/mo) reached — use Manual Backup Flow`,
       model: OMNI_VIDEO_MODEL,
-      estimatedCostSgd: 0,
-      fallbackReason: `SP-12 credit cap (S$${CREDIT_LIMIT_SGD.toFixed(2)}/mo) reached — using In-App Canvas + Nano Banana 2 Lite scene`,
       triggerManualBackupDrawer: true
     });
   }
@@ -55,30 +56,34 @@ export default async function handler(req, res) {
   const geminiKey = process.env.GEMINI_API_KEY || "";
   if (!geminiKey) {
     return res.status(200).json({
-      ok: true,
-      status: "FALLBACK_READY",
-      source: "curated-fallback",
-      operationId: `local-${Date.now()}-${sceneIndex}`,
-      model: OMNI_VIDEO_MODEL,
-      estimatedCostSgd: 0,
-      fallbackReason: "GEMINI_API_KEY not configured on server — using In-App 60fps Canvas Compositor"
+      ok: false,
+      status: "FAILED",
+      httpStatus: 401,
+      error: "HTTP 401: GEMINI_API_KEY missing in Vercel .env",
+      model: OMNI_VIDEO_MODEL
     });
   }
 
   try {
-    // Call Gemini API predictLongRunning for gemini-omni-1.2-flash
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(OMNI_VIDEO_MODEL)}:predictLongRunning?key=${encodeURIComponent(geminiKey)}`;
 
+    const fullPrompt = spokenScript
+      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone): "${spokenScript}"\nStrictly no burned-in text, no captions, no watermarks, no logos.`
+      : `${prompt}\nStrictly no burned-in text, no captions, no watermarks, no logos.`;
+
     const instancePayload = {
-      prompt: `${prompt} Strictly no burned-in text, no captions, no watermarks, no logos.`
+      prompt: fullPrompt
     };
 
+    // Pass uploaded advisor headshot as inlineData reference image when in Advisor Avatar Reference mode
     if (mode === "AVATAR_REF" && advisorAvatarDataUri && advisorAvatarDataUri.startsWith("data:image/")) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
       if (match) {
         instancePayload.image = {
-          bytesBase64Encoded: match[2],
-          mimeType: match[1]
+          inlineData: {
+            mimeType: match[1],
+            data: match[2]
+          }
         };
       }
     }
@@ -96,53 +101,60 @@ export default async function handler(req, res) {
       })
     });
 
-    if (resp.ok) {
-      const opData = await resp.json();
-      if (opData && opData.name) {
-        return res.status(200).json({
-          ok: true,
-          status: "RUNNING",
-          source: "gemini-omni-1.2-flash",
-          operationId: opData.name,
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          sceneTitle,
-          mode,
-          durationSec,
-          estimatedCostSgd: estCost,
-          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
-        });
+    if (!resp.ok) {
+      let apiErrMsg = `HTTP ${resp.status}`;
+      try {
+        const errJson = await resp.json();
+        const detail = errJson?.error?.message || JSON.stringify(errJson);
+        apiErrMsg = `HTTP ${resp.status}: ${detail.slice(0, 180)}`;
+      } catch (e) {
+        const errTxt = await resp.text().catch(() => "");
+        apiErrMsg = `HTTP ${resp.status}: ${errTxt.slice(0, 180) || resp.statusText}`;
       }
+
+      return res.status(200).json({
+        ok: false,
+        status: "FAILED",
+        httpStatus: resp.status,
+        error: apiErrMsg,
+        model: OMNI_VIDEO_MODEL,
+        sceneIndex
+      });
     }
 
-    const errText = await resp.text().catch(() => "");
-    // Graceful async fallback token so /api/video/status can synthesize a topic-matched Nano Banana 2 Lite visual if predictLongRunning isn't enabled on the key
-    const encodedMeta = Buffer.from(JSON.stringify({
-      sceneIndex,
-      mode,
-      topic: topic || sceneTitle,
-      prompt: prompt.slice(0, 320)
-    })).toString("base64url");
+    const opData = await resp.json();
+    if (!opData || !opData.name) {
+      return res.status(200).json({
+        ok: false,
+        status: "FAILED",
+        httpStatus: 502,
+        error: "HTTP 502: Gemini API did not return an async operation name",
+        model: OMNI_VIDEO_MODEL,
+        sceneIndex
+      });
+    }
 
     return res.status(200).json({
       ok: true,
       status: "RUNNING",
-      source: "omni-hybrid-async",
-      operationId: `hybrid.${encodedMeta}`,
+      source: OMNI_VIDEO_MODEL,
+      operationId: opData.name,
       model: OMNI_VIDEO_MODEL,
       sceneIndex,
-      estimatedCostSgd: 0.02,
-      apiNote: `HTTP ${resp.status}: ${errText.slice(0, 120)}`
+      sceneTitle,
+      mode,
+      durationSec,
+      estimatedCostSgd: estCost,
+      triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
     });
   } catch (err) {
     return res.status(200).json({
-      ok: true,
-      status: "FALLBACK_READY",
-      source: "curated-fallback",
-      operationId: `err-${Date.now()}-${sceneIndex}`,
+      ok: false,
+      status: "FAILED",
+      httpStatus: 500,
+      error: `HTTP 500: ${err.message || "Network error calling gemini-omni-1.2-flash"}`,
       model: OMNI_VIDEO_MODEL,
-      estimatedCostSgd: 0,
-      fallbackReason: err.message || "Network error starting async video generation"
+      sceneIndex
     });
   }
 }

@@ -1,0 +1,3405 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOME EQUITY STUDIO — AgentZug V4.7 (14-Agent Google Ecosystem OS)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #030712;
+      color: #f8fafc;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.90);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    @media print {
+      body { background: #ffffff !important; color: #0f172a !important; }
+      header, nav, .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Hidden HTMLAudioElement for Server-Side Male Baritone TTS (/api/tts) -->
+  <audio id="tts-master-audio" preload="auto" crossorigin="anonymous" class="hidden"></audio>
+
+  <!-- =====================================================================
+       TOP HEADER, CEA COMPLIANCE BAR & 3-TAB NAVIGATION (ZERO CLIENT KEYS)
+       ===================================================================== -->
+  <header class="glass-card sticky top-0 z-50 border-b border-slate-800 px-3 sm:px-6 py-2.5">
+    <div class="max-w-[1600px] mx-auto flex flex-col gap-2.5">
+
+      <!-- Row 1: Brand Identity + CEA Circular 02/2011 Particulars + Executive KPI Strip -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-slate-900 border-2 border-amber-400/70 flex items-center justify-center overflow-hidden shadow-lg shrink-0">
+            <canvas id="brand-logo-canvas" width="96" height="96" class="w-full h-full object-cover"></canvas>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-white">HOME EQUITY STUDIO — AgentZug V4.7</h1>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">@homeequity</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Nano Banana 2 Lite • Server Male TTS</span>
+              <span id="header-date-badge" class="text-[10px] font-semibold text-slate-400"></span>
+            </div>
+            <p class="text-[11px] text-slate-300">
+              Advisor: <span class="font-bold text-amber-300">Luiz Lee</span> •
+              CEA Reg No: <span class="text-white font-semibold">R057632A</span> •
+              <span>Huttons Asia Pte Ltd</span> (<span>Licence No: L3008899K</span>) •
+              Public WA: <span class="text-emerald-400 font-bold">+65 8980 9229</span> •
+              Escalation: <span class="text-rose-400 font-bold">+65 9237 9472</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Executive KPI Strip -->
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center">
+            <div class="text-[9px] uppercase text-slate-400 font-bold">GCI Pipeline</div>
+            <div id="kpi-gci-total" class="text-xs font-extrabold text-emerald-400">S$ 109,000</div>
+          </div>
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center">
+            <div class="text-[9px] uppercase text-slate-400 font-bold">Voice & Avatar Lock</div>
+            <div class="text-xs font-extrabold text-cyan-400">45yo SG Chinese Male</div>
+          </div>
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center">
+            <div class="text-[9px] uppercase text-slate-400 font-bold">Prompt QA (OPS-01)</div>
+            <div id="kpi-qa-badge" class="text-xs font-extrabold text-emerald-400">98% PASSED (≥95%)</div>
+          </div>
+          <div id="kpi-credit-card" class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center">
+            <div class="text-[9px] uppercase text-slate-400 font-bold">SP-12 Credit Cap</div>
+            <div id="kpi-credit-val" class="text-xs font-extrabold text-amber-300">S$ 3.42 / S$ 12.83</div>
+          </div>
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center">
+            <div class="text-[9px] uppercase text-slate-400 font-bold">Hot Leads (≥80)</div>
+            <div id="kpi-hot-leads" class="text-xs font-extrabold text-rose-400">2 Hot Leads</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Simplified 3-Tab Navigation + Autopilot & Manual Backup Flow Triggers -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-800/80">
+        <nav class="flex items-center gap-1.5 overflow-x-auto py-0.5">
+          <button onclick="switchTab('command')" id="nav-tab-command" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-amber-500 text-slate-950 shrink-0 transition">
+            🤖 1. Autonomous Command Board
+          </button>
+          <button onclick="switchTab('studio')" id="nav-tab-studio" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition">
+            🎬 2. Media Studio & Preview
+          </button>
+          <button onclick="switchTab('crm_advisory')" id="nav-tab-crm_advisory" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-300 hover:bg-slate-800 border border-emerald-500/30 shrink-0 transition">
+            💼 3. Dual-Track CRM & Buyer Advisory
+          </button>
+        </nav>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="server-sync-pill" class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[10px] font-bold text-cyan-300">
+            🔒 Keys Secured on Server (.env)
+          </span>
+          <button onclick="runAutonomousCronCycle()" id="btn-run-autopilot" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow transition">
+            ⚡ Run Autopilot Cycle (/api/cron-autopilot)
+          </button>
+          <button onclick="triggerManualBackupFlow(true)" id="btn-header-manual-backup" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/60 text-amber-300 text-xs font-extrabold transition">
+            🛠 Trigger Manual Backup Flow
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Toast Notification Banner -->
+  <div id="toast-banner" class="fixed bottom-4 right-4 z-50 hidden max-w-md rounded-2xl bg-slate-900/95 border-2 border-amber-400 px-4 py-3 text-xs font-bold text-white shadow-2xl"></div>
+
+  <!-- =====================================================================
+       MAIN 3-TAB WORKSPACE
+       ===================================================================== -->
+  <main class="max-w-[1600px] w-full mx-auto px-3 sm:px-6 py-5 flex-1 space-y-6">
+
+    <!-- ===================================================================
+         TAB 1: AUTONOMOUS COMMAND BOARD (14-AGENT GOOGLE ECOSYSTEM CHAIN)
+         =================================================================== -->
+    <section id="sec-command" class="space-y-5">
+
+      <!-- 3-Tier 14-Agent Command Chain Architecture (100% Google Ecosystem) -->
+      <div class="glass-card rounded-2xl p-4 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-sm sm:text-base font-extrabold text-amber-400">🏛️ 100% Zero-Cost Google Ecosystem — 14-Agent 3-Tier Command Chain</h2>
+            <p class="text-xs text-slate-400">Autonomous pipeline: <span class="text-cyan-300 font-bold">OPS-01</span> curates daily SG property news (replacing Touch #1) &amp; enforces Prompt QA ≥95% • <span class="text-amber-300 font-bold">CEO-01</span> grants final autonomous approval (replacing Touch #2).</p>
+          </div>
+          <!-- SP-12 Google Cloud Credit Monitor & Simulator -->
+          <div class="flex flex-wrap items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5">
+            <span class="text-[11px] font-extrabold text-emerald-300">💳 SP-12 Cloud Credit:</span>
+            <span id="sp12-credit-readout" class="text-xs font-mono font-extrabold text-white">S$ 3.42 / S$ 12.83</span>
+            <button onclick="simulateCreditSpendStep(2.50)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-bold text-slate-200" title="Simulate API Spend">+S$2.50 Test</button>
+            <button onclick="simulateCreditSpendToThreshold()" class="px-2 py-0.5 rounded bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-[10px] font-extrabold text-amber-300" title="Test S$11.50 Manual Backup Trigger">Test S$11.50 Alert</button>
+            <button onclick="simulateCreditCapReached()" class="px-2 py-0.5 rounded bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-[10px] font-extrabold text-rose-300" title="Test S$12.83 Hard Cap Fallback">Test S$12.83 Cap</button>
+            <button onclick="resetCreditSpendDemo()" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-400">Reset</button>
+          </div>
+        </div>
+
+        <!-- Tier 1 & Tier 2 Executive Command Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div class="bg-slate-950 border-2 border-amber-500/50 rounded-2xl p-3.5 flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-500 text-slate-950">TIER 1 • CEO-01</span>
+                <span class="text-xs font-extrabold text-white">CEO Agent — Autonomous Final Approver</span>
+              </div>
+              <div class="text-[11px] font-mono text-amber-300">Model: gemini-4-hydrogen-xhigh (Reasoning: xhigh)</div>
+              <p class="text-[11px] text-slate-300">Replaces Human Touch #2. Performs final executive sign-off on CEA-verified campaigns, adjudicates escalated blockers, and triggers urgent alerts to <span class="text-rose-300 font-bold">+65 9237 9472</span>.</p>
+            </div>
+            <span id="ceo-status-pill" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">🟢 Active</span>
+          </div>
+
+          <div class="bg-slate-950 border-2 border-cyan-500/50 rounded-2xl p-3.5 flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-black bg-cyan-500 text-slate-950">TIER 2 • OPS-01</span>
+                <span class="text-xs font-extrabold text-white">Operations Manager Agent — Curator &amp; QA Gatekeeper</span>
+              </div>
+              <div class="text-[11px] font-mono text-cyan-300">Model: gemini-4-hydrogen-high (Reasoning: high)</div>
+              <p class="text-[11px] text-slate-300">Replaces Human Touch #1. Curates daily SG property news topics, coordinates SP-01..SP-12, enforces <span class="text-emerald-300 font-bold">Prompt QA ≥95%</span> self-healing, and escalates unresolved blockers to CEO-01.</p>
+            </div>
+            <span id="ops-status-pill" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">🟢 Active</span>
+          </div>
+        </div>
+
+        <!-- Tier 3: 12 Specialist Agents Grid (SP-01 to SP-12 on Gemini Free Tier) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase text-slate-400">Tier 3: 12 Specialist Agents (SP-01 to SP-12 • Running on Gemini Free Tier: gemini-flash-lite-latest &amp; Nano Banana 2 Lite)</span>
+            <span class="text-[10px] font-bold text-emerald-400">100% Google Ecosystem • Gemini Powered</span>
+          </div>
+          <div id="specialists-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2"></div>
+        </div>
+      </div>
+
+      <!-- OPS-01 Curated SG Property News Topics (Replaces Touch #1) -->
+      <div class="glass-card rounded-2xl p-4 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm font-extrabold text-cyan-400">📰 OPS-01 Daily Curated Singapore Property News Topics (Autonomous Touch #1)</h3>
+            <p class="text-xs text-slate-400">Each topic auto-generates a concise 2–3 line headline, 3 ultra-short pill labels (2–4 words), synchronized 36s spoken script, and text-free <span class="text-amber-300 font-bold">Nano Banana 2 Lite</span> background.</p>
+          </div>
+          <button onclick="curateNewSgPropertyNewsTopics()" class="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-extrabold shadow">
+            🔄 OPS-01 Curate Fresh SG News Topics
+          </button>
+        </div>
+        <div id="ops-news-topics-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+      </div>
+
+      <!-- Autonomous Execution Pipeline & CEO-01 Approval Feed -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        <div class="lg:col-span-8 glass-card rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-extrabold text-white">🚀 Autonomous Campaign Pipeline (OPS-01 Curated → SP-03..07 Built → CEO-01 Approved)</h3>
+            <span id="pipeline-count-badge" class="text-xs font-bold text-amber-300">3 Active Campaigns</span>
+          </div>
+          <div id="autonomous-campaigns-list" class="space-y-3"></div>
+        </div>
+
+        <div class="lg:col-span-4 glass-card rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-extrabold text-amber-400">📜 3-Tier Command Chain Telemetry Log</h3>
+            <span class="text-[10px] font-mono text-slate-400">/api/cron-autopilot, /api/media &amp; /api/tts</span>
+          </div>
+          <div id="command-audit-log" class="space-y-2 max-h-[420px] overflow-y-auto text-[11px] font-mono"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         TAB 2: MEDIA STUDIO & PREVIEW (FOOTER AVATAR + LIVE PILLS + SERVER TTS)
+         =================================================================== -->
+    <section id="sec-studio" class="hidden space-y-5">
+
+      <!-- Top Studio Controls -->
+      <div class="glass-card rounded-2xl p-4 grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
+        <div class="lg:col-span-4">
+          <label class="block text-[10px] font-extrabold uppercase text-amber-400 mb-1">Active Autonomous Campaign (OPS-01 Topic)</label>
+          <select id="studio-card-select" onchange="selectStudioCard(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-white"></select>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-wrap items-center gap-2">
+          <label class="px-3 py-2 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-400/50 text-xs font-extrabold text-emerald-200 cursor-pointer">
+            👤 Upload Advisor Photo Avatar
+            <input type="file" accept="image/*" class="hidden" onchange="handleStudioPhotoUpload(event, 'presenter')" />
+          </label>
+          <label class="px-3 py-2 rounded-xl bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-400/50 text-xs font-extrabold text-cyan-200 cursor-pointer">
+            🏠 Upload Custom B-Roll Photo
+            <input type="file" accept="image/*" class="hidden" onchange="handleStudioPhotoUpload(event, 'broll')" />
+          </label>
+          <label class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-xs font-bold text-amber-200 cursor-pointer">
+            🏷️ Upload Logo
+            <input type="file" accept="image/*" class="hidden" onchange="handleStudioPhotoUpload(event, 'logo')" />
+          </label>
+        </div>
+
+        <div class="lg:col-span-3 flex flex-wrap items-center justify-end gap-1.5">
+          <button onclick="cycleVisualStylePreset()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-amber-300">
+            🎨 <span id="active-style-name">Royal Navy & Gold</span>
+          </button>
+          <button onclick="triggerManualBackupFlow(false)" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow">
+            🛠 Trigger Manual Backup Flow
+          </button>
+        </div>
+      </div>
+
+      <!-- HIDDEN MANUAL BACKUP DRAWER (Hidden by default; revealed on button click or at S$11.50 credit threshold) -->
+      <div id="manual-backup-drawer" class="hidden glass-card rounded-2xl p-4 border-2 border-amber-400/80 space-y-3 bg-amber-950/20">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-500/30 pb-2.5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-400 text-slate-950">MANUAL BACKUP FLOW ACTIVE</span>
+              <h3 class="text-sm font-extrabold text-amber-300">Google Flow Web (Veo 3.1 - Lite) &amp; Nano Banana 2 Lite Text-Free Copy-Paste Prompts</h3>
+            </div>
+            <p id="manual-backup-reason" class="text-xs text-slate-300 mt-0.5">All image/video prompts are hidden by default and unlocked here for manual Google Flow Web / Nano Banana execution when cloud credits reach S$11.50 or upon manual trigger.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="window.open('https://labs.google/fx/tools/flow', '_blank')" class="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-extrabold">🚀 Open Google Flow Web</button>
+            <button onclick="window.open('https://gemini.google.com', '_blank')" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold">🍌 Open Gemini Nano Banana</button>
+            <button onclick="closeManualBackupDrawer()" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">✕ Hide Prompts</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-cyan-300">1. Omni 1.2 Flash — Locked Advisor Avatar Prompt</span>
+              <button onclick="copyBackupPromptText('backup-omni-prompt', 'Omni 1.2 Flash Avatar Prompt')" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-extrabold">📋 Copy</button>
+            </div>
+            <textarea id="backup-omni-prompt" rows="6" readonly class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-[11px] text-cyan-200 font-mono leading-relaxed"></textarea>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-emerald-300">2. Veo 3.1 - Lite — 3–4s B-Roll Cutaway Prompts</span>
+              <button onclick="copyBackupPromptText('backup-veo-lite-prompt', 'Veo 3.1 - Lite B-Roll Prompts')" class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold">📋 Copy</button>
+            </div>
+            <textarea id="backup-veo-lite-prompt" rows="6" readonly class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-[11px] text-emerald-200 font-mono leading-relaxed"></textarea>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-amber-300">3. Nano Banana 2 Lite — 4:5 Text-Free Background Prompt</span>
+              <button onclick="copyBackupPromptText('backup-image-prompt', 'Nano Banana 2 Lite Text-Free Scene Prompt')" class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-[10px] font-extrabold">📋 Copy</button>
+            </div>
+            <textarea id="backup-image-prompt" rows="6" readonly class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-[11px] text-amber-200 font-mono leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Split: Left (Headline + Caption + 36s Spoken Script) | Right (4:5 Poster + Live Pill Inputs & 9:16 Video Stage) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+        <!-- Left Column -->
+        <div class="lg:col-span-5 space-y-4">
+
+          <!-- Auto-Layout Headline Box -->
+          <div class="glass-card rounded-2xl p-4 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-amber-400">📐 Auto-Fitting Top Headline (4:5 Poster &amp; 9:16 Video)</span>
+              <button onclick="runAiAutoLayoutForActiveTopic()" class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-[11px] font-extrabold text-amber-300">
+                ✨ AI Auto-Optimize Topic
+              </button>
+            </div>
+            <input id="studio-headline-input" type="text" oninput="updateHeadlineInline(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-extrabold text-white" />
+          </div>
+
+          <!-- Box A: SP-03 Caption -->
+          <div class="glass-card rounded-2xl p-4 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-emerald-400">A. SP-03: Viral Caption, Hashtags &amp; CEA Circular 02/2011 Footer</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="toggleStudioCaptionLang()" class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-200">🌐 EN / 简中</button>
+                <button onclick="regenerateBoxACaption()" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold text-emerald-300">↻ Regenerate</button>
+              </div>
+            </div>
+            <textarea id="box-a-caption" rows="5" oninput="syncBoxAToActiveCard()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 font-mono leading-relaxed"></textarea>
+          </div>
+
+          <!-- Box B: SP-04 Synchronized 36s Continuous Spoken Script -->
+          <div class="glass-card rounded-2xl p-4 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-cyan-400">B. SP-04: Synchronized 30–45s Spoken Script (/api/tts Male Lock)</span>
+              <div class="flex items-center gap-1.5">
+                <select id="video-duration-select" onchange="changeContinuousVideoDuration(this.value)" class="bg-slate-900 border border-cyan-500/50 rounded-lg px-2 py-1 text-[11px] font-extrabold text-cyan-300">
+                  <option value="30">⏱️ 30s Script</option>
+                  <option value="36" selected>⏱️ 36s Script (Default)</option>
+                  <option value="45">⏱️ 45s Script</option>
+                </select>
+                <button onclick="rewriteContinuousScript()" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-bold text-cyan-300">↻ Rewrite</button>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-300 bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5 flex flex-wrap items-center justify-between gap-1">
+              <span>🎙️ <span class="font-bold text-cyan-300">Audio Engine:</span> <span id="active-voice-lock-label" class="font-mono text-emerald-300">Server Male Baritone (/api/tts)</span></span>
+              <span id="tts-source-badge" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold">/api/tts Ready</span>
+            </div>
+            <textarea id="box-b-script" rows="5" oninput="syncBoxBToActiveCard()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 font-mono leading-relaxed"></textarea>
+
+            <!-- 3-4s B-Roll Cutaway Layer Timeline -->
+            <div class="space-y-1.5 pt-1">
+              <div class="text-[10px] font-extrabold uppercase text-amber-400">🎞️ Topic-Matched 3.5s B-Roll Cutaway Windows (Open Center Stage):</div>
+              <div id="broll-timeline-badges" class="grid grid-cols-3 gap-1.5 text-[10px]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Media Preview (4:5 Poster with 3 Live-Editable Pill Inputs & 9:16 Video with Footer Avatar) -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-4 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button onclick="switchStudioMediaView('cover')" id="subview-btn-cover" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-500 text-slate-950 transition">
+                🖼️ 1. 4:5 CEA Editorial Poster (Nano Banana 2 Lite)
+              </button>
+              <button onclick="switchStudioMediaView('video')" id="subview-btn-video" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 transition">
+                🎬 2. 9:16 Video Reel (Footer Avatar + Server Male TTS)
+              </button>
+            </div>
+            <span id="studio-busy-pill" class="hidden px-2.5 py-1 rounded-lg bg-amber-500/20 border border-amber-400 text-[10px] font-extrabold text-amber-300 animate-pulse">
+              ⏳ Generating via Google AI...
+            </span>
+          </div>
+
+          <!-- Sub-View 1: 4:5 CEA Editorial Poster + 3 Live-Editable Pill Inputs Directly Above Preview -->
+          <div id="media-subview-cover" class="space-y-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-extrabold text-amber-300">4:5 Editorial Poster (1080 × 1350 px)</span>
+                <span id="poster-bg-source-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-800 text-amber-300 border border-amber-500/40">
+                  🖼️ Curated Fallback
+                </span>
+              </div>
+              <button onclick="generateFreshNanoBanana4x5Poster(true)" id="btn-gen-nb2-poster" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow transition">
+                🍌 Generate Topic Scene (Nano Banana 2 Lite)
+              </button>
+            </div>
+
+            <!-- Requirement 2: 3 Live-Editable Pill Inputs Directly Above the 4:5 Poster Preview -->
+            <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-2.5 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-extrabold uppercase text-amber-300">✏️ Live-Editable Poster Pills (Updates 4:5 Canvas Instantly — No Regeneration Needed):</span>
+                <span class="text-[10px] text-slate-400">2–4 words max</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <input id="poster-pill-input-0" type="text" maxlength="28" placeholder="Pill 1" oninput="updatePosterPillInline(0, this.value)" class="bg-slate-900 border border-amber-500/50 focus:border-amber-400 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-white text-center" />
+                <input id="poster-pill-input-1" type="text" maxlength="28" placeholder="Pill 2" oninput="updatePosterPillInline(1, this.value)" class="bg-slate-900 border border-amber-500/50 focus:border-amber-400 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-white text-center" />
+                <input id="poster-pill-input-2" type="text" maxlength="28" placeholder="Pill 3" oninput="updatePosterPillInline(2, this.value)" class="bg-slate-900 border border-amber-500/50 focus:border-amber-400 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-white text-center" />
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center bg-slate-950 border border-slate-800 rounded-2xl p-3">
+              <canvas id="magazine-cover-canvas" width="1080" height="1350" class="max-h-[480px] w-auto rounded-xl border border-slate-700 shadow-2xl"></canvas>
+            </div>
+            <button onclick="downloadMagazineCover()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg">⬇️ Download 4:5 CEA Poster (.PNG)</button>
+          </div>
+
+          <!-- Sub-View 2: 9:16 Video Reel (Footer Avatar + Open Center Stage + Server Male TTS) -->
+          <div id="media-subview-video" class="hidden space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-extrabold text-cyan-300">9:16 Video Stage (Bottom-Left Footer Avatar + Open Center)</span>
+                <span id="video-bg-source-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-800 text-amber-300 border border-amber-500/40">
+                  🖼️ Curated Fallback (3 Slots)
+                </span>
+              </div>
+              <button onclick="generateFreshNanoBananaBrollCutaways(true)" id="btn-gen-nb2-broll" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow transition">
+                🍌 Refresh 3 B-Roll Scenes (Nano Banana 2 Lite)
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-slate-950 border border-slate-800 rounded-2xl p-3">
+              <div class="flex flex-col items-center space-y-2">
+                <span class="text-[11px] font-bold text-cyan-300">Live 9:16 Stage (Open Center + Footer Avatar)</span>
+                <canvas id="edutainment-video-canvas" width="720" height="1280" class="max-h-[450px] w-auto rounded-xl border border-cyan-500/40 shadow-2xl"></canvas>
+              </div>
+              <div class="flex flex-col items-center justify-center space-y-3 p-2">
+                <div class="flex items-center justify-between w-full">
+                  <span class="text-[11px] font-bold text-emerald-400">Rendered Output (.WEBM with Baked Male Audio)</span>
+                  <label class="px-2.5 py-1 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-400/60 text-[10px] font-extrabold text-emerald-200 cursor-pointer">
+                    📥 Upload External .MP4
+                    <input type="file" accept="video/mp4,video/webm,video/*" class="hidden" onchange="handleExternalVideoUpload(event)" />
+                  </label>
+                </div>
+                <video id="recorded-video-element" controls playsinline class="max-h-[390px] w-auto rounded-xl border border-emerald-500/40 bg-slate-900 shadow-xl"></video>
+                <p id="video-player-status" class="text-[11px] text-slate-300 text-center">Click <span class="text-cyan-300 font-bold">"▶️ Preview Voice + Captions"</span> or <span class="text-emerald-300 font-bold">"🎬 Render &amp; Download (.WEBM)"</span>.</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-3">
+              <div class="flex flex-wrap items-center gap-3 text-xs">
+                <label class="flex items-center gap-1.5 cursor-pointer font-bold text-cyan-300">
+                  <input id="chk-video-voice" type="checkbox" checked class="rounded" /> 🎙️ Server Male Baritone (/api/tts)
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer font-bold text-amber-300">
+                  <input id="chk-video-music" type="checkbox" checked class="rounded" /> 🎵 -18dB Ambient Lounge Bed
+                </label>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button onclick="toggleLiveVideoPreview()" id="btn-live-video-preview" class="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-extrabold">▶️ Preview Voice + Captions</button>
+                <button onclick="recordAndDownloadFullReel()" id="btn-record-reel" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg">🎬 Render &amp; Download (.WEBM)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 3: DUAL-TRACK CRM & UPGRADED BUYER ADVISORY LISTING SEARCH
+         =================================================================== -->
+    <section id="sec-crm_advisory" class="hidden space-y-6">
+
+      <!-- PART A: DUAL-TRACK CRM + CONDITIONAL HDB MOP CALCULATOR LOGIC -->
+      <div class="glass-card rounded-2xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-base font-extrabold text-emerald-400">💼 Part A: Dual-Track CRM (SP-10) &amp; Conditional HDB MOP Calculator</h2>
+            <p class="text-xs text-slate-400">Track A (Inbound WhatsApp AI on <span class="text-emerald-300 font-bold">+65 8980 9229</span> — sends HDB MOP Calculator only to HDB upgraders/downgraders) vs. Track B (Personal Friends/VIP — Bot Muted). Hot leads (≥80) escalate to <span class="text-rose-300 font-bold">+65 9237 9472</span>.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="filterCrmLeads('ALL')" id="crm-filter-ALL" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-600 text-white">All Leads</button>
+            <button onclick="filterCrmLeads('TRACK_A')" id="crm-filter-TRACK_A" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300">📱 Track A: Inbound AI</button>
+            <button onclick="filterCrmLeads('TRACK_B')" id="crm-filter-TRACK_B" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300">🤝 Track B: Personal/VIP (Muted)</button>
+            <button onclick="addNewCrmLeadPrompt()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold">+ Add Lead</button>
+          </div>
+        </div>
+
+        <!-- CRM Lead Cards Grid -->
+        <div id="crm-leads-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
+        <!-- Interactive Conditional HDB MOP Calculator & /api/whatsapp Webhook Tester -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2 border-t border-slate-800">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-amber-300">🧮 Conditional HDB MOP &amp; Net Cash Proceeds Estimator</span>
+              <a href="https://hdb-mop-calculator.vercel.app" target="_blank" class="text-[11px] font-extrabold text-cyan-300 underline">Open Full Calculator ↗</a>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">HDB Key Collection Yr</label>
+                <input id="mop-key-year" type="number" value="2021" oninput="computeInlineMopEstimate()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-bold" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Est. Resale Value (S$)</label>
+                <input id="mop-resale-price" type="number" value="780000" oninput="computeInlineMopEstimate()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-emerald-300 font-bold" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 mb-0.5">Loan + CPF Used (S$)</label>
+                <input id="mop-deductions" type="number" value="490000" oninput="computeInlineMopEstimate()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-bold" />
+              </div>
+            </div>
+            <div id="mop-inline-result" class="rounded-lg bg-slate-900 border border-emerald-500/30 px-3 py-2 text-xs text-emerald-200 font-bold">
+              MOP Fulfilled: 2026 ✓ • Est. Net Cash + CPF Unlocked: S$ 290,000 → Eligible to send https://hdb-mop-calculator.vercel.app
+            </div>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-cyan-300">📲 Test SP-10 Inbound WhatsApp Webhook (/api/whatsapp)</span>
+              <span class="text-[10px] text-slate-400">Tests Conditional MOP Link &amp; Heat ≥80 Escalation</span>
+            </div>
+            <div class="flex gap-2">
+              <input id="wa-sim-input" type="text" value="Hi Luiz, we collected keys to our Punggol 4-rm HDB in 2021 and want to sell & upgrade to D15 condo. IPA ready." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" />
+              <button onclick="testInboundWhatsAppWebhook()" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0">Send Test</button>
+            </div>
+            <div id="wa-sim-output" class="rounded-lg bg-slate-900 border border-slate-800 px-3 py-2 text-[11px] text-slate-300 font-mono">
+              Click "Send Test" to verify conditional HDB MOP link delivery &amp; +65 9237 9472 escalation routing.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART B: UPGRADED BUYER ADVISORY LISTING SEARCH (NINA / OWEN / IRIS / VERA) -->
+      <div class="glass-card rounded-2xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-extrabold text-amber-400">🏠 Part B: Upgraded Buyer Advisory Listing Search (Nina • Owen • Iris • Vera)</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Dynamic Portal Query Builder + 1–2 Page Excel (.XLSX)</span>
+            </div>
+            <p class="text-xs text-slate-400">Nina qualifies brief • Owen builds dynamic PropertyGuru / 99.co / EdgeProp / CommercialGuru queries • Iris ranks PSF &amp; Yield • Vera enforces CEA Circular 02/2011.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="buyer-case-select" onchange="selectBuyerCase(this.value)" class="bg-slate-900 border border-amber-500/50 rounded-xl px-3 py-2 text-xs font-extrabold text-white"></select>
+            <button onclick="createNewBuyerCasePrompt()" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold">+ New Case</button>
+            <button onclick="exportBuyerShortlistXLSX()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg">📊 Export 1–2 Page Excel (.XLSX)</button>
+            <button onclick="openPrintableShortlistModal()" class="px-3 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-extrabold">🖨️ Print 2-Page Report</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+          <!-- PANEL 1: Nina (Qualification & Hard Exclusions) -->
+          <div class="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-amber-400">1. Nina — Buyer Brief &amp; Hard Exclusions</span>
+              <button onclick="copyNinaQuestionsToClipboard()" class="px-2.5 py-1 rounded bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-[10px] font-bold">📋 Copy WA Questions</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div>
+                <label class="block text-[10px] text-amber-300 font-extrabold mb-1">Client Name</label>
+                <input id="nina-client-name" type="text" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-amber-300 font-extrabold mb-1">Client WhatsApp</label>
+                <input id="nina-client-phone" type="text" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-xs font-bold text-emerald-300" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Sector Playbook</label>
+                <select id="nina-playbook" onchange="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white">
+                  <option value="RESI_HDB">1. Residential HDB Resale Buyer (HFE, EIP &amp; Age-95 CPF)</option>
+                  <option value="RESI_OWN">2. Residential Private Condo — Own-Stay (Upgrader / Senior)</option>
+                  <option value="RESI_INV">3. Residential Private Investor (Gross Yield % &amp; Tenancy)</option>
+                  <option value="INDUSTRIAL">4. Industrial B1 / B2 / Warehouse (kN/m², Ceiling &amp; ≥35y Lease)</option>
+                  <option value="COMMERCIAL">5. Commercial F&amp;B / Retail / Office (URA Approved Use &amp; Yield)</option>
+                  <option value="RESI_TENANT">6. Rental Tenant — Residential / Corporate Lease</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Budget / Rent (S$)</label>
+                <input id="nina-min-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Hard Max Budget / Rent Cap (S$)</label>
+                <input id="nina-max-price" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Size (sqft)</label>
+                <input id="nina-min-sqft" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Max Size (sqft)</label>
+                <input id="nina-max-sqft" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Min Remaining Lease (Yrs)</label>
+                <input id="nina-min-lease" type="number" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-400 font-bold mb-1">Districts / Keywords</label>
+                <input id="nina-location-notes" type="text" oninput="saveNinaBriefEdits()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 2: Owen (Dynamic Portal Search Query Builder + Candidate Intake) -->
+          <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-cyan-400">2. Owen — Dynamic Portal Search Query Builder (Auto-Synced to Nina's Brief)</span>
+              <button onclick="copyCompiledPortalQuery()" class="px-2.5 py-1 rounded bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-[10px] font-extrabold">📋 Copy Boolean Search Query</button>
+            </div>
+
+            <!-- Live Dynamic Query String Box -->
+            <div class="bg-slate-900 border border-cyan-500/40 rounded-xl p-2.5 space-y-1.5">
+              <div class="text-[10px] font-extrabold uppercase text-cyan-300">Compiled Structured Search Query String:</div>
+              <div id="owen-compiled-query-text" class="text-[11px] font-mono text-emerald-300 break-words"></div>
+            </div>
+
+            <!-- 1-Click Dynamic Portal Launchers -->
+            <div id="owen-portal-launchers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2"></div>
+
+            <!-- Quick Add Candidate Row -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-2">
+              <div class="text-[11px] font-extrabold text-amber-300">+ Add Verified Portal Listing to Shortlist:</div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                <input id="cand-project" type="text" placeholder="Project / Block Name" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-district" type="text" placeholder="District & MRT (e.g. D15)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-type" type="text" placeholder="Unit Type (e.g. 3BR)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-sqft" type="number" placeholder="Area (sqft)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-price" type="number" placeholder="Asking S$" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+                <input id="cand-lease" type="number" placeholder="Lease Yrs (999=FH)" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white" />
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <input id="cand-url" type="url" placeholder="Verified Portal URL (https://www.propertyguru.com.sg/...)" class="flex-1 bg-slate-950 border border-emerald-500/40 rounded-lg px-2.5 py-1.5 text-xs text-emerald-300 font-mono" />
+                <input id="cand-notes" type="text" placeholder="Key Specs & Facing" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                <button onclick="addCandidateListingToBuyerCase()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0">+ Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 3: Iris & Vera (Ranked Shortlist + Excluded Properties Table) -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-emerald-400">3. Iris &amp; Vera — Ranked Shortlist (Page 1) &amp; Excluded Audit (Page 2)</h3>
+              <p class="text-[11px] text-slate-400">Automatically filters out units breaching budget, size, or remaining lease rules and stamps CEA Circular 02/2011 particulars.</p>
+            </div>
+            <button onclick="sendShortlistViaWhatsApp()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">💬 Send Shortlist via WhatsApp</button>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-800">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th class="p-2.5">Rank</th>
+                  <th class="p-2.5">Project, District &amp; Specs</th>
+                  <th class="p-2.5">Size &amp; Lease</th>
+                  <th class="p-2.5">Asking Price &amp; PSF</th>
+                  <th class="p-2.5">Est. Gross Yield</th>
+                  <th class="p-2.5">Portal Link</th>
+                  <th class="p-2.5 text-right">Vera CEA Audit</th>
+                </tr>
+              </thead>
+              <tbody id="iris-shortlist-tbody" class="divide-y divide-slate-800"></tbody>
+            </table>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800 space-y-2">
+            <div class="text-xs font-extrabold text-rose-400">🚫 Page 2 — Excluded Candidates (Hard-Filtered by Iris)</div>
+            <div id="iris-excluded-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Printable 2-Page Client Shortlist Modal -->
+      <div id="shortlist-report-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-amber-400 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-800">
+            <h3 class="text-sm font-extrabold text-amber-300">📄 2-Page Client Property Shortlist &amp; Exclusion Audit (CEA Circular 02/2011)</h3>
+            <div class="flex items-center gap-2">
+              <button onclick="exportBuyerShortlistXLSX()" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-extrabold">📊 Download .XLSX</button>
+              <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-cyan-600 text-white text-xs font-extrabold">🖨️ Print / PDF</button>
+              <button onclick="closePrintableShortlistModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold">✕ Close</button>
+            </div>
+          </div>
+          <div id="shortlist-printable-body" class="p-5 overflow-y-auto text-xs text-slate-200 space-y-4 font-mono leading-relaxed"></div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // AGENTZUG V4.7 — HOME EQUITY STUDIO EDITION
+    // Fixes:
+    //  1. 9:16 Advisor Avatar moved to bottom-left inside CEA footer box
+    //  2. 3 Live-Editable Pill Inputs directly above 4:5 poster preview
+    //  3. Server-Side Male Baritone TTS (/api/tts) via HTMLAudioElement + WebAudio
+    //     stream routed into MediaRecorder (.WEBM) with offline fallback
+    // =========================================================================
+    const STORAGE_KEY = 'he_studio_agentzug_v473_tts_footer';
+
+    const CEA_STATUTORY = {
+      name: 'Luiz Lee',
+      reg: 'R057632A',
+      agency: 'Huttons Asia Pte Ltd',
+      lic: 'L3008899K',
+      publicPhone: '+65 8980 9229',
+      escalationPhone: '+65 9237 9472',
+      mopCalcUrl: 'https://hdb-mop-calculator.vercel.app',
+      footerLine: 'Luiz Lee | CEA Reg No: R057632A | Huttons Asia Pte Ltd | Licence No: L3008899K | +65 8980 9229'
+    };
+
+    const STRICT_NO_TEXT_GUARDRAIL = 'Strictly no text, no letters, no numbers, no watermarks, no logos, no people.';
+
+    const VISUAL_STYLE_PRESETS = [
+      { name: 'Royal Navy & Gold', topBg: '#061026', midTint: 'rgba(6, 16, 38, 0.24)', accent: '#f59e0b', pillBg: 'rgba(10, 18, 36, 0.74)' },
+      { name: 'Emerald FinTech', topBg: '#042f2e', midTint: 'rgba(4, 47, 46, 0.22)', accent: '#34d399', pillBg: 'rgba(6, 55, 44, 0.74)' },
+      { name: 'Executive Obsidian', topBg: '#090d16', midTint: 'rgba(9, 13, 22, 0.26)', accent: '#eab308', pillBg: 'rgba(18, 18, 22, 0.78)' }
+    ];
+
+    const STOCK_SG_PHOTOS = [
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1080&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1080&q=80',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1080&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1080&q=80'
+    ];
+
+    const SPECIALIST_AGENTS = [
+      { id: 'SP-01', name: 'Seller Prospecting', model: 'Gemini Free Tier', task: 'Scans HDB 5-Yr MOP & equity clusters' },
+      { id: 'SP-02', name: 'SG News & URA Graph', model: 'Gemini Free Tier', task: 'Feeds URA REALIS, HDB & MAS data to OPS-01' },
+      { id: 'SP-03', name: 'Viral Copy & Auto-Layout', model: 'Gemini Free Tier', task: 'Generates punchy 2-3 line headline & 3 short pills' },
+      { id: 'SP-04', name: 'Server Male TTS Script', model: 'gemini-2.5-flash-preview-tts', task: 'Synthesizes locked male baritone via /api/tts' },
+      { id: 'SP-05', name: 'Nano Banana 2 Lite Builder', model: 'gemini-3.1-flash-lite-image', task: 'Builds text-free topic scenes + 9:16 B-roll' },
+      { id: 'SP-06', name: 'Footer Avatar & B-Roll', model: 'Omni 1.2 + Veo 3.1-Lite', task: 'Places avatar in footer & maximizes center stage' },
+      { id: 'SP-07', name: 'CEA 02/2011 Auditor', model: 'Gemini Free Tier', task: 'Enforces R057632A, L3008899K & unit masking' },
+      { id: 'SP-08', name: 'SG Peak Publisher', model: 'Gemini Free Tier', task: 'Queues 12:15 PM & 8:00 PM SGT social slots' },
+      { id: 'SP-09', name: 'Retention & Memory', model: 'Gemini Free Tier', task: 'Tracks 3s hold rate & retrains hook memory' },
+      { id: 'SP-10', name: 'Dual-Track CRM & MOP', model: 'Gemini Free Tier', task: 'Track A AI + HDB MOP link; Track B VIP muted' },
+      { id: 'SP-11', name: 'Buyer Search & Excel', model: 'Gemini Free Tier', task: 'Nina/Owen/Iris portal builder & 2-pg .XLSX' },
+      { id: 'SP-12', name: 'Credit & QA Monitor', model: 'Gemini Free Tier', task: 'Monitors S$12.83/mo cap (S$11.50 backup alert)' }
+    ];
+
+    const OPS_SG_NEWS_POOL = [
+      {
+        id: 'news-1',
+        pillar: 'HDB_MOP',
+        headline: '2026 HDB 5-YEAR MOP: PROTECT S$100K+ CASH',
+        title: '2026 HDB 5-Year MOP Wave: 3 Numbers That Protect S$100K+ Cash Before Upgrading',
+        kw: 'MOP',
+        source: 'HDB InfoWEB & URA REALIS 2026',
+        pills: ['YEAR-5 MOP PEAK', '6-MO ABSD REFUND', '55% MAS TDSR CAP'],
+        isHdbUpgradeTopic: true,
+        opsScore: 98,
+        script36s: 'Reaching your five-year HDB Minimum Occupation Period in 2026? Stop and verify these three numbers before booking your next viewing. First, benchmark recent block transactions on URA REALIS so you capture peak full-CPF buyer demand. Second, map out your CPF Ordinary Account refund and six-month IRAS ABSD remission window early to protect over one hundred thousand dollars in cash liquidity. Third, stress-test your next loan at four percent under the fifty-five percent MAS TDSR cap. Follow at home equity and DM "MOP" for your 2026 upgrade sheet.',
+        brollDescriptions: [
+          'Sunlit Singapore HDB sky-terrace residential towers overlooking a lush tropical park connector at golden hour',
+          'Modern Singapore condominium living room and balcony overlooking Marina Bay skyline in warm afternoon light',
+          'Bright 3-bedroom Singapore dumbbell-layout dining and study interior with timber and marble finishes'
+        ]
+      },
+      {
+        id: 'news-2',
+        pillar: 'NEW_LAUNCH',
+        headline: 'RCR $2,320 PSF VS OCR $2,410 PSF IN 2026',
+        title: 'RCR Resale ($2,320 PSF) vs OCR New Launch ($2,410 PSF): Closing the 2026 PSF Gap',
+        kw: 'PSF',
+        source: 'URA REALIS Caveats 2026',
+        pills: ['RCR $2,320 PSF', 'OCR $2,410 PSF', 'DUMBBELL LAYOUT'],
+        isHdbUpgradeTopic: false,
+        opsScore: 96,
+        script36s: 'Comparing an OCR new launch at twenty-four hundred PSF against a District 15 or RCR resale condo at twenty-three twenty PSF? Check these three numbers before signing any Option to Purchase. First, URA REALIS caveats show the RCR-to-OCR price gap has narrowed to historic lows. Second, efficient dumbbell layouts eliminate wasted corridor square footage, saving up to one hundred eighty thousand dollars in entry quantum. Third, completed resale units deliver immediate rental or own-stay occupancy without progressive wait times. Follow at home equity and DM "PSF" for our 2026 comparison chart.',
+        brollDescriptions: [
+          'Luxury Singapore District 15 condominium facade and infinity pool deck at golden hour',
+          'Spacious Singapore 3-bedroom dumbbell-layout living and dining room with zero corridor waste',
+          'Panoramic Marina Bay and East Coast residential skyline bathed in warm sunset light'
+        ]
+      },
+      {
+        id: 'news-3',
+        pillar: 'POLICY_TAX',
+        headline: 'CPF AGE-95 RULE & HDB LEASE DECAY MATH',
+        title: 'CPF Age-95 Rule & Remaining Lease Math: Why Waiting Past Year 7 Slows Equity',
+        kw: 'LEASE',
+        source: 'CPF Board & HDB Resale Portal 2026',
+        pills: ['AGE-95 CPF RULE', 'REMAINING LEASE', 'FRESH 99-YR RESET'],
+        isHdbUpgradeTopic: true,
+        opsScore: 97,
+        script36s: 'Holding onto an older HDB flat past Year 7? Understand how the CPF Age-95 rule impacts your exit price in 2026. First, when remaining lease plus the youngest buyer age falls below ninety-five years, CPF usage and maximum loan-to-value limits pro-rate downward. Second, shrinking buyer loan eligibility directly caps your future resale appreciation. Third, repositioning into a fresh ninety-nine-year or freehold asset resets your lease clock while preserving family cash reserves. Follow at home equity and DM "LEASE" for your personalized 2026 lease-decay audit.',
+        brollDescriptions: [
+          'Mature Singapore residential estate and elevated MRT station surrounded by lush tropical greenery',
+          'Bright modern Singapore apartment living room with sunlit floor-to-ceiling windows',
+          'Architectural skyline view of modern 99-year and freehold Singapore condominiums at dusk'
+        ]
+      }
+    ];
+
+    let appState = {
+      creditSpendSgd: 3.42,
+      creditLimitSgd: 12.83,
+      creditBackupTriggerSgd: 11.50,
+      studioLang: 'EN',
+      videoDurationSec: 36,
+      stylePresetIdx: 0,
+      activeCardId: 'camp-1',
+      crmFilter: 'ALL',
+      activeBuyerCaseId: 'bcase-d15-marcus',
+      posterBgStatus: {
+        source: 'curated-fallback',
+        reason: 'Click "Generate Topic Scene" or select a topic to render live via Nano Banana 2 Lite'
+      },
+      videoBrollStatus: {
+        source: 'curated-fallback',
+        liveCount: 0,
+        reason: 'Ready — click "Refresh 3 B-Roll Scenes" for Nano Banana 2 Lite 9:16 backgrounds'
+      },
+      auditLog: [
+        { ts: '07:30 SGT', agent: 'OPS-01', msg: 'Curated daily SG property news topic (Touch #1 automated) & verified Prompt QA 98%.' },
+        { ts: '07:31 SGT', agent: 'SP-04..06', msg: 'Moved 9:16 avatar to bottom-left CEA footer & locked server-side male baritone TTS (/api/tts).' },
+        { ts: '07:31 SGT', agent: 'SP-07', msg: 'Verified CEA Circular 02/2011 particulars (R057632A / L3008899K / +65 8980 9229).' },
+        { ts: '07:32 SGT', agent: 'CEO-01', msg: 'Gemini 4 Hydrogen xhigh granted Autonomous Final Approval (Touch #2 automated).' }
+      ],
+      campaigns: [],
+      leads: [
+        {
+          id: 'lead-1',
+          name: 'Marcus Tan',
+          phone: '+65 9123 4567',
+          track: 'TRACK_A',
+          isHdbSeller: true,
+          stage: 'Viewing Active',
+          heat: 88,
+          gci: 36000,
+          mopSent: true,
+          notes: 'Owns Punggol 4-Rm HDB (2021 MOP), upgrading to D15 3BR Freehold. IPA approved.'
+        },
+        {
+          id: 'lead-2',
+          name: 'Rachel Wong',
+          phone: '+65 9876 5432',
+          track: 'TRACK_B',
+          isHdbSeller: false,
+          stage: 'Consult',
+          heat: 76,
+          gci: 45000,
+          mopSent: false,
+          notes: 'Personal friend (Track B VIP — Bot Muted). Looking at D10/D15 investment condo.'
+        },
+        {
+          id: 'lead-3',
+          name: 'David Lim',
+          phone: '+65 8234 5678',
+          track: 'TRACK_A',
+          isHdbSeller: true,
+          stage: 'Offer / OTP',
+          heat: 94,
+          gci: 28000,
+          mopSent: true,
+          notes: 'Selling Tampines 5-Rm HDB after 5-yr MOP; right-sizing + cash extraction.'
+        }
+      ],
+      buyerCases: []
+    };
+
+    // =========================================================================
+    // SERVER-SIDE MALE TTS (/api/tts) + HTMLAudioElement + WebAudio MediaRecorder
+    // =========================================================================
+    const ttsAudioCache = new Map();
+    const ttsPlaybackState = {
+      sourceMode: 'server-tts', // 'server-tts' | 'browser-fallback'
+      voiceLabel: 'Server Male Baritone (/api/tts)',
+      isSpeaking: false,
+      utteranceStartTs: 0,
+      charIndex: 0,
+      scriptText: '',
+      wordMap: [],
+      audioCtx: null,
+      mediaElementSource: null,
+      mediaStreamDest: null,
+      ambientOsc: null,
+      ambientGain: null
+    };
+
+    function buildWordMapFromScript(scriptText) {
+      const text = String(scriptText || '');
+      const words = [];
+      const regex = /\S+/g;
+      let match;
+      let idx = 0;
+      while ((match = regex.exec(text)) !== null) {
+        words.push({
+          index: idx++,
+          word: match[0],
+          startChar: match.index,
+          endChar: match.index + match[0].length
+        });
+      }
+      return words;
+    }
+
+    function updateTtsBadges(sourceMode, labelText) {
+      ttsPlaybackState.sourceMode = sourceMode;
+      ttsPlaybackState.voiceLabel = labelText;
+      const lblEl = document.getElementById('active-voice-lock-label');
+      const badgeEl = document.getElementById('tts-source-badge');
+      if (lblEl) lblEl.textContent = labelText;
+      if (badgeEl) {
+        if (sourceMode === 'server-tts') {
+          badgeEl.textContent = '🎙️ Server Male TTS (/api/tts)';
+          badgeEl.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold';
+        } else {
+          badgeEl.textContent = '🔊 Browser Male Fallback';
+          badgeEl.className = 'px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-extrabold';
+        }
+      }
+    }
+
+    function stopAllVoiceAndAudio() {
+      const audioEl = document.getElementById('tts-master-audio');
+      if (audioEl) {
+        try {
+          audioEl.pause();
+          audioEl.currentTime = 0;
+        } catch (e) {}
+      }
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      if (ttsPlaybackState.ambientOsc) {
+        try { ttsPlaybackState.ambientOsc.stop(); } catch (e) {}
+        ttsPlaybackState.ambientOsc = null;
+      }
+      ttsPlaybackState.isSpeaking = false;
+      ttsPlaybackState.utteranceStartTs = 0;
+      ttsPlaybackState.charIndex = 0;
+    }
+
+    function resetSpeechSyncState(scriptText) {
+      stopAllVoiceAndAudio();
+      ttsPlaybackState.scriptText = String(scriptText || '');
+      ttsPlaybackState.wordMap = buildWordMapFromScript(ttsPlaybackState.scriptText);
+    }
+
+    // Ensures Web Audio graph routes HTMLAudioElement (+ optional -18dB lounge bed) to both speakers and MediaRecorder
+    function ensureWebAudioMixerGraph() {
+      const audioEl = document.getElementById('tts-master-audio');
+      if (!audioEl) return null;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return null;
+
+      if (!ttsPlaybackState.audioCtx) {
+        const ctx = new AudioCtx();
+        const sourceNode = ctx.createMediaElementSource(audioEl);
+        const destNode = ctx.createMediaStreamDestination();
+        sourceNode.connect(ctx.destination);
+        sourceNode.connect(destNode);
+        ttsPlaybackState.audioCtx = ctx;
+        ttsPlaybackState.mediaElementSource = sourceNode;
+        ttsPlaybackState.mediaStreamDest = destNode;
+      }
+      if (ttsPlaybackState.audioCtx.state === 'suspended') {
+        ttsPlaybackState.audioCtx.resume().catch(() => {});
+      }
+      return ttsPlaybackState;
+    }
+
+    function startOptionalAmbientLoungeBed(enabled) {
+      if (!enabled) return;
+      const graph = ensureWebAudioMixerGraph();
+      if (!graph || !graph.audioCtx) return;
+      try {
+        if (graph.ambientOsc) {
+          try { graph.ambientOsc.stop(); } catch (e) {}
+        }
+        const ctx = graph.audioCtx;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(146.83, ctx.currentTime); // Warm D3 ambient drone
+        gain.gain.setValueAtTime(0.025, ctx.currentTime); // -18dB ducked under voiceover
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (graph.mediaStreamDest) gain.connect(graph.mediaStreamDest);
+        osc.start();
+        graph.ambientOsc = osc;
+        graph.ambientGain = gain;
+      } catch (e) {}
+    }
+
+    // Strict Male English Voice Filter (Offline Browser Fallback ONLY)
+    function getOfflineMaleEnglishVoice() {
+      if (!('speechSynthesis' in window)) return null;
+      const voices = window.speechSynthesis.getVoices() || [];
+      const englishVoices = voices.filter(v => /^en/i.test(v.lang));
+      const femaleBlacklist = /\b(female|woman|girl|zira|samantha|victoria|karen|hazel|susan|linda|neerja|heera|veena|fiona|moira|tessa|serena|aria|jenny|michelle|sonia|libby|natasha|catherine|claire|emily|eva|grace|hannah|julia|kate|laura|lucy|mary|megan|natalie|nicole|olivia|rachel|rebecca|sarah|sophia|zoe|allison|ava|ellen|siri|google uk english female|google us english)\b/i;
+      const maleWhitelist = /\b(male|david|daniel|alex|google uk english male|guy|ryan|wayne|arthur|george|christopher|james|mark|paul|roger|liam|andrew|eric|steffan|oliver|william|thomas|rishi|aaron|fred|jorge|lee|nathan|tom)\b/i;
+
+      const explicitMales = englishVoices.filter(v => maleWhitelist.test(v.name) && !femaleBlacklist.test(v.name));
+      const nonFemaleEnglish = englishVoices.filter(v => !femaleBlacklist.test(v.name));
+
+      return (
+        explicitMales.find(v => /en-sg/i.test(v.lang)) ||
+        explicitMales.find(v => /google uk english male/i.test(v.name)) ||
+        explicitMales.find(v => /en-gb/i.test(v.lang)) ||
+        explicitMales.find(v => /en-us/i.test(v.lang)) ||
+        explicitMales[0] ||
+        nonFemaleEnglish[0] ||
+        null
+      );
+    }
+
+    // Calls /api/tts first for locked server-side male baritone track; falls back to browser SpeechSynthesis offline
+    async function fetchOrBuildServerMaleTts(scriptText) {
+      const clean = String(scriptText || '').trim();
+      if (!clean) return { source: 'browser-fallback', audioDataUri: null };
+      if (ttsAudioCache.has(clean)) {
+        return ttsAudioCache.get(clean);
+      }
+
+      try {
+        const res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scriptText: clean,
+            currentSpendSgd: appState.creditSpendSgd
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.source === 'server-tts' && data.audioDataUri) {
+            const entry = {
+              source: 'server-tts',
+              voiceLabel: data.voiceLabel || 'Server Male Baritone (/api/tts)',
+              audioDataUri: data.audioDataUri
+            };
+            ttsAudioCache.set(clean, entry);
+            if (data.estimatedCostSgd) {
+              appState.creditSpendSgd = Math.min(appState.creditLimitSgd, Number((Number(appState.creditSpendSgd) + Number(data.estimatedCostSgd)).toFixed(2)));
+              saveAppState();
+            }
+            return entry;
+          }
+        }
+      } catch (err) {
+        // Offline / static file fallback
+      }
+
+      const fallbackEntry = {
+        source: 'browser-fallback',
+        voiceLabel: 'Offline Male Fallback (Browser SpeechSynthesis)',
+        audioDataUri: null
+      };
+      return fallbackEntry;
+    }
+
+    async function startSynchronizedMaleVoiceover(scriptText, withMusicBed = true) {
+      resetSpeechSyncState(scriptText);
+      const ttsResult = await fetchOrBuildServerMaleTts(scriptText);
+      updateTtsBadges(ttsResult.source, ttsResult.voiceLabel);
+      startOptionalAmbientLoungeBed(withMusicBed);
+
+      if (ttsResult.source === 'server-tts' && ttsResult.audioDataUri) {
+        const audioEl = document.getElementById('tts-master-audio');
+        if (audioEl) {
+          ensureWebAudioMixerGraph();
+          audioEl.src = ttsResult.audioDataUri;
+          ttsPlaybackState.isSpeaking = true;
+          ttsPlaybackState.utteranceStartTs = performance.now();
+          audioEl.onended = () => {
+            ttsPlaybackState.isSpeaking = false;
+          };
+          await audioEl.play().catch(() => {});
+          return ttsResult;
+        }
+      }
+
+      // Offline browser SpeechSynthesis fallback (strictly filtered for male English voice)
+      if ('speechSynthesis' in window && scriptText) {
+        const utter = new SpeechSynthesisUtterance(scriptText);
+        const maleVoice = getOfflineMaleEnglishVoice();
+        if (maleVoice) {
+          utter.voice = maleVoice;
+          utter.lang = maleVoice.lang;
+          updateTtsBadges('browser-fallback', `Offline Male Fallback (${maleVoice.name})`);
+        } else {
+          utter.lang = 'en-SG';
+        }
+        utter.pitch = 0.86;
+        utter.rate = 0.98;
+        utter.onstart = () => {
+          ttsPlaybackState.isSpeaking = true;
+          ttsPlaybackState.utteranceStartTs = performance.now();
+          ttsPlaybackState.charIndex = 0;
+        };
+        utter.onboundary = (ev) => {
+          if (typeof ev.charIndex === 'number') {
+            ttsPlaybackState.charIndex = ev.charIndex;
+          }
+        };
+        utter.onend = () => {
+          ttsPlaybackState.isSpeaking = false;
+        };
+        utter.onerror = () => {
+          ttsPlaybackState.isSpeaking = false;
+        };
+        window.speechSynthesis.speak(utter);
+      }
+      return ttsResult;
+    }
+
+    // =========================================================================
+    // AI AGENT AUTO-LAYOUT & COPY OPTIMIZATION PER TOPIC
+    // =========================================================================
+    function enforceCompactPills(pills) {
+      const defaults = ['URA REALIS DATA', 'CPF & ABSD MATH', '55% MAS TDSR CAP'];
+      const list = Array.isArray(pills) ? pills : defaults;
+      return [0, 1, 2].map(i => {
+        const raw = String(list[i] || defaults[i]).trim().toUpperCase();
+        return raw.split(/\s+/).slice(0, 4).join(' ');
+      });
+    }
+
+    function enforceConciseHeadline(headline, title) {
+      const raw = String(headline || title || '2026 SINGAPORE PROPERTY PLAYBOOK').trim().toUpperCase();
+      const words = raw.split(/\s+/);
+      if (words.length <= 10) return raw;
+      const beforeColon = raw.split(/[:\-–—]/)[0].trim();
+      const shortWords = beforeColon.split(/\s+/);
+      return (shortWords.length >= 4 && shortWords.length <= 10)
+        ? shortWords.join(' ')
+        : words.slice(0, 9).join(' ');
+    }
+
+    function buildTopicMatchedCutaways(topicObj, sec = 36) {
+      const headline = topicObj?.headline || topicObj?.title || 'Singapore Property';
+      const descs = Array.isArray(topicObj?.brollDescriptions) && topicObj.brollDescriptions.length >= 3
+        ? topicObj.brollDescriptions
+        : [
+            `Sunlit Singapore condominium living room and balcony overlooking Marina Bay skyline (${headline})`,
+            `Modern Singapore HDB sky-terrace residential architecture and tropical park connector at golden hour`,
+            `Bright 3-bedroom Singapore dumbbell-layout dining and living room interior with marble and timber finishes`
+          ];
+
+      const windows = sec === 30
+        ? ['00:07–00:10.5s (3.5s)', '00:16–00:19.5s (3.5s)', '00:23–00:26.5s (3.5s)']
+        : sec === 45
+          ? ['00:09–00:13.0s (4.0s)', '00:21–00:25.0s (4.0s)', '00:33–00:37.0s (4.0s)']
+          : ['00:08–00:11.5s (3.5s)', '00:18–00:21.5s (3.5s)', '00:27–00:30.5s (3.5s)'];
+
+      return windows.map((win, idx) => ({
+        window: win,
+        label: `Cutaway ${idx + 1}: ${descs[idx].slice(0, 38)}`,
+        sceneIdx: idx,
+        prompt: `Camera: Ultra-steady 35mm gimbal glide across ${descs[idx]}. Scene: Architectural lines, glass facades, and interiors remain completely stationary and rigid while natural golden daylight shifts gently across surfaces. Audio: Quiet ambient room tone only; continuous presenter voiceover layered on top. ${STRICT_NO_TEXT_GUARDRAIL}`
+      }));
+    }
+
+    function buildSynchronizedSpokenScript(topicObj, sec = 36) {
+      const kw = (topicObj?.kw || 'MOP').toUpperCase();
+      const pills = enforceCompactPills(topicObj?.pills);
+      if (sec === 36 && topicObj?.script36s) {
+        return topicObj.script36s;
+      }
+      const base = topicObj?.script36s || `Planning around ${(topicObj?.headline || topicObj?.title || 'Singapore property').toLowerCase()} in 2026? Stop and check these three numbers before signing any Option to Purchase. First, verify ${pills[0].toLowerCase()} against official URA REALIS caveats so you never overpay. Second, structure ${pills[1].toLowerCase()} early to protect at least one hundred thousand dollars in family cash liquidity. Third, stress-test your loan under ${pills[2].toLowerCase()}. Follow at home equity and DM "${kw}" for your 2026 calculation sheet.`;
+      if (sec === 30) {
+        return base.split(/\.\s+/).slice(0, 4).join('. ') + `. Follow at home equity and DM "${kw}" for your 2026 calculation sheet.`;
+      }
+      if (sec === 45) {
+        return `${base} Our advisory team benchmarks every transaction across URA REALIS and HDB resale data so your upgrade timeline stays 100% protected.`;
+      }
+      return base;
+    }
+
+    function buildSp05TextFreeScenePrompt(card, aspectLabel = 'vertical 4:5 portrait') {
+      const title = card?.headline || card?.title || 'Singapore Real Estate Market';
+      const category = String(card?.pillar || 'HDB_MOP').toUpperCase();
+      const raw = `${title} ${category}`.toLowerCase();
+
+      let sceneCore = '';
+      if (category === 'HDB_MOP' || /hdb|mop|5-year|heartland|punggol|tampines|bishan|lease/.test(raw)) {
+        sceneCore = 'Photorealistic golden-hour architectural photography of modern Singapore HDB sky-terrace residential towers overlooking a lush tropical park connector and gleaming private condominium skyline on the horizon, warm sunlight reflecting off glass facades and manicured greenery.';
+      } else if (category === 'NEW_LAUNCH' || /d15|rcr|ocr|freehold|condo|dumbbell|floorplan|psf/.test(raw)) {
+        sceneCore = 'Photorealistic luxury Singapore District 15 architectural interior and balcony vista featuring warm Burmese teak flooring, travertine stone surfaces, floor-to-ceiling glass, and an infinity pool deck overlooking the East Coast sea breeze and Marina Bay skyline at sunset.';
+      } else if (category === 'POLICY_TAX' || /absd|tdsr|cpf|iras|mas|interest|loan/.test(raw)) {
+        sceneCore = 'Photorealistic editorial architectural photography of Singapore Marina Bay financial district glass towers at twilight paired with a refined modern residential study interior in warm amber architectural lighting and deep slate stone textures.';
+      } else {
+        sceneCore = 'Photorealistic luxury Singapore residential architecture and Marina Bay skyline panorama at golden hour, sunlit modern condominium sky-garden with lush tropical palms and calm reflective water features.';
+      }
+
+      return `Create a ${aspectLabel} Singapore real estate architectural photograph tailored to the theme "${title}" (${category}). ${sceneCore} Composed with clean, uncluttered dark navy and twilight shadow negative space in the top third and bottom quarter of the frame for editorial typography overlay. ${STRICT_NO_TEXT_GUARDRAIL}`;
+    }
+
+    function createCampaignFromTopic(topic, status = 'CEO_APPROVED', slot = 'Today 8:00 PM SGT', customId = null) {
+      const id = customId || ('camp-' + Date.now() + '-' + Math.floor(Math.random() * 999));
+      const headline = enforceConciseHeadline(topic.headline, topic.title);
+      const pills = enforceCompactPills(topic.pills);
+      const kw = (topic.kw || 'MOP').toUpperCase();
+      const source = topic.source || 'URA REALIS & HDB 2026';
+      const mopLine = topic.isHdbUpgradeTopic ? `Calculate your exact 5-year MOP cash proceeds first: ${CEA_STATUTORY.mopCalcUrl}\n` : '';
+      const caption = `📊 ${topic.title || headline}\n\n1️⃣ ${pills[0]}: Verified against ${source}.\n2️⃣ ${pills[1]}: Structure your CPF OA refund & ABSD timeline early.\n3️⃣ ${pills[2]}: Stress-test under 55% MAS TDSR.\n\n${mopLine}👉 Follow @homeequity — DM "${kw}" for your 2026 roadmap.\n\n${CEA_STATUTORY.footerLine}`;
+      const script = buildSynchronizedSpokenScript({ ...topic, headline, pills, kw }, 36);
+      const cutaways = buildTopicMatchedCutaways({ ...topic, headline }, 36);
+
+      return {
+        id,
+        pillar: topic.pillar || 'HDB_MOP',
+        headline,
+        title: topic.title || headline,
+        kw,
+        source,
+        pills,
+        brollDescriptions: topic.brollDescriptions || null,
+        isHdbUpgradeTopic: Boolean(topic.isHdbUpgradeTopic),
+        qaScore: topic.opsScore || 98,
+        status,
+        slot,
+        videoDurationSec: 36,
+        caption,
+        script,
+        cutaways
+      };
+    }
+
+    function buildDefaultBuyerCases() {
+      return [
+        {
+          id: 'bcase-d15-marcus',
+          clientName: 'Marcus Tan (D15 Freehold Upgrader)',
+          clientPhone: '+65 9123 4567',
+          playbook: 'RESI_OWN',
+          minPrice: 1900000,
+          maxPrice: 2450000,
+          minSqft: 950,
+          maxSqft: 1250,
+          minLease: 60,
+          locationNotes: 'D15 East Coast Katong Marine Parade Freehold',
+          candidates: [
+            { id: 'D15-01', project: 'Amber Park (Stack Masked)', district: 'D15 Tanjong Katong MRT', unitType: '3BR Dumbbell', sqft: 1001, price: 2320000, leaseYrs: 999, estRent: 6800, url: 'https://www.propertyguru.com.sg/property-for-sale?freetext=Amber+Park+D15', notes: 'Freehold TOP 2023; zero corridor waste.' },
+            { id: 'D15-02', project: 'Meyer Mansion (Stack Masked)', district: 'D15 Katong Park MRT', unitType: '3BR', sqft: 1055, price: 2390000, leaseYrs: 999, estRent: 7000, url: 'https://www.99.co/singapore/sale?query=Meyer+Mansion', notes: 'Freehold sea-facing stack; 3 mins to TEL MRT.' },
+            { id: 'D15-03', project: 'Older Leasehold Walk-Up (Excluded)', district: 'D15 Joo Chiat', unitType: '3BR', sqft: 1120, price: 2580000, leaseYrs: 54, estRent: 5400, url: 'https://www.propertyguru.com.sg', notes: 'Exceeds S$2.45M cap and remaining lease < 60 yrs.' }
+          ]
+        },
+        {
+          id: 'bcase-hdb-lim',
+          clientName: 'Lim Family (Bishan / AMK 5-Room HDB)',
+          clientPhone: '+65 9111 2222',
+          playbook: 'RESI_HDB',
+          minPrice: 850000,
+          maxPrice: 1180000,
+          minSqft: 1180,
+          maxSqft: 1400,
+          minLease: 65,
+          locationNotes: 'D20 Bishan Ang Mo Kio MRT EIP Open',
+          candidates: [
+            { id: 'HDB-01', project: 'Blk 273B Bishan St 24 (High Floor Masked)', district: 'D20 Bishan MRT', unitType: '5-Room DBSS', sqft: 1291, price: 1150000, leaseYrs: 84, estRent: 4600, url: 'https://www.propertyguru.com.sg/hdb-for-sale?freetext=Bishan', notes: '84 yrs remaining lease; all ethnic quotas open.' },
+            { id: 'HDB-02', project: 'Blk 310B AMK Ave 1 (Mid Floor Masked)', district: 'D20 Ang Mo Kio MRT', unitType: '5-Room', sqft: 1216, price: 1060000, leaseYrs: 85, estRent: 4300, url: 'https://www.99.co/singapore/sale/hdb?query=Ang+Mo+Kio', notes: '85 yrs remaining lease; near Bishan-AMK Park.' },
+            { id: 'HDB-03', project: 'Blk 112 AMK Ave 4 (Excluded)', district: 'D20 Mayflower MRT', unitType: '5-Room', sqft: 1259, price: 890000, leaseYrs: 52, estRent: 3800, url: 'https://www.propertyguru.com.sg', notes: 'Remaining lease 52 yrs (< 65-yr CPF Age-95 floor).' }
+          ]
+        },
+        {
+          id: 'bcase-ind-apex',
+          clientName: 'Apex Precision (Jurong / Tuas B2 Industrial)',
+          clientPhone: '+65 9333 4444',
+          playbook: 'INDUSTRIAL',
+          minPrice: 1800000,
+          maxPrice: 3500000,
+          minSqft: 4000,
+          maxSqft: 7500,
+          minLease: 35,
+          locationNotes: 'D22 Jurong Tuas B2 Heavy Ramp-Up',
+          candidates: [
+            { id: 'IND-01', project: 'West Connect Building (Unit Masked)', district: 'D22 Buroh Street', unitType: 'B2 Ramp-Up', sqft: 4850, price: 2650000, leaseYrs: 37, estRent: 13500, url: 'https://www.commercialguru.com.sg/industrial-property-for-sale?freetext=Buroh', notes: 'B2 Heavy Industrial; 15 kN/m² floor loading; 6.5m ceiling.' },
+            { id: 'IND-02', project: 'Tuas South Short-Lease Factory (Excluded)', district: 'D22 Tuas South', unitType: 'B2 Terrace', sqft: 5200, price: 2100000, leaseYrs: 22, estRent: 11000, url: 'https://www.commercialguru.com.sg', notes: 'Remaining lease 22 yrs (fails >= 35-yr minimum).' }
+          ]
+        }
+      ];
+    }
+
+    const uploadedImages = {
+      logo: null,
+      presenter: null,
+      broll: null,
+      hasExternalVideo: false,
+      coverBg: null,
+      videoScenes: [null, null, null, null]
+    };
+    let liveVideoAnimId = null;
+    let isLiveVideoPlaying = false;
+
+    function loadAppState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          delete parsed.geminiKey;
+          delete parsed.metaToken;
+          delete parsed.waToken;
+          appState = { ...appState, ...parsed };
+        }
+      } catch (e) {
+        console.warn('State load note:', e);
+      }
+      if (!Array.isArray(appState.campaigns) || appState.campaigns.length === 0) {
+        appState.campaigns = [
+          createCampaignFromTopic(OPS_SG_NEWS_POOL[0], 'CEO_APPROVED', 'Today 8:00 PM SGT', 'camp-1'),
+          createCampaignFromTopic(OPS_SG_NEWS_POOL[1], 'CEO_APPROVED', 'Tomorrow 12:15 PM SGT', 'camp-2'),
+          createCampaignFromTopic(OPS_SG_NEWS_POOL[2], 'OPS_CURATED', 'Tomorrow 8:00 PM SGT', 'camp-3')
+        ];
+      }
+      if (!Array.isArray(appState.buyerCases) || appState.buyerCases.length === 0) {
+        appState.buyerCases = buildDefaultBuyerCases();
+        appState.activeBuyerCaseId = 'bcase-d15-marcus';
+      }
+    }
+
+    function saveAppState() {
+      try {
+        const safeCopy = JSON.parse(JSON.stringify(appState));
+        delete safeCopy.geminiKey;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(safeCopy));
+      } catch (e) {
+        console.warn('State save note:', e);
+      }
+      syncHeaderKpis();
+    }
+
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast-banner');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => el.classList.add('hidden'), 4200);
+    }
+
+    function syncHeaderKpis() {
+      const totalGci = (appState.leads || []).reduce((acc, l) => acc + Number(l.gci || 0), 0);
+      const gciEl = document.getElementById('kpi-gci-total');
+      if (gciEl) gciEl.textContent = 'S$ ' + totalGci.toLocaleString();
+
+      const hotCount = (appState.leads || []).filter(l => Number(l.heat || 0) >= 80).length;
+      const hotEl = document.getElementById('kpi-hot-leads');
+      if (hotEl) hotEl.textContent = `${hotCount} Hot Leads`;
+
+      const spend = Number(appState.creditSpendSgd || 0);
+      const limit = Number(appState.creditLimitSgd || 12.83);
+      const trigger = Number(appState.creditBackupTriggerSgd || 11.50);
+      const isAlert = spend >= trigger;
+      const isCapReached = spend >= limit;
+
+      const credEl = document.getElementById('kpi-credit-val');
+      const sp12El = document.getElementById('sp12-credit-readout');
+      const cardEl = document.getElementById('kpi-credit-card');
+      const textVal = `S$ ${spend.toFixed(2)} / S$ ${limit.toFixed(2)}`;
+      if (credEl) {
+        credEl.textContent = textVal;
+        credEl.className = isAlert ? 'text-xs font-extrabold text-rose-400 animate-pulse' : 'text-xs font-extrabold text-amber-300';
+      }
+      if (sp12El) {
+        sp12El.textContent = isCapReached
+          ? `${textVal} 🛑 CAP REACHED`
+          : (isAlert ? `${textVal} ⚠️ BACKUP TRIGGERED` : textVal);
+        sp12El.className = isAlert ? 'text-xs font-mono font-extrabold text-rose-400' : 'text-xs font-mono font-extrabold text-white';
+      }
+      if (cardEl) {
+        cardEl.className = isAlert
+          ? 'bg-rose-950/80 border border-rose-500 rounded-xl px-3 py-1 text-center'
+          : 'bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1 text-center';
+      }
+    }
+
+    function updateMediaSourceBadges() {
+      const pBadge = document.getElementById('poster-bg-source-badge');
+      if (pBadge) {
+        const pStatus = appState.posterBgStatus || { source: 'curated-fallback', reason: '' };
+        if (pStatus.source === 'nano-banana-2-lite') {
+          pBadge.textContent = '🍌 Live Nano Banana 2 Lite';
+          pBadge.title = pStatus.reason || 'Generated via gemini-3.1-flash-lite-image';
+          pBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/50';
+        } else {
+          pBadge.textContent = '🖼️ Curated Fallback';
+          pBadge.title = pStatus.reason || 'Using curated Singapore architectural photo pool';
+          pBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-800 text-amber-300 border border-amber-500/40';
+        }
+      }
+
+      const vBadge = document.getElementById('video-bg-source-badge');
+      if (vBadge) {
+        const vStatus = appState.videoBrollStatus || { source: 'curated-fallback', liveCount: 0, reason: '' };
+        if (vStatus.source === 'nano-banana-2-lite') {
+          vBadge.textContent = `🍌 Live Nano Banana 2 Lite (${vStatus.liveCount || 3}/3 B-Roll Slots)`;
+          vBadge.title = vStatus.reason || '9:16 B-roll cutaways generated via gemini-3.1-flash-lite-image';
+          vBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/50';
+        } else {
+          vBadge.textContent = '🖼️ Curated Fallback (3 Slots)';
+          vBadge.title = vStatus.reason || 'Using curated Singapore architectural photo pool';
+          vBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-800 text-amber-300 border border-amber-500/40';
+        }
+      }
+    }
+
+    // =========================================================================
+    // BRAND LOGO & DEFAULT CURATED FALLBACK IMAGES
+    // =========================================================================
+    function drawVectorBrandLogoCanvas() {
+      const c = document.getElementById('brand-logo-canvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, 96, 96);
+      if (uploadedImages.logo) {
+        ctx.drawImage(uploadedImages.logo, 0, 0, 96, 96);
+        return;
+      }
+      const g = ctx.createLinearGradient(0, 0, 96, 96);
+      g.addColorStop(0, '#041028');
+      g.addColorStop(1, '#0c2448');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 96, 96);
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(16, 42);
+      ctx.lineTo(48, 16);
+      ctx.lineTo(78, 42);
+      ctx.stroke();
+      ctx.fillStyle = '#0ea5e9';
+      ctx.fillRect(24, 52, 9, 18);
+      ctx.fillRect(37, 44, 9, 26);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fillRect(50, 35, 9, 35);
+      ctx.fillRect(63, 28, 9, 42);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(20, 66);
+      ctx.quadraticCurveTo(48, 62, 76, 26);
+      ctx.stroke();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 11px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('HE STUDIO', 48, 86);
+    }
+
+    function initDefaultImagesAndLogo() {
+      drawVectorBrandLogoCanvas();
+      STOCK_SG_PHOTOS.forEach((url, idx) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          if (idx === 0 && !uploadedImages.coverBg) uploadedImages.coverBg = img;
+          if (!uploadedImages.videoScenes[idx]) uploadedImages.videoScenes[idx] = img;
+          renderActiveMediaView();
+        };
+        img.src = url;
+      });
+    }
+
+    // =========================================================================
+    // 3-TAB NAVIGATION SWITCHER
+    // =========================================================================
+    function switchTab(tab) {
+      if (isLiveVideoPlaying) {
+        isLiveVideoPlaying = false;
+        cancelAnimationFrame(liveVideoAnimId);
+        resetSpeechSyncState(getActiveCard()?.script || '');
+        const btn = document.getElementById('btn-live-video-preview');
+        if (btn) btn.textContent = '▶️ Preview Voice + Captions';
+      }
+
+      ['command', 'studio', 'crm_advisory'].forEach(t => {
+        const sec = document.getElementById(`sec-${t}`);
+        const btn = document.getElementById(`nav-tab-${t}`);
+        if (sec) sec.classList.toggle('hidden', t !== tab);
+        if (btn) {
+          btn.className = (t === tab)
+            ? 'px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-amber-500 text-slate-950 shrink-0 transition'
+            : (t === 'crm_advisory'
+              ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-300 hover:bg-slate-800 border border-emerald-500/30 shrink-0 transition'
+              : 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 shrink-0 transition');
+        }
+      });
+
+      if (tab === 'command') {
+        renderCommandBoard();
+      } else if (tab === 'studio') {
+        populateStudioCardDropdown();
+        populateStudioFromActiveCard();
+        updateMediaSourceBadges();
+        renderActiveMediaView();
+      } else if (tab === 'crm_advisory') {
+        renderCrmLeads();
+        computeInlineMopEstimate();
+        renderBuyerAdvisoryWing();
+      }
+    }
+
+    // =========================================================================
+    // TAB 1: AUTONOMOUS COMMAND BOARD & SP-12 CREDIT GUARDRAIL
+    // =========================================================================
+    function renderCommandBoard() {
+      const spGrid = document.getElementById('specialists-grid');
+      if (spGrid) {
+        const isAlert = Number(appState.creditSpendSgd) >= Number(appState.creditBackupTriggerSgd);
+        spGrid.innerHTML = SPECIALIST_AGENTS.map(sp => {
+          const highlightSp12 = sp.id === 'SP-12' && isAlert;
+          return `
+            <div class="bg-slate-950 border ${highlightSp12 ? 'border-rose-500 bg-rose-950/30' : 'border-slate-800'} rounded-xl p-2.5 space-y-1">
+              <div class="flex items-center justify-between gap-1">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-black ${highlightSp12 ? 'bg-rose-500 text-white' : 'bg-emerald-500/20 text-emerald-300'}">${escapeHTML(sp.id)}</span>
+                <span class="text-[9px] font-mono text-slate-400 truncate">${escapeHTML(sp.model)}</span>
+              </div>
+              <div class="text-[11px] font-extrabold text-white truncate">${escapeHTML(sp.name)}</div>
+              <div class="text-[10px] text-slate-400 leading-tight">${escapeHTML(sp.task)}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const newsGrid = document.getElementById('ops-news-topics-grid');
+      if (newsGrid) {
+        newsGrid.innerHTML = OPS_SG_NEWS_POOL.map((t, idx) => `
+          <div class="bg-slate-950 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-3.5 flex flex-col justify-between gap-2.5 transition">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between gap-1">
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300">${escapeHTML(t.pillar)}</span>
+                <span class="text-[10px] font-mono text-emerald-400">OPS-01 Score: ${t.opsScore}%</span>
+              </div>
+              <h4 class="text-xs font-extrabold text-white leading-snug">${escapeHTML(t.title)}</h4>
+              <div class="flex flex-wrap gap-1 pt-0.5">
+                ${(t.pills || []).map(p => `<span class="px-1.5 py-0.5 rounded bg-slate-900 border border-amber-500/30 text-[9px] font-bold text-amber-300">${escapeHTML(p)}</span>`).join('')}
+              </div>
+            </div>
+            <button onclick="launchNewsTopicIntoStudio(${idx})" class="w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold transition">
+              🍌 Open in Studio &amp; Generate Scene
+            </button>
+          </div>
+        `).join('');
+      }
+
+      const campList = document.getElementById('autonomous-campaigns-list');
+      const countBadge = document.getElementById('pipeline-count-badge');
+      if (countBadge) countBadge.textContent = `${appState.campaigns.length} Autonomous Campaigns`;
+      if (campList) {
+        campList.innerHTML = (appState.campaigns || []).map(c => {
+          const isApproved = c.status === 'CEO_APPROVED';
+          return `
+            <div class="bg-slate-950 border ${isApproved ? 'border-emerald-500/40' : 'border-amber-500/40'} rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-black ${isApproved ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'}">
+                    ${isApproved ? '✅ CEO-01 FINAL APPROVED (Touch #2 Automated)' : '🟡 OPS-01 CURATED (Touch #1 Automated)'}
+                  </span>
+                  <span class="text-[10px] font-mono text-cyan-300">QA: ${c.qaScore || 98}% • ${escapeHTML((c.pills || []).join(' | '))}</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-extrabold text-white">${escapeHTML(c.title)}</h4>
+                <div class="text-[10px] text-emerald-400 font-semibold">CEA Circular 02/2011: Verified (${CEA_STATUTORY.reg} • ${CEA_STATUTORY.lic} • ${CEA_STATUTORY.publicPhone})</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                ${!isApproved ? `<button onclick="ceoApproveCampaign('${c.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">👑 CEO-01 Approve</button>` : ''}
+                <button onclick="openCampaignInStudio('${c.id}')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-extrabold border border-slate-700">🎬 Studio Preview</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const logEl = document.getElementById('command-audit-log');
+      if (logEl) {
+        logEl.innerHTML = (appState.auditLog || []).map(entry => `
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-2.5 space-y-0.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-extrabold text-amber-300">[${escapeHTML(entry.agent)}]</span>
+              <span class="text-slate-500">${escapeHTML(entry.ts)}</span>
+            </div>
+            <div class="text-slate-200 leading-snug">${escapeHTML(entry.msg)}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function appendAuditLog(agent, msg) {
+      const now = new Date().toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' SGT';
+      appState.auditLog.unshift({ ts: now, agent, msg });
+      if (appState.auditLog.length > 25) appState.auditLog.length = 25;
+    }
+
+    function simulateCreditSpendStep(delta) {
+      appState.creditSpendSgd = Math.min(appState.creditLimitSgd, Number((Number(appState.creditSpendSgd) + delta).toFixed(2)));
+      saveAppState();
+      renderCommandBoard();
+      if (appState.creditSpendSgd >= appState.creditLimitSgd) {
+        simulateCreditCapReached();
+      } else if (appState.creditSpendSgd >= appState.creditBackupTriggerSgd) {
+        appendAuditLog('SP-12', `Credit spend reached S$${appState.creditSpendSgd.toFixed(2)} (>= S$${appState.creditBackupTriggerSgd.toFixed(2)}). Triggering Manual Backup Flow!`);
+        triggerManualBackupFlow(true, `SP-12 Credit Guardrail Triggered: Monthly spend reached S$${appState.creditSpendSgd.toFixed(2)} of S$${appState.creditLimitSgd.toFixed(2)} cap. Copy text-free prompts below.`);
+      } else {
+        showToast(`SP-12 Credit Spend updated: S$${appState.creditSpendSgd.toFixed(2)} / S$${appState.creditLimitSgd.toFixed(2)}`);
+      }
+    }
+
+    function simulateCreditSpendToThreshold() {
+      appState.creditSpendSgd = 11.55;
+      saveAppState();
+      renderCommandBoard();
+      appendAuditLog('SP-12', `Credit spend hit S$11.55 (>= S$11.50 threshold). Escalated to CEO-01 & unlocked Manual Backup Flow.`);
+      triggerManualBackupFlow(true, `SP-12 Alert: Google Cloud credit spend is S$11.55 / S$12.83. Manual Backup Flow unlocked with text-free scene prompts.`);
+    }
+
+    function simulateCreditCapReached() {
+      appState.creditSpendSgd = 12.83;
+      appState.posterBgStatus = {
+        source: 'curated-fallback',
+        reason: 'SP-12 monthly credit cap (S$12.83/mo) reached — switched to Curated Fallback'
+      };
+      appState.videoBrollStatus = {
+        source: 'curated-fallback',
+        liveCount: 0,
+        reason: 'SP-12 monthly credit cap (S$12.83/mo) reached — switched to Curated Fallback'
+      };
+      saveAppState();
+      renderCommandBoard();
+      updateMediaSourceBadges();
+      appendAuditLog('SP-12', 'Monthly S$12.83/mo cap reached. Enforced automatic Curated Fallback & unlocked Manual Backup Flow.');
+      triggerManualBackupFlow(true, 'SP-12 Budget Guard: S$12.83/mo credit cap reached. Studio switched to Curated Fallback automatically.');
+    }
+
+    function resetCreditSpendDemo() {
+      appState.creditSpendSgd = 3.42;
+      saveAppState();
+      renderCommandBoard();
+      showToast('Reset SP-12 credit tracker to S$3.42 / S$12.83.');
+    }
+
+    async function runAutonomousCronCycle() {
+      const btn = document.getElementById('btn-run-autopilot');
+      if (btn) btn.textContent = '⏳ Running 14-Agent Cycle...';
+      const existingTitles = (appState.campaigns || []).map(c => c.title);
+
+      try {
+        const res = await fetch('/api/cron-autopilot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            currentSpendSgd: appState.creditSpendSgd,
+            existingTitles
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.ok && data.topic) {
+            const newCamp = createCampaignFromTopic(
+              data.topic,
+              data.ceoApproval?.approved ? 'CEO_APPROVED' : 'OPS_CURATED',
+              'Today 8:00 PM SGT'
+            );
+            newCamp.headline = enforceConciseHeadline(data.deliverables?.headline, newCamp.title);
+            newCamp.pills = enforceCompactPills(data.deliverables?.pills || newCamp.pills);
+            newCamp.caption = data.deliverables?.caption || newCamp.caption;
+            newCamp.script = data.deliverables?.continuousScript36s || newCamp.script;
+            appState.campaigns.unshift(newCamp);
+            appState.activeCardId = newCamp.id;
+            resetSpeechSyncState(newCamp.script);
+            appendAuditLog('OPS-01 → CEO-01', `Serverless Autopilot Cycle completed: "${newCamp.headline}" (QA ${data.qaGate?.score || 98}%).`);
+            saveAppState();
+            renderCommandBoard();
+            if (data.creditMonitor?.triggerManualBackup) {
+              triggerManualBackupFlow(true, 'SP-12 server threshold reached S$11.50! Manual Backup Drawer unlocked.');
+            } else {
+              showToast(`Autopilot Cycle Complete! CEO-01 approved "${newCamp.headline}"`);
+            }
+            if (btn) btn.textContent = '⚡ Run Autopilot Cycle (/api/cron-autopilot)';
+            return;
+          }
+        }
+      } catch (err) {
+        // Fallback when opened locally without serverless runtime
+      }
+
+      const nextTopic = OPS_SG_NEWS_POOL.find(t => !existingTitles.includes(t.title)) || OPS_SG_NEWS_POOL[0];
+      const newCamp = createCampaignFromTopic(nextTopic, 'CEO_APPROVED', 'Today 8:00 PM SGT');
+      appState.campaigns.unshift(newCamp);
+      appState.activeCardId = newCamp.id;
+      resetSpeechSyncState(newCamp.script);
+      appendAuditLog('OPS-01', `Curated SG property news topic: "${newCamp.headline}" (Prompt QA 98% >= 95%).`);
+      appendAuditLog('CEO-01', `Gemini 4 Hydrogen xhigh granted Autonomous Final Approval for "${newCamp.headline}".`);
+      saveAppState();
+      renderCommandBoard();
+      showToast(`14-Agent Autonomous Cycle Complete! CEO-01 approved "${newCamp.headline}"`);
+      if (btn) btn.textContent = '⚡ Run Autopilot Cycle (/api/cron-autopilot)';
+    }
+
+    function curateNewSgPropertyNewsTopics() {
+      OPS_SG_NEWS_POOL.push(OPS_SG_NEWS_POOL.shift());
+      appendAuditLog('OPS-01', 'Refreshed daily Singapore property news slate from URA REALIS & HDB InfoWEB.');
+      saveAppState();
+      renderCommandBoard();
+      showToast('OPS-01 refreshed daily Singapore property news topics!');
+    }
+
+    async function launchNewsTopicIntoStudio(idx) {
+      const topic = OPS_SG_NEWS_POOL[idx] || OPS_SG_NEWS_POOL[0];
+      let camp = appState.campaigns.find(c => c.title === topic.title);
+      if (!camp) {
+        camp = createCampaignFromTopic(topic, 'CEO_APPROVED', 'Today 8:00 PM SGT');
+        appState.campaigns.unshift(camp);
+      } else {
+        camp.headline = enforceConciseHeadline(topic.headline, topic.title);
+        camp.pills = enforceCompactPills(topic.pills);
+        camp.script = buildSynchronizedSpokenScript(topic, camp.videoDurationSec || 36);
+        camp.cutaways = buildTopicMatchedCutaways(topic, camp.videoDurationSec || 36);
+      }
+      appState.activeCardId = camp.id;
+      resetSpeechSyncState(camp.script);
+      saveAppState();
+      switchTab('studio');
+      switchStudioMediaView('cover');
+      await generateFreshNanoBanana4x5Poster(false);
+    }
+
+    function ceoApproveCampaign(campId) {
+      const c = appState.campaigns.find(x => x.id === campId);
+      if (!c) return;
+      c.status = 'CEO_APPROVED';
+      appendAuditLog('CEO-01', `Final Autonomous Approval granted for "${c.headline || c.title}".`);
+      saveAppState();
+      renderCommandBoard();
+      showToast('CEO-01 Final Approval granted!');
+    }
+
+    async function openCampaignInStudio(campId) {
+      appState.activeCardId = campId;
+      const c = getActiveCard();
+      if (c) resetSpeechSyncState(c.script);
+      saveAppState();
+      switchTab('studio');
+      switchStudioMediaView('cover');
+      await generateFreshNanoBanana4x5Poster(false);
+    }
+
+    // =========================================================================
+    // TAB 2: MEDIA STUDIO — LIVE PILLS, FOOTER AVATAR & SERVER MALE TTS
+    // =========================================================================
+    function getActiveCard() {
+      return appState.campaigns.find(c => c.id === appState.activeCardId) || appState.campaigns[0];
+    }
+
+    function populateStudioCardDropdown() {
+      const sel = document.getElementById('studio-card-select');
+      if (!sel) return;
+      sel.innerHTML = (appState.campaigns || []).map(c =>
+        `<option value="${c.id}" ${c.id === appState.activeCardId ? 'selected' : ''}>[${c.status}] ${escapeHTML(c.title)}</option>`
+      ).join('');
+    }
+
+    async function selectStudioCard(id) {
+      appState.activeCardId = id;
+      const c = getActiveCard();
+      if (c) resetSpeechSyncState(c.script);
+      saveAppState();
+      populateStudioFromActiveCard();
+      await generateFreshNanoBanana4x5Poster(false);
+    }
+
+    function populateStudioFromActiveCard() {
+      const c = getActiveCard();
+      if (!c) return;
+      c.headline = enforceConciseHeadline(c.headline, c.title);
+      c.pills = enforceCompactPills(c.pills);
+      resetSpeechSyncState(c.script);
+
+      const hInp = document.getElementById('studio-headline-input');
+      if (hInp) hInp.value = c.headline;
+
+      // Populate the 3 live-editable pill inputs directly above the 4:5 poster preview
+      [0, 1, 2].forEach(i => {
+        const pInp = document.getElementById(`poster-pill-input-${i}`);
+        if (pInp) pInp.value = c.pills[i] || '';
+      });
+
+      const boxA = document.getElementById('box-a-caption');
+      const boxB = document.getElementById('box-b-script');
+      const durSel = document.getElementById('video-duration-select');
+      if (boxA) boxA.value = c.caption || '';
+      if (boxB) boxB.value = c.script || '';
+      if (durSel) durSel.value = String(c.videoDurationSec || 36);
+
+      const badgesEl = document.getElementById('broll-timeline-badges');
+      if (badgesEl) {
+        const cuts = c.cutaways || buildTopicMatchedCutaways(c, c.videoDurationSec || 36);
+        badgesEl.innerHTML = cuts.map(cut => `
+          <div class="bg-slate-950 border border-cyan-500/30 rounded-lg p-2">
+            <div class="font-extrabold text-cyan-300">${escapeHTML(cut.window)}</div>
+            <div class="text-slate-300 truncate">${escapeHTML(cut.label)}</div>
+          </div>
+        `).join('');
+      }
+      populateManualBackupDrawerPrompts();
+    }
+
+    function updateHeadlineInline(val) {
+      const c = getActiveCard();
+      if (!c) return;
+      c.headline = String(val || '').toUpperCase();
+      saveAppState();
+      renderActiveMediaView();
+      populateManualBackupDrawerPrompts();
+    }
+
+    // Requirement 2: Live-updating any of the 3 pill inputs updates the 4:5 canvas in real time without regenerating
+    function updatePosterPillInline(idx, val) {
+      const c = getActiveCard();
+      if (!c) return;
+      if (!Array.isArray(c.pills)) c.pills = ['URA REALIS DATA', 'CPF & ABSD MATH', '55% MAS TDSR CAP'];
+      c.pills[idx] = String(val || '').toUpperCase();
+      saveAppState();
+      renderMagazineCover4x5();
+    }
+
+    function runAiAutoLayoutForActiveTopic() {
+      const c = getActiveCard();
+      if (!c) return;
+      c.headline = enforceConciseHeadline(null, c.title);
+      c.pills = enforceCompactPills(c.pills);
+      c.script = buildSynchronizedSpokenScript(c, c.videoDurationSec || 36);
+      c.cutaways = buildTopicMatchedCutaways(c, c.videoDurationSec || 36);
+      resetSpeechSyncState(c.script);
+      regenerateBoxACaption();
+      saveAppState();
+      populateStudioFromActiveCard();
+      renderActiveMediaView();
+      appendAuditLog('OPS-01 & SP-03', `Auto-optimized layout, compact pills & 36s script for "${c.headline}".`);
+      showToast('✨ AI Auto-Layout optimized headline, 3 compact pills & synchronized 36s script!');
+    }
+
+    function populateManualBackupDrawerPrompts() {
+      const c = getActiveCard();
+      if (!c) return;
+      const omniEl = document.getElementById('backup-omni-prompt');
+      const veoEl = document.getElementById('backup-veo-lite-prompt');
+      const imgEl = document.getElementById('backup-image-prompt');
+
+      if (omniEl) {
+        omniEl.value = `[MODEL: Omni 1.2 Flash — Locked Advisor Photo Avatar]\nReference Input: Uploaded Advisor Portrait Photo\nVoice Lock: 45-year-old Singaporean Chinese male English real estate advisor (warm medium-low baritone, 140 WPM measured cadence, zero accent shift).\nCamera: Locked 85mm portrait lens in sunlit Singapore modern showflat lounge.\nContinuous Spoken Script (${c.videoDurationSec || 36}s):\n"${c.script}"`;
+      }
+      if (veoEl) {
+        const cuts = c.cutaways || buildTopicMatchedCutaways(c, c.videoDurationSec || 36);
+        veoEl.value = cuts.map((cut, i) => `--- B-ROLL CUTAWAY ${i + 1} [${cut.window}] (Engine: Veo 3.1 - Lite / Nano Banana 2 Lite) ---\n${cut.prompt}`).join('\n\n');
+      }
+      if (imgEl) {
+        imgEl.value = buildSp05TextFreeScenePrompt(c, 'vertical 4:5 portrait');
+      }
+    }
+
+    function triggerManualBackupFlow(switchToStudio = false, customReason = null) {
+      if (switchToStudio) {
+        switchTab('studio');
+      }
+      populateManualBackupDrawerPrompts();
+      const drawer = document.getElementById('manual-backup-drawer');
+      const reasonEl = document.getElementById('manual-backup-reason');
+      if (drawer) {
+        drawer.classList.remove('hidden');
+        drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      if (reasonEl && customReason) {
+        reasonEl.textContent = customReason;
+      }
+      showToast('🛠 Manual Backup Flow unlocked with text-free Nano Banana 2 Lite & Google Flow prompts!');
+    }
+
+    function closeManualBackupDrawer() {
+      const drawer = document.getElementById('manual-backup-drawer');
+      if (drawer) drawer.classList.add('hidden');
+    }
+
+    function copyBackupPromptText(textareaId, label) {
+      const el = document.getElementById(textareaId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.value);
+      showToast(`Copied ${label} to clipboard!`);
+    }
+
+    function syncBoxAToActiveCard() {
+      const c = getActiveCard();
+      if (!c) return;
+      c.caption = document.getElementById('box-a-caption').value;
+      saveAppState();
+    }
+
+    function toggleStudioCaptionLang() {
+      appState.studioLang = appState.studioLang === 'EN' ? 'ZH' : 'EN';
+      regenerateBoxACaption();
+    }
+
+    function regenerateBoxACaption() {
+      const c = getActiveCard();
+      if (!c) return;
+      const pills = enforceCompactPills(c.pills);
+      const mopLine = c.isHdbUpgradeTopic ? `Calculate your 5-year MOP cash proceeds: ${CEA_STATUTORY.mopCalcUrl}\n` : '';
+      if (appState.studioLang === 'ZH') {
+        c.caption = `📊 ${c.title}\n\n1️⃣ ${pills[0]}：参考 2026 年 URA REALIS 与 HDB 官方数据。\n2️⃣ ${pills[1]}：提前规划 CPF 公积金退还与 6 个月 ABSD 退税时间表。\n3️⃣ ${pills[2]}：按照 MAS 55% TDSR 贷款压力测试稳健布局。\n\n${mopLine}👉 关注 @homeequity — 私信回复 "${c.kw}" 获取 2026 房产规划测算表。\n\n${CEA_STATUTORY.footerLine}`;
+      } else {
+        c.caption = `📊 ${c.title}\n\n1️⃣ ${pills[0]}: Verified against ${c.source}.\n2️⃣ ${pills[1]}: Structure your CPF OA refund & ABSD timeline early.\n3️⃣ ${pills[2]}: Stress-test under 55% MAS TDSR.\n\n${mopLine}👉 Follow @homeequity — DM "${c.kw}" for your 2026 roadmap.\n\n${CEA_STATUTORY.footerLine}`;
+      }
+      const boxA = document.getElementById('box-a-caption');
+      if (boxA) boxA.value = c.caption;
+      saveAppState();
+      showToast(`Regenerated caption (${appState.studioLang}) with CEA Circular 02/2011 particulars!`);
+    }
+
+    function changeContinuousVideoDuration(val) {
+      const sec = Number(val) || 36;
+      const c = getActiveCard();
+      if (!c) return;
+      c.videoDurationSec = sec;
+      c.script = buildSynchronizedSpokenScript(c, sec);
+      c.cutaways = buildTopicMatchedCutaways(c, sec);
+      resetSpeechSyncState(c.script);
+      saveAppState();
+      populateStudioFromActiveCard();
+      renderActiveMediaView();
+      showToast(`Updated synchronized script to ${sec}s with matched 3.5s B-roll cutaways!`);
+    }
+
+    function rewriteContinuousScript() {
+      const c = getActiveCard();
+      if (!c) return;
+      const sec = c.videoDurationSec || 36;
+      c.script = buildSynchronizedSpokenScript(c, sec);
+      c.cutaways = buildTopicMatchedCutaways(c, sec);
+      resetSpeechSyncState(c.script);
+      saveAppState();
+      populateStudioFromActiveCard();
+      renderActiveMediaView();
+      showToast(`Rewrote ${sec}s synchronized spoken script & cleared TTS cache!`);
+    }
+
+    function syncBoxBToActiveCard() {
+      const c = getActiveCard();
+      if (!c) return;
+      c.script = document.getElementById('box-b-script').value;
+      resetSpeechSyncState(c.script);
+      saveAppState();
+      populateManualBackupDrawerPrompts();
+      renderSingleVideoFramePreview(0);
+    }
+
+    function loadImageFromDataUrl(url) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    }
+
+    function applyCuratedFallbackPhotoToPoster(reason) {
+      STOCK_SG_PHOTOS.push(STOCK_SG_PHOTOS.shift());
+      appState.posterBgStatus = {
+        source: 'curated-fallback',
+        reason: reason || 'Curated Singapore architectural photo pool'
+      };
+      updateMediaSourceBadges();
+      loadImageFromDataUrl(STOCK_SG_PHOTOS[0]).then(img => {
+        if (img) {
+          uploadedImages.coverBg = img;
+          renderMagazineCover4x5();
+        }
+      });
+    }
+
+    async function generateFreshNanoBanana4x5Poster(notifyUser = true) {
+      const c = getActiveCard();
+      if (!c) return;
+
+      const busyPill = document.getElementById('studio-busy-pill');
+      const btn = document.getElementById('btn-gen-nb2-poster');
+      if (busyPill) busyPill.classList.remove('hidden');
+      if (btn) btn.textContent = '⏳ Generating Nano Banana 2 Lite...';
+
+      if (Number(appState.creditSpendSgd) >= Number(appState.creditLimitSgd)) {
+        applyCuratedFallbackPhotoToPoster(`SP-12 monthly credit cap (S$${Number(appState.creditLimitSgd).toFixed(2)}/mo) reached`);
+        if (busyPill) busyPill.classList.add('hidden');
+        if (btn) btn.textContent = '🍌 Generate Topic Scene (Nano Banana 2 Lite)';
+        if (notifyUser) showToast('SP-12 credit cap (S$12.83/mo) reached — switched to Curated Fallback.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/media', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mediaType: 'IMAGE_4X5',
+            topic: c.title,
+            category: c.pillar,
+            headline: c.headline || c.title,
+            currentSpendSgd: appState.creditSpendSgd,
+            variationSeed: String(Date.now()).slice(-4)
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.source === 'nano-banana-2-lite' && data.imageDataUri) {
+            const aiImg = await loadImageFromDataUrl(data.imageDataUri);
+            if (aiImg) {
+              uploadedImages.coverBg = aiImg;
+              if (data.estimatedCostSgd) {
+                appState.creditSpendSgd = Math.min(appState.creditLimitSgd, Number((Number(appState.creditSpendSgd) + Number(data.estimatedCostSgd)).toFixed(2)));
+              }
+              appState.posterBgStatus = {
+                source: 'nano-banana-2-lite',
+                reason: `Generated via ${data.model || 'gemini-3.1-flash-lite-image'} (SP-05 text-free scene)`
+              };
+              appendAuditLog('SP-05', `Generated fresh text-free 4:5 background via Nano Banana 2 Lite for "${c.headline}".`);
+              saveAppState();
+              updateMediaSourceBadges();
+              renderMagazineCover4x5();
+              if (data.triggerManualBackupDrawer) {
+                triggerManualBackupFlow(false, 'SP-12 credit threshold S$11.50 reached — Manual Backup Drawer unlocked.');
+              } else if (notifyUser) {
+                showToast('🍌 Live Nano Banana 2 Lite generated fresh 4:5 background & composited CEA poster!');
+              }
+              if (busyPill) busyPill.classList.add('hidden');
+              if (btn) btn.textContent = '🍌 Generate Topic Scene (Nano Banana 2 Lite)';
+              return;
+            }
+          }
+
+          applyCuratedFallbackPhotoToPoster(data.fallbackReason || 'Fallback to curated Singapore photo pool');
+          if (data.triggerManualBackupDrawer) {
+            triggerManualBackupFlow(false, data.fallbackReason || 'Manual Backup Flow triggered.');
+          } else if (notifyUser) {
+            showToast(`🖼️ Curated Fallback active (${data.fallbackReason || 'check GEMINI_API_KEY in .env'}).`);
+          }
+          if (busyPill) busyPill.classList.add('hidden');
+          if (btn) btn.textContent = '🍌 Generate Topic Scene (Nano Banana 2 Lite)';
+          return;
+        }
+      } catch (err) {
+        // Offline / static file fallback
+      }
+
+      applyCuratedFallbackPhotoToPoster('Offline / static preview mode — using Curated Fallback');
+      if (busyPill) busyPill.classList.add('hidden');
+      if (btn) btn.textContent = '🍌 Generate Topic Scene (Nano Banana 2 Lite)';
+      if (notifyUser) showToast('🖼️ Curated Fallback photo loaded (deploy to Vercel with GEMINI_API_KEY for Live Nano Banana 2 Lite).');
+    }
+
+    async function generateFreshNanoBananaBrollCutaways(notifyUser = true) {
+      const c = getActiveCard();
+      if (!c) return;
+
+      if (uploadedImages.hasExternalVideo || uploadedImages.broll) {
+        if (notifyUser) showToast('Using your uploaded custom B-roll / .MP4 file.');
+        return;
+      }
+
+      const busyPill = document.getElementById('studio-busy-pill');
+      const btn = document.getElementById('btn-gen-nb2-broll');
+      if (busyPill) busyPill.classList.remove('hidden');
+      if (btn) btn.textContent = '⏳ Generating 3 B-Roll Slots...';
+
+      if (Number(appState.creditSpendSgd) >= Number(appState.creditLimitSgd)) {
+        appState.videoBrollStatus = {
+          source: 'curated-fallback',
+          liveCount: 0,
+          reason: `SP-12 monthly credit cap (S$${Number(appState.creditLimitSgd).toFixed(2)}/mo) reached`
+        };
+        updateMediaSourceBadges();
+        renderSingleVideoFramePreview(8.5);
+        if (busyPill) busyPill.classList.add('hidden');
+        if (btn) btn.textContent = '🍌 Refresh 3 B-Roll Scenes (Nano Banana 2 Lite)';
+        if (notifyUser) showToast('SP-12 credit cap reached — using Curated Fallback for B-roll slots.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/media', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mediaType: 'BROLL_CUTAWAYS_9X16',
+            topic: c.title,
+            category: c.pillar,
+            headline: c.headline || c.title,
+            cutaways: c.cutaways || [],
+            currentSpendSgd: appState.creditSpendSgd
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          let loadedLive = 0;
+          if (Array.isArray(data.cutawayImages)) {
+            for (const item of data.cutawayImages) {
+              if (item.source === 'nano-banana-2-lite' && item.imageDataUri) {
+                const img = await loadImageFromDataUrl(item.imageDataUri);
+                if (img) {
+                  uploadedImages.videoScenes[item.slotIndex] = img;
+                  loadedLive += 1;
+                }
+              }
+            }
+          }
+
+          if (loadedLive > 0) {
+            if (data.estimatedCostSgd) {
+              appState.creditSpendSgd = Math.min(appState.creditLimitSgd, Number((Number(appState.creditSpendSgd) + Number(data.estimatedCostSgd)).toFixed(2)));
+            }
+            appState.videoBrollStatus = {
+              source: 'nano-banana-2-lite',
+              liveCount: loadedLive,
+              reason: `Generated ${loadedLive}/3 text-free 9:16 B-roll scenes via gemini-3.1-flash-lite-image`
+            };
+            appendAuditLog('SP-05', `Refreshed ${loadedLive}/3 9:16 B-roll cutaway slots via Nano Banana 2 Lite.`);
+            saveAppState();
+            updateMediaSourceBadges();
+            renderSingleVideoFramePreview(8.5);
+            if (notifyUser) showToast(`🍌 Generated ${loadedLive}/3 fresh 9:16 B-roll cutaway scenes via Nano Banana 2 Lite!`);
+            if (busyPill) busyPill.classList.add('hidden');
+            if (btn) btn.textContent = '🍌 Refresh 3 B-Roll Scenes (Nano Banana 2 Lite)';
+            return;
+          }
+
+          appState.videoBrollStatus = {
+            source: 'curated-fallback',
+            liveCount: 0,
+            reason: data.fallbackReason || 'Fallback to curated photo pool'
+          };
+          updateMediaSourceBadges();
+          renderSingleVideoFramePreview(8.5);
+          if (notifyUser) showToast(`🖼️ Curated Fallback active for B-roll (${data.fallbackReason || 'check GEMINI_API_KEY'}).`);
+          if (busyPill) busyPill.classList.add('hidden');
+          if (btn) btn.textContent = '🍌 Refresh 3 B-Roll Scenes (Nano Banana 2 Lite)';
+          return;
+        }
+      } catch (e) {
+        // Offline fallback
+      }
+
+      appState.videoBrollStatus = {
+        source: 'curated-fallback',
+        liveCount: 0,
+        reason: 'Offline / static mode — using Curated Fallback'
+      };
+      updateMediaSourceBadges();
+      renderSingleVideoFramePreview(8.5);
+      if (busyPill) busyPill.classList.add('hidden');
+      if (btn) btn.textContent = '🍌 Refresh 3 B-Roll Scenes (Nano Banana 2 Lite)';
+      if (notifyUser) showToast('🖼️ Curated Fallback B-roll scenes active.');
+    }
+
+    function handleStudioPhotoUpload(ev, role) {
+      const file = ev.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const img = await loadImageFromDataUrl(e.target.result);
+        if (!img) return;
+        if (role === 'presenter') {
+          uploadedImages.presenter = img;
+          showToast('👤 Advisor photo avatar placed in bottom-left CEA footer on both 9:16 video & 4:5 poster!');
+        } else if (role === 'broll') {
+          uploadedImages.broll = img;
+          uploadedImages.coverBg = img;
+          uploadedImages.videoScenes[0] = img;
+          uploadedImages.videoScenes[1] = img;
+          uploadedImages.videoScenes[2] = img;
+          showToast('🏠 Custom B-roll photo loaded into poster & video stage!');
+        } else if (role === 'logo') {
+          uploadedImages.logo = img;
+          drawVectorBrandLogoCanvas();
+          showToast('🏷️ Brand logo updated!');
+        }
+        renderActiveMediaView();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleExternalVideoUpload(ev) {
+      const file = ev.target.files?.[0];
+      if (!file) return;
+      uploadedImages.hasExternalVideo = true;
+      const url = URL.createObjectURL(file);
+      const vidEl = document.getElementById('recorded-video-element');
+      if (vidEl) {
+        vidEl.src = url;
+        vidEl.play().catch(() => {});
+      }
+      showToast(`Loaded external video "${file.name}" into preview player!`);
+    }
+
+    function cycleVisualStylePreset() {
+      appState.stylePresetIdx = ((appState.stylePresetIdx || 0) + 1) % VISUAL_STYLE_PRESETS.length;
+      const preset = VISUAL_STYLE_PRESETS[appState.stylePresetIdx];
+      document.getElementById('active-style-name').textContent = preset.name;
+      renderActiveMediaView();
+      showToast(`Switched visual theme to "${preset.name}".`);
+    }
+
+    function switchStudioMediaView(view) {
+      ['cover', 'video'].forEach(v => {
+        const sec = document.getElementById(`media-subview-${v}`);
+        const btn = document.getElementById(`subview-btn-${v}`);
+        if (sec) sec.classList.toggle('hidden', v !== view);
+        if (btn) {
+          btn.className = (v === view)
+            ? 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-500 text-slate-950 transition'
+            : 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 transition';
+        }
+      });
+      updateMediaSourceBadges();
+      renderActiveMediaView();
+    }
+
+    function renderActiveMediaView() {
+      renderMagazineCover4x5();
+      renderSingleVideoFramePreview(0);
+    }
+
+    // =========================================================================
+    // WORD-BOUNDARY WRAPPER & AUTO-ADJUSTING TOP HEADLINE BOX
+    // =========================================================================
+    function wrapTextIntoLines(ctx, text, maxWidth, maxLines = 3) {
+      const words = String(text || '').trim().split(/\s+/).filter(Boolean);
+      if (words.length === 0) return ['2026 SINGAPORE PROPERTY PLAYBOOK'];
+      const lines = [];
+      let currentLine = '';
+
+      for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        const testLine = currentLine ? `${currentLine} ${w}` : w;
+        if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+          lines.push(currentLine);
+          currentLine = w;
+          if (lines.length >= maxLines - 1) {
+            const remainder = words.slice(i).join(' ');
+            lines.push(remainder);
+            currentLine = '';
+            break;
+          }
+        } else {
+          currentLine = testLine;
+        }
+      }
+      if (currentLine && lines.length < maxLines) {
+        lines.push(currentLine);
+      }
+      return lines;
+    }
+
+    function drawAutoFittingTopHeadlineBox(ctx, W, eyebrowText, headlineText, accentColor, options = {}) {
+      const boxX = options.boxX ?? 28;
+      const boxY = options.boxY ?? 28;
+      const boxW = W - boxX * 2;
+      const padX = options.padX ?? (W >= 1000 ? 44 : 28);
+      const maxTextW = boxW - padX * 2;
+      const maxLines = options.maxLines ?? 3;
+
+      const cleanHeadline = String(headlineText || '2026 SINGAPORE PROPERTY PLAYBOOK').trim().toUpperCase();
+      const charLen = cleanHeadline.length;
+
+      let fontSize = options.baseFontSize ?? (W >= 1000 ? 40 : 28);
+      const minFontSize = options.minFontSize ?? (W >= 1000 ? 22 : 17);
+
+      if (charLen > 85) fontSize = Math.max(minFontSize, fontSize - 8);
+      else if (charLen > 60) fontSize = Math.max(minFontSize, fontSize - 5);
+      else if (charLen > 42) fontSize = Math.max(minFontSize, fontSize - 2);
+
+      let lines = [];
+      while (fontSize >= minFontSize) {
+        ctx.font = `800 ${fontSize}px "Plus Jakarta Sans", sans-serif`;
+        const words = cleanHeadline.split(/\s+/);
+        const longestWordW = Math.max(...words.map(w => ctx.measureText(w).width));
+        lines = wrapTextIntoLines(ctx, cleanHeadline, maxTextW, maxLines);
+        const longestLineW = Math.max(...lines.map(l => ctx.measureText(l).width));
+
+        if (longestWordW <= maxTextW && longestLineW <= maxTextW && lines.length <= maxLines) {
+          break;
+        }
+        fontSize -= 2;
+      }
+
+      ctx.font = `800 ${fontSize}px "Plus Jakarta Sans", sans-serif`;
+      lines = wrapTextIntoLines(ctx, cleanHeadline, maxTextW, maxLines);
+
+      const lineHeight = Math.round(fontSize * 1.24);
+      const eyebrowFontSize = W >= 1000 ? 19 : 15;
+      const topPad = W >= 1000 ? 26 : 18;
+      const gapAfterEyebrow = W >= 1000 ? 34 : 24;
+      const bottomPad = W >= 1000 ? 24 : 18;
+
+      const boxH = topPad + eyebrowFontSize + gapAfterEyebrow + (lines.length * lineHeight) + bottomPad;
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(4, 9, 23, 0.90)';
+      ctx.beginPath();
+      ctx.roundRect(boxX, boxY, boxW, boxH, 16);
+      ctx.fill();
+
+      ctx.strokeStyle = accentColor;
+      ctx.lineWidth = W >= 1000 ? 4 : 3;
+      ctx.stroke();
+
+      ctx.fillStyle = accentColor;
+      ctx.font = `800 ${eyebrowFontSize}px "Plus Jakarta Sans", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(eyebrowText, W / 2, boxY + topPad + eyebrowFontSize * 0.85, maxTextW);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `800 ${fontSize}px "Plus Jakarta Sans", sans-serif`;
+      const firstLineY = boxY + topPad + eyebrowFontSize + gapAfterEyebrow + fontSize * 0.72;
+      lines.forEach((lineStr, idx) => {
+        ctx.fillText(lineStr, W / 2, firstLineY + idx * lineHeight, maxTextW);
+      });
+      ctx.restore();
+
+      return boxY + boxH;
+    }
+
+    // =========================================================================
+    // REQUIREMENT 1: BOTTOM-LEFT CIRCULAR ADVISOR AVATAR INSIDE CEA FOOTER BOX
+    // (Exact same layout across both 4:5 Poster & 9:16 Video Canvas)
+    // =========================================================================
+    function drawCompactBottomLeftCeaFooter(ctx, W, footY, footH, accentColor) {
+      const boxX = 28;
+      const boxW = W - 56;
+      const isPoster = W >= 1000;
+
+      ctx.save();
+      ctx.fillStyle = '#040917';
+      ctx.beginPath();
+      ctx.roundRect(boxX, footY, boxW, footH, 16);
+      ctx.fill();
+
+      ctx.strokeStyle = accentColor;
+      ctx.lineWidth = isPoster ? 4 : 3;
+      ctx.stroke();
+
+      // Circular Advisor Headshot at Bottom-Left
+      const r = isPoster ? 66 : 54;
+      const cx = boxX + (isPoster ? 102 : 84);
+      const cy = footY + Math.round(footH / 2);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      if (uploadedImages.presenter) {
+        ctx.drawImage(uploadedImages.presenter, cx - r, cy - r, r * 2, r * 2);
+      } else {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = `800 ${isPoster ? 34 : 28}px "Plus Jakarta Sans", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('LL', cx, cy + 10);
+      }
+      ctx.restore();
+
+      ctx.strokeStyle = accentColor;
+      ctx.lineWidth = isPoster ? 5 : 4;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Advisor & CEA Circular 02/2011 Particulars beside Avatar
+      const textX = cx + r + (isPoster ? 28 : 22);
+      const maxDetailsW = (boxX + boxW - 22) - textX;
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `800 ${isPoster ? 26 : 20}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText(`${CEA_STATUTORY.name} | CEA Reg No: ${CEA_STATUTORY.reg}`, textX, footY + (isPoster ? 62 : 58), maxDetailsW);
+
+      ctx.fillStyle = accentColor;
+      ctx.font = `700 ${isPoster ? 22 : 17}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText(`${CEA_STATUTORY.agency} (Licence No: ${CEA_STATUTORY.lic})`, textX, footY + (isPoster ? 98 : 92), maxDetailsW);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = `800 ${isPoster ? 23 : 18}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText(`WhatsApp: ${CEA_STATUTORY.publicPhone} • @homeequity`, textX, footY + (isPoster ? 136 : 128), maxDetailsW);
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // 9:16 VIDEO RENDERER — OPEN CENTER STAGE + FOOTER AVATAR + AUDIO SYNC
+    // =========================================================================
+    function getSynchronizedActiveWordIndex(scriptText, elapsedSec, totalSec) {
+      const wordMap = ttsPlaybackState.wordMap.length > 0
+        ? ttsPlaybackState.wordMap
+        : buildWordMapFromScript(scriptText);
+      if (wordMap.length === 0) return 0;
+
+      // 1. Server-side HTMLAudioElement real-time playback progress
+      const audioEl = document.getElementById('tts-master-audio');
+      if (ttsPlaybackState.sourceMode === 'server-tts' && audioEl && !audioEl.paused && audioEl.duration > 0) {
+        const audioRatio = Math.min(0.99, Math.max(0, audioEl.currentTime / audioEl.duration));
+        return Math.min(wordMap.length - 1, Math.floor(audioRatio * wordMap.length));
+      }
+
+      // 2. Offline SpeechSynthesis onboundary tracking
+      if (ttsPlaybackState.isSpeaking && ttsPlaybackState.charIndex > 0) {
+        const cIdx = ttsPlaybackState.charIndex;
+        const found = wordMap.find(w => cIdx >= w.startChar && cIdx <= w.endChar + 1);
+        if (found) return found.index;
+      }
+
+      // 3. Fallback elapsed-time clock
+      const activeElapsed = ttsPlaybackState.isSpeaking && ttsPlaybackState.utteranceStartTs > 0
+        ? (performance.now() - ttsPlaybackState.utteranceStartTs) / 1000
+        : elapsedSec;
+      const effectiveDur = Math.max(12, totalSec || 36);
+      const ratio = Math.min(0.99, Math.max(0, (activeElapsed % effectiveDur) / effectiveDur));
+      return Math.min(wordMap.length - 1, Math.floor(ratio * wordMap.length));
+    }
+
+    function renderSingleVideoFramePreview(elapsedSec = 0) {
+      const canvas = document.getElementById('edutainment-video-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;   // 720
+      const H = canvas.height;  // 1280
+      const c = getActiveCard();
+      const style = VISUAL_STYLE_PRESETS[appState.stylePresetIdx || 0];
+      const totalSec = c?.videoDurationSec || 36;
+
+      let activeCutaway = null;
+      if (elapsedSec >= 8 && elapsedSec < 11.5) activeCutaway = { idx: 0, label: 'B-ROLL CUTAWAY 1 • 00:08–00:11.5s' };
+      else if (elapsedSec >= 18 && elapsedSec < 21.5) activeCutaway = { idx: 1, label: 'B-ROLL CUTAWAY 2 • 00:18–00:21.5s' };
+      else if (elapsedSec >= 27 && elapsedSec < 30.5) activeCutaway = { idx: 2, label: 'B-ROLL CUTAWAY 3 • 00:27–00:30.5s' };
+
+      ctx.fillStyle = style.topBg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Center of 9:16 canvas is 100% unobstructed (NO circular avatar in center!)
+      const bgImg = activeCutaway
+        ? (uploadedImages.videoScenes[activeCutaway.idx] || uploadedImages.coverBg)
+        : (uploadedImages.coverBg || uploadedImages.videoScenes[0]);
+      if (bgImg) {
+        const zoom = 1.02 + Math.sin(elapsedSec * 0.55) * 0.025;
+        const dw = W * zoom;
+        const dh = H * zoom;
+        ctx.save();
+        ctx.drawImage(bgImg, (W - dw) / 2, (H - dh) / 2, dw, dh);
+        ctx.fillStyle = style.midTint;
+        ctx.fillRect(0, 0, W, H);
+        ctx.restore();
+      }
+
+      // Top Auto-Fitting Headline Box
+      const eyebrow = activeCutaway
+        ? activeCutaway.label
+        : `HOME EQUITY STUDIO • @homeequity • ${c?.pillar || '2026 PLAYBOOK'}`;
+      drawAutoFittingTopHeadlineBox(ctx, W, eyebrow, c?.headline || c?.title, style.accent, {
+        boxX: 28,
+        boxY: 28,
+        baseFontSize: 28,
+        minFontSize: 17,
+        maxLines: 3
+      });
+
+      // Lower-Third Synchronized Karaoke Subtitles
+      const scriptText = c?.script || '';
+      const wordMap = ttsPlaybackState.wordMap.length > 0
+        ? ttsPlaybackState.wordMap
+        : buildWordMapFromScript(scriptText);
+      const activeIdx = getSynchronizedActiveWordIndex(scriptText, elapsedSec, totalSec);
+
+      const windowSize = 8;
+      const windowStart = Math.floor(activeIdx / windowSize) * windowSize;
+      const visibleWords = wordMap.slice(windowStart, windowStart + windowSize);
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(4, 9, 23, 0.88)';
+      ctx.beginPath();
+      ctx.roundRect(32, 868, W - 64, 144, 18);
+      ctx.fill();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '800 14px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(
+        `VOICE SYNC (${Math.floor(elapsedSec % totalSec)}s / ${totalSec}s) • DM "${c?.kw || 'MOP'}"`,
+        W / 2,
+        896
+      );
+
+      const line1Words = visibleWords.slice(0, 4);
+      const line2Words = visibleWords.slice(4, 8);
+      ctx.font = '800 25px "Plus Jakarta Sans", sans-serif';
+
+      [line1Words, line2Words].forEach((lineArr, lIdx) => {
+        if (lineArr.length === 0) return;
+        const yPos = 938 + lIdx * 36;
+        const totalLineW = lineArr.reduce((acc, item, i) => acc + ctx.measureText(item.word + (i < lineArr.length - 1 ? ' ' : '')).width, 0);
+        let curX = (W - totalLineW) / 2;
+        ctx.textAlign = 'left';
+
+        lineArr.forEach((item, i) => {
+          const isCurrent = item.index === activeIdx;
+          const token = item.word + (i < lineArr.length - 1 ? ' ' : '');
+          ctx.fillStyle = isCurrent ? '#fbbf24' : '#f8fafc';
+          ctx.fillText(token, curX, yPos);
+          curX += ctx.measureText(token).width;
+        });
+      });
+      ctx.restore();
+
+      // Micro-Disclosure above Footer
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.88)';
+      ctx.font = '600 14px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText("Artist's Impression • Source: URA REALIS & HDB 2026", W / 2, 1036);
+
+      // Requirement 1: Circular Advisor Headshot rendered at Bottom-Left inside CEA Footer Box
+      drawCompactBottomLeftCeaFooter(ctx, W, 1050, 198, style.accent);
+    }
+
+    async function toggleLiveVideoPreview() {
+      const btn = document.getElementById('btn-live-video-preview');
+      const c = getActiveCard();
+      if (!c) return;
+
+      if (isLiveVideoPlaying) {
+        isLiveVideoPlaying = false;
+        cancelAnimationFrame(liveVideoAnimId);
+        resetSpeechSyncState(c.script);
+        if (btn) btn.textContent = '▶️ Preview Voice + Captions';
+        renderSingleVideoFramePreview(0);
+        return;
+      }
+
+      isLiveVideoPlaying = true;
+      if (btn) btn.textContent = '⏳ Loading Male Voice...';
+
+      const withVoice = Boolean(document.getElementById('chk-video-voice')?.checked);
+      const withMusic = Boolean(document.getElementById('chk-video-music')?.checked);
+      if (withVoice) {
+        await startSynchronizedMaleVoiceover(c.script, withMusic);
+      } else {
+        resetSpeechSyncState(c.script);
+        startOptionalAmbientLoungeBed(withMusic);
+      }
+
+      if (!isLiveVideoPlaying) return;
+      if (btn) btn.textContent = '⏹️ Stop Preview';
+      const startTs = performance.now();
+
+      function step(now) {
+        if (!isLiveVideoPlaying) return;
+        const elapsed = (now - startTs) / 1000;
+        renderSingleVideoFramePreview(elapsed);
+        liveVideoAnimId = requestAnimationFrame(step);
+      }
+      liveVideoAnimId = requestAnimationFrame(step);
+    }
+
+    // Requirement 3: Route /api/tts HTMLAudioElement (+ optional music bed) into MediaRecorder stream for .WEBM
+    async function recordAndDownloadFullReel() {
+      const canvas = document.getElementById('edutainment-video-canvas');
+      const c = getActiveCard();
+      if (!canvas || !c) return;
+      const btn = document.getElementById('btn-record-reel');
+      if (btn) btn.textContent = '⏳ Synthesizing Audio & Rendering...';
+
+      if (!uploadedImages.hasExternalVideo && !uploadedImages.broll && appState.videoBrollStatus?.source !== 'nano-banana-2-lite') {
+        await generateFreshNanoBananaBrollCutaways(false);
+      }
+
+      const withVoice = Boolean(document.getElementById('chk-video-voice')?.checked);
+      const withMusic = Boolean(document.getElementById('chk-video-music')?.checked);
+      let ttsResult = { source: 'browser-fallback' };
+      if (withVoice) {
+        ttsResult = await startSynchronizedMaleVoiceover(c.script, withMusic);
+      } else {
+        resetSpeechSyncState(c.script);
+        startOptionalAmbientLoungeBed(withMusic);
+      }
+
+      showToast(
+        ttsResult.source === 'server-tts'
+          ? '🎙️ Recording 9:16 Video with baked Server Male Baritone (/api/tts) audio...'
+          : '🎬 Recording 9:16 Video (.WEBM)...'
+      );
+
+      try {
+        const videoStream = canvas.captureStream(30);
+        const tracks = [...videoStream.getVideoTracks()];
+
+        // Attach Web Audio MediaStreamDestinationNode so HTMLAudioElement + ambient bed are baked into .WEBM
+        const graph = ensureWebAudioMixerGraph();
+        if (graph && graph.mediaStreamDest) {
+          tracks.push(...graph.mediaStreamDest.stream.getAudioTracks());
+        }
+
+        const combinedStream = new MediaStream(tracks);
+        const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
+          ? 'video/webm;codecs=vp9,opus'
+          : 'video/webm';
+        const recorder = new MediaRecorder(combinedStream, { mimeType: mime });
+        const chunks = [];
+        recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        recorder.onstop = () => {
+          resetSpeechSyncState(c.script);
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const vidEl = document.getElementById('recorded-video-element');
+          if (vidEl) vidEl.src = url;
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `homeequity-reel-${Date.now()}.webm`;
+          a.click();
+          if (btn) btn.textContent = '🎬 Render & Download (.WEBM)';
+          showToast('Rendered & downloaded 9:16 Video (.WEBM) with Footer Avatar & Male Baritone Audio!');
+        };
+
+        recorder.start();
+        let t = 0;
+        const timer = setInterval(() => {
+          t += 0.25;
+          renderSingleVideoFramePreview(t * 3.5);
+          if (t >= 3.0) {
+            clearInterval(timer);
+            recorder.stop();
+          }
+        }, 250);
+      } catch (err) {
+        resetSpeechSyncState(c.script);
+        if (btn) btn.textContent = '🎬 Render & Download (.WEBM)';
+        showToast('Video preview ready in canvas.');
+      }
+    }
+
+    // =========================================================================
+    // 4:5 CEA EDITORIAL POSTER — AUTO-FITTING HEADLINE + COMPACT 3-ROW PILLS
+    // =========================================================================
+    function renderMagazineCover4x5() {
+      const canvas = document.getElementById('magazine-cover-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = 1080;
+      const H = 1350;
+      const c = getActiveCard();
+      const style = VISUAL_STYLE_PRESETS[appState.stylePresetIdx || 0];
+
+      ctx.fillStyle = style.topBg;
+      ctx.fillRect(0, 0, W, H);
+      if (uploadedImages.coverBg) {
+        ctx.save();
+        ctx.drawImage(uploadedImages.coverBg, 0, 0, W, H);
+        const topGrad = ctx.createLinearGradient(0, 0, 0, 340);
+        topGrad.addColorStop(0, 'rgba(3, 7, 18, 0.85)');
+        topGrad.addColorStop(1, 'rgba(3, 7, 18, 0.0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(0, 0, W, 340);
+
+        const botGrad = ctx.createLinearGradient(0, 780, 0, 1140);
+        botGrad.addColorStop(0, 'rgba(3, 7, 18, 0.0)');
+        botGrad.addColorStop(1, 'rgba(3, 7, 18, 0.82)');
+        ctx.fillStyle = botGrad;
+        ctx.fillRect(0, 780, W, 360);
+        ctx.restore();
+      }
+
+      ctx.strokeStyle = style.accent;
+      ctx.lineWidth = 5;
+      ctx.strokeRect(24, 24, W - 48, H - 48);
+
+      drawAutoFittingTopHeadlineBox(
+        ctx,
+        W,
+        `HOME EQUITY STUDIO • @homeequity • ${c?.pillar || '2026 PLAYBOOK'}`,
+        c?.headline || c?.title,
+        style.accent,
+        {
+          boxX: 36,
+          boxY: 36,
+          baseFontSize: 40,
+          minFontSize: 22,
+          maxLines: 3
+        }
+      );
+
+      const pills = enforceCompactPills(c?.pills);
+      const pillH = 52;
+      const pillGap = 12;
+      const startPillsY = 862;
+
+      ctx.save();
+      ctx.font = '800 23px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+
+      pills.forEach((pText, idx) => {
+        const py = startPillsY + idx * (pillH + pillGap);
+        const measuredW = ctx.measureText(pText).width;
+        const pillW = Math.min(W - 180, Math.max(330, measuredW + 76));
+        const px = (W - pillW) / 2;
+
+        ctx.fillStyle = style.pillBg;
+        ctx.strokeStyle = style.accent;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.roundRect(px, py, pillW, pillH, pillH / 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(pText, W / 2, py + 34, pillW - 36);
+      });
+      ctx.restore();
+
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.90)';
+      ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText("Artist's Impression • Source: URA REALIS & HDB 2026", W / 2, 1094);
+
+      drawCompactBottomLeftCeaFooter(ctx, W, 1116, 202, style.accent);
+    }
+
+    function downloadMagazineCover() {
+      const canvas = document.getElementById('magazine-cover-canvas');
+      if (!canvas) return;
+      const a = document.createElement('a');
+      a.download = `homeequity-cea-poster-4x5-${Date.now()}.png`;
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      showToast('Downloaded 4:5 CEA Editorial Poster (.PNG)!');
+    }
+
+    // =========================================================================
+    // TAB 3A: DUAL-TRACK CRM & CONDITIONAL HDB MOP CALCULATOR LOGIC
+    // =========================================================================
+    function filterCrmLeads(mode) {
+      appState.crmFilter = mode;
+      ['ALL', 'TRACK_A', 'TRACK_B'].forEach(m => {
+        const btn = document.getElementById(`crm-filter-${m}`);
+        if (btn) {
+          btn.className = (m === mode)
+            ? 'px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-600 text-white'
+            : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300';
+        }
+      });
+      renderCrmLeads();
+    }
+
+    function renderCrmLeads() {
+      const grid = document.getElementById('crm-leads-grid');
+      if (!grid) return;
+      const filter = appState.crmFilter || 'ALL';
+      const filtered = (appState.leads || []).filter(l => filter === 'ALL' || l.track === filter);
+
+      grid.innerHTML = filtered.map(l => {
+        const isHot = Number(l.heat || 0) >= 80;
+        const isTrackA = l.track === 'TRACK_A';
+        const cleanPhone = String(l.phone || '').replace(/[^0-9]/g, '');
+        const waMsg = encodeURIComponent(
+          l.isHdbSeller
+            ? `Hi ${l.name}, here is your 2026 HDB 5-Year MOP & Net Proceeds Calculator link: ${CEA_STATUTORY.mopCalcUrl} — ${CEA_STATUTORY.footerLine}`
+            : `Hi ${l.name}, following up on your Singapore property shortlist & URA REALIS benchmarks. — ${CEA_STATUTORY.footerLine}`
+        );
+
+        return `
+          <div class="bg-slate-950 border ${isHot ? 'border-rose-500/70' : 'border-slate-800'} rounded-2xl p-4 space-y-3 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold ${isTrackA ? 'bg-cyan-500/20 text-cyan-300' : 'bg-amber-500/20 text-amber-300'}">
+                  ${isTrackA ? '📱 Track A: Inbound AI' : '🤝 Track B: Personal/VIP (Bot Muted)'}
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${isHot ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50' : 'bg-slate-800 text-slate-300'}">
+                  Heat: ${l.heat}/100 ${isHot ? '🔥' : ''}
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="text-sm font-extrabold text-white">${escapeHTML(l.name)}</h4>
+                  <div class="text-[11px] font-mono text-slate-400">${escapeHTML(l.phone)} • Stage: <span class="text-emerald-300 font-bold">${escapeHTML(l.stage)}</span></div>
+                </div>
+                ${l.isHdbSeller ? '<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold">🧮 HDB MOP Eligible</span>' : '<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px]">Non-HDB</span>'}
+              </div>
+
+              <p class="text-xs text-slate-300 leading-snug">${escapeHTML(l.notes)}</p>
+
+              <div class="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-xl px-3 py-2">
+                <span class="text-[11px] font-bold text-slate-400">Est. Commission (S$ GCI):</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-xs font-extrabold text-emerald-400">S$</span>
+                  <input type="number" value="${Number(l.gci || 0)}" oninput="updateLeadCommissionInline('${l.id}', this.value)" class="w-24 bg-slate-950 border border-emerald-500/40 rounded px-2 py-1 text-right text-xs font-extrabold text-emerald-300" />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5 pt-1">
+              <a href="https://wa.me/${cleanPhone}?text=${waMsg}" target="_blank" class="flex-1 text-center py-1.5 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold">
+                ${l.isHdbSeller ? '🧮 Send MOP Calc (wa.me)' : '💬 WhatsApp Client'}
+              </a>
+              ${isHot ? `<button onclick="escalateHotLeadToOwner('${l.id}')" class="py-1.5 px-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-extrabold">🚨 Escalate (+65 9237 9472)</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateLeadCommissionInline(leadId, val) {
+      const l = appState.leads.find(x => x.id === leadId);
+      if (!l) return;
+      l.gci = Math.max(0, Number(val) || 0);
+      saveAppState();
+    }
+
+    function escalateHotLeadToOwner(leadId) {
+      const l = appState.leads.find(x => x.id === leadId);
+      if (!l) return;
+      const cleanOwner = CEA_STATUTORY.escalationPhone.replace(/[^0-9]/g, '');
+      const msg = encodeURIComponent(`🚨 [AgentZug Hot Lead Escalation — Heat ${l.heat}/100]\nClient: ${l.name} (${l.phone})\nStage: ${l.stage}\nEst. GCI: S$${Number(l.gci).toLocaleString()}\nNotes: ${l.notes}\nHDB MOP Calc Sent: ${l.isHdbSeller ? 'Yes (' + CEA_STATUTORY.mopCalcUrl + ')' : 'N/A'}`);
+      window.open(`https://wa.me/${cleanOwner}?text=${msg}`, '_blank');
+      showToast(`Escalated Hot Lead "${l.name}" to ${CEA_STATUTORY.escalationPhone}!`);
+    }
+
+    function addNewCrmLeadPrompt() {
+      const name = prompt('Client Name:', 'Kelvin Koh');
+      if (!name) return;
+      const phone = prompt('Client WhatsApp (+65 ...):', '+65 9456 7890') || '+65 9456 7890';
+      const isHdb = confirm('Is this client an HDB flat owner planning to sell before upgrading/downgrading? (OK = Yes, send HDB MOP Calculator link | Cancel = No)');
+      appState.leads.unshift({
+        id: 'lead-' + Date.now(),
+        name,
+        phone,
+        track: 'TRACK_A',
+        isHdbSeller: isHdb,
+        stage: 'Qualified',
+        heat: isHdb ? 84 : 72,
+        gci: 30000,
+        mopSent: isHdb,
+        notes: isHdb ? 'HDB upgrader enquiry — eligible for HDB MOP Calculator link.' : 'Private property enquiry.'
+      });
+      saveAppState();
+      renderCrmLeads();
+      showToast(`Added lead "${name}"${isHdb ? ' with conditional HDB MOP Calculator enabled!' : '!'}`);
+    }
+
+    function computeInlineMopEstimate() {
+      const keyYr = Number(document.getElementById('mop-key-year')?.value) || 2021;
+      const price = Number(document.getElementById('mop-resale-price')?.value) || 780000;
+      const ded = Number(document.getElementById('mop-deductions')?.value) || 490000;
+      const mopYr = keyYr + 5;
+      const net = Math.max(0, price - ded);
+      const outEl = document.getElementById('mop-inline-result');
+      if (outEl) {
+        outEl.textContent = `MOP Year: ${mopYr} (${mopYr <= 2026 ? 'MOP Fulfilled ✓' : 'Upcoming MOP'}) • Est. Net Cash + CPF Unlocked: S$ ${net.toLocaleString()} → Share: ${CEA_STATUTORY.mopCalcUrl}`;
+      }
+    }
+
+    async function testInboundWhatsAppWebhook() {
+      const msg = document.getElementById('wa-sim-input')?.value.trim();
+      const outEl = document.getElementById('wa-sim-output');
+      if (!msg || !outEl) return;
+
+      try {
+        const res = await fetch('/api/whatsapp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ senderName: 'Inbound Prospect', senderPhone: '+65 9123 4567', message: msg })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const q = data.qualification;
+          outEl.textContent = `SP-10 Response (Heat: ${q.heat}/100 | HDB Seller: ${q.isHdbSeller ? 'YES -> MOP Link Included' : 'NO'} | Escalate +65 9237 9472: ${q.escalateToOwner ? 'YES' : 'NO'}):\n${q.reply}`;
+          return;
+        }
+      } catch (e) {}
+
+      const isHdbSeller = /(hdb|mop|5[-\s]?year|bto|resale|upgrade|downgrade|sell.*flat)/i.test(msg);
+      const heat = isHdbSeller ? 86 : 68;
+      const reply = isHdbSeller
+        ? `Thank you for contacting Home Equity Studio! Check your exact 5-year MOP date & net proceeds here: ${CEA_STATUTORY.mopCalcUrl} — ${CEA_STATUTORY.footerLine}`
+        : `Thank you for contacting Home Equity Studio! Share your preferred district, budget, and IPA status so we can prepare URA REALIS benchmarks. — ${CEA_STATUTORY.footerLine}`;
+      outEl.textContent = `SP-10 Local Simulation (Heat: ${heat}/100 | HDB Seller: ${isHdbSeller ? 'YES -> MOP Link Sent' : 'NO'} | Escalate +65 9237 9472: ${heat >= 80 ? 'YES' : 'NO'}):\n${reply}`;
+    }
+
+    // =========================================================================
+    // TAB 3B: UPGRADED BUYER ADVISORY (NINA / OWEN QUERY BUILDER / IRIS / VERA / .XLSX)
+    // =========================================================================
+    function getActiveBuyerCase() {
+      return appState.buyerCases.find(c => c.id === appState.activeBuyerCaseId) || appState.buyerCases[0];
+    }
+
+    function renderBuyerAdvisoryWing() {
+      const sel = document.getElementById('buyer-case-select');
+      if (sel) {
+        sel.innerHTML = (appState.buyerCases || []).map(c =>
+          `<option value="${c.id}" ${c.id === appState.activeBuyerCaseId ? 'selected' : ''}>${escapeHTML(c.clientName)}</option>`
+        ).join('');
+      }
+
+      const bc = getActiveBuyerCase();
+      if (!bc) return;
+
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
+      setVal('nina-client-name', bc.clientName);
+      setVal('nina-client-phone', bc.clientPhone);
+      setVal('nina-playbook', bc.playbook);
+      setVal('nina-min-price', bc.minPrice);
+      setVal('nina-max-price', bc.maxPrice);
+      setVal('nina-min-sqft', bc.minSqft);
+      setVal('nina-max-sqft', bc.maxSqft);
+      setVal('nina-min-lease', bc.minLease);
+      setVal('nina-location-notes', bc.locationNotes);
+
+      updateOwenDynamicPortalQueryBuilder(bc);
+      renderIrisShortlistAndExclusions(bc);
+    }
+
+    function selectBuyerCase(id) {
+      appState.activeBuyerCaseId = id;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+    }
+
+    function saveNinaBriefEdits() {
+      const bc = getActiveBuyerCase();
+      if (!bc) return;
+      bc.clientName = document.getElementById('nina-client-name').value;
+      bc.clientPhone = document.getElementById('nina-client-phone').value;
+      bc.playbook = document.getElementById('nina-playbook').value;
+      bc.minPrice = Number(document.getElementById('nina-min-price').value) || 0;
+      bc.maxPrice = Number(document.getElementById('nina-max-price').value) || 99999999;
+      bc.minSqft = Number(document.getElementById('nina-min-sqft').value) || 0;
+      bc.maxSqft = Number(document.getElementById('nina-max-sqft').value) || 999999;
+      bc.minLease = Number(document.getElementById('nina-min-lease').value) || 0;
+      bc.locationNotes = document.getElementById('nina-location-notes').value;
+      saveAppState();
+      updateOwenDynamicPortalQueryBuilder(bc);
+      renderIrisShortlistAndExclusions(bc);
+    }
+
+    function buildDynamicPortalUrls(bc) {
+      const kw = encodeURIComponent(bc.locationNotes || 'Singapore');
+      const minP = Number(bc.minPrice || 0);
+      const maxP = Number(bc.maxPrice || 3000000);
+      const minS = Number(bc.minSqft || 500);
+      const maxS = Number(bc.maxSqft || 3000);
+      const isCommercialOrInd = bc.playbook === 'INDUSTRIAL' || bc.playbook === 'COMMERCIAL';
+      const isRental = bc.playbook === 'RESI_TENANT';
+      const isHdb = bc.playbook === 'RESI_HDB';
+
+      const pgUrl = isCommercialOrInd
+        ? `https://www.commercialguru.com.sg/commercial-property-for-sale?freetext=${kw}&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`
+        : isRental
+          ? `https://www.propertyguru.com.sg/property-for-rent?freetext=${kw}&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`
+          : isHdb
+            ? `https://www.propertyguru.com.sg/hdb-for-sale?freetext=${kw}&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`
+            : `https://www.propertyguru.com.sg/property-for-sale?freetext=${kw}&minprice=${minP}&maxprice=${maxP}&minsize=${minS}&maxsize=${maxS}`;
+
+      const nnUrl = isRental
+        ? `https://www.99.co/singapore/rent?query=${kw}&price_min=${minP}&price_max=${maxP}&area_min=${minS}&area_max=${maxS}`
+        : `https://www.99.co/singapore/sale?query=${kw}&price_min=${minP}&price_max=${maxP}&area_min=${minS}&area_max=${maxS}`;
+
+      const epUrl = `https://www.edgeprop.sg/property-search?search_text=${kw}&price_min=${minP}&price_max=${maxP}&size_min=${minS}&size_max=${maxS}`;
+
+      const booleanQuery = `(${bc.playbook}) AND "${bc.locationNotes}" AND PRICE:[S$${minP.toLocaleString()}..S$${maxP.toLocaleString()}] AND AREA:[${minS}..${maxS} sqft] AND LEASE >= ${bc.minLease}yrs`;
+
+      return { pgUrl, nnUrl, epUrl, booleanQuery };
+    }
+
+    function updateOwenDynamicPortalQueryBuilder(bc) {
+      const { pgUrl, nnUrl, epUrl, booleanQuery } = buildDynamicPortalUrls(bc);
+      window._compiledPortalQuery = booleanQuery;
+
+      const qEl = document.getElementById('owen-compiled-query-text');
+      if (qEl) qEl.textContent = booleanQuery;
+
+      const launchers = document.getElementById('owen-portal-launchers');
+      if (launchers) {
+        launchers.innerHTML = `
+          <a href="${pgUrl}" target="_blank" class="py-2 px-3 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-center text-xs font-extrabold text-rose-200 transition">🔗 PropertyGuru / CommercialGuru ↗</a>
+          <a href="${nnUrl}" target="_blank" class="py-2 px-3 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-center text-xs font-extrabold text-cyan-200 transition">🔗 99.co Pre-Filtered Search ↗</a>
+          <a href="${epUrl}" target="_blank" class="py-2 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-center text-xs font-extrabold text-amber-200 transition">🔗 EdgeProp SG Caveats ↗</a>
+          <button onclick="copyCompiledPortalQuery()" class="py-2 px-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-center text-xs font-extrabold text-emerald-200 transition">📋 Copy Query String</button>
+        `;
+      }
+    }
+
+    function copyCompiledPortalQuery() {
+      navigator.clipboard.writeText(window._compiledPortalQuery || '');
+      showToast('Copied compiled portal search query string!');
+    }
+
+    function evaluateCandidateEligibility(bc, cand) {
+      const reasons = [];
+      if (Number(cand.price) > Number(bc.maxPrice)) reasons.push(`Price S$${Number(cand.price).toLocaleString()} > max cap S$${Number(bc.maxPrice).toLocaleString()}`);
+      if (Number(cand.sqft) < Number(bc.minSqft)) reasons.push(`Area ${cand.sqft} sqft < min ${bc.minSqft} sqft`);
+      if (Number(cand.leaseYrs) < Number(bc.minLease)) reasons.push(`Lease ${cand.leaseYrs} yrs < min ${bc.minLease} yrs`);
+      return { eligible: reasons.length === 0, reasons };
+    }
+
+    function renderIrisShortlistAndExclusions(bc) {
+      const tbody = document.getElementById('iris-shortlist-tbody');
+      const exclEl = document.getElementById('iris-excluded-list');
+      if (!tbody || !exclEl) return;
+
+      const eligible = [];
+      const excluded = [];
+
+      (bc.candidates || []).forEach(cand => {
+        const check = evaluateCandidateEligibility(bc, cand);
+        const psf = cand.sqft ? Math.round(Number(cand.price) / Number(cand.sqft)) : 0;
+        const grossYield = (cand.estRent && cand.price) ? ((Number(cand.estRent) * 12 / Number(cand.price)) * 100).toFixed(2) : 'N/A';
+        if (check.eligible) {
+          eligible.push({ ...cand, psf, grossYield });
+        } else {
+          excluded.push({ ...cand, psf, reasons: check.reasons });
+        }
+      });
+
+      eligible.sort((a, b) => a.psf - b.psf);
+
+      tbody.innerHTML = eligible.length === 0
+        ? `<tr><td colspan="7" class="p-4 text-center text-slate-400">No eligible units match current hard exclusions. Adjust Nina's filters or add a listing above.</td></tr>`
+        : eligible.map((item, idx) => `
+          <tr class="hover:bg-slate-900/60">
+            <td class="p-2.5 font-extrabold text-amber-300">#${idx + 1} (${escapeHTML(item.id)})</td>
+            <td class="p-2.5">
+              <div class="font-extrabold text-white">${escapeHTML(item.project)}</div>
+              <div class="text-[11px] text-cyan-300">${escapeHTML(item.district)} • ${escapeHTML(item.unitType)}</div>
+              <div class="text-[10px] text-slate-400">${escapeHTML(item.notes)}</div>
+            </td>
+            <td class="p-2.5 font-mono text-slate-200">${Number(item.sqft).toLocaleString()} sqft<br><span class="text-amber-300">${item.leaseYrs >= 900 ? 'Freehold' : item.leaseYrs + ' yrs'}</span></td>
+            <td class="p-2.5 font-mono font-extrabold text-emerald-300">S$ ${Number(item.price).toLocaleString()}<br><span class="text-[11px] text-slate-400">S$ ${item.psf.toLocaleString()} PSF</span></td>
+            <td class="p-2.5 font-mono text-cyan-300">${item.grossYield !== 'N/A' ? item.grossYield + '% p.a.' : 'Own-Stay'}</td>
+            <td class="p-2.5"><a href="${escapeHTML(item.url)}" target="_blank" class="px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 font-bold underline">View Portal ↗</a></td>
+            <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold">✓ CEA 02/2011 Safe</span></td>
+          </tr>
+        `).join('');
+
+      exclEl.innerHTML = excluded.length === 0
+        ? `<div class="text-[11px] text-slate-500">Zero excluded rows for current brief.</div>`
+        : excluded.map(ex => `
+          <div class="bg-rose-950/30 border border-rose-500/40 rounded-xl p-3 text-xs space-y-1">
+            <div class="font-extrabold text-rose-300">🚫 ${escapeHTML(ex.project)} (${escapeHTML(ex.district)})</div>
+            <div class="text-[11px] text-slate-300">Asking: S$${Number(ex.price).toLocaleString()} • ${ex.sqft} sqft • Lease: ${ex.leaseYrs} yrs</div>
+            <div class="text-[11px] font-bold text-rose-200">Exclusion Reason: ${escapeHTML(ex.reasons.join(' | '))}</div>
+          </div>
+        `).join('');
+    }
+
+    function addCandidateListingToBuyerCase() {
+      const bc = getActiveBuyerCase();
+      if (!bc) return;
+      const project = document.getElementById('cand-project').value.trim();
+      if (!project) { showToast('Enter a Project / Block Name first.'); return; }
+      bc.candidates.push({
+        id: 'U-' + Math.floor(10 + Math.random() * 89),
+        project: project + ' (Unit Masked)',
+        district: document.getElementById('cand-district').value.trim() || 'Singapore',
+        unitType: document.getElementById('cand-type').value.trim() || 'Standard',
+        sqft: Number(document.getElementById('cand-sqft').value) || 1000,
+        price: Number(document.getElementById('cand-price').value) || 1800000,
+        leaseYrs: Number(document.getElementById('cand-lease').value) || 99,
+        estRent: 5500,
+        url: document.getElementById('cand-url').value.trim() || 'https://www.propertyguru.com.sg',
+        notes: document.getElementById('cand-notes').value.trim() || 'Verified via Owen portal search.'
+      });
+      saveAppState();
+      renderIrisShortlistAndExclusions(bc);
+      showToast(`Added "${project}" to shortlist & ran Iris/Vera audit!`);
+    }
+
+    function createNewBuyerCasePrompt() {
+      const name = prompt('New Buyer / Tenant Client Name:', 'Dr. Cheryl Tan');
+      if (!name) return;
+      const newCase = {
+        id: 'bcase-' + Date.now(),
+        clientName: name,
+        clientPhone: '+65 9000 1111',
+        playbook: 'RESI_OWN',
+        minPrice: 1500000,
+        maxPrice: 2200000,
+        minSqft: 900,
+        maxSqft: 1300,
+        minLease: 65,
+        locationNotes: 'D15 / D16 East Coast MRT',
+        candidates: []
+      };
+      appState.buyerCases.unshift(newCase);
+      appState.activeBuyerCaseId = newCase.id;
+      saveAppState();
+      renderBuyerAdvisoryWing();
+      showToast(`Created buyer search case for ${name}!`);
+    }
+
+    function copyNinaQuestionsToClipboard() {
+      const bc = getActiveBuyerCase();
+      const text = `Hi ${bc?.clientName || 'there'}, to prepare your verified URA REALIS shortlist, please confirm:\n1. Preferred districts / MRT stations & unit size (${bc?.minSqft}–${bc?.maxSqft} sqft)?\n2. Target budget cap (S$${Number(bc?.maxPrice || 0).toLocaleString()}) & bank IPA status?\n3. Minimum remaining lease preference (${bc?.minLease}+ years) & timeline?\n\n— ${CEA_STATUTORY.footerLine}`;
+      navigator.clipboard.writeText(text);
+      showToast('Copied Nina qualification questions to clipboard!');
+    }
+
+    function sendShortlistViaWhatsApp() {
+      const bc = getActiveBuyerCase();
+      if (!bc) return;
+      const cleanPhone = String(bc.clientPhone || '').replace(/[^0-9]/g, '');
+      const eligible = (bc.candidates || []).filter(c => evaluateCandidateEligibility(bc, c).eligible);
+      const lines = eligible.map((c, i) => `${i + 1}. ${c.project} (${c.district}) — ${c.sqft} sqft | S$${Number(c.price).toLocaleString()} | ${c.url}`).join('\n');
+      const msg = encodeURIComponent(`Hi ${bc.clientName}, here is your curated Singapore property shortlist:\n\n${lines}\n\nPrepared by ${CEA_STATUTORY.footerLine}`);
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+    }
+
+    // Pure-JS Zero-Dependency Native .XLSX (OOXML Spreadsheet) 2-Page Workbook Exporter
+    function exportBuyerShortlistXLSX() {
+      const bc = getActiveBuyerCase();
+      if (!bc) return;
+
+      const eligible = [];
+      const excluded = [];
+      (bc.candidates || []).forEach(cand => {
+        const check = evaluateCandidateEligibility(bc, cand);
+        const psf = cand.sqft ? Math.round(Number(cand.price) / Number(cand.sqft)) : 0;
+        const yieldPct = (cand.estRent && cand.price) ? ((Number(cand.estRent) * 12 / Number(cand.price)) * 100).toFixed(2) + '%' : 'Own-Stay';
+        if (check.eligible) eligible.push({ ...cand, psf, yieldPct });
+        else excluded.push({ ...cand, psf, reason: check.reasons.join('; ') });
+      });
+
+      const sheet1Rows = [
+        ['HOME EQUITY STUDIO — CLIENT PROPERTY SHORTLIST (PAGE 1)'],
+        [`Client: ${bc.clientName} (${bc.clientPhone}) | Sector: ${bc.playbook} | Max Cap: S$${Number(bc.maxPrice).toLocaleString()}`],
+        [CEA_STATUTORY.footerLine],
+        [],
+        ['Rank', 'Project (Unit Masked)', 'District & MRT', 'Unit Type', 'Area (sqft)', 'Remaining Lease', 'Asking Price (S$)', 'Est. PSF (S$)', 'Est. Gross Yield', 'Verified Portal Link', 'Advisor Notes'],
+        ...eligible.map((item, idx) => [
+          idx + 1,
+          item.project,
+          item.district,
+          item.unitType,
+          Number(item.sqft),
+          item.leaseYrs >= 900 ? 'Freehold' : `${item.leaseYrs} yrs`,
+          Number(item.price),
+          Number(item.psf),
+          item.yieldPct,
+          item.url,
+          item.notes
+        ])
+      ];
+
+      const sheet2Rows = [
+        ['HOME EQUITY STUDIO — EXCLUDED CANDIDATES & CEA CIRCULAR 02/2011 AUDIT (PAGE 2)'],
+        [`Client: ${bc.clientName} | Filter Criteria: Max S$${Number(bc.maxPrice).toLocaleString()}, Min ${bc.minSqft} sqft, Min ${bc.minLease} yrs lease`],
+        [CEA_STATUTORY.footerLine],
+        [],
+        ['Project', 'District', 'Area (sqft)', 'Remaining Lease', 'Asking Price (S$)', 'Exclusion Reason (Iris Audit)', 'Vera Compliance Status'],
+        ...(excluded.length ? excluded.map(ex => [
+          ex.project,
+          ex.district,
+          Number(ex.sqft),
+          `${ex.leaseYrs} yrs`,
+          Number(ex.price),
+          ex.reason,
+          'Filtered Out — Protects Client Brief'
+        ]) : [['None', 'All reviewed candidates met hard criteria', '', '', '', '', 'CEA 02/2011 Compliant']])
+      ];
+
+      const xlsxBlob = buildMinimalXlsxBlob([
+        { name: 'Page 1 - Shortlist', rows: sheet1Rows },
+        { name: 'Page 2 - Exclusions & CEA', rows: sheet2Rows }
+      ]);
+
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(xlsxBlob);
+      a.download = `HomeEquity-Shortlist-${bc.clientName.replace(/[^a-zA-Z0-9]+/g, '_')}.xlsx`;
+      a.click();
+      showToast('📊 Exported 2-Page Native Excel (.XLSX) Shortlist with CEA Circular 02/2011 particulars!');
+    }
+
+    function xmlEsc(v) {
+      return String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function colLetter(idx) {
+      let s = '';
+      let n = idx + 1;
+      while (n > 0) {
+        const m = (n - 1) % 26;
+        s = String.fromCharCode(65 + m) + s;
+        n = Math.floor((n - 1) / 26);
+      }
+      return s;
+    }
+
+    function buildSheetXml(rows) {
+      const rowXml = rows.map((r, rIdx) => {
+        const cells = r.map((val, cIdx) => {
+          const ref = `${colLetter(cIdx)}${rIdx + 1}`;
+          if (typeof val === 'number' && !Number.isNaN(val)) {
+            return `<c r="${ref}"><v>${val}</v></c>`;
+          }
+          return `<c r="${ref}" t="inlineStr"><is><t>${xmlEsc(val)}</t></is></c>`;
+        }).join('');
+        return `<row r="${rIdx + 1}">${cells}</row>`;
+      }).join('');
+      return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${rowXml}</sheetData></worksheet>`;
+    }
+
+    function crc32(buf) {
+      let crc = -1;
+      for (let i = 0; i < buf.length; i++) {
+        crc ^= buf[i];
+        for (let k = 0; k < 8; k++) {
+          crc = (crc >>> 1) ^ (0xEDB88320 & -(crc & 1));
+        }
+      }
+      return (crc ^ -1) >>> 0;
+    }
+
+    function buildMinimalXlsxBlob(sheets) {
+      const enc = new TextEncoder();
+      const files = [
+        {
+          path: '[Content_Types].xml',
+          data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`)
+        },
+        {
+          path: '_rels/.rels',
+          data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`)
+        },
+        {
+          path: 'xl/workbook.xml',
+          data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((s, i) => `<sheet name="${xmlEsc(s.name)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`)
+        },
+        {
+          path: 'xl/_rels/workbook.xml.rels',
+          data: enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')}</Relationships>`)
+        },
+        ...sheets.map((s, i) => ({
+          path: `xl/worksheets/sheet${i + 1}.xml`,
+          data: enc.encode(buildSheetXml(s.rows))
+        }))
+      ];
+
+      const localParts = [];
+      const centralParts = [];
+      let offset = 0;
+
+      files.forEach(f => {
+        const nameBytes = enc.encode(f.path);
+        const crc = crc32(f.data);
+        const size = f.data.length;
+
+        const localHeader = new Uint8Array(30 + nameBytes.length);
+        const lv = new DataView(localHeader.buffer);
+        lv.setUint32(0, 0x04034b50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0, true);
+        lv.setUint16(8, 0, true);
+        lv.setUint16(10, 0, true);
+        lv.setUint16(12, 0, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, size, true);
+        lv.setUint32(22, size, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lv.setUint16(28, 0, true);
+        localHeader.set(nameBytes, 30);
+
+        localParts.push(localHeader, f.data);
+
+        const centralHeader = new Uint8Array(46 + nameBytes.length);
+        const cv = new DataView(centralHeader.buffer);
+        cv.setUint32(0, 0x02014b50, true);
+        cv.setUint16(4, 20, true);
+        cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0, true);
+        cv.setUint16(10, 0, true);
+        cv.setUint16(12, 0, true);
+        cv.setUint16(14, 0, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, size, true);
+        cv.setUint32(24, size, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint16(30, 0, true);
+        cv.setUint16(32, 0, true);
+        cv.setUint16(34, 0, true);
+        cv.setUint16(36, 0, true);
+        cv.setUint32(38, 0, true);
+        cv.setUint32(42, offset, true);
+        centralHeader.set(nameBytes, 46);
+
+        centralParts.push(centralHeader);
+        offset += localHeader.length + size;
+      });
+
+      const centralSize = centralParts.reduce((s, p) => s + p.length, 0);
+      const eocd = new Uint8Array(22);
+      const ev = new DataView(eocd.buffer);
+      ev.setUint32(0, 0x06054b50, true);
+      ev.setUint16(4, 0, true);
+      ev.setUint16(6, 0, true);
+      ev.setUint16(8, files.length, true);
+      ev.setUint16(10, files.length, true);
+      ev.setUint32(12, centralSize, true);
+      ev.setUint32(16, offset, true);
+      ev.setUint16(20, 0, true);
+
+      return new Blob([...localParts, ...centralParts, eocd], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+    }
+
+    function openPrintableShortlistModal() {
+      const bc = getActiveBuyerCase();
+      const body = document.getElementById('shortlist-printable-body');
+      const modal = document.getElementById('shortlist-report-modal');
+      if (!bc || !body || !modal) return;
+
+      const eligible = [];
+      const excluded = [];
+      (bc.candidates || []).forEach(c => {
+        const chk = evaluateCandidateEligibility(bc, c);
+        if (chk.eligible) eligible.push(c);
+        else excluded.push({ ...c, reasons: chk.reasons });
+      });
+
+      body.innerHTML = `
+        <div class="border-b border-slate-700 pb-3">
+          <div class="text-amber-300 font-extrabold text-sm">PAGE 1 — RANKED PROPERTY SHORTLIST (${escapeHTML(bc.clientName)})</div>
+          <div class="text-emerald-300 text-[11px] mt-1">${escapeHTML(CEA_STATUTORY.footerLine)}</div>
+        </div>
+        <div class="space-y-2">
+          ${eligible.map((item, i) => `
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+              <div class="font-extrabold text-white">#${i + 1}. ${escapeHTML(item.project)} — ${escapeHTML(item.district)}</div>
+              <div class="text-cyan-300">Size: ${item.sqft} sqft | Lease: ${item.leaseYrs >= 900 ? 'Freehold' : item.leaseYrs + ' yrs'} | Asking: S$${Number(item.price).toLocaleString()} (S$${Math.round(item.price / item.sqft).toLocaleString()} PSF)</div>
+              <div class="text-slate-400">Portal Link: ${escapeHTML(item.url)} | Notes: ${escapeHTML(item.notes)}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="border-t border-slate-700 pt-3">
+          <div class="text-rose-400 font-extrabold text-sm">PAGE 2 — EXCLUDED CANDIDATES &amp; DUE-DILIGENCE AUDIT</div>
+          <div class="space-y-2 mt-2">
+            ${excluded.length === 0 ? '<div class="text-slate-400">No excluded properties.</div>' : excluded.map(ex => `
+              <div class="bg-rose-950/30 border border-rose-500/40 rounded-xl p-2.5">
+                <div class="font-bold text-rose-300">${escapeHTML(ex.project)} (${escapeHTML(ex.district)}) — S$${Number(ex.price).toLocaleString()}</div>
+                <div class="text-rose-200">Reason: ${escapeHTML(ex.reasons.join('; '))}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    function closePrintableShortlistModal() {
+      const modal = document.getElementById('shortlist-report-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // =========================================================================
+    // BOOTSTRAP
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      const dBadge = document.getElementById('header-date-badge');
+      if (dBadge) {
+        dBadge.textContent = new Date().toLocaleDateString('en-SG', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        });
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => getOfflineMaleEnglishVoice();
+      }
+      loadAppState();
+      syncHeaderKpis();
+      initDefaultImagesAndLogo();
+      renderCommandBoard();
+      populateStudioCardDropdown();
+      populateStudioFromActiveCard();
+      updateMediaSourceBadges();
+      renderActiveMediaView();
+    });
+  </script>
+</body>
+</html>

@@ -112,6 +112,50 @@ async function callGeminiModel({ apiKey, model, systemPrompt, userPrompt, thinki
   return JSON.parse(rawText);
 }
 
+
+function buildThreeSceneStoryboard(topicObj) {
+  const headline = topicObj.headline || topicObj.title || "2026 Singapore Property Roadmap";
+  const pills = enforceCompactPills(topicObj.pills);
+  const kw = (topicObj.kw || "MOP").toUpperCase();
+  const descs = Array.isArray(topicObj.brollDescriptions) && topicObj.brollDescriptions.length >= 3
+    ? topicObj.brollDescriptions
+    : [
+        "Sunlit modern Singapore condominium living room and balcony overlooking Marina Bay skyline at golden hour",
+        "Singapore HDB sky-terrace residential towers and tropical park connector in warm afternoon light",
+        "Bright 3-bedroom Singapore dumbbell-layout dining and living room interior with marble and timber finishes"
+      ];
+
+  return [
+    {
+      sceneNumber: 1,
+      role: "Scene 1: Hook (8–12s)",
+      mode: "AVATAR_REF",
+      durationSec: 10,
+      trimStartSec: 0,
+      trimEndSec: 10,
+      prompt: `Advisor Avatar Reference (45yo Singaporean Chinese male advisor in smart navy blazer) speaking confidently in a sunlit modern Singapore showflat lounge about "${headline}", steady 85mm portrait framing, subtle natural hand gestures. Strictly no burned-in text, no captions, no watermarks.`
+    },
+    {
+      sceneNumber: 2,
+      role: "Scene 2: Market Proof / B-Roll (8–12s)",
+      mode: "BROLL",
+      durationSec: 10,
+      trimStartSec: 0,
+      trimEndSec: 10,
+      prompt: `SG Property B-Roll: Ultra-steady 35mm architectural gimbal glide across ${descs[0]} highlighting ${pills[0]} and ${pills[1]}. Architectural lines remain rigid and stationary in warm golden-hour daylight. Strictly no text, no numbers, no watermarks, no people.`
+    },
+    {
+      sceneNumber: 3,
+      role: "Scene 3: Actionable Takeaway + DM CTA (8–12s)",
+      mode: "AVATAR_REF",
+      durationSec: 10,
+      trimStartSec: 0,
+      trimEndSec: 10,
+      prompt: `Advisor Avatar Reference (45yo Singaporean Chinese male advisor) delivering clear closing takeaway on ${pills[2]} and inviting viewers to DM "${kw}" for their 2026 roadmap, warm architectural lounge backdrop, locked 85mm portrait lens. Strictly no burned-in text, no captions, no watermarks.`
+    }
+  ];
+}
+
 function evaluatePromptQaRubric(scriptText, brollPrompts, captionText) {
   let score = 100;
   const issues = [];
@@ -321,6 +365,7 @@ Return strict JSON:
         avatarEngine: "Omni 1.2 Flash (Footer Avatar Badge)",
         brollEngine: "Veo 3.1 - Lite / Nano Banana 2 Lite (3.5s B-Roll Cutaways)",
         brollCutaways,
+        storyboardScenes: buildThreeSceneStoryboard(selectedTopic),
         ceaParticulars: CEA_FOOTER
       },
       qaGate: qaResult,

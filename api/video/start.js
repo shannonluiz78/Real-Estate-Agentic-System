@@ -113,7 +113,7 @@ export default async function handler(req, res) {
         input: inputContent,
         background: true,
         store: true,
-        response_modalities: ["VIDEO"],
+        response_modalities: ["video"],
         generation_config: {
           duration: durationTag,
           aspect_ratio: aspectRatio

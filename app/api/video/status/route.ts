@@ -3,8 +3,9 @@
  * Google Gemini Interactions API Poller for gemini-omni-1.2-flash
  *
  * Polls GET https://generativelanguage.googleapis.com/v1beta/interactions/{id}
- * with `x-goog-api-key: GEMINI_API_KEY`. Extracts video URI or base64 video data
- * from completed interaction output steps, or forwards exact error status/message.
+ * with `x-goog-api-key: GEMINI_API_KEY`. Extracts the playable video URI or base64
+ * video data from `interaction.steps[]` (`type: "model_output"` -> `content[]`) or
+ * `interaction.outputs[]`, and forwards exact error status/message on failure.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -20,77 +21,107 @@ function corsHeaders() {
   };
 }
 
+function appendApiKeyIfNeeded(rawUri: string, geminiKey: string): string {
+  if (!rawUri) return rawUri;
+  if (rawUri.includes("generativelanguage.googleapis.com") && !rawUri.includes("key=")) {
+    const sep = rawUri.includes("?") ? "&" : "?";
+    return `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`;
+  }
+  return rawUri;
+}
+
 function extractVideoFromInteraction(interaction: Record<string, unknown>, geminiKey: string) {
-  const outputs = Array.isArray(interaction?.outputs)
-    ? (interaction.outputs as Array<Record<string, unknown>>)
-    : [];
+  const candidateCollections: Array<Record<string, unknown>> = [];
+  const textNotes: string[] = [];
 
-  for (const item of outputs) {
+  // 1. Primary REST schema: interaction.steps[] -> step.content[]
+  if (Array.isArray(interaction?.steps)) {
+    for (const step of interaction.steps as Array<Record<string, unknown>>) {
+      if (step && typeof step === "object") {
+        const stepType = String(step.type || "").toLowerCase();
+        candidateCollections.push(step);
+        if (Array.isArray(step.content)) {
+          for (const part of step.content as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") {
+              candidateCollections.push(part);
+              if (stepType === "model_output" && part.type === "text" && typeof part.text === "string") {
+                textNotes.push(part.text);
+              }
+            }
+          }
+        }
+        if (Array.isArray(step.parts)) {
+          for (const part of step.parts as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
+        }
+      }
+    }
+  }
+
+  // 2. Secondary REST schema: interaction.outputs[]
+  if (Array.isArray(interaction?.outputs)) {
+    for (const out of interaction.outputs as Array<Record<string, unknown>>) {
+      if (out && typeof out === "object") {
+        candidateCollections.push(out);
+        if (Array.isArray(out.content)) {
+          for (const part of out.content as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
+        }
+        if (Array.isArray(out.parts)) {
+          for (const part of out.parts as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
+        }
+      }
+    }
+  }
+
+  // 3. Top-level output / result fallback
+  for (const key of ["output", "result"]) {
+    const obj = interaction?.[key];
+    if (obj && typeof obj === "object" && !Array.isArray(obj)) {
+      candidateCollections.push(obj as Record<string, unknown>);
+    }
+  }
+
+  for (const item of candidateCollections) {
     const itemType = String(item?.type || "").toLowerCase();
-    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
+    const mimeType = String(item?.mime_type || item?.mimeType || "");
+    const isVideoPart = itemType === "video" || mimeType.toLowerCase().startsWith("video/");
 
-    if (itemType === "video" || mimeType.startsWith("video/")) {
-      if (typeof item?.data === "string" && item.data) {
-        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
+    if (isVideoPart) {
+      if (typeof item?.data === "string" && item.data.length > 0) {
+        return {
+          videoDataUri: `data:${mimeType || "video/mp4"};base64,${item.data}`,
+          videoUrl: null,
+          modelTextNote: textNotes.join(" ").trim()
+        };
       }
       const rawUri = (item?.uri || item?.url || item?.file_uri || item?.fileUri) as string | undefined;
-      if (rawUri) {
-        const sep = rawUri.includes("?") ? "&" : "?";
-        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
-          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
-          : rawUri;
-        return { videoUrl, videoDataUri: null };
-      }
-    }
-
-    const nestedParts = Array.isArray(item?.content)
-      ? (item.content as Array<Record<string, unknown>>)
-      : Array.isArray(item?.parts)
-        ? (item.parts as Array<Record<string, unknown>>)
-        : [];
-    for (const part of nestedParts) {
-      const pMime = String(part?.mime_type || part?.mimeType || "");
-      if (part?.type === "video" || pMime.startsWith("video/")) {
-        if (typeof part?.data === "string" && part.data) {
-          return { videoDataUri: `data:${pMime || "video/mp4"};base64,${part.data}`, videoUrl: null };
-        }
-        const pUri = (part?.uri || part?.url || part?.file_uri) as string | undefined;
-        if (pUri) {
-          const sep = pUri.includes("?") ? "&" : "?";
-          const videoUrl = pUri.includes("generativelanguage.googleapis.com")
-            ? `${pUri}${sep}key=${encodeURIComponent(geminiKey)}`
-            : pUri;
-          return { videoUrl, videoDataUri: null };
-        }
+      if (typeof rawUri === "string" && rawUri.length > 0) {
+        return {
+          videoUrl: appendApiKeyIfNeeded(rawUri, geminiKey),
+          videoDataUri: null,
+          modelTextNote: textNotes.join(" ").trim()
+        };
       }
     }
   }
 
-  // Also check top-level output / result fallback fields
-  const singleOutput = (interaction?.output || interaction?.result) as Record<string, unknown> | undefined;
-  if (singleOutput && typeof singleOutput === "object") {
-    const sMime = String(singleOutput?.mime_type || singleOutput?.mimeType || "video/mp4");
-    if (typeof singleOutput?.data === "string" && singleOutput.data) {
-      return { videoDataUri: `data:${sMime};base64,${singleOutput.data}`, videoUrl: null };
-    }
-    const sUri = (singleOutput?.uri || singleOutput?.url || singleOutput?.file_uri) as string | undefined;
-    if (sUri) {
-      const sep = sUri.includes("?") ? "&" : "?";
-      const videoUrl = sUri.includes("generativelanguage.googleapis.com")
-        ? `${sUri}${sep}key=${encodeURIComponent(geminiKey)}`
-        : sUri;
-      return { videoUrl, videoDataUri: null };
-    }
-  }
-
-  return { videoUrl: null, videoDataUri: null };
+  return {
+    videoUrl: null,
+    videoDataUri: null,
+    modelTextNote: textNotes.join(" ").trim()
+  };
 }
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 200, headers: corsHeaders() });
 }
 
-async function handlePoll(interactionId: string) {
+async function handlePoll(interactionId: string, initialVideoUrl = "") {
   const geminiKey = process.env.GEMINI_API_KEY || "";
   if (!interactionId) {
     return NextResponse.json(
@@ -183,9 +214,11 @@ async function handlePoll(interactionId: string) {
       );
     }
 
-    // Interaction completed — extract video URI or base64 data from output steps
+    // Interaction completed — extract video URI or base64 data from steps[] or outputs[]
     const media = extractVideoFromInteraction(data, geminiKey);
-    if (media.videoDataUri || media.videoUrl) {
+    const resolvedUrl = media.videoUrl || (initialVideoUrl ? appendApiKeyIfNeeded(initialVideoUrl, geminiKey) : null);
+
+    if (media.videoDataUri || resolvedUrl) {
       return NextResponse.json(
         {
           ok: true,
@@ -193,21 +226,22 @@ async function handlePoll(interactionId: string) {
           interactionId: cleanId,
           interactionStatus: "completed",
           source: OMNI_VIDEO_MODEL,
-          videoUrl: media.videoUrl,
+          videoUrl: resolvedUrl,
           videoDataUri: media.videoDataUri
         },
         { status: 200, headers: corsHeaders() }
       );
     }
 
-    console.error("[/api/video/status] Interaction completed without video output:", data);
+    console.error("[/api/video/status] Interaction completed without video part in steps/outputs:", data);
+    const noteSuffix = media.modelTextNote ? `: ${media.modelTextNote.slice(0, 180)}` : "";
     return NextResponse.json(
       {
         ok: false,
         status: "FAILED",
         upstreamStatus: 204,
         upstreamBody: data,
-        error: "Interactions API HTTP 204: Interaction completed without a playable video output step"
+        error: `Interactions API HTTP 204: Interaction completed without a playable video output step${noteSuffix}`
       },
       { status: 200, headers: corsHeaders() }
     );
@@ -231,11 +265,13 @@ export async function GET(req: NextRequest) {
     req.nextUrl.searchParams.get("interactionId") ||
     req.nextUrl.searchParams.get("operationId") ||
     "";
-  return handlePoll(interactionId);
+  const initialVideoUrl = req.nextUrl.searchParams.get("initialVideoUrl") || "";
+  return handlePoll(interactionId, initialVideoUrl);
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const interactionId = String(body.interactionId || body.operationId || "").trim();
-  return handlePoll(interactionId);
+  const initialVideoUrl = String(body.initialVideoUrl || "").trim();
+  return handlePoll(interactionId, initialVideoUrl);
 }

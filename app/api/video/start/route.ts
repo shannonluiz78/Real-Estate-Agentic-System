@@ -163,8 +163,7 @@ export async function POST(req: NextRequest) {
       store: true,
       response_modalities: ["video"],
       generation_config: {
-        duration: durationTag,
-        aspect_ratio: aspectRatio
+        temperature: 0.4
       }
     };
 

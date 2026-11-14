@@ -3,9 +3,12 @@
  * Google Gemini Interactions API Video Starter for gemini-omni-1.2-flash
  *
  * Calls POST https://generativelanguage.googleapis.com/v1beta/interactions
- * with header `x-goog-api-key: GEMINI_API_KEY`, `model: "gemini-omni-1.2-flash"`,
- * `background: true`, `store: true`, scene prompt + spoken script, and optional
- * advisor portrait reference image when in "Advisor Avatar Reference" mode.
+ * with:
+ *  - model: "gemini-omni-1.2-flash"
+ *  - background: true, store: true
+ *  - response_modalities: ["video"]
+ *  - response_format: { type: "video", aspect_ratio: "9:16", duration: "<N>s", resolution: "720p", delivery: "uri" }
+ *  - multimodal input: optional reference image + scene prompt + spoken script
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -16,7 +19,7 @@ const OMNI_VIDEO_MODEL = process.env.MODEL_AVATAR_VIDEO || "gemini-omni-1.2-flas
 const INTERACTIONS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 function estimateSceneCostSgd(durationSec = 10, mode = "AVATAR_REF"): number {
-  const dur = Math.min(15, Math.max(8, Number(durationSec) || 10));
+  const dur = Math.min(15, Math.max(3, Number(durationSec) || 10));
   const ratePerSec = mode === "AVATAR_REF" ? 0.035 : 0.025;
   return Number((dur * ratePerSec).toFixed(2));
 }
@@ -29,52 +32,78 @@ function corsHeaders() {
   };
 }
 
+function appendApiKeyIfNeeded(rawUri: string, geminiKey: string): string {
+  if (!rawUri) return rawUri;
+  if (rawUri.includes("generativelanguage.googleapis.com") && !rawUri.includes("key=")) {
+    const sep = rawUri.includes("?") ? "&" : "?";
+    return `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`;
+  }
+  return rawUri;
+}
+
 function extractVideoFromInteraction(interaction: Record<string, unknown>, geminiKey: string) {
-  const outputs = Array.isArray(interaction?.outputs)
-    ? (interaction.outputs as Array<Record<string, unknown>>)
-    : [];
+  const candidateCollections: Array<Record<string, unknown>> = [];
 
-  for (const item of outputs) {
-    const itemType = String(item?.type || "").toLowerCase();
-    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
-
-    if (itemType === "video" || mimeType.startsWith("video/")) {
-      if (typeof item?.data === "string" && item.data) {
-        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
-      }
-      const rawUri = (item?.uri || item?.url || item?.file_uri || item?.fileUri) as string | undefined;
-      if (rawUri) {
-        const sep = rawUri.includes("?") ? "&" : "?";
-        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
-          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
-          : rawUri;
-        return { videoUrl, videoDataUri: null };
-      }
-    }
-
-    // Check nested content/parts arrays if present
-    const nestedParts = Array.isArray(item?.content)
-      ? (item.content as Array<Record<string, unknown>>)
-      : Array.isArray(item?.parts)
-        ? (item.parts as Array<Record<string, unknown>>)
-        : [];
-    for (const part of nestedParts) {
-      const pMime = String(part?.mime_type || part?.mimeType || "");
-      if (part?.type === "video" || pMime.startsWith("video/")) {
-        if (typeof part?.data === "string" && part.data) {
-          return { videoDataUri: `data:${pMime || "video/mp4"};base64,${part.data}`, videoUrl: null };
+  // 1. Primary REST schema: interaction.steps[] -> step.content[]
+  if (Array.isArray(interaction?.steps)) {
+    for (const step of interaction.steps as Array<Record<string, unknown>>) {
+      if (step && typeof step === "object") {
+        candidateCollections.push(step);
+        if (Array.isArray(step.content)) {
+          for (const part of step.content as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
         }
-        const pUri = (part?.uri || part?.url || part?.file_uri) as string | undefined;
-        if (pUri) {
-          const sep = pUri.includes("?") ? "&" : "?";
-          const videoUrl = pUri.includes("generativelanguage.googleapis.com")
-            ? `${pUri}${sep}key=${encodeURIComponent(geminiKey)}`
-            : pUri;
-          return { videoUrl, videoDataUri: null };
+        if (Array.isArray(step.parts)) {
+          for (const part of step.parts as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
         }
       }
     }
   }
+
+  // 2. Secondary REST schema: interaction.outputs[]
+  if (Array.isArray(interaction?.outputs)) {
+    for (const out of interaction.outputs as Array<Record<string, unknown>>) {
+      if (out && typeof out === "object") {
+        candidateCollections.push(out);
+        if (Array.isArray(out.content)) {
+          for (const part of out.content as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
+        }
+        if (Array.isArray(out.parts)) {
+          for (const part of out.parts as Array<Record<string, unknown>>) {
+            if (part && typeof part === "object") candidateCollections.push(part);
+          }
+        }
+      }
+    }
+  }
+
+  for (const item of candidateCollections) {
+    const itemType = String(item?.type || "").toLowerCase();
+    const mimeType = String(item?.mime_type || item?.mimeType || "");
+    const isVideoPart = itemType === "video" || mimeType.toLowerCase().startsWith("video/");
+
+    if (isVideoPart) {
+      if (typeof item?.data === "string" && item.data.length > 0) {
+        return {
+          videoDataUri: `data:${mimeType || "video/mp4"};base64,${item.data}`,
+          videoUrl: null
+        };
+      }
+      const rawUri = (item?.uri || item?.url || item?.file_uri || item?.fileUri) as string | undefined;
+      if (typeof rawUri === "string" && rawUri.length > 0) {
+        return {
+          videoUrl: appendApiKeyIfNeeded(rawUri, geminiKey),
+          videoDataUri: null
+        };
+      }
+    }
+  }
+
   return { videoUrl: null, videoDataUri: null };
 }
 
@@ -129,21 +158,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const clampedDur = Math.min(15, Math.max(8, Number(durationSec) || 10));
+    // Omni 1.2 Flash supports whole seconds from 3s to 15s
+    const clampedDur = Math.min(15, Math.max(3, Math.round(Number(durationSec) || 10)));
     const durationTag = `${clampedDur}s`;
     const aspectRatio = "9:16";
 
     const fullPrompt = spokenScript
-      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone, ${durationTag}): "${spokenScript}"\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`
-      : `${prompt}\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`;
+      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone): "${spokenScript}"\nStrictly no burned-in text, no captions, no watermarks, no logos.`
+      : `${prompt}\nStrictly no burned-in text, no captions, no watermarks, no logos.`;
 
-    // Build Gemini Interactions API multimodal input array
-    const inputContent: Array<Record<string, unknown>> = [
-      {
-        type: "text",
-        text: fullPrompt
-      }
-    ];
+    // Place reference image first followed by text instruction per official Omni cookbook
+    const inputContent: Array<Record<string, unknown>> = [];
 
     if (mode === "AVATAR_REF" && typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
@@ -156,14 +181,23 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    inputContent.push({
+      type: "text",
+      text: fullPrompt
+    });
+
     const interactionPayload: Record<string, unknown> = {
       model: OMNI_VIDEO_MODEL,
       input: inputContent,
       background: true,
       store: true,
       response_modalities: ["video"],
-      generation_config: {
-        temperature: 0.4
+      response_format: {
+        type: "video",
+        aspect_ratio: aspectRatio,
+        duration: durationTag,
+        resolution: "720p",
+        delivery: "uri"
       }
     };
 
@@ -226,31 +260,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // If the interaction already completed synchronously
-    if (interactionStatus === "completed") {
-      const media = extractVideoFromInteraction(parsed, geminiKey);
-      if (media.videoDataUri || media.videoUrl) {
-        return NextResponse.json(
-          {
-            ok: true,
-            status: "DONE",
-            interactionId,
-            operationId: interactionId,
-            interactionStatus,
-            source: OMNI_VIDEO_MODEL,
-            model: OMNI_VIDEO_MODEL,
-            sceneIndex,
-            sceneTitle,
-            mode,
-            durationSec: clampedDur,
-            videoUrl: media.videoUrl,
-            videoDataUri: media.videoDataUri,
-            estimatedCostSgd: estCost,
-            triggerManualBackupDrawer: spend + estCost >= BACKUP_TRIGGER_SGD
-          },
-          { status: 200, headers: corsHeaders() }
-        );
-      }
+    // Extract video immediately if already present in steps[] / outputs[]
+    const media = extractVideoFromInteraction(parsed, geminiKey);
+    if (interactionStatus === "completed" && (media.videoDataUri || media.videoUrl)) {
+      return NextResponse.json(
+        {
+          ok: true,
+          status: "DONE",
+          interactionId,
+          operationId: interactionId,
+          interactionStatus,
+          source: OMNI_VIDEO_MODEL,
+          model: OMNI_VIDEO_MODEL,
+          sceneIndex,
+          sceneTitle,
+          mode,
+          durationSec: clampedDur,
+          videoUrl: media.videoUrl,
+          videoDataUri: media.videoDataUri,
+          estimatedCostSgd: estCost,
+          triggerManualBackupDrawer: spend + estCost >= BACKUP_TRIGGER_SGD
+        },
+        { status: 200, headers: corsHeaders() }
+      );
     }
 
     // Return interaction.id immediately to client for async polling via /api/video/status
@@ -261,6 +293,7 @@ export async function POST(req: NextRequest) {
         interactionId,
         operationId: interactionId,
         interactionStatus,
+        initialVideoUrl: media.videoUrl || null,
         source: OMNI_VIDEO_MODEL,
         model: OMNI_VIDEO_MODEL,
         sceneIndex,

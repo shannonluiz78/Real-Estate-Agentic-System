@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/cron-autopilot",
+      "schedule": "30 23 * * *"
+    }
+  ]
+}

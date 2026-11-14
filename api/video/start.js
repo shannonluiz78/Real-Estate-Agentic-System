@@ -115,8 +115,7 @@ export default async function handler(req, res) {
         store: true,
         response_modalities: ["video"],
         generation_config: {
-          duration: durationTag,
-          aspect_ratio: aspectRatio
+          temperature: 0.4
         }
       })
     });

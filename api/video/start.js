@@ -3,9 +3,9 @@
  * Google Gemini Interactions API Video Starter for gemini-omni-1.2-flash
  *
  * - Uploads reference portrait via Gemini Files API (https://generativelanguage.googleapis.com/upload/v1beta/files)
- *   and passes { type: "image", uri, mime_type } alongside the natural-language prompt & spoken dialogue
- *   (matching Google's official gemini-omni-flash-api reference-to-video pipeline).
- * - Falls back to inline base64 image data if Files API upload is unavailable.
+ *   and returns `advisorFileUri` so Clip 1 and Clip 3 reuse the exact same verified Gemini Files URI.
+ * - Supports `useInlineBase64Fallback` so retries keep the user's profile photo attached rather than
+ *   dropping the face reference.
  */
 
 const CREDIT_LIMIT_SGD = parseFloat(process.env.MONTHLY_CLOUD_CREDIT_LIMIT_SGD || "12.83");
@@ -27,6 +27,21 @@ function appendApiKeyIfNeeded(rawUri, geminiKey) {
     return `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`;
   }
   return rawUri;
+}
+
+async function verifyExistingGeminiFileUri({ geminiKey, fileUri }) {
+  if (!fileUri || typeof fileUri !== "string") return false;
+  try {
+    const match = fileUri.match(/\/files\/([a-zA-Z0-9_-]+)/);
+    if (!match) return false;
+    const fileName = `files/${match[1]}`;
+    const checkResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${encodeURIComponent(geminiKey)}`);
+    if (!checkResp.ok) return false;
+    const info = await checkResp.json();
+    return info?.state === "ACTIVE";
+  } catch (e) {
+    return false;
+  }
 }
 
 async function uploadReferenceImageToGeminiFilesApi({ geminiKey, base64Data, mimeType }) {
@@ -55,9 +70,8 @@ async function uploadReferenceImageToGeminiFilesApi({ geminiKey, base64Data, mim
     const fileUri = fileObj?.uri || null;
     const fileName = fileObj?.name || null;
 
-    // Poll briefly if file state is PROCESSING
     if (fileName && fileObj?.state === "PROCESSING") {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 6; i++) {
         await new Promise(r => setTimeout(r, 800));
         const checkResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${encodeURIComponent(geminiKey)}`);
         if (checkResp.ok) {
@@ -134,6 +148,8 @@ export default async function handler(req, res) {
     durationSec = 10,
     mode = "AVATAR_REF",
     advisorAvatarDataUri = null,
+    advisorFileUri = null,
+    useInlineBase64Fallback = false,
     currentSpendSgd = 3.42
   } = req.body || {};
 
@@ -169,21 +185,23 @@ export default async function handler(req, res) {
     const aspectRatio = "9:16";
     const cleanDialogue = String(spokenScript || "").trim();
 
-    // Strip legacy meta-prefix if present so prompt uses natural language
+    // Strip any legacy meta-prefixes or duplicate boilerplate from cached prompts
     const cleanedScenePrompt = String(prompt || "")
       .replace(/^Advisor Avatar Reference\s*\([^)]*\)\s*/i, "")
+      .replace(/^SG Property B-Roll\s*\([^)]*\):\s*/i, "")
+      .replace(/Strictly no (burned-in )?text[^.]*\./gi, "")
       .trim();
 
     const hasAvatarImage =
       mode === "AVATAR_REF" &&
-      typeof advisorAvatarDataUri === "string" &&
-      advisorAvatarDataUri.startsWith("data:image/");
+      ((typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) ||
+        (typeof advisorFileUri === "string" && advisorFileUri.startsWith("http")));
 
-    // Consistent identity-anchored reference-to-video prompt so Clip 1 and Clip 3 match identically
+    // Identical natural-language reference prompt structure across Clip 1 and Clip 3
     const sceneLead = hasAvatarImage
-      ? `In a single continuous ${durationTag} unbroken vertical shot, the exact same Singaporean Chinese male real estate advisor from the attached reference photo (identical facial structure, hairstyle, skin tone, and smart navy blazer over a crisp white shirt) ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
+      ? `In a single continuous ${durationTag} unbroken vertical shot, the Singaporean real estate advisor shown in the reference photo, wearing a smart navy blazer over a crisp white shirt, ${cleanedScenePrompt || "speaks warmly and confidently on camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures, steady 85mm lens."}`
       : mode === "AVATAR_REF"
-        ? `In a single continuous ${durationTag} unbroken vertical shot, a 45-year-old Singaporean Chinese male real estate advisor in a smart navy blazer over a crisp white shirt ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
+        ? `In a single continuous ${durationTag} unbroken vertical shot, a 45-year-old Singaporean Chinese male real estate advisor in a smart navy blazer over a crisp white shirt ${cleanedScenePrompt || "speaks warmly and confidently on camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures, steady 85mm lens."}`
         : `In a single continuous ${durationTag} unbroken vertical shot, ${cleanedScenePrompt}`;
 
     const audioDirective = cleanDialogue
@@ -194,38 +212,55 @@ export default async function handler(req, res) {
 
     const fullPrompt = `${sceneLead} ${audioDirective}`;
 
-    // Place text instruction before single reference image per Google Interactions API best practices
+    // Place text instruction before reference portrait image
     const inputContent = [{ type: "text", text: fullPrompt }];
     let attachedImageMethod = "none";
+    let resolvedAdvisorFileUri = null;
 
-    if (hasAvatarImage && advisorAvatarDataUri) {
-      const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
-      if (match) {
-        const mimeType = match[1];
-        const base64Data = match[2];
+    if (hasAvatarImage) {
+      const match = typeof advisorAvatarDataUri === "string"
+        ? advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/)
+        : null;
+      const mimeType = match ? match[1] : "image/jpeg";
+      const base64Data = match ? match[2] : null;
 
-        // Upload via Gemini Files API first (recommended for Interactions API R2V)
-        const uploadedFile = await uploadReferenceImageToGeminiFilesApi({
-          geminiKey,
-          base64Data,
-          mimeType
-        });
-
-        if (uploadedFile && uploadedFile.uri) {
+      if (!useInlineBase64Fallback) {
+        // 1. Reuse existing active Gemini Files API URI if Clip 1 already uploaded it
+        if (advisorFileUri && (await verifyExistingGeminiFileUri({ geminiKey, fileUri: advisorFileUri }))) {
           inputContent.push({
             type: "image",
-            uri: uploadedFile.uri,
-            mime_type: uploadedFile.mimeType
-          });
-          attachedImageMethod = "files-api-uri";
-        } else {
-          inputContent.push({
-            type: "image",
-            data: base64Data,
+            uri: advisorFileUri,
             mime_type: mimeType
           });
-          attachedImageMethod = "inline-base64";
+          attachedImageMethod = "files-api-uri-cached";
+          resolvedAdvisorFileUri = advisorFileUri;
+        } else if (base64Data) {
+          // 2. Upload portrait to Gemini Files API and cache URI for subsequent clips
+          const uploadedFile = await uploadReferenceImageToGeminiFilesApi({
+            geminiKey,
+            base64Data,
+            mimeType
+          });
+          if (uploadedFile && uploadedFile.uri) {
+            inputContent.push({
+              type: "image",
+              uri: uploadedFile.uri,
+              mime_type: uploadedFile.mimeType
+            });
+            attachedImageMethod = "files-api-uri";
+            resolvedAdvisorFileUri = uploadedFile.uri;
+          }
         }
+      }
+
+      // 3. Inline base64 attachment (either explicit retry fallback or if Files API upload unavailable)
+      if (attachedImageMethod === "none" && base64Data) {
+        inputContent.push({
+          type: "image",
+          data: base64Data,
+          mime_type: mimeType
+        });
+        attachedImageMethod = "inline-base64";
       }
     }
 
@@ -296,6 +331,7 @@ export default async function handler(req, res) {
         operationId: interactionId,
         interactionStatus,
         attachedImageMethod,
+        advisorFileUri: resolvedAdvisorFileUri,
         source: OMNI_VIDEO_MODEL,
         model: OMNI_VIDEO_MODEL,
         sceneIndex,
@@ -316,6 +352,7 @@ export default async function handler(req, res) {
       operationId: interactionId,
       interactionStatus,
       attachedImageMethod,
+      advisorFileUri: resolvedAdvisorFileUri,
       initialVideoUrl: media.videoUrl || null,
       source: OMNI_VIDEO_MODEL,
       model: OMNI_VIDEO_MODEL,

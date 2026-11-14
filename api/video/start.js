@@ -179,11 +179,11 @@ export default async function handler(req, res) {
       typeof advisorAvatarDataUri === "string" &&
       advisorAvatarDataUri.startsWith("data:image/");
 
-    // Natural-language reference-to-video prompt following Google AI Studio Omni guidelines
+    // Consistent identity-anchored reference-to-video prompt so Clip 1 and Clip 3 match identically
     const sceneLead = hasAvatarImage
-      ? `In a single continuous ${durationTag} unbroken vertical shot, the Singaporean real estate advisor shown in the reference image, wearing a smart navy blazer, ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
+      ? `In a single continuous ${durationTag} unbroken vertical shot, the exact same Singaporean Chinese male real estate advisor from the attached reference photo (identical facial structure, hairstyle, skin tone, and smart navy blazer over a crisp white shirt) ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
       : mode === "AVATAR_REF"
-        ? `In a single continuous ${durationTag} unbroken vertical shot, a 45-year-old Singaporean Chinese male real estate advisor in a smart navy blazer ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
+        ? `In a single continuous ${durationTag} unbroken vertical shot, a 45-year-old Singaporean Chinese male real estate advisor in a smart navy blazer over a crisp white shirt ${cleanedScenePrompt || "speaks warmly and confidently directly to the camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures."}`
         : `In a single continuous ${durationTag} unbroken vertical shot, ${cleanedScenePrompt}`;
 
     const audioDirective = cleanDialogue

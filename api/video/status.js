@@ -18,24 +18,37 @@ function appendApiKeyIfNeeded(rawUri, geminiKey) {
 function extractFailureDetails(interaction) {
   const details = [];
   if (interaction?.error?.message) details.push(String(interaction.error.message));
+  if (interaction?.error?.status) details.push(`status=${interaction.error.status}`);
   if (interaction?.status_message) details.push(String(interaction.status_message));
   if (interaction?.failure_reason) details.push(String(interaction.failure_reason));
 
   if (Array.isArray(interaction?.steps)) {
     for (const step of interaction.steps) {
       if (!step || typeof step !== "object") continue;
+      const stepType = String(step.type || step.role || "").toLowerCase();
+      // NEVER include user_input / user prompt text in failure diagnostics
+      if (stepType === "user_input" || stepType === "user") continue;
+
       if (step.error?.message) details.push(String(step.error.message));
       if (step.message) details.push(String(step.message));
       if (Array.isArray(step.content)) {
         for (const part of step.content) {
-          if (part?.text) details.push(String(part.text));
           if (part?.error?.message) details.push(String(part.error.message));
+          if (part?.text && stepType !== "user_input") details.push(String(part.text));
         }
       }
     }
   }
+
   const unique = [...new Set(details.map(s => s.trim()).filter(Boolean))];
-  return unique.join(" | ").slice(0, 260);
+  if (unique.length > 0) {
+    return unique.join(" | ").slice(0, 260);
+  }
+  // Fallback diagnostic showing interaction status & step types if no explicit message field was populated
+  const stepSummary = Array.isArray(interaction?.steps)
+    ? interaction.steps.map(s => s?.type || "step").join(",")
+    : "no-steps";
+  return `Interaction ${interaction?.status || "failed"} (${stepSummary})`;
 }
 
 function extractVideoFromInteraction(interaction, geminiKey) {
@@ -46,6 +59,7 @@ function extractVideoFromInteraction(interaction, geminiKey) {
     for (const step of interaction.steps) {
       if (step && typeof step === "object") {
         const stepType = String(step.type || "").toLowerCase();
+        if (stepType === "user_input" || stepType === "user") continue;
         candidateCollections.push(step);
         if (Array.isArray(step.content)) {
           for (const part of step.content) {
@@ -155,16 +169,15 @@ export default async function handler(req, res) {
     const iStatus = String(data?.status || "").toLowerCase();
 
     if (iStatus === "failed" || iStatus === "cancelled" || data?.error) {
-      console.error("[/api/video/status] Interaction failed payload:", JSON.stringify(data).slice(0, 800));
+      console.error("[/api/video/status] Interaction failed payload:", JSON.stringify(data).slice(0, 1200));
       const code = Number(data?.error?.code || 500);
       const extractedDetail = extractFailureDetails(data);
-      const msg = extractedDetail || `Interaction ${iStatus || "failed"}`;
       return res.status(200).json({
         ok: false,
         status: "FAILED",
         upstreamStatus: code,
         upstreamBody: data,
-        error: `Interactions API HTTP ${code}: ${msg}`
+        error: `Interactions API HTTP ${code}: ${extractedDetail}`
       });
     }
 

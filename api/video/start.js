@@ -3,9 +3,9 @@
  * Google Gemini Interactions API Video Starter for gemini-omni-1.2-flash
  *
  * - Uploads reference portrait via Gemini Files API (https://generativelanguage.googleapis.com/upload/v1beta/files)
- *   and returns `advisorFileUri` so Clip 1 and Clip 3 reuse the exact same verified Gemini Files URI.
- * - Supports `useInlineBase64Fallback` so retries keep the user's profile photo attached rather than
- *   dropping the face reference.
+ *   and places { type: "image", uri, mime_type } FIRST in `input` followed by { type: "text", text }
+ *   (matching Google's official Omni 1.2 Flash reference-to-video contract).
+ * - Supports `useInlineBase64Fallback` so retries keep the user's profile photo attached.
  */
 
 const CREDIT_LIMIT_SGD = parseFloat(process.env.MONTHLY_CLOUD_CREDIT_LIMIT_SGD || "12.83");
@@ -98,6 +98,8 @@ function extractVideoFromInteraction(interaction, geminiKey) {
   if (Array.isArray(interaction?.steps)) {
     for (const step of interaction.steps) {
       if (step && typeof step === "object") {
+        const stepType = String(step.type || "").toLowerCase();
+        if (stepType === "user_input" || stepType === "user") continue;
         candidateCollections.push(step);
         if (Array.isArray(step.content)) candidateCollections.push(...step.content);
         if (Array.isArray(step.parts)) candidateCollections.push(...step.parts);
@@ -183,13 +185,21 @@ export default async function handler(req, res) {
     const clampedDur = Math.min(15, Math.max(3, Math.round(Number(durationSec) || 10)));
     const durationTag = `${clampedDur}s`;
     const aspectRatio = "9:16";
-    const cleanDialogue = String(spokenScript || "").trim();
 
-    // Strip any legacy meta-prefixes or duplicate boilerplate from cached prompts
+    // Replace nested double quotes inside spoken dialogue with single quotes so Omni's speech parser never breaks
+    const cleanDialogue = String(spokenScript || "")
+      .replace(/"/g, "'")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // Normalize scene visual description to match Clip 1's clean standalone single-shot format
     const cleanedScenePrompt = String(prompt || "")
       .replace(/^Advisor Avatar Reference\s*\([^)]*\)\s*/i, "")
       .replace(/^SG Property B-Roll\s*\([^)]*\):\s*/i, "")
+      .replace(/\bin the same sunlit modern Singapore showflat lounge\b/gi, "in a sunlit modern Singapore showflat lounge")
       .replace(/Strictly no (burned-in )?text[^.]*\./gi, "")
+      .replace(/"/g, "'")
+      .replace(/\s+/g, " ")
       .trim();
 
     const hasAvatarImage =
@@ -197,7 +207,6 @@ export default async function handler(req, res) {
       ((typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) ||
         (typeof advisorFileUri === "string" && advisorFileUri.startsWith("http")));
 
-    // Identical natural-language reference prompt structure across Clip 1 and Clip 3
     const sceneLead = hasAvatarImage
       ? `In a single continuous ${durationTag} unbroken vertical shot, the Singaporean real estate advisor shown in the reference photo, wearing a smart navy blazer over a crisp white shirt, ${cleanedScenePrompt || "speaks warmly and confidently on camera in a sunlit modern Singapore showflat lounge, medium close-up portrait framing, subtle natural hand gestures, steady 85mm lens."}`
       : mode === "AVATAR_REF"
@@ -212,8 +221,8 @@ export default async function handler(req, res) {
 
     const fullPrompt = `${sceneLead} ${audioDirective}`;
 
-    // Place text instruction before reference portrait image
-    const inputContent = [{ type: "text", text: fullPrompt }];
+    // Place reference image FIRST in `input` followed by text prompt per official Omni 1.2 Flash docs
+    const inputContent = [];
     let attachedImageMethod = "none";
     let resolvedAdvisorFileUri = null;
 
@@ -225,7 +234,6 @@ export default async function handler(req, res) {
       const base64Data = match ? match[2] : null;
 
       if (!useInlineBase64Fallback) {
-        // 1. Reuse existing active Gemini Files API URI if Clip 1 already uploaded it
         if (advisorFileUri && (await verifyExistingGeminiFileUri({ geminiKey, fileUri: advisorFileUri }))) {
           inputContent.push({
             type: "image",
@@ -235,7 +243,6 @@ export default async function handler(req, res) {
           attachedImageMethod = "files-api-uri-cached";
           resolvedAdvisorFileUri = advisorFileUri;
         } else if (base64Data) {
-          // 2. Upload portrait to Gemini Files API and cache URI for subsequent clips
           const uploadedFile = await uploadReferenceImageToGeminiFilesApi({
             geminiKey,
             base64Data,
@@ -253,7 +260,6 @@ export default async function handler(req, res) {
         }
       }
 
-      // 3. Inline base64 attachment (either explicit retry fallback or if Files API upload unavailable)
       if (attachedImageMethod === "none" && base64Data) {
         inputContent.push({
           type: "image",
@@ -263,6 +269,8 @@ export default async function handler(req, res) {
         attachedImageMethod = "inline-base64";
       }
     }
+
+    inputContent.push({ type: "text", text: fullPrompt });
 
     const resp = await fetch(INTERACTIONS_BASE_URL, {
       method: "POST",

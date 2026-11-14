@@ -9,30 +9,58 @@ const OMNI_VIDEO_MODEL = process.env.MODEL_AVATAR_VIDEO || "gemini-omni-1.2-flas
 const INTERACTIONS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 function estimateSceneCostSgd(durationSec = 10, mode = "AVATAR_REF") {
-  const dur = Math.min(15, Math.max(8, Number(durationSec) || 10));
+  const dur = Math.min(15, Math.max(3, Number(durationSec) || 10));
   const ratePerSec = mode === "AVATAR_REF" ? 0.035 : 0.025;
   return Number((dur * ratePerSec).toFixed(2));
 }
 
+function appendApiKeyIfNeeded(rawUri, geminiKey) {
+  if (!rawUri) return rawUri;
+  if (rawUri.includes("generativelanguage.googleapis.com") && !rawUri.includes("key=")) {
+    const sep = rawUri.includes("?") ? "&" : "?";
+    return `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`;
+  }
+  return rawUri;
+}
+
 function extractVideoFromInteraction(interaction, geminiKey) {
-  const outputs = Array.isArray(interaction?.outputs) ? interaction.outputs : [];
-  for (const item of outputs) {
-    const itemType = String(item?.type || "").toLowerCase();
-    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
-    if (itemType === "video" || mimeType.startsWith("video/")) {
-      if (typeof item?.data === "string" && item.data) {
-        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
-      }
-      const rawUri = item?.uri || item?.url || item?.file_uri || item?.fileUri;
-      if (rawUri) {
-        const sep = rawUri.includes("?") ? "&" : "?";
-        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
-          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
-          : rawUri;
-        return { videoUrl, videoDataUri: null };
+  const candidateCollections = [];
+
+  if (Array.isArray(interaction?.steps)) {
+    for (const step of interaction.steps) {
+      if (step && typeof step === "object") {
+        candidateCollections.push(step);
+        if (Array.isArray(step.content)) candidateCollections.push(...step.content);
+        if (Array.isArray(step.parts)) candidateCollections.push(...step.parts);
       }
     }
   }
+
+  if (Array.isArray(interaction?.outputs)) {
+    for (const out of interaction.outputs) {
+      if (out && typeof out === "object") {
+        candidateCollections.push(out);
+        if (Array.isArray(out.content)) candidateCollections.push(...out.content);
+        if (Array.isArray(out.parts)) candidateCollections.push(...out.parts);
+      }
+    }
+  }
+
+  for (const item of candidateCollections) {
+    if (!item || typeof item !== "object") continue;
+    const itemType = String(item?.type || "").toLowerCase();
+    const mimeType = String(item?.mime_type || item?.mimeType || "");
+    if (itemType === "video" || mimeType.toLowerCase().startsWith("video/")) {
+      if (typeof item?.data === "string" && item.data.length > 0) {
+        return { videoDataUri: `data:${mimeType || "video/mp4"};base64,${item.data}`, videoUrl: null };
+      }
+      const rawUri = item?.uri || item?.url || item?.file_uri || item?.fileUri;
+      if (typeof rawUri === "string" && rawUri.length > 0) {
+        return { videoUrl: appendApiKeyIfNeeded(rawUri, geminiKey), videoDataUri: null };
+      }
+    }
+  }
+
   return { videoUrl: null, videoDataUri: null };
 }
 
@@ -81,15 +109,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const clampedDur = Math.min(15, Math.max(8, Number(durationSec) || 10));
+    const clampedDur = Math.min(15, Math.max(3, Math.round(Number(durationSec) || 10)));
     const durationTag = `${clampedDur}s`;
     const aspectRatio = "9:16";
 
     const fullPrompt = spokenScript
-      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone, ${durationTag}): "${spokenScript}"\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`
-      : `${prompt}\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`;
+      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone): "${spokenScript}"\nStrictly no burned-in text, no captions, no watermarks, no logos.`
+      : `${prompt}\nStrictly no burned-in text, no captions, no watermarks, no logos.`;
 
-    const inputContent = [{ type: "text", text: fullPrompt }];
+    const inputContent = [];
 
     if (mode === "AVATAR_REF" && typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
@@ -101,6 +129,8 @@ export default async function handler(req, res) {
         });
       }
     }
+
+    inputContent.push({ type: "text", text: fullPrompt });
 
     const resp = await fetch(INTERACTIONS_BASE_URL, {
       method: "POST",
@@ -114,8 +144,12 @@ export default async function handler(req, res) {
         background: true,
         store: true,
         response_modalities: ["video"],
-        generation_config: {
-          temperature: 0.4
+        response_format: {
+          type: "video",
+          aspect_ratio: aspectRatio,
+          duration: durationTag,
+          resolution: "720p",
+          delivery: "uri"
         }
       })
     });
@@ -154,27 +188,25 @@ export default async function handler(req, res) {
       });
     }
 
-    if (interactionStatus === "completed") {
-      const media = extractVideoFromInteraction(parsed, geminiKey);
-      if (media.videoDataUri || media.videoUrl) {
-        return res.status(200).json({
-          ok: true,
-          status: "DONE",
-          interactionId,
-          operationId: interactionId,
-          interactionStatus,
-          source: OMNI_VIDEO_MODEL,
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          sceneTitle,
-          mode,
-          durationSec: clampedDur,
-          videoUrl: media.videoUrl,
-          videoDataUri: media.videoDataUri,
-          estimatedCostSgd: estCost,
-          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
-        });
-      }
+    const media = extractVideoFromInteraction(parsed, geminiKey);
+    if (interactionStatus === "completed" && (media.videoDataUri || media.videoUrl)) {
+      return res.status(200).json({
+        ok: true,
+        status: "DONE",
+        interactionId,
+        operationId: interactionId,
+        interactionStatus,
+        source: OMNI_VIDEO_MODEL,
+        model: OMNI_VIDEO_MODEL,
+        sceneIndex,
+        sceneTitle,
+        mode,
+        durationSec: clampedDur,
+        videoUrl: media.videoUrl,
+        videoDataUri: media.videoDataUri,
+        estimatedCostSgd: estCost,
+        triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
+      });
     }
 
     return res.status(200).json({
@@ -183,6 +215,7 @@ export default async function handler(req, res) {
       interactionId,
       operationId: interactionId,
       interactionStatus,
+      initialVideoUrl: media.videoUrl || null,
       source: OMNI_VIDEO_MODEL,
       model: OMNI_VIDEO_MODEL,
       sceneIndex,

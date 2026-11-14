@@ -6,58 +6,72 @@
 const OMNI_VIDEO_MODEL = process.env.MODEL_AVATAR_VIDEO || "gemini-omni-1.2-flash";
 const INTERACTIONS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
+function appendApiKeyIfNeeded(rawUri, geminiKey) {
+  if (!rawUri) return rawUri;
+  if (rawUri.includes("generativelanguage.googleapis.com") && !rawUri.includes("key=")) {
+    const sep = rawUri.includes("?") ? "&" : "?";
+    return `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`;
+  }
+  return rawUri;
+}
+
 function extractVideoFromInteraction(interaction, geminiKey) {
-  const outputs = Array.isArray(interaction?.outputs) ? interaction.outputs : [];
-  for (const item of outputs) {
+  const candidateCollections = [];
+  const textNotes = [];
+
+  if (Array.isArray(interaction?.steps)) {
+    for (const step of interaction.steps) {
+      if (step && typeof step === "object") {
+        const stepType = String(step.type || "").toLowerCase();
+        candidateCollections.push(step);
+        if (Array.isArray(step.content)) {
+          for (const part of step.content) {
+            if (part && typeof part === "object") {
+              candidateCollections.push(part);
+              if (stepType === "model_output" && part.type === "text" && typeof part.text === "string") {
+                textNotes.push(part.text);
+              }
+            }
+          }
+        }
+        if (Array.isArray(step.parts)) candidateCollections.push(...step.parts);
+      }
+    }
+  }
+
+  if (Array.isArray(interaction?.outputs)) {
+    for (const out of interaction.outputs) {
+      if (out && typeof out === "object") {
+        candidateCollections.push(out);
+        if (Array.isArray(out.content)) candidateCollections.push(...out.content);
+        if (Array.isArray(out.parts)) candidateCollections.push(...out.parts);
+      }
+    }
+  }
+
+  for (const key of ["output", "result"]) {
+    const obj = interaction?.[key];
+    if (obj && typeof obj === "object" && !Array.isArray(obj)) {
+      candidateCollections.push(obj);
+    }
+  }
+
+  for (const item of candidateCollections) {
+    if (!item || typeof item !== "object") continue;
     const itemType = String(item?.type || "").toLowerCase();
-    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
-    if (itemType === "video" || mimeType.startsWith("video/")) {
-      if (typeof item?.data === "string" && item.data) {
-        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
+    const mimeType = String(item?.mime_type || item?.mimeType || "");
+    if (itemType === "video" || mimeType.toLowerCase().startsWith("video/")) {
+      if (typeof item?.data === "string" && item.data.length > 0) {
+        return { videoDataUri: `data:${mimeType || "video/mp4"};base64,${item.data}`, videoUrl: null, modelTextNote: textNotes.join(" ").trim() };
       }
       const rawUri = item?.uri || item?.url || item?.file_uri || item?.fileUri;
-      if (rawUri) {
-        const sep = rawUri.includes("?") ? "&" : "?";
-        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
-          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
-          : rawUri;
-        return { videoUrl, videoDataUri: null };
-      }
-    }
-    const nestedParts = Array.isArray(item?.content) ? item.content : (Array.isArray(item?.parts) ? item.parts : []);
-    for (const part of nestedParts) {
-      const pMime = String(part?.mime_type || part?.mimeType || "");
-      if (part?.type === "video" || pMime.startsWith("video/")) {
-        if (typeof part?.data === "string" && part.data) {
-          return { videoDataUri: `data:${pMime || "video/mp4"};base64,${part.data}`, videoUrl: null };
-        }
-        const pUri = part?.uri || part?.url || part?.file_uri;
-        if (pUri) {
-          const sep = pUri.includes("?") ? "&" : "?";
-          const videoUrl = pUri.includes("generativelanguage.googleapis.com")
-            ? `${pUri}${sep}key=${encodeURIComponent(geminiKey)}`
-            : pUri;
-          return { videoUrl, videoDataUri: null };
-        }
+      if (typeof rawUri === "string" && rawUri.length > 0) {
+        return { videoUrl: appendApiKeyIfNeeded(rawUri, geminiKey), videoDataUri: null, modelTextNote: textNotes.join(" ").trim() };
       }
     }
   }
-  const singleOutput = interaction?.output || interaction?.result;
-  if (singleOutput && typeof singleOutput === "object") {
-    const sMime = String(singleOutput?.mime_type || singleOutput?.mimeType || "video/mp4");
-    if (typeof singleOutput?.data === "string" && singleOutput.data) {
-      return { videoDataUri: `data:${sMime};base64,${singleOutput.data}`, videoUrl: null };
-    }
-    const sUri = singleOutput?.uri || singleOutput?.url || singleOutput?.file_uri;
-    if (sUri) {
-      const sep = sUri.includes("?") ? "&" : "?";
-      const videoUrl = sUri.includes("generativelanguage.googleapis.com")
-        ? `${sUri}${sep}key=${encodeURIComponent(geminiKey)}`
-        : sUri;
-      return { videoUrl, videoDataUri: null };
-    }
-  }
-  return { videoUrl: null, videoDataUri: null };
+
+  return { videoUrl: null, videoDataUri: null, modelTextNote: textNotes.join(" ").trim() };
 }
 
 export default async function handler(req, res) {
@@ -68,6 +82,7 @@ export default async function handler(req, res) {
 
   const params = req.method === "POST" ? (req.body || {}) : (req.query || {});
   const interactionId = String(params.interactionId || params.operationId || "").trim();
+  const initialVideoUrl = String(params.initialVideoUrl || "").trim();
   const geminiKey = process.env.GEMINI_API_KEY || "";
 
   if (!interactionId) {
@@ -139,24 +154,27 @@ export default async function handler(req, res) {
     }
 
     const media = extractVideoFromInteraction(data, geminiKey);
-    if (media.videoDataUri || media.videoUrl) {
+    const resolvedUrl = media.videoUrl || (initialVideoUrl ? appendApiKeyIfNeeded(initialVideoUrl, geminiKey) : null);
+
+    if (media.videoDataUri || resolvedUrl) {
       return res.status(200).json({
         ok: true,
         status: "DONE",
         interactionId: cleanId,
         interactionStatus: "completed",
         source: OMNI_VIDEO_MODEL,
-        videoUrl: media.videoUrl,
+        videoUrl: resolvedUrl,
         videoDataUri: media.videoDataUri
       });
     }
 
+    const noteSuffix = media.modelTextNote ? `: ${media.modelTextNote.slice(0, 180)}` : "";
     return res.status(200).json({
       ok: false,
       status: "FAILED",
       upstreamStatus: 204,
       upstreamBody: data,
-      error: "Interactions API HTTP 204: Interaction completed without a playable video output step"
+      error: `Interactions API HTTP 204: Interaction completed without a playable video output step${noteSuffix}`
     });
   } catch (err) {
     console.error("[/api/video/status] Unhandled exception:", err);

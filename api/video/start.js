@@ -112,14 +112,36 @@ export default async function handler(req, res) {
     const clampedDur = Math.min(15, Math.max(3, Math.round(Number(durationSec) || 10)));
     const durationTag = `${clampedDur}s`;
     const aspectRatio = "9:16";
+    const cleanDialogue = String(spokenScript || "").trim();
 
-    const fullPrompt = spokenScript
-      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone): "${spokenScript}"\nStrictly no burned-in text, no captions, no watermarks, no logos.`
-      : `${prompt}\nStrictly no burned-in text, no captions, no watermarks, no logos.`;
+    const hasAvatarImage =
+      mode === "AVATAR_REF" &&
+      typeof advisorAvatarDataUri === "string" &&
+      advisorAvatarDataUri.startsWith("data:image/");
+
+    const characterDirective = hasAvatarImage
+      ? "Subject & Character Reference: Use the exact person shown in the attached reference portrait photo as the on-screen Singaporean real estate advisor, preserving their exact facial features, likeness, hairstyle, glasses, and expression."
+      : "";
+
+    const audioDirective = cleanDialogue
+      ? mode === "AVATAR_REF"
+        ? `Audio & Lip-Sync: Native synchronized speech spoken directly on camera by the advisor in a warm, natural 45-year-old Singaporean Chinese male English baritone voice, with accurate lip movement matching every word verbatim across ${durationTag}: "${cleanDialogue}". Clean studio room tone only, no background music.`
+        : `Audio: Off-screen voiceover narration in a warm 45-year-old Singaporean Chinese male English baritone voice saying verbatim across ${durationTag}: "${cleanDialogue}", paired with subtle architectural room tone and no background music.`
+      : "Audio: Subtle clean ambient architectural room tone only, no background music.";
+
+    const fullPrompt = [
+      `Single continuous ${durationTag} unbroken vertical shot (${aspectRatio}).`,
+      characterDirective,
+      prompt,
+      audioDirective,
+      "Strictly no burned-in text, no subtitles, no captions, no watermarks, no logos."
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     const inputContent = [];
 
-    if (mode === "AVATAR_REF" && typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) {
+    if (hasAvatarImage && advisorAvatarDataUri) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
       if (match) {
         inputContent.push({

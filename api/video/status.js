@@ -15,6 +15,29 @@ function appendApiKeyIfNeeded(rawUri, geminiKey) {
   return rawUri;
 }
 
+function extractFailureDetails(interaction) {
+  const details = [];
+  if (interaction?.error?.message) details.push(String(interaction.error.message));
+  if (interaction?.status_message) details.push(String(interaction.status_message));
+  if (interaction?.failure_reason) details.push(String(interaction.failure_reason));
+
+  if (Array.isArray(interaction?.steps)) {
+    for (const step of interaction.steps) {
+      if (!step || typeof step !== "object") continue;
+      if (step.error?.message) details.push(String(step.error.message));
+      if (step.message) details.push(String(step.message));
+      if (Array.isArray(step.content)) {
+        for (const part of step.content) {
+          if (part?.text) details.push(String(part.text));
+          if (part?.error?.message) details.push(String(part.error.message));
+        }
+      }
+    }
+  }
+  const unique = [...new Set(details.map(s => s.trim()).filter(Boolean))];
+  return unique.join(" | ").slice(0, 260);
+}
+
 function extractVideoFromInteraction(interaction, geminiKey) {
   const candidateCollections = [];
   const textNotes = [];
@@ -132,8 +155,10 @@ export default async function handler(req, res) {
     const iStatus = String(data?.status || "").toLowerCase();
 
     if (iStatus === "failed" || iStatus === "cancelled" || data?.error) {
+      console.error("[/api/video/status] Interaction failed payload:", JSON.stringify(data).slice(0, 800));
       const code = Number(data?.error?.code || 500);
-      const msg = String(data?.error?.message || data?.status_message || `Interaction ${iStatus || "failed"}`).slice(0, 220);
+      const extractedDetail = extractFailureDetails(data);
+      const msg = extractedDetail || `Interaction ${iStatus || "failed"}`;
       return res.status(200).json({
         ok: false,
         status: "FAILED",

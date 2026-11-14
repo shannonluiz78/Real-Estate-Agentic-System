@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
       input: inputContent,
       background: true,
       store: true,
-      response_modalities: ["VIDEO"],
+      response_modalities: ["video"],
       generation_config: {
         duration: durationTag,
         aspect_ratio: aspectRatio

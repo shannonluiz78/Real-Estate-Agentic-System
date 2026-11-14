@@ -1,20 +1,39 @@
 /**
  * AgentZug V4.7 — api/video/start.js
- * Vercel Serverless Function for /api/video/start (Static Root Deployment)
- *
- * Calls Google Gemini API (`generativelanguage.googleapis.com/v1beta/models/gemini-omni-1.2-flash:generateContent`,
- * with automatic fallback to `:predictLongRunning`). Logs and forwards exact upstream Gemini API status and
- * response body if rejected.
+ * Google Gemini Interactions API Video Starter for gemini-omni-1.2-flash
  */
 
 const CREDIT_LIMIT_SGD = parseFloat(process.env.MONTHLY_CLOUD_CREDIT_LIMIT_SGD || "12.83");
 const BACKUP_TRIGGER_SGD = parseFloat(process.env.MANUAL_BACKUP_TRIGGER_SGD || "11.50");
 const OMNI_VIDEO_MODEL = process.env.MODEL_AVATAR_VIDEO || "gemini-omni-1.2-flash";
+const INTERACTIONS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 function estimateSceneCostSgd(durationSec = 10, mode = "AVATAR_REF") {
   const dur = Math.min(15, Math.max(8, Number(durationSec) || 10));
   const ratePerSec = mode === "AVATAR_REF" ? 0.035 : 0.025;
   return Number((dur * ratePerSec).toFixed(2));
+}
+
+function extractVideoFromInteraction(interaction, geminiKey) {
+  const outputs = Array.isArray(interaction?.outputs) ? interaction.outputs : [];
+  for (const item of outputs) {
+    const itemType = String(item?.type || "").toLowerCase();
+    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
+    if (itemType === "video" || mimeType.startsWith("video/")) {
+      if (typeof item?.data === "string" && item.data) {
+        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
+      }
+      const rawUri = item?.uri || item?.url || item?.file_uri || item?.fileUri;
+      if (rawUri) {
+        const sep = rawUri.includes("?") ? "&" : "?";
+        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
+          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
+          : rawUri;
+        return { videoUrl, videoDataUri: null };
+      }
+    }
+  }
+  return { videoUrl: null, videoDataUri: null };
 }
 
 export default async function handler(req, res) {
@@ -56,174 +75,123 @@ export default async function handler(req, res) {
       ok: false,
       status: "FAILED",
       upstreamStatus: 401,
-      error: "Upstream Gemini HTTP 401: GEMINI_API_KEY is missing in Vercel environment variables",
+      error: "Interactions API HTTP 401: GEMINI_API_KEY is missing in Vercel environment variables",
       model: OMNI_VIDEO_MODEL
     });
   }
 
   try {
     const clampedDur = Math.min(15, Math.max(8, Number(durationSec) || 10));
+    const durationTag = `${clampedDur}s`;
+    const aspectRatio = "9:16";
+
     const fullPrompt = spokenScript
-      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone, ${clampedDur}s): "${spokenScript}"\nTarget aspect ratio: 9:16 vertical. Strictly no burned-in text, no captions, no watermarks, no logos.`
-      : `${prompt}\nTarget aspect ratio: 9:16 vertical, duration ${clampedDur}s. Strictly no burned-in text, no captions, no watermarks, no logos.`;
+      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone, ${durationTag}): "${spokenScript}"\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`
+      : `${prompt}\nTarget Format: ${aspectRatio} vertical video, duration ${durationTag}. Strictly no burned-in text, no captions, no watermarks, no logos.`;
 
-    const parts = [{ text: fullPrompt }];
-    let inlineImageObj = null;
+    const inputContent = [{ type: "text", text: fullPrompt }];
 
-    if (mode === "AVATAR_REF" && advisorAvatarDataUri && advisorAvatarDataUri.startsWith("data:image/")) {
+    if (mode === "AVATAR_REF" && typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
       if (match) {
-        inlineImageObj = { mimeType: match[1], data: match[2] };
-        parts.push({ inlineData: inlineImageObj });
+        inputContent.push({
+          type: "image",
+          data: match[2],
+          mime_type: match[1]
+        });
       }
     }
 
-    // 1. Primary Attempt: Official Gemini v1beta :generateContent endpoint supported by GEMINI_API_KEY
-    const gcUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(OMNI_VIDEO_MODEL)}:generateContent?key=${encodeURIComponent(geminiKey)}`;
-    const gcResp = await fetch(gcUrl, {
+    const resp = await fetch(INTERACTIONS_BASE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": geminiKey
+      },
       body: JSON.stringify({
-        contents: [{ role: "user", parts }],
-        generationConfig: { temperature: 0.4 }
+        model: OMNI_VIDEO_MODEL,
+        input: inputContent,
+        background: true,
+        store: true,
+        response_modalities: ["VIDEO"],
+        generation_config: {
+          duration: durationTag,
+          aspect_ratio: aspectRatio
+        }
       })
     });
 
-    const gcRawText = await gcResp.text();
-    let gcParsed = {};
-    try { gcParsed = JSON.parse(gcRawText); } catch (e) { gcParsed = { rawBody: gcRawText }; }
+    const rawText = await resp.text();
+    let parsed = {};
+    try { parsed = JSON.parse(rawText); } catch (e) { parsed = { rawBody: rawText }; }
 
-    if (gcResp.ok) {
-      const respParts = gcParsed?.candidates?.[0]?.content?.parts || [];
-      const mediaPart = respParts.find(p => p?.inlineData?.data || p?.fileData?.fileUri);
-
-      if (mediaPart?.inlineData?.data) {
-        const mimeType = mediaPart.inlineData.mimeType || "video/mp4";
-        return res.status(200).json({
-          ok: true,
-          status: "DONE",
-          source: OMNI_VIDEO_MODEL,
-          endpointUsed: "generateContent",
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          sceneTitle,
-          mode,
-          durationSec: clampedDur,
-          videoDataUri: `data:${mimeType};base64,${mediaPart.inlineData.data}`,
-          estimatedCostSgd: estCost,
-          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
-        });
-      }
-
-      if (mediaPart?.fileData?.fileUri) {
-        const rawUri = String(mediaPart.fileData.fileUri);
-        const sep = rawUri.includes("?") ? "&" : "?";
-        const fetchableUrl = rawUri.includes("generativelanguage.googleapis.com")
-          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
-          : rawUri;
-        return res.status(200).json({
-          ok: true,
-          status: "DONE",
-          source: OMNI_VIDEO_MODEL,
-          endpointUsed: "generateContent",
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          sceneTitle,
-          mode,
-          durationSec: clampedDur,
-          videoUrl: fetchableUrl,
-          estimatedCostSgd: estCost,
-          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
-        });
-      }
-
-      if (gcParsed?.name) {
-        return res.status(200).json({
-          ok: true,
-          status: "RUNNING",
-          source: OMNI_VIDEO_MODEL,
-          endpointUsed: "generateContent",
-          operationId: gcParsed.name,
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          estimatedCostSgd: estCost
-        });
-      }
-    }
-
-    console.error("[/api/video/start] Upstream :generateContent rejected:", {
-      model: OMNI_VIDEO_MODEL,
-      status: gcResp.status,
-      body: gcParsed
-    });
-
-    const gcErrDetail = gcParsed?.error?.message || gcRawText.slice(0, 240);
-
-    // 2. Secondary Attempt: Try :predictLongRunning if :generateContent returned 400 or 404
-    if (gcResp.status === 400 || gcResp.status === 404) {
-      const plrUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(OMNI_VIDEO_MODEL)}:predictLongRunning?key=${encodeURIComponent(geminiKey)}`;
-      const instancePayload = { prompt: fullPrompt };
-      if (inlineImageObj) instancePayload.image = { inlineData: inlineImageObj };
-
-      const plrResp = await fetch(plrUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          instances: [instancePayload],
-          parameters: {
-            aspectRatio: "9:16",
-            durationSeconds: clampedDur
-          }
-        })
-      });
-
-      const plrRawText = await plrResp.text();
-      let plrParsed = {};
-      try { plrParsed = JSON.parse(plrRawText); } catch (e) { plrParsed = { rawBody: plrRawText }; }
-
-      if (plrResp.ok && plrParsed?.name) {
-        return res.status(200).json({
-          ok: true,
-          status: "RUNNING",
-          source: OMNI_VIDEO_MODEL,
-          endpointUsed: "predictLongRunning",
-          operationId: plrParsed.name,
-          model: OMNI_VIDEO_MODEL,
-          sceneIndex,
-          sceneTitle,
-          mode,
-          durationSec: clampedDur,
-          estimatedCostSgd: estCost,
-          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
-        });
-      }
-
-      console.error("[/api/video/start] Upstream :predictLongRunning rejected:", {
+    if (!resp.ok) {
+      console.error("[/api/video/start] Gemini Interactions API rejected request:", {
+        endpoint: INTERACTIONS_BASE_URL,
         model: OMNI_VIDEO_MODEL,
-        status: plrResp.status,
-        body: plrParsed
+        status: resp.status,
+        body: parsed
       });
-
-      const plrErrDetail = plrParsed?.error?.message || plrRawText.slice(0, 240);
+      const detail = parsed?.error?.message || rawText.slice(0, 240) || resp.statusText;
       return res.status(200).json({
         ok: false,
         status: "FAILED",
-        upstreamStatus: gcResp.status,
-        upstreamEndpoint: `models/${OMNI_VIDEO_MODEL}:generateContent`,
-        upstreamBody: gcParsed,
-        fallbackAttemptStatus: plrResp.status,
-        fallbackAttemptBody: plrParsed,
-        error: `Upstream Gemini HTTP ${gcResp.status} (${OMNI_VIDEO_MODEL}): ${gcErrDetail || plrErrDetail}`
+        upstreamStatus: resp.status,
+        upstreamBody: parsed,
+        error: `Interactions API HTTP ${resp.status} (${OMNI_VIDEO_MODEL}): ${detail}`
       });
     }
 
+    const interactionId = String(parsed?.id || parsed?.name || "").trim();
+    const interactionStatus = String(parsed?.status || "in_progress").toLowerCase();
+
+    if (!interactionId) {
+      return res.status(200).json({
+        ok: false,
+        status: "FAILED",
+        upstreamStatus: 502,
+        upstreamBody: parsed,
+        error: "Interactions API HTTP 502: Missing interaction.id in response"
+      });
+    }
+
+    if (interactionStatus === "completed") {
+      const media = extractVideoFromInteraction(parsed, geminiKey);
+      if (media.videoDataUri || media.videoUrl) {
+        return res.status(200).json({
+          ok: true,
+          status: "DONE",
+          interactionId,
+          operationId: interactionId,
+          interactionStatus,
+          source: OMNI_VIDEO_MODEL,
+          model: OMNI_VIDEO_MODEL,
+          sceneIndex,
+          sceneTitle,
+          mode,
+          durationSec: clampedDur,
+          videoUrl: media.videoUrl,
+          videoDataUri: media.videoDataUri,
+          estimatedCostSgd: estCost,
+          triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
+        });
+      }
+    }
+
     return res.status(200).json({
-      ok: false,
-      status: "FAILED",
-      upstreamStatus: gcResp.status,
-      upstreamEndpoint: `models/${OMNI_VIDEO_MODEL}:generateContent`,
-      upstreamBody: gcParsed,
-      error: `Upstream Gemini HTTP ${gcResp.status} (${OMNI_VIDEO_MODEL}): ${gcErrDetail}`
+      ok: true,
+      status: "RUNNING",
+      interactionId,
+      operationId: interactionId,
+      interactionStatus,
+      source: OMNI_VIDEO_MODEL,
+      model: OMNI_VIDEO_MODEL,
+      sceneIndex,
+      sceneTitle,
+      mode,
+      durationSec: clampedDur,
+      estimatedCostSgd: estCost,
+      triggerManualBackupDrawer: (spend + estCost) >= BACKUP_TRIGGER_SGD
     });
   } catch (err) {
     console.error("[/api/video/start] Unhandled exception:", err);
@@ -231,7 +199,7 @@ export default async function handler(req, res) {
       ok: false,
       status: "FAILED",
       upstreamStatus: 500,
-      error: `Upstream Gemini HTTP 500: ${err.message || "Network error calling gemini-omni-1.2-flash"}`
+      error: `Interactions API HTTP 500: ${err.message || "Network error"}`
     });
   }
 }

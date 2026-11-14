@@ -8,7 +8,7 @@
  *  - background: true, store: true
  *  - response_modalities: ["video"]
  *  - response_format: { type: "video", aspect_ratio: "9:16", duration: "<N>s", resolution: "720p", delivery: "uri" }
- *  - multimodal input: optional reference image + scene prompt + spoken script
+ *  - multimodal input: uploaded advisor profile photo reference + scene prompt + verbatim lip-synced dialogue
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -44,7 +44,6 @@ function appendApiKeyIfNeeded(rawUri: string, geminiKey: string): string {
 function extractVideoFromInteraction(interaction: Record<string, unknown>, geminiKey: string) {
   const candidateCollections: Array<Record<string, unknown>> = [];
 
-  // 1. Primary REST schema: interaction.steps[] -> step.content[]
   if (Array.isArray(interaction?.steps)) {
     for (const step of interaction.steps as Array<Record<string, unknown>>) {
       if (step && typeof step === "object") {
@@ -63,7 +62,6 @@ function extractVideoFromInteraction(interaction: Record<string, unknown>, gemin
     }
   }
 
-  // 2. Secondary REST schema: interaction.outputs[]
   if (Array.isArray(interaction?.outputs)) {
     for (const out of interaction.outputs as Array<Record<string, unknown>>) {
       if (out && typeof out === "object") {
@@ -162,15 +160,36 @@ export async function POST(req: NextRequest) {
     const clampedDur = Math.min(15, Math.max(3, Math.round(Number(durationSec) || 10)));
     const durationTag = `${clampedDur}s`;
     const aspectRatio = "9:16";
+    const cleanDialogue = String(spokenScript || "").trim();
 
-    const fullPrompt = spokenScript
-      ? `${prompt}\nSpoken Dialogue (45yo Singaporean Chinese male English advisor, warm baritone): "${spokenScript}"\nStrictly no burned-in text, no captions, no watermarks, no logos.`
-      : `${prompt}\nStrictly no burned-in text, no captions, no watermarks, no logos.`;
+    const hasAvatarImage =
+      mode === "AVATAR_REF" &&
+      typeof advisorAvatarDataUri === "string" &&
+      advisorAvatarDataUri.startsWith("data:image/");
 
-    // Place reference image first followed by text instruction per official Omni cookbook
+    const characterDirective = hasAvatarImage
+      ? "Subject & Character Reference: Use the exact person shown in the attached reference portrait photo as the on-screen Singaporean real estate advisor, preserving their exact facial features, likeness, hairstyle, glasses, and expression."
+      : "";
+
+    const audioDirective = cleanDialogue
+      ? mode === "AVATAR_REF"
+        ? `Audio & Lip-Sync: Native synchronized speech spoken directly on camera by the advisor in a warm, natural 45-year-old Singaporean Chinese male English baritone voice, with accurate lip movement matching every word verbatim across ${durationTag}: "${cleanDialogue}". Clean studio room tone only, no background music.`
+        : `Audio: Off-screen voiceover narration in a warm 45-year-old Singaporean Chinese male English baritone voice saying verbatim across ${durationTag}: "${cleanDialogue}", paired with subtle architectural room tone and no background music.`
+      : "Audio: Subtle clean ambient architectural room tone only, no background music.";
+
+    const fullPrompt = [
+      `Single continuous ${durationTag} unbroken vertical shot (${aspectRatio}).`,
+      characterDirective,
+      prompt,
+      audioDirective,
+      "Strictly no burned-in text, no subtitles, no captions, no watermarks, no logos."
+    ]
+      .filter(Boolean)
+      .join("\n");
+
     const inputContent: Array<Record<string, unknown>> = [];
 
-    if (mode === "AVATAR_REF" && typeof advisorAvatarDataUri === "string" && advisorAvatarDataUri.startsWith("data:image/")) {
+    if (hasAvatarImage && advisorAvatarDataUri) {
       const match = advisorAvatarDataUri.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
       if (match) {
         inputContent.push({
@@ -260,7 +279,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Extract video immediately if already present in steps[] / outputs[]
     const media = extractVideoFromInteraction(parsed, geminiKey);
     if (interactionStatus === "completed" && (media.videoDataUri || media.videoUrl)) {
       return NextResponse.json(
@@ -285,7 +303,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Return interaction.id immediately to client for async polling via /api/video/status
     return NextResponse.json(
       {
         ok: true,

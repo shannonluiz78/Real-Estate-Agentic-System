@@ -1,12 +1,16 @@
 /**
  * AgentZug V4.7 — app/api/video/status/route.ts
- * Next.js App Router Route Handler for /api/video/status
- * Polls Google Gemini operation status using GEMINI_API_KEY and forwards exact upstream status/body on error.
+ * Google Gemini Interactions API Poller for gemini-omni-1.2-flash
+ *
+ * Polls GET https://generativelanguage.googleapis.com/v1beta/interactions/{id}
+ * with `x-goog-api-key: GEMINI_API_KEY`. Extracts video URI or base64 video data
+ * from completed interaction output steps, or forwards exact error status/message.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 
 const OMNI_VIDEO_MODEL = process.env.MODEL_AVATAR_VIDEO || "gemini-omni-1.2-flash";
+const INTERACTIONS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 function corsHeaders() {
   return {
@@ -16,135 +20,194 @@ function corsHeaders() {
   };
 }
 
+function extractVideoFromInteraction(interaction: Record<string, unknown>, geminiKey: string) {
+  const outputs = Array.isArray(interaction?.outputs)
+    ? (interaction.outputs as Array<Record<string, unknown>>)
+    : [];
+
+  for (const item of outputs) {
+    const itemType = String(item?.type || "").toLowerCase();
+    const mimeType = String(item?.mime_type || item?.mimeType || "video/mp4");
+
+    if (itemType === "video" || mimeType.startsWith("video/")) {
+      if (typeof item?.data === "string" && item.data) {
+        return { videoDataUri: `data:${mimeType};base64,${item.data}`, videoUrl: null };
+      }
+      const rawUri = (item?.uri || item?.url || item?.file_uri || item?.fileUri) as string | undefined;
+      if (rawUri) {
+        const sep = rawUri.includes("?") ? "&" : "?";
+        const videoUrl = rawUri.includes("generativelanguage.googleapis.com")
+          ? `${rawUri}${sep}key=${encodeURIComponent(geminiKey)}`
+          : rawUri;
+        return { videoUrl, videoDataUri: null };
+      }
+    }
+
+    const nestedParts = Array.isArray(item?.content)
+      ? (item.content as Array<Record<string, unknown>>)
+      : Array.isArray(item?.parts)
+        ? (item.parts as Array<Record<string, unknown>>)
+        : [];
+    for (const part of nestedParts) {
+      const pMime = String(part?.mime_type || part?.mimeType || "");
+      if (part?.type === "video" || pMime.startsWith("video/")) {
+        if (typeof part?.data === "string" && part.data) {
+          return { videoDataUri: `data:${pMime || "video/mp4"};base64,${part.data}`, videoUrl: null };
+        }
+        const pUri = (part?.uri || part?.url || part?.file_uri) as string | undefined;
+        if (pUri) {
+          const sep = pUri.includes("?") ? "&" : "?";
+          const videoUrl = pUri.includes("generativelanguage.googleapis.com")
+            ? `${pUri}${sep}key=${encodeURIComponent(geminiKey)}`
+            : pUri;
+          return { videoUrl, videoDataUri: null };
+        }
+      }
+    }
+  }
+
+  // Also check top-level output / result fallback fields
+  const singleOutput = (interaction?.output || interaction?.result) as Record<string, unknown> | undefined;
+  if (singleOutput && typeof singleOutput === "object") {
+    const sMime = String(singleOutput?.mime_type || singleOutput?.mimeType || "video/mp4");
+    if (typeof singleOutput?.data === "string" && singleOutput.data) {
+      return { videoDataUri: `data:${sMime};base64,${singleOutput.data}`, videoUrl: null };
+    }
+    const sUri = (singleOutput?.uri || singleOutput?.url || singleOutput?.file_uri) as string | undefined;
+    if (sUri) {
+      const sep = sUri.includes("?") ? "&" : "?";
+      const videoUrl = sUri.includes("generativelanguage.googleapis.com")
+        ? `${sUri}${sep}key=${encodeURIComponent(geminiKey)}`
+        : sUri;
+      return { videoUrl, videoDataUri: null };
+    }
+  }
+
+  return { videoUrl: null, videoDataUri: null };
+}
+
 export async function OPTIONS() {
   return new NextResponse(null, { status: 200, headers: corsHeaders() });
 }
 
-async function handlePoll(operationId: string) {
+async function handlePoll(interactionId: string) {
   const geminiKey = process.env.GEMINI_API_KEY || "";
-  if (!operationId) {
+  if (!interactionId) {
     return NextResponse.json(
-      { ok: false, status: "FAILED", upstreamStatus: 400, error: "operationId is required" },
+      { ok: false, status: "FAILED", upstreamStatus: 400, error: "interactionId is required" },
       { status: 400, headers: corsHeaders() }
     );
   }
 
   if (!geminiKey) {
     return NextResponse.json(
-      { ok: false, status: "FAILED", upstreamStatus: 401, error: "Upstream Gemini HTTP 401: GEMINI_API_KEY missing in Vercel .env" },
+      {
+        ok: false,
+        status: "FAILED",
+        upstreamStatus: 401,
+        error: "Interactions API HTTP 401: GEMINI_API_KEY missing in Vercel .env"
+      },
       { status: 200, headers: corsHeaders() }
     );
   }
 
   try {
-    const cleanOpPath = operationId.startsWith("operations/") || operationId.startsWith("models/")
-      ? operationId
-      : `operations/${operationId}`;
-    const pollUrl = `https://generativelanguage.googleapis.com/v1beta/${cleanOpPath}?key=${encodeURIComponent(geminiKey)}`;
+    const cleanId = interactionId.replace(/^interactions\//, "");
+    const pollUrl = `${INTERACTIONS_BASE_URL}/${encodeURIComponent(cleanId)}`;
 
-    const resp = await fetch(pollUrl, { method: "GET" });
+    const resp = await fetch(pollUrl, {
+      method: "GET",
+      headers: {
+        "x-goog-api-key": geminiKey
+      }
+    });
+
     const rawText = await resp.text();
-    let opData: Record<string, unknown> = {};
+    let data: Record<string, unknown> = {};
     try {
-      opData = JSON.parse(rawText);
+      data = JSON.parse(rawText);
     } catch {
-      opData = { rawBody: rawText };
+      data = { rawBody: rawText };
     }
 
     if (!resp.ok) {
-      console.error("[/api/video/status] Upstream poll error:", { status: resp.status, body: opData });
-      const errDetail = (opData?.error as Record<string, unknown>)?.message
-        ? String((opData.error as Record<string, unknown>).message)
-        : rawText.slice(0, 200);
+      console.error("[/api/video/status] Gemini Interactions poll error:", {
+        interactionId: cleanId,
+        status: resp.status,
+        body: data
+      });
+      const errDetail = (data?.error as Record<string, unknown>)?.message
+        ? String((data.error as Record<string, unknown>).message)
+        : rawText.slice(0, 220) || resp.statusText;
       return NextResponse.json(
         {
           ok: false,
           status: "FAILED",
           upstreamStatus: resp.status,
-          upstreamBody: opData,
-          error: `Upstream Gemini Poll HTTP ${resp.status}: ${errDetail}`
+          upstreamBody: data,
+          error: `Interactions Poll HTTP ${resp.status}: ${errDetail}`
         },
         { status: 200, headers: corsHeaders() }
       );
     }
 
-    if (opData.error) {
-      const errObj = opData.error as Record<string, unknown>;
-      console.error("[/api/video/status] Operation returned error object:", errObj);
+    const iStatus = String(data?.status || "").toLowerCase();
+
+    if (iStatus === "failed" || iStatus === "cancelled" || data?.error) {
+      const errObj = (data?.error || {}) as Record<string, unknown>;
+      const code = Number(errObj?.code || 500);
+      const msg = String(errObj?.message || data?.status_message || `Interaction ${iStatus || "failed"}`).slice(0, 220);
+      console.error("[/api/video/status] Interaction failed:", { interactionId: cleanId, status: iStatus, body: data });
       return NextResponse.json(
         {
           ok: false,
           status: "FAILED",
-          upstreamStatus: Number(errObj.code || 500),
-          upstreamBody: opData,
-          error: `Upstream Gemini HTTP ${errObj.code || 500}: ${String(errObj.message || "Operation failed").slice(0, 200)}`
+          upstreamStatus: code,
+          upstreamBody: data,
+          error: `Interactions API HTTP ${code}: ${msg}`
         },
         { status: 200, headers: corsHeaders() }
       );
     }
 
-    if (!opData.done) {
+    if (iStatus !== "completed" && data?.done !== true) {
       return NextResponse.json(
         {
           ok: true,
           status: "RUNNING",
-          source: OMNI_VIDEO_MODEL,
-          metadata: opData.metadata || null
+          interactionId: cleanId,
+          interactionStatus: iStatus || "in_progress",
+          source: OMNI_VIDEO_MODEL
         },
         { status: 200, headers: corsHeaders() }
       );
     }
 
-    const responseObj = (opData.response || {}) as Record<string, unknown>;
-    const genVidResp = (responseObj.generateVideoResponse || {}) as Record<string, unknown>;
-    const generatedSamples = (
-      Array.isArray(genVidResp.generatedSamples)
-        ? genVidResp.generatedSamples
-        : Array.isArray(responseObj.predictions)
-          ? responseObj.predictions
-          : []
-    ) as Array<Record<string, unknown>>;
-
-    const firstSample = generatedSamples[0] || {};
-    const videoObj = (firstSample.video || {}) as Record<string, unknown>;
-    const rawVideoUri = (videoObj.uri || firstSample.uri || null) as string | null;
-    const base64Video = (firstSample.bytesBase64Encoded || videoObj.bytesBase64Encoded || null) as string | null;
-
-    if (base64Video) {
+    // Interaction completed — extract video URI or base64 data from output steps
+    const media = extractVideoFromInteraction(data, geminiKey);
+    if (media.videoDataUri || media.videoUrl) {
       return NextResponse.json(
         {
           ok: true,
           status: "DONE",
+          interactionId: cleanId,
+          interactionStatus: "completed",
           source: OMNI_VIDEO_MODEL,
-          videoDataUri: `data:video/mp4;base64,${base64Video}`
+          videoUrl: media.videoUrl,
+          videoDataUri: media.videoDataUri
         },
         { status: 200, headers: corsHeaders() }
       );
     }
 
-    if (rawVideoUri) {
-      const sep = rawVideoUri.includes("?") ? "&" : "?";
-      const fetchableUrl = rawVideoUri.includes("generativelanguage.googleapis.com")
-        ? `${rawVideoUri}${sep}key=${encodeURIComponent(geminiKey)}`
-        : rawVideoUri;
-      return NextResponse.json(
-        {
-          ok: true,
-          status: "DONE",
-          source: OMNI_VIDEO_MODEL,
-          videoUrl: fetchableUrl
-        },
-        { status: 200, headers: corsHeaders() }
-      );
-    }
-
+    console.error("[/api/video/status] Interaction completed without video output:", data);
     return NextResponse.json(
       {
         ok: false,
         status: "FAILED",
         upstreamStatus: 204,
-        upstreamBody: opData,
-        error: "Upstream Gemini HTTP 204: Operation completed without a video output sample"
+        upstreamBody: data,
+        error: "Interactions API HTTP 204: Interaction completed without a playable video output step"
       },
       { status: 200, headers: corsHeaders() }
     );
@@ -156,7 +219,7 @@ async function handlePoll(operationId: string) {
         ok: false,
         status: "FAILED",
         upstreamStatus: 500,
-        error: `Upstream Gemini HTTP 500: ${message}`
+        error: `Interactions Poll HTTP 500: ${message}`
       },
       { status: 200, headers: corsHeaders() }
     );
@@ -164,12 +227,15 @@ async function handlePoll(operationId: string) {
 }
 
 export async function GET(req: NextRequest) {
-  const operationId = req.nextUrl.searchParams.get("operationId") || "";
-  return handlePoll(operationId);
+  const interactionId =
+    req.nextUrl.searchParams.get("interactionId") ||
+    req.nextUrl.searchParams.get("operationId") ||
+    "";
+  return handlePoll(interactionId);
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
-  const operationId = String(body.operationId || "").trim();
-  return handlePoll(operationId);
+  const interactionId = String(body.interactionId || body.operationId || "").trim();
+  return handlePoll(interactionId);
 }

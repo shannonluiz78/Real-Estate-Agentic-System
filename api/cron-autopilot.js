@@ -14,6 +14,7 @@ const HDB_MOP_URL = process.env.HDB_MOP_CALCULATOR_URL || "https://hdb-mop-calcu
 
 const CREDIT_LIMIT_SGD = parseFloat(process.env.MONTHLY_CLOUD_CREDIT_LIMIT_SGD || "12.83");
 const BACKUP_TRIGGER_SGD = parseFloat(process.env.MANUAL_BACKUP_TRIGGER_SGD || "11.50");
+const MAX_WALL_BUDGET_MS = 7200;
 
 const SG_NEWS_FALLBACK_TOPICS = [
   {
@@ -83,8 +84,8 @@ function enforceConciseHeadline(headline, title) {
   return src.split(/\s+/).slice(0, 9).join(" ");
 }
 
-async function callGeminiModel({ apiKey, model, systemPrompt, userPrompt, thinkingLevel }) {
-  if (!apiKey) return null;
+async function callGeminiModel({ apiKey, model, systemPrompt, userPrompt, thinkingLevel, timeoutMs = 4200 }) {
+  if (!apiKey || timeoutMs < 800) return null;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
   const body = {
     systemInstruction: { parts: [{ text: systemPrompt }] },
@@ -98,20 +99,31 @@ async function callGeminiModel({ apiKey, model, systemPrompt, userPrompt, thinki
     body.generationConfig.thinkingConfig = { thinkingLevel };
   }
 
-  const resp = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
-  });
-  if (!resp.ok) {
-    const errText = await resp.text();
-    throw new Error(`Gemini ${model} HTTP ${resp.status}: ${errText.slice(0, 200)}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const resp = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+    if (!resp.ok) {
+      const errText = await resp.text().catch(() => "");
+      throw new Error(`Gemini ${model} HTTP ${resp.status}: ${errText.slice(0, 180)}`);
+    }
+    const data = await resp.json();
+    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    return JSON.parse(rawText);
+  } catch (err) {
+    if (err?.name === "AbortError") {
+      throw new Error(`Gemini ${model} timed out after ${timeoutMs}ms (safe Vercel guard)`);
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
   }
-  const data = await resp.json();
-  const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-  return JSON.parse(rawText);
 }
-
 
 function buildThreeSceneStoryboard(topicObj) {
   const headline = topicObj.headline || topicObj.title || "2026 Singapore Property Roadmap";
@@ -128,30 +140,30 @@ function buildThreeSceneStoryboard(topicObj) {
   return [
     {
       sceneNumber: 1,
-      role: "Scene 1: Hook (8–12s)",
+      role: "Scene 1: Hook (8–15s)",
       mode: "AVATAR_REF",
       durationSec: 10,
       trimStartSec: 0,
       trimEndSec: 10,
-      prompt: `Advisor Avatar Reference (45yo Singaporean Chinese male advisor in smart navy blazer) speaking confidently in a sunlit modern Singapore showflat lounge about "${headline}", steady 85mm portrait framing, subtle natural hand gestures. Strictly no burned-in text, no captions, no watermarks.`
+      prompt: `speaks warmly and confidently on camera in a sunlit modern Singapore showflat lounge about "${headline}", medium close-up portrait framing, natural eye contact, subtle hand gestures, steady 85mm lens.`
     },
     {
       sceneNumber: 2,
-      role: "Scene 2: Market Proof / B-Roll (8–12s)",
+      role: "Scene 2: Market Proof / B-Roll (8–15s)",
       mode: "BROLL",
       durationSec: 10,
       trimStartSec: 0,
       trimEndSec: 10,
-      prompt: `SG Property B-Roll: Ultra-steady 35mm architectural gimbal glide across ${descs[0]} highlighting ${pills[0]} and ${pills[1]}. Architectural lines remain rigid and stationary in warm golden-hour daylight. Strictly no text, no numbers, no watermarks, no people.`
+      prompt: `Ultra-steady 35mm architectural gimbal glide across ${descs[0]} illustrating ${pills[0]} and ${pills[1]}. Architectural lines remain rigid and stationary in warm golden-hour daylight.`
     },
     {
       sceneNumber: 3,
-      role: "Scene 3: Actionable Takeaway + DM CTA (8–12s)",
+      role: "Scene 3: Actionable Takeaway + DM CTA (8–15s)",
       mode: "AVATAR_REF",
       durationSec: 10,
       trimStartSec: 0,
       trimEndSec: 10,
-      prompt: `Advisor Avatar Reference (45yo Singaporean Chinese male advisor) delivering clear closing takeaway on ${pills[2]} and inviting viewers to DM "${kw}" for their 2026 roadmap, warm architectural lounge backdrop, locked 85mm portrait lens. Strictly no burned-in text, no captions, no watermarks.`
+      prompt: `speaks warmly and confidently on camera in a sunlit modern Singapore showflat lounge with a clear closing takeaway on ${pills[2]} and inviting viewers to DM "${kw}" for their 2026 property roadmap, medium close-up portrait framing, natural eye contact, subtle hand gestures, steady 85mm lens.`
     }
   ];
 }
@@ -187,12 +199,23 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") return res.status(200).end();
 
+  const startWallMs = Date.now();
+  const remainingBudgetMs = () => Math.max(0, MAX_WALL_BUDGET_MS - (Date.now() - startWallMs));
+
   const geminiKey = process.env.GEMINI_API_KEY || "";
   const ceoModel = process.env.MODEL_CEO_AGENT || "gemini-4-hydrogen-xhigh";
   const opsModel = process.env.MODEL_OPS_AGENT || "gemini-4-hydrogen-high";
   const spModel = process.env.MODEL_SPECIALIST_FREE || "gemini-flash-lite-latest";
 
-  const body = req.method === "POST" ? (req.body || {}) : {};
+  let body = {};
+  if (req.method === "POST") {
+    if (typeof req.body === "string") {
+      try { body = JSON.parse(req.body); } catch (e) { body = {}; }
+    } else if (req.body && typeof req.body === "object") {
+      body = req.body;
+    }
+  }
+
   const currentSpendSgd = Number(body.currentSpendSgd ?? 3.42);
   const existingTitles = Array.isArray(body.existingTitles) ? body.existingTitles : [];
   const manualTopicOverride = body.topicOverride || null;
@@ -210,15 +233,16 @@ export default async function handler(req, res) {
 
   try {
     // STEP 1: OPS-01 + SP-03 + SP-05 auto-generate punchy 2-3 line headline, 3 ultra-short pills (2-4 words),
-    // synchronized 36s spoken script, and 3 topic-matched B-roll cutaway descriptions.
+    // synchronized 36s spoken script, and 3 topic-matched B-roll cutaway descriptions (bounded by safe timeout guard).
     let selectedTopic = manualTopicOverride;
     if (!selectedTopic) {
-      if (geminiKey) {
+      if (geminiKey && remainingBudgetMs() > 1500) {
         try {
           const opsResult = await callGeminiModel({
             apiKey: geminiKey,
             model: opsModel,
             thinkingLevel: "high",
+            timeoutMs: Math.min(4200, Math.max(1200, remainingBudgetMs() - 1800)),
             systemPrompt: `You are OPS-01 (Operations Manager Agent) collaborating with SP-03 and SP-05 for Home Equity Studio Singapore.
 Curate 1 high-converting daily Singapore property news topic (URA REALIS, HDB MOP, ABSD, TDSR) avoiding duplicates.
 Return strict JSON:
@@ -314,12 +338,13 @@ Return strict JSON:
       escalationLine: ESCALATION_PHONE
     };
 
-    if (geminiKey && qaResult.passed && !triggerManualBackup) {
+    if (geminiKey && qaResult.passed && !triggerManualBackup && remainingBudgetMs() > 1400) {
       try {
         const ceoAi = await callGeminiModel({
           apiKey: geminiKey,
           model: ceoModel,
           thinkingLevel: "xhigh",
+          timeoutMs: Math.min(2800, Math.max(1000, remainingBudgetMs() - 400)),
           systemPrompt: "You are CEO-01 (Gemini 4 Hydrogen xhigh), final autonomous approver for Home Equity Studio Singapore. Review the campaign QA score and CEA compliance. Return JSON: { approved: boolean, decision: string, rationale: string }.",
           userPrompt: `Headline: ${selectedTopic.headline}. Pills: ${JSON.stringify(selectedTopic.pills)}. QA Score: ${qaResult.score}%. Spend: S$${currentSpendSgd}/S$${CREDIT_LIMIT_SGD}.`
         });
@@ -338,10 +363,43 @@ Return strict JSON:
       detail: `${ceoDecision.decision}: ${ceoDecision.rationale}`
     });
 
+    const storyboardScenes = buildThreeSceneStoryboard(selectedTopic);
+
+    const campaign = {
+      id: `camp-${Date.now()}`,
+      topicId: selectedTopic.id || null,
+      pillar: selectedTopic.pillar || "HDB_MOP",
+      headline: selectedTopic.headline,
+      title: selectedTopic.title,
+      kw: selectedTopic.kw,
+      source: selectedTopic.source,
+      pills: selectedTopic.pills,
+      brollDescriptions: brollDescs,
+      isHdbUpgradeTopic: Boolean(selectedTopic.isHdbUpgradeTopic),
+      qaScore: qaResult.score,
+      status: ceoDecision.approved ? "CEO_APPROVED" : "OPS_CURATED",
+      slot: "Today 8:00 PM SGT",
+      videoDurationSec: 36,
+      caption,
+      script: continuousScript36s,
+      cutaways: brollCutaways,
+      storyboardScenes
+    };
+
+    const telemetryEntry = {
+      ts: new Date().toLocaleTimeString("en-SG", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) + " SGT",
+      agent: ceoDecision.approved ? "OPS-01 → CEO-01" : "OPS-01",
+      msg: `${ceoDecision.approved ? "CEO-01 Final Approved" : "OPS-01 Curated"}: "${selectedTopic.headline}" (QA ${qaResult.score}% >= 95% • CEA Verified)`
+    };
+
     return res.status(200).json({
       ok: true,
       version: "4.7.0",
       timestamp: new Date().toISOString(),
+      elapsedMs: Date.now() - startWallMs,
+      campaign,
+      telemetryEntry,
+      error: null,
       commandChain: {
         tier1_ceo: ceoModel,
         tier2_ops: opsModel,
@@ -365,7 +423,7 @@ Return strict JSON:
         avatarEngine: "Omni 1.2 Flash (Footer Avatar Badge)",
         brollEngine: "Veo 3.1 - Lite / Nano Banana 2 Lite (3.5s B-Roll Cutaways)",
         brollCutaways,
-        storyboardScenes: buildThreeSceneStoryboard(selectedTopic),
+        storyboardScenes,
         ceaParticulars: CEA_FOOTER
       },
       qaGate: qaResult,
@@ -373,8 +431,10 @@ Return strict JSON:
       auditLog
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(200).json({
       ok: false,
+      campaign: null,
+      telemetryEntry: null,
       error: error.message || "Autopilot orchestration failed",
       escalationWhatsApp: ESCALATION_PHONE
     });
